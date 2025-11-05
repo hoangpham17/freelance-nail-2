@@ -47,20 +47,20 @@ const AboutUs: React.FC = () => {
   return (
     <div className="w-full bg-gradient-to-b from-accent to-white">
       {/* Header */}
-      <div className="text-center py-20 px-5 bg-gradient-to-r from-primary to-primary-dark text-white">
+      <div className="text-center py-12 sm:py-16 md:py-20 px-4 sm:px-5 bg-gradient-to-r from-primary to-primary-dark text-white">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-3 md:mb-4">
             About Us
           </h1>
-          <div className="w-24 h-1 bg-white mx-auto mb-6 opacity-50"></div>
-          <p className="text-xl opacity-95">
+          <div className="w-16 sm:w-20 md:w-24 h-1 bg-white mx-auto mb-4 md:mb-6 opacity-50"></div>
+          <p className="text-base sm:text-lg md:text-xl opacity-95 px-4">
             Your trusted destination for luxury nail care
           </p>
         </div>
       </div>
 
       {/* Content Section */}
-      <section className="py-20 px-5">
+      <section className="py-10 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-5">
         <div className="max-w-7xl mx-auto">
           {/* Loading State */}
           {loading && (
@@ -101,7 +101,7 @@ const AboutUs: React.FC = () => {
 
           {/* Data Cards */}
           {!loading && !error && data && data.length > 0 && (
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {data.map((item, index) => {
                 const iconUrl = item.icon?.[0]?.url;
                 const logoUrl = item.logo?.[0]?.url;
@@ -116,7 +116,8 @@ const AboutUs: React.FC = () => {
                           ? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
                           : ""
                       }
-                      rounded-3xl p-8 md:p-12
+                      rounded-2xl md:rounded-3xl 
+                      p-6 sm:p-8 md:p-10 lg:p-12
                       shadow-lg hover:shadow-2xl 
                       transition-all duration-300 
                       hover:-translate-y-1
@@ -126,11 +127,11 @@ const AboutUs: React.FC = () => {
                     style={bgColor ? { backgroundColor: bgColor } : undefined}
                   >
                     {/* Content Container */}
-                    <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 relative z-10">
                       {/* Icon */}
                       {iconUrl && (
                         <div className="flex-shrink-0">
-                          <div className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                          <div className="w-20 h-20 md:w-28 md:h-28 flex items-center justify-center hover:scale-105 transition-transform duration-300">
                             <img
                               src={iconUrl}
                               alt="Icon"
@@ -144,14 +145,14 @@ const AboutUs: React.FC = () => {
                       )}
 
                       {/* Content */}
-                      <div className="flex-1 relative">
+                      <div className="flex-1 relative w-full">
                         {/* Background Logo */}
                         {logoUrl && (
-                          <div className="absolute -top-4 left-0 right-0 flex justify-center md:justify-start pointer-events-none">
+                          <div className="absolute -top-2 md:-top-4 left-0 right-0 flex justify-center md:justify-start pointer-events-none opacity-30 md:opacity-40">
                             <img
                               src={logoUrl}
                               alt="Logo"
-                              className="w-48 md:w-64 h-auto object-contain"
+                              className="w-32 h-auto md:w-64 object-contain"
                               onError={(e) => {
                                 e.currentTarget.style.display = "none";
                               }}
@@ -160,8 +161,8 @@ const AboutUs: React.FC = () => {
                         )}
 
                         {/* Description */}
-                        <div className="relative z-10 mt-[45px] ml-[215px]">
-                          <p className="text-secondary-light text-base md:text-lg leading-relaxed text-center md:text-left">
+                        <div className="relative z-10 pt-10 md:pt-12">
+                          <p className="text-secondary text-sm md:text-base lg:text-lg leading-relaxed text-center md:text-left">
                             {item.description}
                           </p>
                         </div>
