@@ -148,7 +148,7 @@ const AboutUs: React.FC = () => {
                       <div className="flex-1 relative w-full">
                         {/* Background Logo */}
                         {logoUrl && (
-                          <div className="absolute -top-2 md:-top-4 left-0 right-0 flex justify-center md:justify-start pointer-events-none opacity-30 md:opacity-40">
+                          <div className="absolute -top-2 md:-top-4 left-0 right-0 flex justify-start pointer-events-none">
                             <img
                               src={logoUrl}
                               alt="Logo"
@@ -161,7 +161,7 @@ const AboutUs: React.FC = () => {
                         )}
 
                         {/* Description */}
-                        <div className="relative z-10 pt-10 md:pt-12">
+                        <div className="relative z-10 pt-10 md:pt-12 md:pl-[215px]">
                           <p className="text-secondary text-sm md:text-base lg:text-lg leading-relaxed text-center md:text-left">
                             {item.description}
                           </p>
