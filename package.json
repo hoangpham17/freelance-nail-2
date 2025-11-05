@@ -10,13 +10,12 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "papaparse": "^5.5.3",
+    "airtable": "^0.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.9.5"
   },
   "devDependencies": {
-    "@types/papaparse": "^5.5.0",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/react-router-dom": "^5.3.3",

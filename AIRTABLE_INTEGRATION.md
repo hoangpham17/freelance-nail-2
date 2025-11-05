@@ -1,32 +1,51 @@
 # Airtable Integration Guide
 
-This project uses **Airtable Share URLs** to fetch data directly from shared views (no API key required!).
+This project uses **Airtable.js official library** to fetch data from Airtable.
 
 ## 🚀 Quick Setup
 
-### 1. Get Your Airtable Share URL
+### 1. Get Your Airtable API Key
 
-1. Open your Airtable base
-2. Open the view you want to share
-3. Click the **"Share view"** button (top right)
-4. Enable **"Create a shareable link to this view"**
-5. Copy the share URL (e.g., `https://airtable.com/appXXXXXXX/shrYYYYYYY`)
+1. Go to https://airtable.com/create/tokens
+2. Click "Create new token"
+3. Give it a name (e.g., "Madison Nail Lounge")
+4. Add these scopes:
+   - `data.records:read`
+5. Add access to your base: `appj9Es9rfmtwnDZn`
+6. Click "Create token"
+7. **Copy the token** (you won't see it again!)
 
-### 2. Add Share URL to Configuration
+### 2. Create `.env` File
+
+Create a `.env` file in the project root:
+
+```env
+VITE_AIRTABLE_API_KEY=your_api_key_here
+```
+
+> **Important**: Never commit your `.env` file. It's already in `.gitignore`.
+
+### 3. Get Your Table ID
+
+1. Open your Airtable base: https://airtable.com/appj9Es9rfmtwnDZn
+2. Click on a table
+3. The URL will look like: `https://airtable.com/appXXXXXXXXXXXX/tblYYYYYYYYYYYY/...`
+   - `appXXXXXXXXXXXX` = Base ID (already configured)
+   - `tblYYYYYYYYYYYY` = Table ID (you need this)
+
+### 4. Add Table ID to Configuration
 
 Edit `src/services/airtable.service.ts`:
 
 ```typescript
 export const AIRTABLE_ENDPOINTS = {
-  aboutUs: "https://airtable.com/appj9Es9rfmtwnDZn/shrfMsjWs3H6i5pFo",
-  services: "https://airtable.com/appXXXXXXX/shrYYYYYYY", // Add your URL here
-  gallery: "https://airtable.com/appXXXXXXX/shrZZZZZZZ", // Add your URL here
+  aboutUs: "tblWIqcxLfO7p3Vgs", // Your About Us table ID
+  services: "tblXXXXXXXXXXXXX", // Your Services table ID
+  gallery: "tblXXXXXXXXXXXXX", // Your Gallery table ID
 };
 ```
 
-> **Note**: The service automatically converts share URLs to CSV format by appending `?format=csv`
-
-### 3. Use in Component
+### 5. Use in Component
 
 ```tsx
 import { useAirtable } from "../../hooks/useAirtable";
@@ -61,66 +80,154 @@ const MyComponent: React.FC = () => {
 };
 ```
 
-## ✨ Advantages
+## ✨ Advantages of Official Airtable.js
 
-- **No API Key Required**: Use public share URLs directly
-- **Simple Setup**: Just copy and paste the share URL
-- **No Authentication**: No need to manage API tokens
-- **Fast**: Direct CSV download is lightweight
+- **Official Library**: Maintained by Airtable
+- **Type Safe**: Full TypeScript support
+- **Reliable**: Direct API access, no CORS proxy needed
+- **Feature Rich**: Access to all Airtable API features
+- **Filtering & Sorting**: Advanced query capabilities
+- **Automatic Pagination**: Handles large datasets automatically
 
 ## 📊 Data Format
 
-The share URL is automatically converted to CSV format. PapaParse parses the CSV and returns an array of objects where:
+The Airtable API returns records in this format:
 
-- Column headers become object keys
-- Each row becomes an object in the array
-
-Example Airtable view:
-
-| title       | description             | icon       |
-| ----------- | ----------------------- | ---------- |
-| Our Team    | Experienced technicians | icon-1.svg |
-| Our Mission | Quality service         | icon-2.svg |
-
-Becomes:
-
-```typescript
-[
-  {
+```javascript
+{
+  id: "recXXXXXXXXXXXXXX",
+  fields: {
     title: "Our Team",
     description: "Experienced technicians",
-    icon: "icon-1.svg",
-  },
-  { title: "Our Mission", description: "Quality service", icon: "icon-2.svg" },
-];
+    icon: "icon-1.svg"
+  }
+}
 ```
 
-## 🔒 Security Note
+Our service transforms it to:
 
-- Share URLs are **public** - anyone with the URL can access the data
-- Only share views with data you want to be public
-- For sensitive data, consider using the Airtable API with authentication
+```javascript
+{
+  id: "recXXXXXXXXXXXXXX",
+  title: "Our Team",
+  description: "Experienced technicians",
+  icon: "icon-1.svg"
+}
+```
+
+## 🔒 Security
+
+- **Never commit** your `.env` file
+- The `.env` file is already in `.gitignore`
+- Use environment variables for production deployments
+- API keys should have minimal required scopes
+
+## 🔧 Advanced Usage
+
+### Filter Records
+
+```typescript
+export const fetchAirtableData = async <T = Record<string, unknown>>(
+  tableId: string,
+  filterFormula?: string
+): Promise<T[]> => {
+  const query = filterFormula
+    ? base(tableId).select({ filterByFormula: filterFormula })
+    : base(tableId).select();
+
+  const records = await query.all();
+
+  return records.map((record) => ({
+    id: record.id,
+    ...record.fields,
+  })) as T[];
+};
+
+// Usage
+const activeServices = await fetchAirtableData(
+  AIRTABLE_ENDPOINTS.services,
+  "{Status} = 'Active'"
+);
+```
+
+### Sort Records
+
+```typescript
+const records = await base(tableId)
+  .select({
+    sort: [{ field: "Name", direction: "asc" }],
+  })
+  .all();
+```
+
+### Limit Results
+
+```typescript
+const records = await base(tableId)
+  .select({
+    maxRecords: 10,
+  })
+  .all();
+```
 
 ## 📚 Files
 
 - `src/hooks/useAirtable.ts` - React hook for data fetching
-- `src/services/airtable.service.ts` - Service functions with PapaParse
+- `src/services/airtable.service.ts` - Service functions with Airtable.js
 - `src/pages/AboutUs/AboutUs.tsx` - Working example
 
 ## 🐛 Troubleshooting
 
-### CORS Errors
+### "Invalid API Key" Error
 
-If you encounter CORS errors, make sure:
+1. Check that your API key is correct in `.env`
+2. Make sure the key has `data.records:read` scope
+3. Verify the key has access to base `appj9Es9rfmtwnDZn`
+4. Restart the dev server after changing `.env`
 
-1. The view is properly shared (not private)
-2. You're using the share URL, not the base URL
-3. The URL format is: `https://airtable.com/appXXXXXXX/shrYYYYYYY`
+### "Table not found" Error
+
+1. Check the table ID is correct
+2. Open Airtable and verify the table exists
+3. Make sure the API key has access to the table
 
 ### Empty Data
 
-If data is empty:
+1. Check that the table has records
+2. Verify column names match your TypeScript interface
+3. Check browser console for errors
 
-1. Check that the view has records
-2. Verify the share URL is correct
-3. Make sure columns have headers (first row)
+### CORS Errors
+
+The official Airtable.js library handles CORS automatically. If you still see CORS errors:
+
+1. Make sure you're using the official `airtable` npm package
+2. Check that the API key is valid
+3. Try clearing browser cache
+
+## 💡 Pro Tips
+
+1. **Use TypeScript Interfaces**: Define interfaces for your data structure for better type safety
+
+2. **Add Fallback Data**: Always provide fallback data for better UX
+
+3. **Handle Loading States**: Show loading indicators while fetching
+
+4. **Cache Data**: Consider caching data in React state or using a library like React Query
+
+5. **Environment-Specific Keys**: Use different API keys for development and production
+
+## 🌐 Production Deployment
+
+When deploying to production:
+
+1. **Vercel/Netlify**: Add environment variable in dashboard
+
+   - Key: `VITE_AIRTABLE_API_KEY`
+   - Value: Your production API key
+
+2. **GitHub Actions**: Add as repository secret
+
+3. **Docker**: Use `.env` file or environment variables
+
+Remember: Environment variables starting with `VITE_` are exposed to the client-side code.
