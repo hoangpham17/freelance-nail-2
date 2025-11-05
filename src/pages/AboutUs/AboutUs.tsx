@@ -3,16 +3,37 @@ import { useAirtable } from "../../hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
 
 /**
+ * Airtable Attachment Type
+ */
+interface AirtableAttachment {
+  id: string;
+  url: string;
+  filename: string;
+  size: number;
+  type: string;
+  width?: number;
+  height?: number;
+  thumbnails?: {
+    small?: { url: string; width: number; height: number };
+    large?: { url: string; width: number; height: number };
+    full?: { url: string; width: number; height: number };
+  };
+}
+
+/**
  * About Us Data Structure from Airtable
- * Only contains description field
+ * Contains description, icon, logo, and backgroundColor fields
  */
 interface AboutUsData {
   id?: string;
   description: string;
+  icon?: AirtableAttachment[];
+  logo?: AirtableAttachment[];
+  backgroundColor?: string;
 }
 
-// Predefined card styles for visual variety
-const CARD_COLORS = [
+// Fallback card styles if backgroundColor is not provided
+const FALLBACK_COLORS = [
   "bg-gradient-to-br from-amber-50 to-orange-50",
   "bg-gradient-to-br from-blue-50 to-cyan-50",
   "bg-gradient-to-br from-purple-50 to-pink-50",
@@ -80,31 +101,79 @@ const AboutUs: React.FC = () => {
 
           {/* Data Cards */}
           {!loading && !error && data && data.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {data.map((item, index) => (
-                <div
-                  key={item.id || index}
-                  className={`
-                    ${CARD_COLORS[index % CARD_COLORS.length]}
-                    rounded-2xl p-8 
-                    shadow-lg hover:shadow-2xl 
-                    transition-all duration-300 
-                    hover:-translate-y-2
-                    border border-gray-100
-                    relative overflow-hidden
-                  `}
-                >
-                  {/* Decorative Element */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
+            <div className="space-y-8">
+              {data.map((item, index) => {
+                const iconUrl = item.icon?.[0]?.url;
+                const logoUrl = item.logo?.[0]?.url;
+                const bgColor = item.backgroundColor;
 
-                  {/* Description */}
-                  <div className="relative z-10 pt-8">
-                    <p className="text-secondary-light text-lg leading-relaxed text-center">
-                      {item.description}
-                    </p>
+                return (
+                  <div
+                    key={item.id || index}
+                    className={`
+                      ${
+                        !bgColor
+                          ? FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+                          : ""
+                      }
+                      rounded-3xl p-8 md:p-12
+                      shadow-lg hover:shadow-2xl 
+                      transition-all duration-300 
+                      hover:-translate-y-1
+                      border border-gray-100
+                      relative overflow-hidden
+                    `}
+                    style={bgColor ? { backgroundColor: bgColor } : undefined}
+                  >
+                    {/* Content Container */}
+                    <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                      {/* Icon */}
+                      {iconUrl && (
+                        <div className="flex-shrink-0">
+                          <div className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                            <img
+                              src={iconUrl}
+                              alt="Icon"
+                              className="w-full h-full object-contain"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Content */}
+                      <div className="flex-1 relative">
+                        {/* Background Logo */}
+                        {logoUrl && (
+                          <div className="absolute -top-4 left-0 right-0 flex justify-center md:justify-start pointer-events-none">
+                            <img
+                              src={logoUrl}
+                              alt="Logo"
+                              className="w-48 md:w-64 h-auto object-contain"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          </div>
+                        )}
+
+                        {/* Description */}
+                        <div className="relative z-10 mt-[45px] ml-[215px]">
+                          <p className="text-secondary-light text-base md:text-lg leading-relaxed text-center md:text-left">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Decorative Elements */}
+                    <div className="absolute bottom-0 right-0 w-40 h-40 bg-white opacity-5 rounded-full -mr-20 -mb-20"></div>
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-white opacity-5 rounded-full -ml-16 -mt-16"></div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
