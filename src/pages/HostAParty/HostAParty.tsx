@@ -120,8 +120,7 @@ const HostAParty: React.FC = () => {
                   alt="Party celebration"
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    e.currentTarget.src =
-                      "https://via.placeholder.com/800x1000/C9A05C/ffffff?text=Party+Celebration";
+                    e.currentTarget.src = "https://picsum.photos/800/1000";
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent"></div>

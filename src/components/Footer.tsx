@@ -28,8 +28,7 @@ const Footer: React.FC = () => {
                 className="rounded-lg w-full"
                 onError={(e) => {
                   // Fallback if Google Maps API key not set
-                  e.currentTarget.src =
-                    "https://via.placeholder.com/400x200/1a1a1a/666666?text=Map";
+                  e.currentTarget.src = "https://picsum.photos/400/200";
                 }}
               />
             </div>

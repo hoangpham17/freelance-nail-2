@@ -11,91 +11,79 @@ const Gallery: React.FC = () => {
     { id: "extensions", name: "Extensions" },
   ];
 
-  // Placeholder images - replace with actual images
+  // Gallery images using picsum.photos
   const galleryItems = [
     {
       id: 1,
       category: "manicure",
       title: "Classic French Manicure",
-      image:
-        "https://via.placeholder.com/400x300/667eea/ffffff?text=French+Manicure",
+      image: "https://picsum.photos/id/1011/400/300",
     },
     {
       id: 2,
       category: "nailart",
       title: "Floral Nail Art",
-      image:
-        "https://via.placeholder.com/400x300/f093fb/ffffff?text=Floral+Art",
+      image: "https://picsum.photos/id/1018/400/300",
     },
     {
       id: 3,
       category: "pedicure",
       title: "Spa Pedicure",
-      image:
-        "https://via.placeholder.com/400x300/764ba2/ffffff?text=Spa+Pedicure",
+      image: "https://picsum.photos/id/1025/400/300",
     },
     {
       id: 4,
       category: "extensions",
       title: "Acrylic Extensions",
-      image:
-        "https://via.placeholder.com/400x300/f5576c/ffffff?text=Acrylic+Extensions",
+      image: "https://picsum.photos/id/1027/400/300",
     },
     {
       id: 5,
       category: "manicure",
       title: "Gel Manicure",
-      image:
-        "https://via.placeholder.com/400x300/667eea/ffffff?text=Gel+Manicure",
+      image: "https://picsum.photos/id/1035/400/300",
     },
     {
       id: 6,
       category: "nailart",
       title: "Geometric Design",
-      image:
-        "https://via.placeholder.com/400x300/f093fb/ffffff?text=Geometric+Design",
+      image: "https://picsum.photos/id/1041/400/300",
     },
     {
       id: 7,
       category: "pedicure",
       title: "Summer Pedicure",
-      image:
-        "https://via.placeholder.com/400x300/764ba2/ffffff?text=Summer+Pedicure",
+      image: "https://picsum.photos/id/1043/400/300",
     },
     {
       id: 8,
       category: "nailart",
       title: "Glitter Nails",
-      image:
-        "https://via.placeholder.com/400x300/f5576c/ffffff?text=Glitter+Nails",
+      image: "https://picsum.photos/id/1050/400/300",
     },
     {
       id: 9,
       category: "manicure",
       title: "Ombre Nails",
-      image:
-        "https://via.placeholder.com/400x300/667eea/ffffff?text=Ombre+Nails",
+      image: "https://picsum.photos/id/1054/400/300",
     },
     {
       id: 10,
       category: "extensions",
       title: "Stiletto Nails",
-      image:
-        "https://via.placeholder.com/400x300/f093fb/ffffff?text=Stiletto+Nails",
+      image: "https://picsum.photos/id/1057/400/300",
     },
     {
       id: 11,
       category: "nailart",
       title: "Marble Effect",
-      image:
-        "https://via.placeholder.com/400x300/764ba2/ffffff?text=Marble+Effect",
+      image: "https://picsum.photos/id/1059/400/300",
     },
     {
       id: 12,
       category: "pedicure",
       title: "Classic Pedicure",
-      image:
-        "https://via.placeholder.com/400x300/f5576c/ffffff?text=Classic+Pedicure",
+      image: "https://picsum.photos/id/1062/400/300",
     },
   ];
 
@@ -165,4 +153,3 @@ const Gallery: React.FC = () => {
 };
 
 export default Gallery;
-
