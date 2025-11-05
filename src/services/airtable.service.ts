@@ -1,56 +1,49 @@
-/**
- * Airtable Configuration
- * Get your API token from: https://airtable.com/create/tokens
- */
-const AIRTABLE_CONFIG = {
-  apiKey: import.meta.env.VITE_AIRTABLE_API_KEY || "",
-  baseId: "appj9Es9rfmtwnDZn",
-};
+import Papa from "papaparse";
 
 /**
- * Configuration for Airtable tables
+ * Configuration for Airtable share URLs
+ * These are the exact URLs from Airtable shared views
  */
 export const AIRTABLE_ENDPOINTS = {
-  aboutUs: "tblWIqcxLfO7p3Vgs", // Replace with your table ID
-  // Add more table IDs here as needed
-  // services: "tblXXXXXXXXXXXXX",
-  // gallery: "tblXXXXXXXXXXXXX",
+  aboutUs: "https://airtable.com/appj9Es9rfmtwnDZn/shrfMsjWs3H6i5pFo",
+  // Add more share URLs here as needed
+  // services: "https://airtable.com/appj9Es9rfmtwnDZn/shrXXXXXXXXXXXX",
+  // gallery: "https://airtable.com/appj9Es9rfmtwnDZn/shrXXXXXXXXXXXX",
 } as const;
 
 /**
- * Generic function to fetch data from Airtable API
- * @param tableId - The Airtable table ID
+ * Generic function to fetch data from Airtable share URL
+ * @param shareUrl - The Airtable share URL
  * @returns Promise with parsed data
  */
 export const fetchAirtableData = async <T = Record<string, unknown>>(
-  tableId: string
+  shareUrl: string
 ): Promise<T[]> => {
-  try {
-    const url = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${tableId}`;
+  return new Promise((resolve, reject) => {
+    try {
+      // Convert share URL to CSV format
+      const csvUrl = `${shareUrl}?format=csv`;
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${AIRTABLE_CONFIG.apiKey}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Airtable API error: ${response.statusText}`);
+      Papa.parse(csvUrl, {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: (results) => {
+          if (results.errors && results.errors.length > 0) {
+            console.warn("CSV parsing warnings:", results.errors);
+          }
+          resolve(results.data as T[]);
+        },
+        error: (error: Error) => {
+          console.error("CSV Download Error:", error);
+          reject(error);
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching Airtable data:", error);
+      reject(error);
     }
-
-    const data = await response.json();
-
-    // Transform Airtable records to simpler format
-    return data.records.map(
-      (record: { id: string; fields: Record<string, unknown> }) => ({
-        id: record.id,
-        ...record.fields,
-      })
-    ) as T[];
-  } catch (error) {
-    console.error("Error fetching Airtable data:", error);
-    throw error;
-  }
+  });
 };
 
 /**

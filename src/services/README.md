@@ -4,15 +4,17 @@ This directory contains utilities for fetching data from Airtable CSV endpoints.
 
 ## Setup
 
-1. **Configure Endpoints**: Add your Airtable CSV endpoints in `airtable.service.ts`
+1. **Configure Endpoints**: Add your Airtable share URLs in `airtable.service.ts`
 
 ```typescript
 export const AIRTABLE_ENDPOINTS = {
-  aboutUs: "https://airtable.com/YOUR_APP_ID/YOUR_SHARE_ID?format=csv",
-  services: "https://airtable.com/YOUR_APP_ID/YOUR_SHARE_ID?format=csv",
+  aboutUs: "https://airtable.com/YOUR_APP_ID/YOUR_SHARE_ID",
+  services: "https://airtable.com/YOUR_APP_ID/YOUR_SHARE_ID",
   // Add more endpoints as needed
 };
 ```
+
+> **Note**: The service automatically appends `?format=csv` to convert the share URL to CSV format
 
 ## Usage
 
@@ -52,13 +54,13 @@ function MyComponent() {
 
 ```typescript
 import {
-  fetchAirtableCSV,
+  fetchAirtableData,
   AIRTABLE_ENDPOINTS,
 } from "./services/airtable.service";
 
 async function getData() {
   try {
-    const data = await fetchAirtableCSV(AIRTABLE_ENDPOINTS.aboutUs);
+    const data = await fetchAirtableData(AIRTABLE_ENDPOINTS.aboutUs);
     console.log(data);
   } catch (error) {
     console.error("Failed to fetch data:", error);
@@ -66,19 +68,20 @@ async function getData() {
 }
 ```
 
-## How to Get Airtable CSV Endpoint
+## How to Get Airtable Share URL
 
 1. Open your Airtable base
 2. Click "Share" on the view you want to export
 3. Enable "Create a shareable link to this view"
 4. Copy the share URL
-5. Add `?format=csv` to the end of the URL
 
 Example:
 
 ```
-https://airtable.com/appj9Es9rfmtwnDZn/shrfMsjWs3H6i5pFo?format=csv
+https://airtable.com/appj9Es9rfmtwnDZn/shrfMsjWs3H6i5pFo
 ```
+
+> The service will automatically append `?format=csv` when fetching data
 
 ## Features
 
