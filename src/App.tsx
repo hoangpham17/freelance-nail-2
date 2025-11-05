@@ -1,14 +1,17 @@
+import { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
-import Home from "./pages/Home/Home";
-import Services from "./pages/Services/Services";
-import HostAParty from "./pages/HostAParty/HostAParty";
-import Gallery from "./pages/Gallery/Gallery";
-import AboutUs from "./pages/AboutUs/AboutUs";
-import OurPolicies from "./pages/OurPolicies/OurPolicies";
-import { PATHS } from "./routes/Routes";
+import { routes } from "./routes";
 import "./App.css";
+
+// Loading component for lazy loaded routes
+const PageLoader = () => (
+  <div className="flex flex-col justify-center items-center min-h-[60vh]">
+    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-4"></div>
+    <p className="text-secondary-light text-lg">Loading...</p>
+  </div>
+);
 
 function App() {
   return (
@@ -16,14 +19,20 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <Navigation />
         <main className="flex-1">
-          <Routes>
-            <Route path={PATHS.home} element={<Home />} />
-            <Route path={PATHS.services} element={<Services />} />
-            <Route path={PATHS.hostAParty} element={<HostAParty />} />
-            <Route path={PATHS.gallery} element={<Gallery />} />
-            <Route path={PATHS.aboutUs} element={<AboutUs />} />
-            <Route path={PATHS.ourPolicies} element={<OurPolicies />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {routes.map((route) => {
+                const Component = route.element;
+                return (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={<Component />}
+                  />
+                );
+              })}
+            </Routes>
+          </Suspense>
         </main>
         <Footer />
       </div>
