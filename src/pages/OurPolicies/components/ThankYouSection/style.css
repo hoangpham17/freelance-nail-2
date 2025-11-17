@@ -1,0 +1,35 @@
+.policies-thanks {
+  padding: 4rem 1.25rem;
+  background: linear-gradient(135deg, #0f0f0f 0%, #2c2c2c 100%);
+}
+
+.policies-thanks__container {
+  max-width: 50rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.policies-thanks__quote {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.policies-thanks__copy {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+}
+
+.policies-thanks__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 2.5rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f9d978 0%, #c8995c 100%);
+  color: #1f1f1f;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}

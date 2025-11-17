@@ -1,0 +1,114 @@
+.party-form {
+  position: relative;
+  padding: clamp(3rem, 6vw, 6rem) 1.25rem;
+  background: linear-gradient(135deg, #181818, #1f1f1f 60%, #181818);
+  color: #fff;
+}
+
+.party-form__pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(circle at 20px 20px, #fff 2px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.party-form__container {
+  position: relative;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.party-form__heading {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.party-form__heading h2 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.party-form__heading p {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.party-form__card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.75rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.party-form__grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.party-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(249, 217, 120, 0.9);
+}
+
+.party-form__field--full {
+  grid-column: 1 / -1;
+}
+
+.party-form__field input,
+.party-form__field textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.85rem;
+  padding: 0.95rem 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.party-form__field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.party-form__field input:focus,
+.party-form__field textarea:focus {
+  outline: none;
+  border-color: #f9d978;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.party-form__actions {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.party-form__actions button {
+  width: 100%;
+  padding: 1.1rem;
+  border: none;
+  border-radius: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  background: linear-gradient(120deg, #c99965, #f9d978);
+  color: #1b1209;
+  box-shadow: 0 15px 35px rgba(201, 153, 101, 0.3);
+}
+
+.party-form__actions p {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,61 @@
+@media (max-width: 991px) {
+  .show-campaign .banner-about-us {
+    min-height: 28.125rem;
+  }
+}
+
+.banner-about-us {
+  min-height: 34.375rem;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .banner-about-us {
+    min-height: 21.875rem;
+  }
+}
+
+.banner-about-us__heading {
+  margin-top: 5rem;
+  color: #fff;
+  text-align: center;
+}
+
+@media (max-width: 991px) {
+  .banner-about-us__heading {
+    margin-top: 0;
+  }
+}
+
+.banner-about-us__heading-title {
+  margin-bottom: 1.875rem;
+  font-family: SVN-Tangerine;
+  font-size: 7.5rem;
+  line-height: 7.5rem;
+}
+
+@media (max-width: 991px) {
+  .banner-about-us__heading-title {
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem;
+    line-height: 1.875rem;
+  }
+}
+
+.banner-about-us__heading p {
+  max-width: 38.125rem;
+  margin: 0 auto;
+  font-size: 1.25rem;
+  line-height: 1.5625rem;
+}
+
+@media (max-width: 991px) {
+  .banner-about-us__heading p {
+    max-width: 15.9375rem;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+  }
+}

@@ -2,12 +2,13 @@ import { lazy } from "react";
 import { PATHS } from "./Routes";
 
 // Lazy load components for better performance
-const Home = lazy(() => import("../pages/Home/Home"));
-const Services = lazy(() => import("../pages/Services/Services"));
-const HostAParty = lazy(() => import("../pages/HostAParty/HostAParty"));
-const Gallery = lazy(() => import("../pages/Gallery/Gallery"));
-const AboutUs = lazy(() => import("../pages/AboutUs/AboutUs"));
-const OurPolicies = lazy(() => import("../pages/OurPolicies/OurPolicies"));
+const Home = lazy(() => import("../pages/Home"));
+const Services = lazy(() => import("../pages/Services"));
+const HostAParty = lazy(() => import("../pages/HostAParty"));
+const Gallery = lazy(() => import("../pages/Gallery"));
+const AboutUs = lazy(() => import("../pages/AboutUs"));
+const ContactUs = lazy(() => import("../pages/ContactUs"));
+const OurPolicies = lazy(() => import("../pages/OurPolicies"));
 
 export interface RouteConfig {
   path: string;
@@ -52,6 +53,12 @@ export const routes: RouteConfig[] = [
     description: "Learn more about us",
   },
   {
+    path: PATHS.contactUs,
+    element: ContactUs,
+    title: "Contact",
+    description: "Get in touch with us",
+  },
+  {
     path: PATHS.ourPolicies,
     element: OurPolicies,
     title: "Our Policies",
@@ -75,4 +82,3 @@ export const getNavigationItems = () => {
     label: route.title,
   }));
 };
-

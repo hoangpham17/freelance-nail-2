@@ -1,0 +1,15 @@
+.policies-grid {
+  padding: 5rem 1.25rem;
+  background: linear-gradient(180deg, #f9f6f1 0%, #fff 100%);
+}
+
+.policies-grid__container {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.policies-grid__layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 2rem;
+}

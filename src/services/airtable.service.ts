@@ -6,7 +6,7 @@ import Airtable from "airtable";
  */
 const AIRTABLE_CONFIG = {
   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY || "",
-  baseId: "appj9Es9rfmtwnDZn",
+  baseId: "appUYBhhvXCbvE5GN",
 };
 
 const base = new Airtable({ apiKey: AIRTABLE_CONFIG.apiKey }).base(
@@ -15,6 +15,11 @@ const base = new Airtable({ apiKey: AIRTABLE_CONFIG.apiKey }).base(
 
 export const AIRTABLE_ENDPOINTS = {
   aboutUs: "about-us",
+  services: "tblpfWm5eaqWkRNlf",
+  banner: "tblBJE5SoZNzFEk4h",
+  home_gallery: "tblh3ZJpTjB5NbFmJ",
+  gallery: "tblSTkMoAhVrOXYS7",
+  promotion: "tblFjrUsoWmeWV82J",
 } as const;
 
 export const fetchAirtableData = async <T = Record<string, unknown>>(

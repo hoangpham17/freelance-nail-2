@@ -1,0 +1,39 @@
+.policy-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 20px 45px rgba(13, 38, 59, 0.1);
+  border: 1px solid rgba(17, 38, 56, 0.05);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.policy-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(13, 38, 59, 0.2);
+}
+
+.policy-card__icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+  background: rgba(249, 217, 120, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c8995c;
+}
+
+.policy-card__title {
+  font-size: 1.25rem;
+  font-family: "Playfair Display", serif;
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+.policy-card__content {
+  color: rgba(15, 23, 42, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}

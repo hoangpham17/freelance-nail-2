@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FixedButtons from "./components/FixedButtons";
 import { routes } from "./routes";
 import "./App.css";
 
@@ -16,9 +17,10 @@ const PageLoader = () => (
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <main className="flex-1">
+      <div className="app min-h-screen flex flex-col">
+        <Header />
+        <FixedButtons />
+        <div className="main flex-1">
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {routes.map((route) => {
@@ -33,7 +35,7 @@ function App() {
               })}
             </Routes>
           </Suspense>
-        </main>
+        </div>
         <Footer />
       </div>
     </Router>
