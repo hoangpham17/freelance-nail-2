@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Flex, Image } from "antd";
 import { PATHS } from "../../routes/Routes";
 import { useAirtable } from "../../hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
 import Promotion from "./components/Promotion";
 import { PromotionData } from "./types";
-import "./style.css";
+import clsx from "clsx";
+import { responsiveFontSizeArray } from "../../shared/utils/helper";
+import { ListSocial } from "./components/ListSocial";
+import { ButtonStyle1 } from "../../based/components/Button/Style1";
+import { BurgerMenu } from "./components/BurgerMenu";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -15,63 +20,15 @@ const DEFAULT_PROMOTION_TEXT =
 type NavItem = {
   path: string;
   label: string;
-  hasSub?: boolean;
-};
-
-type ServiceNavItem = {
-  path: string;
-  label: string;
-  icon: string;
-  iconActive: string;
 };
 
 const navItems: NavItem[] = [
-  { path: PATHS.home, label: "Home" },
-  { path: PATHS.services, label: "Services", hasSub: true },
-  { path: PATHS.hostAParty, label: "Host A Party" },
-  { path: PATHS.gallery, label: "Gallery" },
-  { path: PATHS.aboutUs, label: "About Us" },
-  { path: PATHS.ourPolicies, label: "Our Policies" },
-  { path: PATHS.contactUs, label: "Contact" },
-];
-
-const serviceSubmenu: ServiceNavItem[] = [
-  {
-    path: `${PATHS.services}#manicure`,
-    label: "Manicure",
-    icon: "/assets/images/Services/Manicure-gray.svg",
-    iconActive: "/assets/images/Services/Manicure-gold.svg",
-  },
-  {
-    path: `${PATHS.services}#pedicure`,
-    label: "Pedicure",
-    icon: "/assets/images/Services/Pedicure-gray.svg",
-    iconActive: "/assets/images/Services/Pedicure-gold.svg",
-  },
-  {
-    path: `${PATHS.services}#nails-enhancements`,
-    label: "Nail Enhancements",
-    icon: "/assets/images/Services/Nail-Enhancements-gray.svg",
-    iconActive: "/assets/images/Services/Nail-Enhancements-gold.svg",
-  },
-  {
-    path: `${PATHS.services}#additional-services`,
-    label: "Additional Services",
-    icon: "/assets/images/Services/Additional-Services-gray.svg",
-    iconActive: "/assets/images/Services/Additional-Services-gold.svg",
-  },
-  {
-    path: `${PATHS.services}#waxing`,
-    label: "Waxing",
-    icon: "/assets/images/Services/Waxing-gray.svg",
-    iconActive: "/assets/images/Services/Waxing-gold.svg",
-  },
-  {
-    path: `${PATHS.services}#kid-services`,
-    label: "Kid's Services",
-    icon: "/assets/images/Services/Kid-Services-gray.svg",
-    iconActive: "/assets/images/Services/Kid-Services-gold.svg",
-  },
+  { path: PATHS.home, label: "HOME" },
+  { path: PATHS.services, label: "SERVICES" },
+  { path: PATHS.hostAParty, label: "HOST A PARTY" },
+  { path: PATHS.gallery, label: "GALLERY" },
+  { path: PATHS.aboutUs, label: "ABOUT US" },
+  { path: PATHS.ourPolicies, label: "OUR POLICIES" },
 ];
 
 const getPromotionText = (promotion?: PromotionData) =>
@@ -80,7 +37,6 @@ const getPromotionText = (promotion?: PromotionData) =>
 const Header: React.FC = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
   const [hasDismissedCampaignText, setHasDismissedCampaignText] =
     useState(false);
@@ -134,7 +90,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const handleScroll = () => {
-      setIsHeaderSolid(window.scrollY > 0);
+      setIsHeaderSolid(window.scrollY > 50);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -192,7 +148,6 @@ const Header: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const closeMenu = () => {
     setIsMenuOpen(false);
-    setIsSubMenuOpen(false);
   };
 
   const handleCloseCampaign = () => {
@@ -211,7 +166,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className={isHeaderSolid ? "bg-black" : ""}>
+    <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-[2px_6px_6px_0px_#0000000F]">
       <Promotion
         promotion={promotion}
         promotionText={promotionText}
@@ -222,142 +177,92 @@ const Header: React.FC = () => {
         onClosePopup={handleClosePopup}
       />
 
-      <div className="header">
-        <button
-          id="burger"
-          className={`header__burger ${isMenuOpen ? "is-open" : ""}`}
-          data-toogle-burger
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
+      {/* Main Header */}
+      <div className="max-w-[1920px] mx-auto px-4 md:px-4 lg:px-8">
+        <Flex
+          justify="space-between"
+          align="center"
+          gap={16}
+          className="py-3 md:py-5"
         >
-          <span className="header__burger--first" />
-          <span className="header__burger--second" />
-        </button>
-
-        <div
-          className={`header__menu-wrapper ${isMenuOpen ? "show-menu" : ""}`}
-          data-header-wrapper
-        >
-          <span
-            className="header__menu-overlay"
-            data-close-burger
+          <BurgerMenu toggleMenu={toggleMenu} />
+          <Link
+            to={PATHS.home}
             onClick={closeMenu}
-          ></span>
-          <ul className="header__menu-list">
+            className="flex-shrink-0 max-h-[32px] md:max-h-[45px]"
+          >
+            <Image
+              src="/assets/images/Logo/logo-desktop.png"
+              alt="THE VEIRA NAIL LOUNGE & SPA"
+              className="max-h-[32px] md:max-h-[45px] 2xl:max-h-[70px]"
+              preview={false}
+            />
+          </Link>
+
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
-              const classes = [
-                "header__menu-item",
-                isActive ? "active" : "",
-                item.hasSub ? "has-sub" : "",
-                item.hasSub && isSubMenuOpen ? "show-sub" : "",
-              ]
-                .filter(Boolean)
-                .join(" ");
-
-              if (item.hasSub) {
-                return (
-                  <li key={item.path} className={classes}>
-                    <Link to={item.path} className="white" onClick={closeMenu}>
-                      {item.label}
-                    </Link>
-                    <div
-                      className="icon"
-                      data-toogle-sub-menu
-                      onClick={() => setIsSubMenuOpen((prev) => !prev)}
-                    ></div>
-                    <div className="header__sub-menu-block">
-                      <ul className="header__sub-menu-list">
-                        {serviceSubmenu.map((service) => (
-                          <li
-                            key={service.path}
-                            className="header__sub-menu-item"
-                          >
-                            <Link
-                              to={service.path}
-                              className="white"
-                              onClick={closeMenu}
-                            >
-                              <img
-                                src={service.icon}
-                                alt={`${service.label} icon`}
-                                className="icon"
-                              />
-                              <img
-                                src={service.iconActive}
-                                alt={`${service.label} active icon`}
-                                className="icon active"
-                              />
-                              <p>{service.label}</p>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </li>
-                );
-              }
-
               return (
-                <li key={item.path} className={classes}>
-                  <Link to={item.path} className="white" onClick={closeMenu}>
-                    {item.label}
-                  </Link>
-                </li>
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={clsx(
+                    "font-lexend uppercase transition-colors",
+                    responsiveFontSizeArray(14, 16),
+                    isActive
+                      ? "text-[#8B7355] font-semibold"
+                      : "text-[#0F172A] hover:text-[#A67C52]"
+                  )}
+                >
+                  {item.label}
+                </Link>
               );
             })}
-          </ul>
-        </div>
+          </nav>
 
-        <Link
-          to={PATHS.home}
-          className="header__block-logo"
-          title="Madison Nail Lounge"
-          onClick={closeMenu}
-        >
-          <img
-            src="/assets/images/Logo/logo-desktop.png"
-            alt="Madison Nail Lounge"
-            className="logo"
-          />
-        </Link>
+          <div className="flex flex-col items-end gap-1 md:flex-row md:items-center md:gap-4 flex-shrink-0">
+            {/* Phone Number - Mobile Only */}
+            <a
+              href="tel:608000000"
+              className="md:hidden text-[#8B7355] text-sm font-medium"
+            >
+              (608) 000 000
+            </a>
 
-        <div className="header__contact">
-          <a
-            className="header__contact-phone"
-            href="tel:6087201011"
-            title="Call Madison Nail Lounge"
-          >
-            (608) 720 1011
-          </a>
-          <address className="header__contact-address">
-            <i className="bi bi-geo-alt" /> 795 University Ave, Madison, WI
-            53715
-          </address>
-          <ul className="social-list">
-            <li>
-              <a
-                className="social-item"
-                href="https://www.instagram.com/madisonnaillounge/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="social-icon bi bi-instagram"></i>
-                <span className="hidden-text">Instagram</span>
-              </a>
-            </li>
-            <li>
-              <a
-                className="social-item"
-                href="https://www.facebook.com/madisonnailloungewi"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="social-icon bi bi-facebook"></i>
-                <span className="hidden-text">Facebook</span>
-              </a>
-            </li>
-          </ul>
+            <ListSocial />
+            <Link to={PATHS.contactUs} className="hidden md:block">
+              <ButtonStyle1 className="font-lexend">CONTACT US</ButtonStyle1>
+            </Link>
+          </div>
+        </Flex>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden fixed inset-0 bg-white z-40 transform transition-transform duration-300 ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="pt-20 px-6">
+          <nav className="flex flex-col gap-6">
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={closeMenu}
+                  className={`text-lg font-lexend uppercase transition-colors ${
+                    isActive
+                      ? "text-[#8B7355] font-semibold"
+                      : "text-[#8B7355] hover:text-[#A67C52]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
       </div>
     </header>

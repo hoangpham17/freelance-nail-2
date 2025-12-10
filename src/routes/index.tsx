@@ -9,7 +9,7 @@ const Gallery = lazy(() => import("../pages/Gallery"));
 const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const OurPolicies = lazy(() => import("../pages/OurPolicies"));
-
+const StyleGuide = lazy(() => import("../based/StyleGuide"));
 export interface RouteConfig {
   path: string;
   element: React.LazyExoticComponent<React.FC>;
@@ -63,6 +63,12 @@ export const routes: RouteConfig[] = [
     element: OurPolicies,
     title: "Our Policies",
     description: "Salon policies and guidelines",
+  },
+  {
+    path: PATHS.styleguide,
+    element: StyleGuide,
+    title: "Style Guide",
+    description: "Style guide for development",
   },
 ];
 

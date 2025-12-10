@@ -4,7 +4,23 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
-@import "./styles/legacy.css";
+
+/* Custom Fonts */
+@font-face {
+  font-family: "Lexend";
+  src: url("/assets/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Prata";
+  src: url("/assets/fonts/Prata-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -12,7 +28,7 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-accent text-secondary font-sans;
+    @apply min-h-screen bg-accent text-secondary font-lexend;
   }
 
   h1,

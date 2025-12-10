@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ConfigProvider } from "antd";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FixedButtons from "./components/FixedButtons";
@@ -16,29 +17,31 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <Router>
-      <div className="app min-h-screen flex flex-col">
-        <Header />
-        <FixedButtons />
-        <div className="main flex-1">
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {routes.map((route) => {
-                const Component = route.element;
-                return (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={<Component />}
-                  />
-                );
-              })}
-            </Routes>
-          </Suspense>
+    <ConfigProvider>
+      <Router>
+        <div className="app min-h-screen flex flex-col">
+          <Header />
+          <FixedButtons />
+          <div className="main flex-1">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {routes.map((route) => {
+                  const Component = route.element;
+                  return (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      element={<Component />}
+                    />
+                  );
+                })}
+              </Routes>
+            </Suspense>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </ConfigProvider>
   );
 }
 

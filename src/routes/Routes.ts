@@ -6,4 +6,5 @@ export const PATHS = {
   aboutUs: "/about-us",
   contactUs: "/contact-us",
   ourPolicies: "/our-policies",
+  styleguide: "/style-guide-for-dev",
 };

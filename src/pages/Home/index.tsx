@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useAirtable } from "../../hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
-import BannerSlider from "./components/BannerSlider";
-import ServicesHighlight from "./components/ServicesHighlight";
-import WhyChooseUs from "./components/WhyChooseUs";
+import HeroSection from "./components/HeroSection";
+import WelcomeSection from "./components/WelcomeSection";
+import NailBeautifySection from "./components/NailBeautifySection";
+import TestimonialSection from "./components/TestimonialSection";
 import HomeGallery from "./components/HomeGallery";
 import GalleryPopup from "./components/GalleryPopup";
 import {
@@ -11,19 +12,12 @@ import {
   BannerRecord,
   GalleryRecord,
   HomeGalleryItem,
-  WhyChooseItem,
 } from "./types";
-
-const WHY_CHOOSE_US: WhyChooseItem[] = [
-  { value: 39, label: "Colors for choose" },
-  { value: 600, label: "More booking Online" },
-  { value: 1000, label: "More members visited here" },
-  { value: 600, label: "Posted" },
-];
 
 const Home: React.FC = () => {
   const [isGalleryPopupOpen, setIsGalleryPopupOpen] = useState(false);
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState(0);
+
   useEffect(() => {
     document.body.classList.add("home-body");
     return () => {
@@ -92,12 +86,18 @@ const Home: React.FC = () => {
 
   return (
     <main className="home-page">
-      <BannerSlider
+      <HeroSection
         items={bannerItems}
-        campaignText="GIFT CARDS ARE AVAILABLE FOR PURCHASE IN-STORE ONLY"
+        campaignText="Gift card are available for purchase in store only"
       />
-      <ServicesHighlight />
-      <WhyChooseUs items={WHY_CHOOSE_US} />
+      <WelcomeSection />
+      <NailBeautifySection />
+      <TestimonialSection
+        galleryImages={galleryItems.map((item) => ({
+          id: item.id || `gallery-${Math.random()}`,
+          url: item.url || "/assets/images/Slide/Photo.jpg",
+        }))}
+      />
       <HomeGallery items={galleryItems} onOpen={openGalleryPopup} />
       <GalleryPopup
         isOpen={isGalleryPopupOpen}
