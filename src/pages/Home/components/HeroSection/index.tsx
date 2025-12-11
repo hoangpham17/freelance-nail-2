@@ -1,31 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Slider, { Settings } from "react-slick";
-import { Button } from "antd";
-import { PhoneOutlined } from "@ant-design/icons";
 import { BannerItem } from "../../types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./style.css";
 
 interface HeroSectionProps {
   items: BannerItem[];
-  campaignText: string;
+  campaignText?: string;
 }
 
-const settings: Settings = {
-  infinite: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: false,
-  dots: true,
-  autoplay: true,
-  autoplaySpeed: 5000,
-  fade: true,
-  cssEase: "linear",
-};
-
-const HeroSection: React.FC<HeroSectionProps> = ({ items, campaignText }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ items }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const sliderRef = useRef<Slider>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -36,11 +23,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ items, campaignText }) => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const settings: Settings = {
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    dots: false,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    fade: true,
+    cssEase: "linear",
+    beforeChange: (_current: number, next: number) => setCurrentSlide(next),
+  };
+
   return (
-    <section className="hero-section relative w-full h-screen min-h-[700px] overflow-hidden">
+    <section className="relative w-full h-screen min-h-[700px] overflow-hidden">
       {/* Slider Background */}
       <div className="absolute inset-0 w-full h-full">
-        <Slider {...settings}>
+        <Slider ref={sliderRef} {...settings}>
           {items.map((item, index) => {
             const desktop =
               item.desktop || "/assets/images/Background/home-1.jpg";
@@ -67,61 +67,28 @@ const HeroSection: React.FC<HeroSectionProps> = ({ items, campaignText }) => {
         </Slider>
       </div>
 
-      {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center min-h-[700px]">
-        {/* Main Title - Centered at top */}
-        <div className="text-center mb-12 md:mb-16">
-          <h1
-            className="hero-main-title text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-bold"
-          >
-            THE VEIRA NAIL LOUNGE & SPA
-          </h1>
-        </div>
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 w-full flex-1 flex items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start max-w-7xl mx-auto w-full">
-            {/* Left Content Box */}
-            <div className="hero-left-box bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-2xl max-w-lg">
-              <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 font-serif"
-              >
-                Dip powder on Real Nails
-              </h2>
-              <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-                commodo ligula.
-              </p>
-
-              <Button
-                type="primary"
-                size="large"
-                className="mb-6 rounded-full px-8 py-6 h-auto text-base font-semibold"
-                icon={<PhoneOutlined />}
-              >
-                Contact
-              </Button>
-
-              <p className="text-sm md:text-base text-gray-600 italic">
-                {campaignText}
-              </p>
-            </div>
-
-            {/* Right Content Box */}
-            <div className="hero-right-box flex flex-col items-end lg:items-start space-y-4">
-              <Button
-                type="primary"
-                size="large"
-                className="rounded-full px-8 py-6 h-auto text-lg font-semibold"
-              >
-                Booking now
-              </Button>
-              <p
-                className="text-xl md:text-2xl font-semibold"
-              >
-                (608) 000 000
-              </p>
-            </div>
-          </div>
-        </div>
+      {/* Custom Dots */}
+      <div className="absolute bottom-[30px] left-1/2 -translate-x-1/2 z-20">
+        <ul className="flex items-center justify-center gap-[6px] list-none m-0 p-0">
+          {items.map((_, index) => {
+            const isActive = index === currentSlide;
+            return (
+              <li key={index} className="m-0 p-0">
+                <button
+                  onClick={() => {
+                    sliderRef.current?.slickGoTo(index);
+                  }}
+                  className={`block cursor-pointer transition-all duration-300 ease-in-out ${
+                    isActive
+                      ? "w-[30px] h-[5px] rounded-[2.5px] bg-[#D4AF37]"
+                      : "w-[5px] h-[5px] rounded-full bg-[#D3D3D3]"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

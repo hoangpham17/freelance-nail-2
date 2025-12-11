@@ -1,29 +1,22 @@
-import { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { ConfigProvider } from "antd";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FixedButtons from "./components/FixedButtons";
+import RouteWrapper from "./components/RouteWrapper";
 import { routes } from "./routes";
 import "./App.css";
 
-// Loading component for lazy loaded routes
-const PageLoader = () => (
-  <div className="flex flex-col justify-center items-center min-h-[60vh]">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-4"></div>
-    <p className="text-secondary-light text-lg">Loading...</p>
-  </div>
-);
-
 function App() {
   return (
-    <ConfigProvider>
-      <Router>
-        <div className="app min-h-screen flex flex-col">
-          <Header />
-          <FixedButtons />
-          <div className="main flex-1">
-            <Suspense fallback={<PageLoader />}>
+    <HelmetProvider>
+      <ConfigProvider>
+        <Router>
+          <div className="app min-h-screen flex flex-col">
+            <Header />
+            <FixedButtons />
+            <div className="main flex-1">
               <Routes>
                 {routes.map((route) => {
                   const Component = route.element;
@@ -31,17 +24,21 @@ function App() {
                     <Route
                       key={route.path}
                       path={route.path}
-                      element={<Component />}
+                      element={
+                        <RouteWrapper>
+                          <Component />
+                        </RouteWrapper>
+                      }
                     />
                   );
                 })}
               </Routes>
-            </Suspense>
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </Router>
-    </ConfigProvider>
+        </Router>
+      </ConfigProvider>
+    </HelmetProvider>
   );
 }
 

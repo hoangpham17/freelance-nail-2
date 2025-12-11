@@ -35,7 +35,9 @@ const BottomNav: React.FC = () => {
             to={item.path}
             className={clsx(
               "text-xs md:text-sm uppercase tracking-wide transition-colors hover:opacity-80 font-normal py-3 px-6",
-              checkIsActive(item.path) ? "text-black" : "text-[#8B4B20]"
+              checkIsActive(item.path)
+                ? "text-black bg-white"
+                : "text-[#8B4B20]"
             )}
           >
             {item.label}
