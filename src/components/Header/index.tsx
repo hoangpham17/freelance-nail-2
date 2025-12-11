@@ -189,7 +189,7 @@ const Header: React.FC = () => {
           <Link
             to={PATHS.home}
             onClick={closeMenu}
-            className="flex-shrink-0 max-h-[32px] md:max-h-[45px]"
+            className="flex-shrink-0 max-h-[32px] md:max-h-[45px] 2xl:max-h-[70px]"
           >
             <Image
               src="/assets/images/Logo/logo-desktop.png"
