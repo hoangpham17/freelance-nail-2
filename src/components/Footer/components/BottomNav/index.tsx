@@ -29,14 +29,14 @@ const BottomNav: React.FC = () => {
 
   return (
     <div className="hidden lg:block bg-white/20">
-      <nav className="flex justify-center">
-        <Wrapper>
+      <Wrapper>
+        <nav className="flex justify-center">
           {serviceNavItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
               className={clsx(
-                "text-xs md:text-sm uppercase tracking-wide transition-colors hover:opacity-80 font-normal py-3 px-6",
+                "text-xs md:text-sm uppercase transition-colors hover:bg-white hover:text-black py-3 px-6",
                 checkIsActive(item.path)
                   ? "text-black bg-white"
                   : "text-[#8B4B20]"
@@ -45,8 +45,8 @@ const BottomNav: React.FC = () => {
               {item.label}
             </Link>
           ))}
-        </Wrapper>
-      </nav>
+        </nav>
+      </Wrapper>
     </div>
   );
 };
