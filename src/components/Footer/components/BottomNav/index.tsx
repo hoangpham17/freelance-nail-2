@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { PATHS } from "@/routes/Routes";
 import clsx from "clsx";
+import { Wrapper } from "@/based/components/Wrapper";
 
 const BottomNav: React.FC = () => {
   const serviceNavItems = [
@@ -28,21 +29,23 @@ const BottomNav: React.FC = () => {
 
   return (
     <div className="hidden lg:block bg-white/20">
-      <nav className="flex max-w-[1920px] mx-auto justify-center">
-        {serviceNavItems.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className={clsx(
-              "text-xs md:text-sm uppercase tracking-wide transition-colors hover:opacity-80 font-normal py-3 px-6",
-              checkIsActive(item.path)
-                ? "text-black bg-white"
-                : "text-[#8B4B20]"
-            )}
-          >
-            {item.label}
-          </Link>
-        ))}
+      <nav className="flex justify-center">
+        <Wrapper>
+          {serviceNavItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={clsx(
+                "text-xs md:text-sm uppercase tracking-wide transition-colors hover:opacity-80 font-normal py-3 px-6",
+                checkIsActive(item.path)
+                  ? "text-black bg-white"
+                  : "text-[#8B4B20]"
+              )}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </Wrapper>
       </nav>
     </div>
   );

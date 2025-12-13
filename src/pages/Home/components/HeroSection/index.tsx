@@ -1,18 +1,52 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Slider, { Settings } from "react-slick";
-import { BannerItem } from "../../types";
+import { Skeleton } from "antd";
+import { BannerItem, BannerRecord } from "../../types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
+import { useAirtable } from "@/hooks/useAirtable";
+import CustomDots from "@/based/components/CustomDots";
 
-interface HeroSectionProps {
-  items: BannerItem[];
-  campaignText?: string;
-}
-
-const HeroSection: React.FC<HeroSectionProps> = ({ items }) => {
+const HeroSection: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
+
+  const { data: bannerRecords } = useAirtable<BannerRecord>(
+    AIRTABLE_ENDPOINTS.banner
+  );
+
+  const bannerItems: BannerItem[] = useMemo(() => {
+    if (!bannerRecords || bannerRecords.length === 0) {
+      return [];
+    }
+
+    return bannerRecords
+      .slice()
+      .sort((a, b) => (a.index ?? a.order ?? 0) - (b.index ?? b.order ?? 0))
+      .map((record) => {
+        const desktopUrl =
+          Array.isArray(record.desktop) &&
+          record.desktop.length > 0 &&
+          record.desktop[0]?.url
+            ? record.desktop[0].url
+            : undefined;
+        const mobileUrl =
+          Array.isArray(record.mobile) &&
+          record.mobile.length > 0 &&
+          record.mobile[0]?.url
+            ? record.mobile[0].url
+            : undefined;
+
+        return {
+          id: record.id,
+          desktop: desktopUrl,
+          mobile: mobileUrl,
+        };
+      })
+      .filter((item) => item.desktop || item.mobile);
+  }, [bannerRecords]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -36,16 +70,46 @@ const HeroSection: React.FC<HeroSectionProps> = ({ items }) => {
     beforeChange: (_current: number, next: number) => setCurrentSlide(next),
   };
 
+  if (bannerItems.length === 0) {
+    return (
+      <section className="relative w-full h-screen min-h-[700px] overflow-hidden">
+        <div className="absolute inset-0 w-full h-full">
+          <Skeleton.Image
+            active
+            style={{ width: "100%", height: "100%", minHeight: "700px" }}
+          />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative w-full h-screen min-h-[700px] overflow-hidden">
       {/* Slider Background */}
       <div className="absolute inset-0 w-full h-full">
         <Slider ref={sliderRef} {...settings}>
-          {items.map((item, index) => {
-            const desktop =
-              item.desktop || "/assets/images/Background/home-1.jpg";
-            const mobile = item.mobile || desktop;
-            const imageUrl = isMobile ? mobile : desktop;
+          {bannerItems.map((item, index) => {
+            const imageUrl = isMobile ? item.mobile : item.desktop;
+
+            if (!imageUrl) {
+              return (
+                <div
+                  key={item.id || index}
+                  className="relative w-full h-screen min-h-[700px]"
+                >
+                  <div className="absolute inset-0 w-full h-full">
+                    <Skeleton.Image
+                      active
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        minHeight: "700px",
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            }
 
             return (
               <div
@@ -68,28 +132,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ items }) => {
       </div>
 
       {/* Custom Dots */}
-      <div className="absolute bottom-[30px] left-1/2 -translate-x-1/2 z-20">
-        <ul className="flex items-center justify-center gap-[6px] list-none m-0 p-0">
-          {items.map((_, index) => {
-            const isActive = index === currentSlide;
-            return (
-              <li key={index} className="m-0 p-0">
-                <button
-                  onClick={() => {
-                    sliderRef.current?.slickGoTo(index);
-                  }}
-                  className={`block cursor-pointer transition-all duration-300 ease-in-out ${
-                    isActive
-                      ? "w-[30px] h-[5px] rounded-[2.5px] bg-[#D4AF37]"
-                      : "w-[5px] h-[5px] rounded-full bg-[#D3D3D3]"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <CustomDots
+        totalSlides={bannerItems.length}
+        currentIndex={currentSlide}
+        onDotClick={(index) => {
+          sliderRef.current?.slickGoTo(index);
+        }}
+      />
     </section>
   );
 };

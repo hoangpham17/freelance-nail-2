@@ -1,114 +1,113 @@
-import React from "react";
-import { Button } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { PATHS } from "../../../../routes/Routes";
-import "./style.css";
+import React, { useMemo, useRef, useEffect } from "react";
+import Slider from "react-slick";
+import { useAirtable } from "../../../../hooks/useAirtable";
+import { AIRTABLE_ENDPOINTS } from "../../../../services/airtable.service";
+import { GalleryRecord } from "../../types";
+import HeaderSection from "./components/HeaderSection";
+import NavigationArrows from "./components/NavigationArrows";
+import GallerySlider from "./components/GallerySlider";
+import { GalleryItem } from "./types";
+import { Wrapper } from "@/based/components/Wrapper";
+import { Flex } from "antd";
 
-const SERVICE_SHOWCASE = [
-  {
-    id: 1,
-    title: "Wrinkle spa best selling",
-    image: "/assets/images/Background/home-2.jpg",
-    link: `${PATHS.services}#wrinkle-spa`,
-  },
-  {
-    id: 2,
-    title: "Nail beauty",
-    image: "/assets/images/Background/home-3.jpg",
-    link: `${PATHS.services}#nail-beauty`,
-  },
-  {
-    id: 3,
-    title: "Hand care",
-    image: "/assets/images/Background/home-4.jpg",
-    link: `${PATHS.services}#hand-care`,
-  },
-  {
-    id: 4,
-    title: "Nail beauty",
-    image: "/assets/images/Background/home-5.jpg",
-    link: `${PATHS.services}#nail-beauty`,
-  },
-];
+interface NailBeautifySectionProps {
+  onItemClick?: (index: number) => void;
+  onGalleryItemsChange?: (items: GalleryItem[]) => void;
+}
 
-const NailBeautifySection: React.FC = () => {
+const NailBeautifySection: React.FC<NailBeautifySectionProps> = ({
+  onItemClick,
+  onGalleryItemsChange,
+}) => {
+  const sliderRef = useRef<Slider | null>(null);
+
+  const { data: galleryRecords } = useAirtable<GalleryRecord>(
+    AIRTABLE_ENDPOINTS.home_gallery
+  );
+
+  const galleryItems: GalleryItem[] = useMemo(() => {
+    if (!galleryRecords || galleryRecords.length === 0) {
+      return [];
+    }
+
+    return galleryRecords
+      .filter((record) => {
+        // Filter out records without valid URLs
+        if (Array.isArray(record.url) && record.url.length > 0) {
+          const firstUrl = record.url[0];
+          return (
+            firstUrl &&
+            (typeof firstUrl === "string" ||
+              (typeof firstUrl === "object" && firstUrl.thumbnails?.full?.url))
+          );
+        }
+        return false;
+      })
+      .map((record) => {
+        let imageUrl: string | undefined = undefined;
+        if (Array.isArray(record.url) && record.url.length > 0) {
+          const firstUrl = record.url[0];
+          if (typeof firstUrl === "object" && firstUrl.thumbnails?.full?.url) {
+            imageUrl = firstUrl.thumbnails.full.url;
+          } else if (typeof firstUrl === "string") {
+            imageUrl = firstUrl;
+          } else if (typeof firstUrl === "object" && firstUrl.url) {
+            imageUrl = firstUrl.url;
+          }
+        }
+
+        return {
+          id: record.id || `gallery-${Math.random()}`,
+          url: imageUrl,
+          description: record.description,
+          textColor: record.text_color,
+          textPosition: record.text_position,
+        };
+      })
+      .sort((a, b) => {
+        const recordA = galleryRecords.find((r) => r.id === a.id);
+        const recordB = galleryRecords.find((r) => r.id === b.id);
+        const indexA = recordA?.index ?? 999;
+        const indexB = recordB?.index ?? 999;
+        return indexA - indexB;
+      });
+  }, [galleryRecords]);
+
+  // Notify parent component about gallery items change
+  useEffect(() => {
+    if (onGalleryItemsChange) {
+      onGalleryItemsChange(galleryItems);
+    }
+  }, [galleryItems, onGalleryItemsChange]);
+
+  // Group items into slides of 5
+  const slides = useMemo(() => {
+    const result: GalleryItem[][] = [];
+    for (let i = 0; i < galleryItems.length; i += 5) {
+      result.push(galleryItems.slice(i, i + 5));
+    }
+    return result;
+  }, [galleryItems]);
+
   return (
-    <section className="nail-beautify-section py-20 md:py-28 bg-white">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+    <section className="relative py-20 md:py-28 bg-white">
+      <Wrapper className="px-4 md:px-6 lg:px-8">
         {/* Top Section - Heading, Description, Button, and Image */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Left Side - Text Content */}
-          <div className="space-y-6">
-            <h2
-              className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight"
-            >
-              Your nail beautify Elevate your style!
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-              penatibus et magnis dis parturient montes.
-            </p>
-            <Link to={PATHS.services}>
-              <Button
-                type="primary"
-                size="large"
-                className="rounded-full px-8 py-6 h-auto text-base font-semibold"
-                icon={<ArrowRightOutlined />}
-              >
-                View more
-              </Button>
-            </Link>
-          </div>
+        <HeaderSection />
 
-          {/* Right Side - Nail Polish Splash Image */}
-          <div className="relative">
-            <div className="nail-polish-image relative overflow-hidden rounded-2xl">
-              <img
-                src="/assets/images/Background/home-1.jpg"
-                alt="Nail polish splash"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Service Showcase Grid - 2x2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {SERVICE_SHOWCASE.map((service) => (
-            <div
-              key={service.id}
-              className="service-showcase-item relative group overflow-hidden rounded-xl cursor-pointer"
-            >
-              <div className="relative h-64 md:h-80">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-                {/* Overlay Content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-serif">
-                    {service.title}
-                  </h3>
-                  <Link to={service.link}>
-                    <Button
-                      type="primary"
-                      className="rounded-full px-6 py-4 h-auto"
-                      icon={<ArrowRightOutlined />}
-                    >
-                      GET TICKETS &gt;&gt;
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+        {/* Image Gallery Slider - 5 items per slide in 2x3 grid */}
+        {galleryItems.length > 0 && (
+          <Flex vertical className="gap-4 md:gap-0">
+            <NavigationArrows sliderRef={sliderRef} />
+            <GallerySlider
+              slides={slides}
+              galleryItems={galleryItems}
+              sliderRef={sliderRef}
+              onItemClick={onItemClick}
+            />
+          </Flex>
+        )}
+      </Wrapper>
     </section>
   );
 };

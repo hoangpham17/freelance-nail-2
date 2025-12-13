@@ -28,7 +28,7 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-accent text-secondary font-lexend;
+    @apply min-h-screen bg-white text-black font-lexend;
   }
 
   h1,
@@ -39,10 +39,6 @@
   h6 {
     @apply font-serif;
   }
-}
-
-body.home-body {
-  background-color: #000;
 }
 
 .popup-campaign__text {

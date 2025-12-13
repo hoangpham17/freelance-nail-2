@@ -11,6 +11,7 @@ import { responsiveFontSizeArray } from "../../shared/utils/helper";
 import { ListSocial } from "./components/ListSocial";
 import { ButtonStyle1 } from "../../based/components/Button/Style1";
 import { BurgerMenu } from "./components/BurgerMenu";
+import { Wrapper } from "@/based/components/Wrapper";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -178,7 +179,7 @@ const Header: React.FC = () => {
       />
 
       {/* Main Header */}
-      <div className="max-w-[1920px] mx-auto px-4 md:px-4 lg:px-8">
+      <Wrapper className="px-4 md:px-4 lg:px-8">
         <Flex
           justify="space-between"
           align="center"
@@ -235,7 +236,7 @@ const Header: React.FC = () => {
             </Link>
           </div>
         </Flex>
-      </div>
+      </Wrapper>
 
       {/* Mobile Menu */}
       <div

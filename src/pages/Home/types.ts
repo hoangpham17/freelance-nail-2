@@ -1,14 +1,28 @@
 export type BannerRecord = {
   id?: string;
-  desktop?: string | { url: string }[];
-  mobile?: string | { url: string }[];
+  desktop?: { url: string }[];
+  mobile?: { url: string }[];
+  index?: number;
   order?: number;
 };
 
 export type GalleryRecord = {
   id?: string;
-  url?: string | { url: string }[];
+  url?:
+    | string
+    | Array<{
+        id?: string;
+        url?: string;
+        thumbnails?: {
+          full?: {
+            url: string;
+          };
+        };
+      }>;
   description?: string;
+  index?: number;
+  text_color?: string;
+  text_position?: "left" | "right";
 };
 
 export type BannerItem = {

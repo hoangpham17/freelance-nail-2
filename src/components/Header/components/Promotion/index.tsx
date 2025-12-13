@@ -2,6 +2,7 @@ import React from "react";
 import { PromotionData } from "../../types";
 import clsx from "clsx";
 import SvgIcon from "@/based/SvgIcon";
+import { Wrapper } from "@/based/components/Wrapper";
 
 interface PromotionProps {
   promotion?: PromotionData;
@@ -39,7 +40,7 @@ const Promotion: React.FC<PromotionProps> = ({
         )}
         data-campaign
       >
-        <div className="max-w-[1920px] mx-auto px-4 md:px-4 lg:px-8">
+        <Wrapper className="px-4 md:px-4 lg:px-8">
           <div className="relative py-5 xl:py-2.5" id="campaign">
             <button
               className="absolute top-1/2 right-0 -translate-y-1/2 p-2.5 md:p-1.5 cursor-pointer bg-transparent border-0"
@@ -62,7 +63,7 @@ const Promotion: React.FC<PromotionProps> = ({
               {promotionText}
             </div>
           </div>
-        </div>
+        </Wrapper>
       </div>
 
       {/* Popup Campaign */}
@@ -83,10 +84,12 @@ const Promotion: React.FC<PromotionProps> = ({
               data-popup-close
               onClick={onClosePopup}
             >
-              <img
-                src="/assets/images/Icons/icon-close.svg"
-                alt="Close promotion"
-                className="w-full h-full object-contain"
+              <SvgIcon
+                src={"assets/svgs/x-close.svg"}
+                ariaLabel="text"
+                width={24}
+                height={24}
+                className="size-[24px] shrink-0"
               />
             </button>
             <div className="max-h-[80vh] min-h-[250px] relative">
