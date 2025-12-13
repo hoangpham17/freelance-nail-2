@@ -10,7 +10,7 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 const HeaderSection: React.FC = () => {
   return (
     <div
-      className="relative bg-no-repeat bg-right bg-contain mb-4 md:mb-0"
+      className="relative bg-no-repeat bg-right bg-contain mb-4 md:mb-8"
       style={{
         backgroundImage: "url('/assets/images/Background/home-1.jpg')",
       }}
