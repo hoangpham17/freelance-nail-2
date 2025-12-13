@@ -28,24 +28,22 @@ const GallerySlider: React.FC<GallerySliderProps> = ({ galleryImages }) => {
     <div className="relative order-1 md:order-2">
       <div className="relative overflow-visible">
         <div className="relative">
-          {/* Slider Container */}
-          <div className="relative z-20 rounded-2xl overflow-hidden shadow-xl">
+          <div className="relative z-20 rounded-2xl overflow-hidden">
             <Slider ref={gallerySliderRef} {...gallerySettings}>
               {galleryImages.map((image) => (
                 <div key={image.id} className="relative">
                   <img
                     src={image.url}
                     alt="Gallery"
-                    className="w-full h-96 md:h-[500px] object-cover rounded-2xl"
+                    className="w-[315px] md:w-[437px] h-[300px] md:h-[428px] object-cover rounded-2xl"
                   />
                 </div>
               ))}
             </Slider>
           </div>
 
-          {/* Next Image Preview - Overlapping from right */}
           {galleryImages.length > 1 && (
-            <div className="absolute right-0 top-0 w-[50%] h-full z-10 rounded-2xl overflow-hidden pointer-events-none">
+            <div className="absolute right-0 top-0 w-[50%] h-full z-10 rounded-2xl overflow-hidden pointer-events-none scale-75">
               <img
                 src={
                   galleryImages[
@@ -59,15 +57,14 @@ const GallerySlider: React.FC<GallerySliderProps> = ({ galleryImages }) => {
           )}
         </div>
 
-        {/* Custom Dots - Outside slider, below images */}
-        <div className="mt-6 flex justify-center">
+        <div className="mt-12 flex justify-center">
           <CustomDots
+            position="bottom"
             totalSlides={galleryImages.length}
             currentIndex={currentGalleryIndex}
             onDotClick={(index) => {
               gallerySliderRef.current?.slickGoTo(index);
             }}
-            className="relative bottom-0 left-0 translate-x-0 translate-y-0"
           />
         </div>
       </div>
