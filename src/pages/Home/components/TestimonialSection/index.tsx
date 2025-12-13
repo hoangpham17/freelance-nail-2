@@ -1,23 +1,13 @@
-import React from "react";
-import Slider, { Settings } from "react-slick";
-import { Rate } from "antd";
-import { StarFilled } from "@ant-design/icons";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "./style.css";
-
-interface Testimonial {
-  id: string;
-  name: string;
-  rating: number;
-  reviewCount: number;
-  comment: string;
-  avatar?: string;
-}
+import React, { useMemo } from "react";
+import { Wrapper } from "@/based/components/Wrapper";
+import HeaderSection from "./components/HeaderSection";
+import TestimonialContent from "./components/TestimonialContent";
+import GallerySlider from "./components/GallerySlider";
+import { Testimonial, GalleryImage } from "./types";
 
 interface TestimonialSectionProps {
   testimonials?: Testimonial[];
-  galleryImages?: { id: string; url: string }[];
+  galleryImages?: GalleryImage[];
 }
 
 const DEFAULT_TESTIMONIALS: Testimonial[] = [
@@ -32,126 +22,39 @@ const DEFAULT_TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-const DEFAULT_GALLERY_IMAGES = [
+const DEFAULT_GALLERY_IMAGES: GalleryImage[] = [
   { id: "1", url: "/assets/images/Slide/Photo.jpg" },
   { id: "2", url: "/assets/images/Slide/Photo-2.jpg" },
   { id: "3", url: "/assets/images/Slide/Photo-3.jpg" },
 ];
 
-const testimonialSettings: Settings = {
-  infinite: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: true,
-  dots: false,
-  autoplay: true,
-  autoplaySpeed: 4000,
-  fade: true,
-};
-
-const gallerySettings: Settings = {
-  infinite: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  arrows: false,
-  dots: true,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  fade: true,
-};
-
 const TestimonialSection: React.FC<TestimonialSectionProps> = ({
   testimonials = DEFAULT_TESTIMONIALS,
   galleryImages = DEFAULT_GALLERY_IMAGES,
 }) => {
+  // Water droplet pattern background
+  const waterDropletPattern = useMemo(
+    () =>
+      `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='%23D4AF37' opacity='0.1'/%3E%3C/svg%3E")`,
+    []
+  );
+
   return (
-    <section className="testimonial-section py-20 md:py-28 relative overflow-hidden">
-      {/* Background with water droplet patterns */}
-      <div className="testimonial-bg absolute inset-0"></div>
-
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
+    <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
+      <div
+        className="absolute inset-0 opacity-60"
+        style={{
+          backgroundImage: `radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%), ${waterDropletPattern}`,
+          backgroundRepeat: "repeat",
+        }}
+      />
+      <Wrapper className="px-4 md:px-6 lg:px-8 relative z-10">
+        <HeaderSection />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Testimonial */}
-          <div className="space-y-6">
-            {/* Heading */}
-            <div className="space-y-2">
-              <h3
-                className="text-2xl md:text-3xl font-bold"
-              >
-                10K COMMENT
-              </h3>
-              <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight"
-              >
-                Your nail has never felt better Brighter and Healthier with
-                Veira
-              </h2>
-            </div>
-
-            {/* Testimonial Card */}
-            <div className="testimonial-card bg-white rounded-2xl p-6 md:p-8 shadow-xl">
-              <Slider {...testimonialSettings}>
-                {testimonials.map((testimonial) => (
-                  <div key={testimonial.id} className="space-y-4">
-                    <div className="flex items-center gap-4 mb-4">
-                      {testimonial.avatar && (
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          className="w-16 h-16 rounded-full object-cover border-2"
-                        />
-                      )}
-                      <div>
-                        <h4
-                          className="text-lg font-semibold"
-                        >
-                          {testimonial.name}
-                        </h4>
-                        <div className="flex items-center gap-2">
-                          <Rate
-                            disabled
-                            value={testimonial.rating}
-                            allowHalf
-                            character={<StarFilled />}
-                          />
-                          <span
-                            className="text-sm"
-                          >
-                            {testimonial.rating} (
-                            {testimonial.reviewCount.toLocaleString()})
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <p
-                      className="text-base md:text-lg italic leading-relaxed"
-                    >
-                      "{testimonial.comment}"
-                    </p>
-                  </div>
-                ))}
-              </Slider>
-            </div>
-          </div>
-
-          {/* Right Side - Gallery Carousel */}
-          <div className="relative">
-            <div className="gallery-carousel rounded-2xl overflow-hidden shadow-xl">
-              <Slider {...gallerySettings}>
-                {galleryImages.map((image) => (
-                  <div key={image.id} className="relative">
-                    <img
-                      src={image.url}
-                      alt="Gallery"
-                      className="w-full h-96 md:h-[500px] object-cover"
-                    />
-                  </div>
-                ))}
-              </Slider>
-            </div>
-          </div>
+          <TestimonialContent testimonials={testimonials} />
+          <GallerySlider galleryImages={galleryImages} />
         </div>
-      </div>
+      </Wrapper>
     </section>
   );
 };

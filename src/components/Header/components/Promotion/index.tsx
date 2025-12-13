@@ -3,6 +3,7 @@ import { PromotionData } from "../../types";
 import clsx from "clsx";
 import SvgIcon from "@/based/SvgIcon";
 import { Wrapper } from "@/based/components/Wrapper";
+import { Flex } from "antd";
 
 interface PromotionProps {
   promotion?: PromotionData;
@@ -49,11 +50,11 @@ const Promotion: React.FC<PromotionProps> = ({
               aria-label="Close campaign"
             >
               <SvgIcon
-                src={"/assets/svgs/icon-close-x.svg"}
+                src={"/assets/svgs/x-close.svg"}
                 ariaLabel="text"
-                width={16}
-                height={16}
-                className="size-[16px] shrink-0 text-white"
+                width={20}
+                height={20}
+                className="size-[20px] shrink-0 text-white"
               />
             </button>
             <div
@@ -84,13 +85,15 @@ const Promotion: React.FC<PromotionProps> = ({
               data-popup-close
               onClick={onClosePopup}
             >
-              <SvgIcon
-                src={"assets/svgs/x-close.svg"}
-                ariaLabel="text"
-                width={24}
-                height={24}
-                className="size-[24px] shrink-0"
-              />
+              <Flex justify="center" align="center">
+                <SvgIcon
+                  src={"assets/svgs/x-close.svg"}
+                  ariaLabel="text"
+                  width={24}
+                  height={24}
+                  className="size-[24px] shrink-0"
+                />
+              </Flex>
             </button>
             <div className="max-h-[80vh] min-h-[250px] relative">
               <img
