@@ -1,16 +1,16 @@
 import React from "react";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { Flex } from "antd";
 
 const HeaderSection: React.FC = () => {
   return (
     <div className="relative">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12 lg:gap-16 w-full">
+      <Flex className="items-start lg:items-center justify-center lg:justify-start gap-6 md:gap-12 lg:gap-16 w-full">
         <div className="relative flex-shrink-0">
           <p
             className={clsx(
-              "font-prata font-semibold text-black",
-              responsiveFontSizeArray(54, 130)
+              "font-prata font-semibold text-black text-[54px] sm:text-[67px] md:text-[73px] lg:text-[86px] xl:text-[99px] 2xl:text-[130px]"
             )}
           >
             10K
@@ -38,7 +38,7 @@ const HeaderSection: React.FC = () => {
             with Veira
           </p>
         </div>
-      </div>
+      </Flex>
     </div>
   );
 };

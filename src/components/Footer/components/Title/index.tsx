@@ -7,7 +7,7 @@ export const Title: React.FC<{ children: React.ReactNode }> = ({
   return (
     <h3
       className={clsx(
-        "font-medium mb-[6px] md:mb-4 text-[#452917] font-lexend",
+        "font-medium mb-[6px] lg:mb-4 text-[#452917] font-lexend",
         responsiveFontSizeArray(24, 36)
       )}
     >

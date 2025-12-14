@@ -35,7 +35,7 @@ const KeepInTouch: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col md:col-span-2 lg:col-span-1">
+    <div className="flex flex-col lg:col-span-2 lg:col-span-1">
       <Title>KEEP IN TOUCH</Title>
       <Flex vertical gap={6}>
         <a
@@ -63,7 +63,7 @@ const KeepInTouch: React.FC = () => {
         >
           naillounge@mail.com
         </a>
-        <div className="flex gap-3 md:gap-4 mt-2">
+        <div className="flex gap-3 lg:gap-4 mt-2">
           {socialLinks.map((social) => (
             <a
               key={social.label}
@@ -73,7 +73,7 @@ const KeepInTouch: React.FC = () => {
               className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-black !text-[#D5B994] hover:opacity-80"
               aria-label={social.label}
             >
-              <i className={`bi ${social.icon} text-base md:text-lg`}></i>
+              <i className={`bi ${social.icon} text-base lg:text-lg`}></i>
             </a>
           ))}
         </div>
