@@ -9,7 +9,7 @@ const HeaderSection: React.FC = () => {
         <div className="relative flex-shrink-0">
           <p
             className={clsx(
-              "font-prata font-semibold text-black",
+              "font-prata font-semibold text-black 2xl:text-[130px]",
               responsiveFontSizeArray(54, 130)
             )}
           >

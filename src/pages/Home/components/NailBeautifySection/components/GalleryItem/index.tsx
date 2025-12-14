@@ -23,20 +23,24 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
 }) => {
   const isLarge = size === "large";
   const containerClasses = isLarge
-    ? "relative overflow-hidden rounded-xl aspect-[16/10] min-h-[140px] md:min-h-[270px] lg:min-h-[320px] cursor-pointer transition-transform duration-300 hover:-translate-y-1"
-    : "relative overflow-hidden rounded-xl aspect-square min-h-[140px] md:min-h-[250px] lg:min-h-[300px] cursor-pointer transition-transform duration-300 hover:-translate-y-1";
+    ? "relative overflow-hidden rounded-xl aspect-[16/10] w-full h-[140px] md:h-[270px] lg:h-[320px] cursor-pointer transition-transform duration-300 hover:-translate-y-1"
+    : "relative overflow-hidden rounded-xl aspect-square w-full h-[140px] md:h-[250px] lg:h-[300px] cursor-pointer transition-transform duration-300 hover:-translate-y-1";
 
   const paddingClasses = isLarge ? "p-6 md:p-8" : "p-4 md:p-6";
 
   return (
-    <div className={containerClasses} onClick={onClick}>
+    <div
+      className={containerClasses}
+      onClick={onClick}
+      style={{
+        backgroundImage: url ? `url(${url})` : undefined,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       {url ? (
         <>
-          <img
-            src={url}
-            alt={description || "Gallery"}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-          />
           {description && (
             <>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

@@ -44,7 +44,6 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
     },
   };
 
-  // Show skeleton while loading
   if (loading) {
     return (
       <div className="relative order-1 md:order-2">
@@ -58,7 +57,6 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
     );
   }
 
-  // Show empty state if no images
   if (!galleryImages || galleryImages.length === 0) {
     return null;
   }
