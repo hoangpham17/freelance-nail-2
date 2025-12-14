@@ -86,7 +86,7 @@ const TestimonialSection: React.FC = () => {
   );
 
   return (
-    <section className="relative py-10 md:py-16 overflow-hidden bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
+    <section className="relative py-10 md:pt-16 md:pb-0 overflow-hidden bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
       <div
         className="absolute inset-0 opacity-60"
         style={{
@@ -96,7 +96,7 @@ const TestimonialSection: React.FC = () => {
       />
       <Wrapper className="px-4 md:px-6 lg:px-8 relative z-10">
         <HeaderSection />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center -translate-y-20">
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-12 items-center md:-translate-y-20">
           <TestimonialContent
             testimonials={testimonials}
             currentIndex={currentIndex}

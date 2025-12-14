@@ -32,8 +32,8 @@ const HeaderSection: React.FC = () => {
             )}
           >
             Your nail has never felt <br /> better
-            <span className="text-[#D1A054]">Brighter</span> and
-            <span className="text-[#D1A054]">Healthier</span>
+            <span className="text-[#D1A054]"> Brighter</span> and
+            <span className="text-[#D1A054]"> Healthier</span>
             <br />
             with Veira
           </p>

@@ -90,7 +90,7 @@ const NailBeautifySection: React.FC<NailBeautifySectionProps> = ({
   }, [galleryItems]);
 
   return (
-    <section className="relative py-20 md:py-28 bg-white">
+    <section className="relative pt-10 pb-4 md:py-[50px] bg-white">
       <Wrapper className="px-4 md:px-6 lg:px-8">
         {/* Top Section - Heading, Description, Button, and Image */}
         <HeaderSection />

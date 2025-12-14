@@ -28,10 +28,13 @@ const FixedButtons: React.FC = () => {
         align="center"
         justify="center"
       >
-        <div className="absolute top-0 left-0 w-full h-full bg-white blur-lg md:hidden block"></div>
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-white/40 md:hidden block"
+          style={{ backdropFilter: "blur(10px)" }}
+        ></div>
         <a
           className={clsx(
-            "z-[1] md:px-7 md:py-4 p-3 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-[32px] text-center font-prata md:rotate-[-2deg] text-2xl md:text-[45px]"
+            "z-[1] md:px-7 md:py-4 p-3 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl text-center font-prata md:rotate-[-2deg] text-2xl md:text-[45px] border border-[#9E7B6A]"
           )}
           title="BOOKING"
           href="https://booking.spacepos.net/?id=jzOR8l!BpuM="

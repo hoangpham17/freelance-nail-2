@@ -42,7 +42,7 @@ const Promotion: React.FC<PromotionProps> = ({
         data-campaign
       >
         <Wrapper className="px-4 md:px-4 lg:px-8">
-          <div className="relative py-5 xl:py-2.5" id="campaign">
+          <div className="relative py-1 md:py-5 xl:py-2.5" id="campaign">
             <button
               className="absolute top-1/2 right-0 -translate-y-1/2 p-2.5 md:p-1.5 cursor-pointer bg-transparent border-0"
               data-close-campaign
@@ -58,7 +58,7 @@ const Promotion: React.FC<PromotionProps> = ({
               />
             </button>
             <div
-              className="text-white text-3xl xl:text-lg xl:leading-5 md:text-base md:leading-[1.125rem] leading-8 text-center font-serif"
+              className="text-white text-sm xl:text-lg md:text-base text-center"
               data-campaign-text
             >
               {promotionText}

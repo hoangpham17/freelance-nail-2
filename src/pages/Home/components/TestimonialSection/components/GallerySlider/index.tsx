@@ -30,11 +30,14 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
     speed: 400,
     cssEase: "linear",
     pauseOnHover: false,
-    className: `[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[25%] 
+    className: `[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[37%]  md:[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[25%] 
     [&_.slick-active:not(.slick-current)_.slide-item-custom]:blur-sm 
     [&_.slick-active:not(.slick-current)_.slide-item-custom_img]:scale-75 
-    [&_.slick-active:not(.slick-current)_.slide-item-custom]:z-[1] 
-    [&_.slick-active.slick-current_.slide-item-custom]:z-[2]
+    [&_.slick-active:not(.slick-current)_.slide-item-custom]:z-[2] 
+    [&_.slick-slide_.slide-item-custom]:z-[1] 
+    [&_.slick-active_.slide-item-custom]:!w-[310px] 
+    md:[&_.slick-active_.slide-item-custom]:!w-[437px] 
+    [&_.slick-active.slick-current_.slide-item-custom]:z-[3]
     `,
     beforeChange: (_: unknown, next: number) => {
       setCurrentGalleryIndex(next);
@@ -62,7 +65,7 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
   }
 
   return (
-    <div className="relative order-1 md:order-2">
+    <div className="order-1 md:order-2">
       <div className="relative overflow-visible">
         <div className="relative">
           <div
@@ -77,7 +80,7 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
                     key={image.id}
                     data-slide-index={index}
                     className={clsx(
-                      "slide-item-custom relative transition-all duration-400 md:!w-[437px] h-[300px] md:h-[428px] overflow-hidden"
+                      "slide-item-custom relative transition-all duration-400 h-[300px] md:h-[428px] overflow-hidden rounded-2xl"
                     )}
                   >
                     <img

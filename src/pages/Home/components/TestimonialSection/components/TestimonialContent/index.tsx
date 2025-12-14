@@ -52,31 +52,18 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
   const currentTestimonial = testimonials[currentIndex] || testimonials[0];
 
   return (
-    <div className="space-y-6 order-2 md:order-1">
-      <div className="relative">
+    <div className="order-2 md:order-1">
+      <div className="relative mb-3 md:mb-4">
         <span
-          className={clsx(
-            "absolute -left-4 -top-8 font-prata text-[#E5E5E5] -z-10 select-none",
-            responsiveFontSizeArray(80, 120)
-          )}
-          style={{ opacity: 0.3 }}
-        >
-          Customer
-        </span>
-        <h4
           className={clsx(
             "font-prata font-bold text-black relative z-10",
             responsiveFontSizeArray(24, 45)
           )}
         >
           {currentTestimonial?.name}
-        </h4>
+        </span>
       </div>
-
-      <div
-        className=" bg-[#E1B1681A] rounded-2xl p-6 md:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] relative"
-        style={{}}
-      >
+      <div className=" bg-[#E1B1681A] rounded-2xl p-6 md:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] w-full md:relative">
         <Slider ref={testimonialSliderRef} {...testimonialSettings}>
           {testimonials.map((testimonial) => (
             <div key={testimonial.id}>
