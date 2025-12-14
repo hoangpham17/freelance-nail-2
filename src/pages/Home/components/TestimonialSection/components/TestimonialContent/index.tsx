@@ -38,7 +38,7 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
 
   if (loading) {
     return (
-      <div className="space-y-6 order-2 md:order-1">
+      <div className="space-y-6 order-2 lg:order-1">
         <Skeleton active paragraph={{ rows: 2 }} />
         <Skeleton active paragraph={{ rows: 4 }} />
       </div>
@@ -52,8 +52,8 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
   const currentTestimonial = testimonials[currentIndex] || testimonials[0];
 
   return (
-    <div className="order-2 md:order-1">
-      <div className="relative mb-3 md:mb-4">
+    <div className="order-2 lg:order-1">
+      <div className="relative mb-3 lg:mb-4">
         <span
           className={clsx(
             "font-prata font-bold text-black relative z-10",
@@ -63,11 +63,11 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
           {currentTestimonial?.name}
         </span>
       </div>
-      <div className=" bg-[#E1B1681A] rounded-2xl p-6 md:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] w-full md:relative">
+      <div className=" bg-[#E1B1681A] rounded-2xl p-6 lg:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] w-full lg:relative">
         <Slider ref={testimonialSliderRef} {...testimonialSettings}>
           {testimonials.map((testimonial) => (
             <div key={testimonial.id}>
-              <p className="text-base md:text-lg leading-relaxed text-black italic">
+              <p className="text-base lg:text-lg leading-relaxed text-black italic">
                 "{testimonial.comment}"
               </p>
             </div>

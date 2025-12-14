@@ -23,10 +23,10 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
 }) => {
   const isLarge = size === "large";
   const containerClasses = isLarge
-    ? "relative overflow-hidden rounded-xl aspect-[16/10] w-full h-[140px] md:h-[270px] lg:h-[320px] cursor-pointer transition-transform duration-300 hover:-translate-y-1"
-    : "relative overflow-hidden rounded-xl aspect-square w-full h-[140px] md:h-[250px] lg:h-[300px] cursor-pointer transition-transform duration-300 hover:-translate-y-1";
+    ? "relative overflow-hidden rounded-xl aspect-[16/10] w-full h-[140px] lg:h-[270px] lg:h-[320px] cursor-pointer transition-transform duration-300 hover:-translate-y-1"
+    : "relative overflow-hidden rounded-xl aspect-square w-full h-[140px] lg:h-[250px] lg:h-[300px] cursor-pointer transition-transform duration-300 hover:-translate-y-1";
 
-  const paddingClasses = isLarge ? "p-6 md:p-8" : "p-4 md:p-6";
+  const paddingClasses = isLarge ? "p-6 lg:p-8" : "p-4 lg:p-6";
 
   return (
     <div
@@ -47,7 +47,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
               <div
                 className={`absolute inset-0 flex flex-col justify-end ${paddingClasses} ${
                   textPosition === "right"
-                    ? "md:items-end"
+                    ? "lg:items-end"
                     : textPosition === "left"
                     ? "items-start"
                     : "items-start"
@@ -55,7 +55,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
               >
                 <span
                   className={clsx(
-                    "md:max-w-[50%]",
+                    "lg:max-w-[50%]",
                     responsiveFontSizeArray(32, 45)
                   )}
                   style={{

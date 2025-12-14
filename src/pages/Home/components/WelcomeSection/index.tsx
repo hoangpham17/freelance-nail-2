@@ -111,14 +111,14 @@ const WelcomeSection: React.FC = () => {
             </p>
           </Flex>
           <Flex
-            className="flex-wrap gap-4 z-[1] translate-y-[60px] md:translate-y-[80px]"
+            className="flex-wrap gap-4 z-[1] translate-y-[60px] lg:translate-y-[80px]"
             align="center"
             justify="center"
           >
             {SERVICES_MENU.map((service) => (
               <Link key={service.title} href={service.href}>
                 <Flex
-                  className="w-32 h-32 md:w-40 md:h-40 bg-white/80 rounded-full"
+                  className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full"
                   align="center"
                   justify="center"
                   vertical

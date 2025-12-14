@@ -5,11 +5,11 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 const HeaderSection: React.FC = () => {
   return (
     <div className="relative">
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-12 lg:gap-16 w-full">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-12 lg:gap-16 w-full">
         <div className="relative flex-shrink-0">
           <p
             className={clsx(
-              "font-prata font-semibold text-black 2xl:text-[130px]",
+              "font-prata font-semibold text-black",
               responsiveFontSizeArray(54, 130)
             )}
           >
@@ -17,7 +17,7 @@ const HeaderSection: React.FC = () => {
           </p>
           <p
             className={clsx(
-              "text-sm md:text-base font-semibold uppercase tracking-wider text-[#494747]",
+              "text-sm lg:text-base font-semibold uppercase tracking-wider text-[#494747]",
               responsiveFontSizeArray(16, 36)
             )}
           >

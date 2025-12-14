@@ -40,21 +40,17 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
     initialSlide: selectedIndex,
     nextArrow: (
       <button
-        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white border border-gray-200 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+        className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-white border border-gray-200 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
         type="button"
         aria-label="Next"
-      >
-        <i className="bi bi-chevron-right text-xl md:text-2xl text-gray-700"></i>
-      </button>
+      ></button>
     ),
     prevArrow: (
       <button
-        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white border border-gray-200 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+        className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-white border border-gray-200 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
         type="button"
         aria-label="Previous"
-      >
-        <i className="bi bi-chevron-left text-xl md:text-2xl text-gray-700"></i>
-      </button>
+      ></button>
     ),
   };
 
@@ -66,10 +62,10 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
         onClick={onClose}
       ></div>
       {/* Popup Inner */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] md:w-[60%] max-h-[90vh] z-[102]">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] lg:w-[60%] max-h-[90vh] z-[102]">
         {/* Close Button */}
         <button
-          className="absolute -top-2.5 -right-2.5 md:-top-2.5 md:-right-2.5 w-8 h-8 md:w-10 md:h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center"
+          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 w-8 h-8 lg:w-10 lg:h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center"
           onClick={onClose}
           aria-label="Close popup"
         >

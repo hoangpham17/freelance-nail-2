@@ -30,13 +30,13 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
     speed: 400,
     cssEase: "linear",
     pauseOnHover: false,
-    className: `[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[37%]  md:[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[25%] 
+    className: `[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[37%]  lg:[&_.slick-active:not(.slick-current)_.slide-item-custom]:-translate-x-[25%] 
     [&_.slick-active:not(.slick-current)_.slide-item-custom]:blur-sm 
     [&_.slick-active:not(.slick-current)_.slide-item-custom_img]:scale-75 
     [&_.slick-active:not(.slick-current)_.slide-item-custom]:z-[2] 
     [&_.slick-slide_.slide-item-custom]:z-[1] 
     [&_.slick-active_.slide-item-custom]:!w-[310px] 
-    md:[&_.slick-active_.slide-item-custom]:!w-[437px] 
+    lg:[&_.slick-active_.slide-item-custom]:!w-[437px] 
     [&_.slick-active.slick-current_.slide-item-custom]:z-[3]
     `,
     beforeChange: (_: unknown, next: number) => {
@@ -49,8 +49,8 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
 
   if (loading) {
     return (
-      <div className="relative order-1 md:order-2">
-        <div className="w-[315px] md:w-[437px] h-[300px] md:h-[428px]">
+      <div className="relative order-1 lg:order-2">
+        <div className="w-[315px] lg:w-[437px] h-[300px] lg:h-[428px]">
           <Skeleton.Image
             active
             style={{ width: "100%", height: "100%", borderRadius: "16px" }}
@@ -65,52 +65,50 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
   }
 
   return (
-    <div className="order-1 md:order-2">
-      <div className="relative overflow-visible">
-        <div className="relative">
-          <div
-            className={clsx(
-              "relative z-20 rounded-2xl overflow-hidden gallery-slider-custom"
-            )}
-          >
-            <Slider ref={gallerySliderRef} {...gallerySettings}>
-              {galleryImages.map((image, index) => {
-                return (
-                  <div
-                    key={image.id}
-                    data-slide-index={index}
+    <div className="lg:relative order-1 lg:order-2 max-w-[375px] lg:max-w-none mx-auto lg:mx-0">
+      <div className="relative">
+        <div
+          className={clsx(
+            "relative z-20 rounded-2xl overflow-hidden gallery-slider-custom"
+          )}
+        >
+          <Slider ref={gallerySliderRef} {...gallerySettings}>
+            {galleryImages.map((image, index) => {
+              return (
+                <div
+                  key={image.id}
+                  data-slide-index={index}
+                  className={clsx(
+                    "slide-item-custom relative transition-all duration-400 h-[300px] lg:h-[428px] overflow-hidden rounded-2xl"
+                  )}
+                >
+                  <img
+                    src={image.url}
+                    alt="Gallery"
                     className={clsx(
-                      "slide-item-custom relative transition-all duration-400 h-[300px] md:h-[428px] overflow-hidden rounded-2xl"
+                      "object-cover rounded-2xl border-2 border-white w-full h-full transition-all duration-400"
                     )}
-                  >
-                    <img
-                      src={image.url}
-                      alt="Gallery"
-                      className={clsx(
-                        "object-cover rounded-2xl border-2 border-white w-full h-full transition-all duration-400"
-                      )}
-                    />
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
+                  />
+                </div>
+              );
+            })}
+          </Slider>
         </div>
+      </div>
 
-        <div className="mt-12 flex justify-center">
-          <CustomDots
-            position="bottom"
-            totalSlides={galleryImages.length}
-            currentIndex={currentGalleryIndex}
-            onDotClick={(index) => {
-              gallerySliderRef.current?.slickGoTo(index);
-              setCurrentGalleryIndex(index);
-              if (onSlideChange) {
-                onSlideChange(index);
-              }
-            }}
-          />
-        </div>
+      <div className="lg:mt-12 flex justify-center">
+        <CustomDots
+          position="bottom"
+          totalSlides={galleryImages.length}
+          currentIndex={currentGalleryIndex}
+          onDotClick={(index) => {
+            gallerySliderRef.current?.slickGoTo(index);
+            setCurrentGalleryIndex(index);
+            if (onSlideChange) {
+              onSlideChange(index);
+            }
+          }}
+        />
       </div>
     </div>
   );

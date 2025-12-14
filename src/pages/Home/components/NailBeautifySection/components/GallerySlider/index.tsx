@@ -24,15 +24,15 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
   };
 
   return (
-    <div className="relative order-1 md:order-2">
+    <div className="relative order-1 lg:order-2">
       <div className="[&_.slick-list]:m-0 [&_.slick-slide]:p-0">
         <Slider ref={sliderRef} {...sliderSettings}>
           {slides.map((slide, slideIndex) => (
             <div key={`slide-${slideIndex}`}>
               {/* Mobile: 1 column, Desktop: 2x3 grid */}
-              <div className="flex flex-col md:flex-col gap-4">
+              <div className="flex flex-col lg:flex-col gap-4">
                 {/* Row 1: 2 large images - hidden on mobile */}
-                <div className="hidden md:grid md:grid-cols-2 gap-4">
+                <div className="hidden lg:grid lg:grid-cols-2 gap-4">
                   {slide.slice(0, 2).map((item) => {
                     const itemIndex = galleryItems.findIndex(
                       (g) => g.id === item.id
@@ -52,7 +52,7 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
                   })}
                 </div>
                 {/* Row 2: 3 smaller images - hidden on mobile */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="hidden lg:grid lg:grid-cols-2 lg:grid-cols-3 gap-4">
                   {slide.slice(2, 5).map((item) => {
                     const itemIndex = galleryItems.findIndex(
                       (g) => g.id === item.id
@@ -72,7 +72,7 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
                   })}
                 </div>
                 {/* Mobile: Show all items in 1 column */}
-                <div className="flex flex-col gap-4 md:hidden">
+                <div className="flex flex-col gap-4 lg:hidden">
                   {slide.map((item) => {
                     const itemIndex = galleryItems.findIndex(
                       (g) => g.id === item.id
