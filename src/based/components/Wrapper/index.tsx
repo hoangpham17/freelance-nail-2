@@ -6,6 +6,6 @@ type WrapperProps = {
 };
 export const Wrapper = ({ children, className }: WrapperProps) => {
   return (
-    <div className={clsx("max-w-[1420px] mx-auto", className)}>{children}</div>
+    <div className={clsx("max-w-[1620px] mx-auto", className)}>{children}</div>
   );
 };

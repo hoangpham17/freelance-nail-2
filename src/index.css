@@ -41,6 +41,10 @@
   }
 }
 
+main {
+  @apply mt-[110px];
+}
+
 .popup-campaign__text {
   position: absolute;
   left: 1.5rem;

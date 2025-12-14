@@ -11,7 +11,8 @@ import CustomDots from "@/based/components/CustomDots";
 const HeroSection: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef<Slider>(null);
+  const mobileSliderRef = useRef<Slider>(null);
+  const desktopSliderRef = useRef<Slider>(null);
 
   const { data: bannerRecords } = useAirtable<BannerRecord>(
     AIRTABLE_ENDPOINTS.banner
@@ -67,7 +68,16 @@ const HeroSection: React.FC = () => {
     autoplaySpeed: 5000,
     fade: true,
     cssEase: "linear",
-    beforeChange: (_current: number, next: number) => setCurrentSlide(next),
+    beforeChange: (_current: number, next: number) => {
+      setCurrentSlide(next);
+      // Sync the other slider (silent mode to prevent infinite loop)
+      const isCurrentlyMobile = window.innerWidth < 768;
+      if (isCurrentlyMobile) {
+        desktopSliderRef.current?.slickGoTo(next, false);
+      } else {
+        mobileSliderRef.current?.slickGoTo(next, false);
+      }
+    },
   };
 
   if (bannerItems.length === 0) {
@@ -84,12 +94,12 @@ const HeroSection: React.FC = () => {
   }
 
   return (
-    <section className="relative w-full h-screen min-h-[700px] overflow-hidden">
-      {/* Slider Background */}
-      <div className="absolute inset-0 w-full h-full">
-        <Slider ref={sliderRef} {...settings}>
+    <section className="relative w-full h-screen min-h-[700px] lg:h-auto lg:min-h-auto overflow-hidden">
+      {/* Mobile Slider - Keep absolute positioning */}
+      <div className="absolute inset-0 w-full h-full md:hidden">
+        <Slider ref={mobileSliderRef} {...settings}>
           {bannerItems.map((item, index) => {
-            const imageUrl = isMobile ? item.mobile : item.desktop;
+            const imageUrl = item.mobile;
 
             if (!imageUrl) {
               return (
@@ -131,12 +141,50 @@ const HeroSection: React.FC = () => {
         </Slider>
       </div>
 
+      {/* Desktop Slider - No absolute positioning, use img tags */}
+      <div className="hidden md:block w-full h-full">
+        <Slider ref={desktopSliderRef} {...settings}>
+          {bannerItems.map((item, index) => {
+            const imageUrl = item.desktop;
+
+            if (!imageUrl) {
+              return (
+                <div
+                  key={item.id || index}
+                  className="relative w-full h-screen min-h-[700px]"
+                >
+                  <Skeleton.Image
+                    active
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "700px",
+                    }}
+                  />
+                </div>
+              );
+            }
+
+            return (
+              <div key={item.id || index} className="w-full">
+                <img
+                  src={imageUrl}
+                  alt={`Banner ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            );
+          })}
+        </Slider>
+      </div>
+
       {/* Custom Dots */}
       <CustomDots
         totalSlides={bannerItems.length}
         currentIndex={currentSlide}
         onDotClick={(index) => {
-          sliderRef.current?.slickGoTo(index);
+          mobileSliderRef.current?.slickGoTo(index);
+          desktopSliderRef.current?.slickGoTo(index);
         }}
       />
     </section>
