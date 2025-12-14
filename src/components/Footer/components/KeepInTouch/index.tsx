@@ -70,7 +70,7 @@ const KeepInTouch: React.FC = () => {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-black text-[#D5B994]"
+              className="w-8 h-8 rounded-full flex items-center justify-center transition-all hover:scale-110 bg-black !text-[#D5B994] hover:opacity-80"
               aria-label={social.label}
             >
               <i className={`bi ${social.icon} text-base md:text-lg`}></i>

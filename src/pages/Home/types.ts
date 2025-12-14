@@ -41,3 +41,20 @@ export type WhyChooseItem = {
   value: number;
   label: string;
 };
+
+export type HomeCommentRecord = {
+  id?: string;
+  guest_name?: string;
+  comment?: string;
+  image?:
+    | string
+    | Array<{
+        id?: string;
+        url?: string;
+        thumbnails?: {
+          full?: {
+            url: string;
+          };
+        };
+      }>;
+};

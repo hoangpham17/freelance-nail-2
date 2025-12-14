@@ -1,26 +1,29 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Slider, { Settings } from "react-slick";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-
-interface Testimonial {
-  id: string;
-  name: string;
-  rating: number;
-  reviewCount: number;
-  comment: string;
-  avatar?: string;
-}
+import { Skeleton } from "antd";
+import { Testimonial } from "../../types";
 
 interface TestimonialContentProps {
   testimonials: Testimonial[];
+  currentIndex: number;
+  loading?: boolean;
 }
 
 const TestimonialContent: React.FC<TestimonialContentProps> = ({
   testimonials,
+  currentIndex,
+  loading = false,
 }) => {
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
   const testimonialSliderRef = useRef<Slider | null>(null);
+
+  // Sync testimonial slider with gallery slider
+  useEffect(() => {
+    if (testimonialSliderRef.current && currentIndex < testimonials.length) {
+      testimonialSliderRef.current.slickGoTo(currentIndex);
+    }
+  }, [currentIndex, testimonials.length]);
 
   const testimonialSettings: Settings = {
     infinite: true,
@@ -28,18 +31,29 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
     slidesToScroll: 1,
     arrows: false,
     dots: false,
-    autoplay: true,
-    autoplaySpeed: 4000,
+    autoplay: false, // Disable autoplay, sync with gallery instead
     fade: true,
-    beforeChange: (_current: number, next: number) =>
-      setCurrentTestimonialIndex(next),
+    speed: 500,
   };
+
+  if (loading) {
+    return (
+      <div className="space-y-6 order-2 md:order-1">
+        <Skeleton active paragraph={{ rows: 2 }} />
+        <Skeleton active paragraph={{ rows: 4 }} />
+      </div>
+    );
+  }
+
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
+  const currentTestimonial = testimonials[currentIndex] || testimonials[0];
 
   return (
     <div className="space-y-6 order-2 md:order-1">
-      {/* Testimonial Author with Watermark */}
       <div className="relative">
-        {/* Customer watermark */}
         <span
           className={clsx(
             "absolute -left-4 -top-8 font-prata text-[#E5E5E5] -z-10 select-none",
@@ -52,15 +66,17 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
         <h4
           className={clsx(
             "font-prata font-bold text-black relative z-10",
-            responsiveFontSizeArray(24, 32)
+            responsiveFontSizeArray(24, 45)
           )}
         >
-          {testimonials[currentTestimonialIndex]?.name || "Maria Chen"}
+          {currentTestimonial?.name}
         </h4>
       </div>
 
-      {/* Testimonial Quote Card */}
-      <div className="bg-[#F5F5F0] rounded-2xl p-6 md:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] relative">
+      <div
+        className=" bg-[#E1B1681A] rounded-2xl p-6 md:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] relative"
+        style={{}}
+      >
         <Slider ref={testimonialSliderRef} {...testimonialSettings}>
           {testimonials.map((testimonial) => (
             <div key={testimonial.id}>

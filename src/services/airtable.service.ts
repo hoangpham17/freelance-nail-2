@@ -20,6 +20,7 @@ export const AIRTABLE_ENDPOINTS = {
   home_gallery: "tblh3ZJpTjB5NbFmJ",
   gallery: "tblSTkMoAhVrOXYS7",
   promotion: "tblFjrUsoWmeWV82J",
+  home_comments: "tblZbWKvBilnZB6ge",
 } as const;
 
 export const fetchAirtableData = async <T = Record<string, unknown>>(

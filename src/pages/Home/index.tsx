@@ -37,12 +37,7 @@ const Home: React.FC = () => {
         onItemClick={openGalleryPopup}
         onGalleryItemsChange={setGalleryItems}
       />
-      <TestimonialSection
-        galleryImages={galleryItems.map((item) => ({
-          id: item.id || `gallery-${Math.random()}`,
-          url: item.url || "/assets/images/Slide/Photo.jpg",
-        }))}
-      />
+      <TestimonialSection />
       <GalleryPopup
         isOpen={isGalleryPopupOpen}
         items={galleryItems}
