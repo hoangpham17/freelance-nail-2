@@ -16,14 +16,28 @@ export type ServiceItem = {
   price?: string;
   icon?: string | AirtableAttachment[];
   image?: string | AirtableAttachment[];
-  category?: string;
+  // From Airtable this is actually string[]
+  category?: string | string[];
   addons?: string;
+  index?: number;
 };
 
 export type ServiceCategory = {
   id: string;
   title: string;
+  slug: string;
   description: string;
-  backgroundImage: string;
+  titleBackgroundImage: string;
+  sectionBackgroundImage: string;
   services: ServiceItem[];
+};
+
+export type ServiceCategoryRecord = {
+  id?: string;
+  name?: string;
+  title_background_image?: string | AirtableAttachment[];
+  section_background_image?: string | AirtableAttachment[];
+  slug?: string;
+  description?: string;
+  index?: number;
 };

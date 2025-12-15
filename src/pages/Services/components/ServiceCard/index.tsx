@@ -1,10 +1,9 @@
 import React from "react";
 import { ServiceItem, AirtableAttachment } from "../../types";
-import "./style.css";
 
-const resolveIcon = (icon?: string | AirtableAttachment[]) => {
-  if (typeof icon === "string") return icon;
-  if (Array.isArray(icon) && icon.length > 0) return icon[0]?.url;
+const resolveImage = (value?: string | AirtableAttachment[]) => {
+  if (typeof value === "string") return value;
+  if (Array.isArray(value) && value.length > 0) return value[0]?.url;
   return null;
 };
 
@@ -17,19 +16,27 @@ const ServiceCard: React.FC<ServiceItem> = ({
   price,
   cost,
   icon,
+  image,
   addons,
 }) => {
-  const iconUrl = resolveIcon(icon);
+  const imageSource = icon ?? image;
+  const iconUrl = resolveImage(imageSource);
+  const displayPrice = price || cost || "N/A";
+  const displayName = title || name || "";
 
   return (
-    <div className="services-menu__item" id={id}>
-      <div className="services-menu__item-wrapper">
+    <div
+      id={id}
+      className="py-4 md:py-5 border-b border-white/40 last:border-b-0"
+    >
+      <div className="flex gap-3 md:gap-4">
+        {/* Thumbnail Image */}
         {iconUrl && (
-          <div className="services-menu__item-img">
+          <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-md overflow-hidden shadow-sm">
             <img
               src={iconUrl}
-              alt={title || name}
-              className="img"
+              alt={displayName}
+              className="w-full h-full object-cover"
               onError={(e) => {
                 e.currentTarget.src =
                   "/assets/images/Services/thumbnail-service-item.png";
@@ -37,26 +44,27 @@ const ServiceCard: React.FC<ServiceItem> = ({
             />
           </div>
         )}
-        <div className="services-menu__item-content">
-          <div className="services-menu__item-title-block">
-            <h3 className="services-menu__item-title gold">{title || name}</h3>
-            <div className="services-menu__item-divider"></div>
+
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2 mb-1">
+            <h3 className="text-base md:text-lg font-serif font-semibold text-[#3a3a3a] flex-1">
+              {displayName}
+            </h3>
+            <span className="text-base md:text-lg font-semibold text-[#d4a574] whitespace-nowrap">
+              {displayPrice}
+            </span>
           </div>
-          <span className="services-menu__item-cost gold">
-            {price || cost || "N/A"}
-          </span>
-          {subtitle && (
-            <p className="services-menu__item-subtitle gray-2">{subtitle}</p>
-          )}
-          {description && (
-            <p className="services-menu__item-subtitle gray-2">
-              {description}
+
+          {(subtitle || description) && (
+            <p className="text-xs md:text-sm text-[#666] mb-1 md:mb-2">
+              {subtitle || description}
             </p>
           )}
+
           {addons && (
-            <div className="services-menu__add-on">
-              <div className="services-menu__add-on-title gold">Add-ons:</div>
-              <div className="services-menu__add-on-desc gray-2">{addons}</div>
+            <div className="mt-1 md:mt-2 text-[11px] md:text-xs text-[#666]">
+              {addons}
             </div>
           )}
         </div>

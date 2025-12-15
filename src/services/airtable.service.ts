@@ -16,6 +16,7 @@ const base = new Airtable({ apiKey: AIRTABLE_CONFIG.apiKey }).base(
 export const AIRTABLE_ENDPOINTS = {
   aboutUs: "about-us",
   services: "tblpfWm5eaqWkRNlf",
+  list_services: "tblEjsDqCMgqQzDEN",
   banner: "tblBJE5SoZNzFEk4h",
   home_gallery: "tblh3ZJpTjB5NbFmJ",
   gallery: "tblSTkMoAhVrOXYS7",

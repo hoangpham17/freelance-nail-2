@@ -12,6 +12,7 @@ import { ListSocial } from "./components/ListSocial";
 import { ButtonStyle1 } from "../../based/components/Button/Style1";
 import { BurgerMenu } from "./components/BurgerMenu";
 import { Wrapper } from "@/based/components/Wrapper";
+import { useCampaignStore } from "@/shared/store/campaignStore";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -43,6 +44,10 @@ const Header: React.FC = () => {
     useState(false);
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const setShowCampaignBar = useCampaignStore(
+    (state) => state.setShowCampaignBar
+  );
 
   const { data: promotionData } = useAirtable<PromotionData>(
     AIRTABLE_ENDPOINTS.promotion
@@ -77,6 +82,11 @@ const Header: React.FC = () => {
     (canShowCampaignText && !hasDismissedCampaignText) ||
     shouldQueuePopup ||
     isPopupOpen;
+
+  // Sync global store so other pages can know campaign bar visibility
+  useEffect(() => {
+    setShowCampaignBar(shouldShowCampaignBar);
+  }, [setShowCampaignBar, shouldShowCampaignBar]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

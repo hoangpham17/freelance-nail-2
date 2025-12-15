@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { PromotionData } from "../../types";
 import clsx from "clsx";
 import SvgIcon from "@/based/SvgIcon";
 import { Wrapper } from "@/based/components/Wrapper";
 import { Flex } from "antd";
+import { useCampaignStore } from "@/shared/store/campaignStore";
 
 interface PromotionProps {
   promotion?: PromotionData;
@@ -24,6 +25,41 @@ const Promotion: React.FC<PromotionProps> = ({
   onCloseCampaign,
   onClosePopup,
 }) => {
+  const campaignBarRef = useRef<HTMLDivElement>(null);
+  const setCampaignBarHeight = useCampaignStore(
+    (state) => state.setCampaignBarHeight
+  );
+
+  useEffect(() => {
+    const element = campaignBarRef.current;
+
+    // Nếu không có element thì không làm gì
+    if (!element) return;
+
+    // Khi bar ẩn thì height = 0
+    if (!showCampaignBar) {
+      setCampaignBarHeight(0);
+      return;
+    }
+
+    // Đo ban đầu sau khi element đã render
+    setCampaignBarHeight(element.offsetHeight);
+
+    // Quan sát mọi thay đổi kích thước (text/content thay đổi, responsive, v.v.)
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const nextHeight = entry.contentRect.height;
+      setCampaignBarHeight(nextHeight);
+    });
+
+    resizeObserver.observe(element);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [setCampaignBarHeight, showCampaignBar]);
+
   const imageSrc =
     promotion?.icon ||
     promotion?.image ||
@@ -33,6 +69,7 @@ const Promotion: React.FC<PromotionProps> = ({
     <>
       {/* Campaign Block */}
       <div
+        ref={campaignBarRef}
         className={clsx(
           "block transition-all duration-300 ease-linear overflow-hidden bg-[#D5B994]",
           showCampaignBar && !isCampaignDismissed

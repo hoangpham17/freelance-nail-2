@@ -7,8 +7,19 @@ import FixedButtons from "./components/FixedButtons";
 import RouteWrapper from "./components/RouteWrapper";
 import { routes } from "./routes";
 import "./App.css";
+import { useCampaignStore } from "./shared/store/campaignStore";
 
 function App() {
+  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
+  const campaignBarHeight = useCampaignStore(
+    (state) => state.campaignBarHeight
+  );
+
+  const baseOffset = 110;
+  const mainMarginTop = showCampaignBar
+    ? baseOffset + campaignBarHeight
+    : baseOffset;
+
   return (
     <HelmetProvider>
       <ConfigProvider>
@@ -16,7 +27,10 @@ function App() {
           <div className="app min-h-screen flex flex-col">
             <Header />
             <FixedButtons />
-            <div className="main flex-1">
+            <div
+              className="main flex-1"
+              style={{ marginTop: `${mainMarginTop}px` }}
+            >
               <Routes>
                 {routes.map((route) => {
                   const Component = route.element;

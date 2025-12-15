@@ -1,117 +1,91 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useAirtable } from "../../hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
-import ServicesTabs from "./components/ServicesTabs";
 import ServiceCategorySection from "./components/ServiceCategorySection";
-import { ServiceCategory, ServiceItem } from "./types";
+import CategoryTabs from "./components/CategoryTabs";
+import {
+  ServiceCategory,
+  ServiceItem,
+  ServiceCategoryRecord,
+  AirtableAttachment,
+} from "./types";
+import { Wrapper } from "@/based/components/Wrapper";
 
-const BASE_CATEGORIES: Omit<ServiceCategory, "services">[] = [
-  {
-    id: "manicure",
-    title: "Manicure",
-    description:
-      "Getting a manicure is a great way to maintain the health and beauty of your nails, as well as to take some time for yourself and indulge in some well-deserved relaxation.",
-    backgroundImage: "/assets/images/Services/banner-Manicure.png",
-  },
-  {
-    id: "pedicure",
-    title: "Pedicure",
-    description:
-      "All types of pedicures include the basic steps of removing polish (if applicable), cutting and shaping the nails, caring for the cuticles, using a pumice stone to exfoliate and smooth the feet, providing a massage to promote relaxation and wellness, hot towel and applying regular polish (if desired).",
-    backgroundImage: "/assets/images/Services/banner-Pedicure.png",
-  },
-  {
-    id: "nails-enhancements",
-    title: "Nail Enhancements",
-    description: "",
-    backgroundImage: "/assets/images/Services/banner-Nail-Enhancements.png",
-  },
-  {
-    id: "additional-services",
-    title: "Additional Services",
-    description: "",
-    backgroundImage: "/assets/images/Services/banner-Additional-Services.png",
-  },
-  {
-    id: "waxing",
-    title: "Waxing",
-    description: "",
-    backgroundImage: "/assets/images/Services/banner-Waxing.png",
-  },
-  {
-    id: "kid-services",
-    title: "Kid's Services",
-    description: "",
-    backgroundImage: "/assets/images/Services/banner-Kid-Services.png",
-  },
-];
+const resolveImageUrl = (image?: string | AirtableAttachment[]): string => {
+  if (typeof image === "string") return image;
+  if (Array.isArray(image) && image.length > 0) return image[0]?.url || "";
+  return "";
+};
 
 const Services: React.FC = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState("manicure");
   const { data: servicesData } = useAirtable<ServiceItem>(
     AIRTABLE_ENDPOINTS.services
   );
+  const { data: categoriesData } = useAirtable<ServiceCategoryRecord>(
+    AIRTABLE_ENDPOINTS.list_services
+  );
 
   const serviceCategories: ServiceCategory[] = useMemo(() => {
-    return BASE_CATEGORIES.map((category) => {
-      const categoryServices: ServiceItem[] = [];
-
-      servicesData?.forEach((service) => {
-        const categoryValue = service.category?.toLowerCase().trim() || "";
-        const normalizedId = category.id.toLowerCase();
-        const normalizedTitle = category.title.toLowerCase();
-
-        if (
-          categoryValue === normalizedId ||
-          categoryValue === normalizedTitle ||
-          categoryValue === normalizedId.replace("-", " ")
-        ) {
-          categoryServices.push(service);
-        }
-      });
-
-      return {
-        ...category,
-        services: categoryServices,
-      };
-    });
-  }, [servicesData]);
-
-  const handleTabClick = (tabId: string) => {
-    setActiveTab(tabId);
-    const element = document.getElementById(tabId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!categoriesData || categoriesData.length === 0) {
+      return [];
     }
-  };
+
+    return categoriesData
+      .sort((a, b) => (a?.index ?? 0) - (b?.index ?? 0))
+      .map((category) => ({
+        id: category.id || "",
+        title: category.name || "",
+        slug: category.slug || "",
+        description: category.description || "",
+        titleBackgroundImage: resolveImageUrl(category.title_background_image),
+        sectionBackgroundImage: resolveImageUrl(
+          category.section_background_image
+        ),
+        services:
+          servicesData?.filter((service) =>
+            (service.category as string[])?.includes(category.slug || "")
+          ) || [],
+      }));
+  }, [categoriesData, servicesData]);
 
   useEffect(() => {
     if (location.hash) {
       const hash = location.hash.replace("#", "");
-      if (serviceCategories.some((cat) => cat.id === hash)) {
-        setActiveTab(hash);
-        setTimeout(() => {
-          const element = document.getElementById(hash);
-          element?.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 150);
-      }
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        element?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
     }
-  }, [location.hash, serviceCategories]);
+  }, [location.hash]);
 
   return (
-    <main className="services-page">
-      <ServicesTabs
-        categories={serviceCategories.map(({ id, title }) => ({ id, title }))}
-        activeTab={activeTab}
-        onTabClick={handleTabClick}
-      />
+    <main className="w-full">
+      <CategoryTabs categories={serviceCategories} />
+      <section className="relative w-full py-16 md:py-24 lg:py-32">
+        <Wrapper>
+          <h1 className="text-center text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#3a3a3a]">
+            SERVICES NAIL LOUNGE!
+          </h1>
+        </Wrapper>
+      </section>
 
-      <section className="services-menu">
-        {serviceCategories.map((category) => (
-          <ServiceCategorySection key={category.id} category={category} />
-        ))}
+      {/* Service Categories */}
+      <section className="w-full">
+        {serviceCategories
+          .map((category, originalIndex) => ({
+            category,
+            originalIndex: originalIndex + 1,
+          }))
+          .filter(({ category }) => category.services.length > 0)
+          .map(({ category, originalIndex }) => (
+            <ServiceCategorySection
+              key={category.id}
+              category={category}
+              index={originalIndex}
+            />
+          ))}
       </section>
     </main>
   );

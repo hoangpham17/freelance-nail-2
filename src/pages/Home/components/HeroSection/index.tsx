@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Slider, { Settings } from "react-slick";
 import { Skeleton } from "antd";
 import { BannerItem, BannerRecord } from "../../types";
@@ -9,7 +9,6 @@ import { useAirtable } from "@/hooks/useAirtable";
 import CustomDots from "@/based/components/CustomDots";
 
 const HeroSection: React.FC = () => {
-  const [isMobile, setIsMobile] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const mobileSliderRef = useRef<Slider>(null);
   const desktopSliderRef = useRef<Slider>(null);
@@ -48,15 +47,6 @@ const HeroSection: React.FC = () => {
       })
       .filter((item) => item.desktop || item.mobile);
   }, [bannerRecords]);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const settings: Settings = {
     infinite: true,
