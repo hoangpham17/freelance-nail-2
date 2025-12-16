@@ -5,6 +5,7 @@ import { Wrapper } from "@/based/components/Wrapper";
 import { Flex } from "antd";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { useScreen } from "@/hooks/useScreen";
 
 interface ServiceCategorySectionProps {
   category: ServiceCategory;
@@ -15,6 +16,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
   category,
   index,
 }) => {
+  const { isDesktop } = useScreen();
   const formattedIndex = String(index).padStart(2, "0");
 
   return (
@@ -53,10 +55,10 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
             }
           >
             <div>
-              <Flex align="center" gap={16} className="h-full p-4 w-full">
+              <Flex gap={16} className="h-full p-4 w-full lg:items-center">
                 <p
                   className={clsx(
-                    "font-prata text-[#9E7B6A] underline mt-2",
+                    "font-prata text-[#9E7B6A] underline mt-2 text-left",
                     responsiveFontSizeArray(45, 57)
                   )}
                 >
@@ -64,7 +66,10 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 </p>
                 <Flex
                   align="center"
-                  className="flex-col lg:flex-row justify-between w-full"
+                  className={clsx(
+                    "w-full gap-4",
+                    isDesktop ? "justify-between" : "items-start flex-col"
+                  )}
                 >
                   <h2
                     className={clsx(
@@ -74,15 +79,24 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                   >
                     {category.title}
                   </h2>
-                  <Flex align="center">
-                    <p>{category.description}</p>
-                  </Flex>
+                  {category.description && (
+                    <Flex
+                      align="center"
+                      className={clsx(
+                        "lg:max-w-[50%]",
+                        !isDesktop &&
+                          "bg-white/30 border border-white rounded-2xl py-1 px-3"
+                      )}
+                    >
+                      <p>{category.description}</p>
+                    </Flex>
+                  )}
                 </Flex>
               </Flex>
             </div>
           </div>
 
-          <div className="columns-1 md:columns-2 gap-4 md:gap-6">
+          <div className="columns-1 lg:columns-2 gap-4 lg:gap-6">
             {category.services.map((service) => (
               <ServiceCard key={service.id} {...service} />
             ))}

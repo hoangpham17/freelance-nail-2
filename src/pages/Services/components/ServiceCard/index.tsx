@@ -29,12 +29,12 @@ const ServiceCard: React.FC<ServiceItem> = ({
   return (
     <div
       id={id}
-      className="py-2 md:py-3 px-3 md:px-4 mb-4 md:mb-6 rounded-2xl bg-[#F7F7F7CC] break-inside-avoid"
+      className="py-2 lg:py-3 px-3 lg:px-4 mb-4 lg:mb-6 rounded-2xl bg-[#F7F7F7CC] break-inside-avoid"
     >
       <Flex className="flex-col md:flex-row justify-between gap-2 md:gap-3">
         <Flex gap={12} className="w-full">
           {imageUrl && (
-            <div className="flex-shrink-0 w-[16] h-[16] md:w-[100px] md:h-[100px] rounded-md overflow-hidden shadow-sm">
+            <div className="flex-shrink-0 w-16 h-16 lg:w-[100px] lg:h-[100px] rounded-md overflow-hidden shadow-sm">
               <img
                 src={imageUrl}
                 alt={displayName}
