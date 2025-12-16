@@ -97,3 +97,19 @@ export const responsiveFontSizeArray = (
   const classes = responsiveFontSize(minSize, maxSize);
   return Object.values(classes);
 };
+
+/**
+ * Clean HTML description by removing escaped characters
+ * Removes backslashes before asterisks and newlines
+ *
+ * @param html - HTML string that may contain escaped characters
+ * @returns Cleaned HTML string
+ *
+ * @example
+ * cleanDescription("\\* Item 1") // Returns "* Item 1"
+ */
+export const cleanDescription = (html?: string): string => {
+  if (!html) return "";
+  // Remove backslashes before asterisks (e.g., \* becomes *)
+  return html.replace(/\\\*/g, "*").replace(/\\n/g, "\n");
+};

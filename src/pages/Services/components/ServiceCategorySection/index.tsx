@@ -2,6 +2,9 @@ import React from "react";
 import { ServiceCategory } from "../../types";
 import ServiceCard from "../ServiceCard";
 import { Wrapper } from "@/based/components/Wrapper";
+import { Flex } from "antd";
+import clsx from "clsx";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 interface ServiceCategorySectionProps {
   category: ServiceCategory;
@@ -17,11 +20,12 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
   return (
     <div
       id={category.id}
-      className={
+      className={clsx(
+        "relative w-full min-h-screen overflow-hidden pb-[30px] lg:pb-[50px]",
         category.sectionBackgroundImage
-          ? "relative w-full min-h-screen bg-center bg-no-repeat bg-cover py-12 md:py-16 lg:py-20 overflow-hidden"
-          : "relative w-full min-h-screen bg-white py-12 md:py-16 lg:py-20 overflow-hidden"
-      }
+          ? "bg-center bg-no-repeat bg-cover"
+          : "bg-white"
+      )}
       style={
         category.sectionBackgroundImage
           ? {
@@ -33,30 +37,55 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
     >
       <Wrapper className="relative z-10 px-4 md:px-6 lg:px-8">
         <div>
-          <div className="flex-shrink-0 mb-6 lg:mb-0 lg:w-1/3">
-            <div className="flex items-center gap-4 md:gap-6">
-              <span className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif font-light text-[#d4a574] leading-none">
-                {formattedIndex}
-              </span>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold text-[#3a3a3a]">
-                {category.title}
-              </h2>
+          <div
+            className={clsx(
+              "min-h-[236px] mb-4 md:mb-8",
+              category.titleBackgroundImage
+                ? "bg-center bg-no-repeat bg-cover"
+                : "bg-white"
+            )}
+            style={
+              category.titleBackgroundImage
+                ? {
+                    backgroundImage: `url(${category.titleBackgroundImage})`,
+                  }
+                : undefined
+            }
+          >
+            <div>
+              <Flex align="center" gap={16} className="h-full p-4 w-full">
+                <p
+                  className={clsx(
+                    "font-prata text-[#9E7B6A] underline mt-2",
+                    responsiveFontSizeArray(45, 57)
+                  )}
+                >
+                  {formattedIndex}
+                </p>
+                <Flex
+                  align="center"
+                  className="flex-col lg:flex-row justify-between w-full"
+                >
+                  <h2
+                    className={clsx(
+                      "font-prata text-[#9E7B6A] m-0",
+                      responsiveFontSizeArray(48, 80)
+                    )}
+                  >
+                    {category.title}
+                  </h2>
+                  <Flex align="center">
+                    <p>{category.description}</p>
+                  </Flex>
+                </Flex>
+              </Flex>
             </div>
           </div>
 
-          <div className="flex-1 lg:w-2/3">
-            {category.description && (
-              <p className="text-base md:text-lg text-[#666] mb-8 lg:mb-12 max-w-2xl">
-                {category.description}
-              </p>
-            )}
-
-            {/* Services Grid - Two Columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              {category.services.map((service) => (
-                <ServiceCard key={service.id} {...service} />
-              ))}
-            </div>
+          <div className="columns-1 md:columns-2 gap-4 md:gap-6">
+            {category.services.map((service) => (
+              <ServiceCard key={service.id} {...service} />
+            ))}
           </div>
         </div>
       </Wrapper>

@@ -15,7 +15,7 @@ function App() {
     (state) => state.campaignBarHeight
   );
 
-  const baseOffset = 110;
+  const baseOffset = 100;
   const mainMarginTop = showCampaignBar
     ? baseOffset + campaignBarHeight
     : baseOffset;

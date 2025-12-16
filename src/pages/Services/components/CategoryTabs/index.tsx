@@ -18,7 +18,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
     (state) => state.campaignBarHeight
   );
 
-  const baseTop = 110;
+  const baseTop = 100;
   const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                   >
                     <div
                       className={clsx(
-                        "px-2 py-4 rounded-2xl border border-white whitespace-nowrap",
+                        "px-2 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap",
                         isActive ? "bg-white/80" : "bg-white/30",
                         responsiveFontSizeArray(24, 32)
                       )}

@@ -9,17 +9,13 @@ export type AirtableAttachment = {
 export type ServiceItem = {
   id?: string;
   name?: string;
-  title?: string;
-  subtitle?: string;
   description?: string;
-  cost?: string;
   price?: string;
-  icon?: string | AirtableAttachment[];
   image?: string | AirtableAttachment[];
-  // From Airtable this is actually string[]
   category?: string | string[];
-  addons?: string;
+  add_on_services?: string;
   index?: number;
+  order?: number;
 };
 
 export type ServiceCategory = {

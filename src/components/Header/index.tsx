@@ -194,18 +194,18 @@ const Header: React.FC = () => {
           justify="space-between"
           align="center"
           gap={16}
-          className="py-3 md:py-5"
+          className="h-[64px] lg:h-[100px]"
         >
           <BurgerMenu toggleMenu={toggleMenu} />
           <Link
             to={PATHS.home}
             onClick={closeMenu}
-            className="flex-shrink-0 max-h-[32px] md:max-h-[45px] 2xl:max-h-[70px]"
+            className="flex-shrink-0 max-h-[32px] md:max-h-[45px] lg:max-h-[70px]"
           >
             <Image
               src="/assets/images/Logo/logo-desktop.png"
               alt="THE VEIRA NAIL LOUNGE & SPA"
-              className="max-h-[32px] md:max-h-[45px] 2xl:max-h-[70px]"
+              className="max-h-[32px] md:max-h-[45px] lg:max-h-[70px]"
               preview={false}
             />
           </Link>

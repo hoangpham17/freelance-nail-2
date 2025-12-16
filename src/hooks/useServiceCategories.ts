@@ -14,15 +14,6 @@ const resolveImageUrl = (image?: string | AirtableAttachment[]): string => {
   return "";
 };
 
-/**
- * Custom hook for fetching and processing service categories with their services
- * @returns Array of ServiceCategory objects with services filtered by category slug
- *
- * @example
- * ```tsx
- * const serviceCategories = useServiceCategories();
- * ```
- */
 export const useServiceCategories = (): ServiceCategory[] => {
   const { data: categoriesData } = useAirtable<ServiceCategoryRecord>(
     AIRTABLE_ENDPOINTS.list_services
@@ -49,9 +40,16 @@ export const useServiceCategories = (): ServiceCategory[] => {
           category.section_background_image
         ),
         services:
-          servicesData?.filter((service) =>
-            (service.category as string[])?.includes(category.slug || "")
-          ) || [],
+          servicesData
+            ?.filter((service) =>
+              (service.category as string[])?.includes(category.slug || "")
+            )
+            ?.map((service) => ({
+              ...service,
+              price: service.price || "",
+              addons: service.add_on_services || "",
+            }))
+            .sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0)) || [],
       }));
   }, [categoriesData, servicesData]);
 

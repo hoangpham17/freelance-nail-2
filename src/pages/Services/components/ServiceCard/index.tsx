@@ -1,5 +1,11 @@
 import React from "react";
 import { ServiceItem, AirtableAttachment } from "../../types";
+import {
+  responsiveFontSizeArray,
+  cleanDescription,
+} from "@/shared/utils/helper";
+import clsx from "clsx";
+import { Flex } from "antd";
 
 const resolveImage = (value?: string | AirtableAttachment[]) => {
   if (typeof value === "string") return value;
@@ -9,66 +15,92 @@ const resolveImage = (value?: string | AirtableAttachment[]) => {
 
 const ServiceCard: React.FC<ServiceItem> = ({
   id,
-  title,
   name,
-  subtitle,
   description,
   price,
-  cost,
-  icon,
   image,
-  addons,
+  add_on_services,
 }) => {
-  const imageSource = icon ?? image;
-  const iconUrl = resolveImage(imageSource);
-  const displayPrice = price || cost || "N/A";
-  const displayName = title || name || "";
+  const imageSource = image;
+  const imageUrl = resolveImage(imageSource);
+  const displayPrice = price || "";
+  const displayName = name || "";
 
   return (
     <div
       id={id}
-      className="py-4 md:py-5 border-b border-white/40 last:border-b-0"
+      className="py-2 md:py-3 px-3 md:px-4 mb-4 md:mb-6 rounded-2xl bg-[#F7F7F7CC] break-inside-avoid"
     >
-      <div className="flex gap-3 md:gap-4">
-        {/* Thumbnail Image */}
-        {iconUrl && (
-          <div className="flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-md overflow-hidden shadow-sm">
-            <img
-              src={iconUrl}
-              alt={displayName}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src =
-                  "/assets/images/Services/thumbnail-service-item.png";
-              }}
-            />
-          </div>
-        )}
-
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2 mb-1">
-            <h3 className="text-base md:text-lg font-serif font-semibold text-[#3a3a3a] flex-1">
-              {displayName}
-            </h3>
-            <span className="text-base md:text-lg font-semibold text-[#d4a574] whitespace-nowrap">
-              {displayPrice}
-            </span>
-          </div>
-
-          {(subtitle || description) && (
-            <p className="text-xs md:text-sm text-[#666] mb-1 md:mb-2">
-              {subtitle || description}
-            </p>
-          )}
-
-          {addons && (
-            <div className="mt-1 md:mt-2 text-[11px] md:text-xs text-[#666]">
-              {addons}
+      <Flex className="flex-col md:flex-row justify-between gap-2 md:gap-3">
+        <Flex gap={12} className="w-full">
+          {imageUrl && (
+            <div className="flex-shrink-0 w-[16] h-[16] md:w-[100px] md:h-[100px] rounded-md overflow-hidden shadow-sm">
+              <img
+                src={imageUrl}
+                alt={displayName}
+                className="w-full h-full object-cover border-2 border-white rounded-2xl"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    "/assets/images/Services/thumbnail-service-item.png";
+                }}
+              />
             </div>
           )}
-        </div>
-      </div>
+          <Flex vertical className="gap-1 md:gap-2">
+            <h3
+              className={clsx(
+                "font-prata text-[#10182A] flex-1",
+                responsiveFontSizeArray(24, 32)
+              )}
+            >
+              {displayName}
+            </h3>
+
+            {description && (
+              <div
+                className={clsx(
+                  "text-xs md:text-sm text-[#10182A] mb-1 md:mb-2 whitespace-pre-wrap",
+                  responsiveFontSizeArray(16, 20)
+                )}
+                dangerouslySetInnerHTML={{
+                  __html: cleanDescription(description),
+                }}
+              />
+            )}
+
+            {add_on_services && (
+              <Flex vertical className="text-[#9E7B6A] mt-3 md:mt-4">
+                <span
+                  className={clsx(
+                    "font-prata",
+                    responsiveFontSizeArray(24, 32)
+                  )}
+                >
+                  *Additional charge:
+                </span>
+                <div
+                  className={clsx(
+                    "whitespace-pre-wrap",
+                    responsiveFontSizeArray(14, 16)
+                  )}
+                  dangerouslySetInnerHTML={{
+                    __html: cleanDescription(add_on_services),
+                  }}
+                />
+              </Flex>
+            )}
+          </Flex>
+        </Flex>
+
+        <span
+          className={clsx(
+            "text-[#D1A054] whitespace-nowrap font-bold",
+            responsiveFontSizeArray(24, 32)
+          )}
+        >
+          ${displayPrice}
+        </span>
+      </Flex>
     </div>
   );
 };

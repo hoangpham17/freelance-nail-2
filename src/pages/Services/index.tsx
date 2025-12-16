@@ -4,6 +4,8 @@ import { useServiceCategories } from "../../hooks/useServiceCategories";
 import ServiceCategorySection from "./components/ServiceCategorySection";
 import CategoryTabs from "./components/CategoryTabs";
 import { Wrapper } from "@/based/components/Wrapper";
+import clsx from "clsx";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 const Services: React.FC = () => {
   const location = useLocation();
@@ -24,7 +26,12 @@ const Services: React.FC = () => {
       <CategoryTabs categories={serviceCategories} />
       <section className="relative w-full py-16 md:py-24 lg:py-32">
         <Wrapper>
-          <h1 className="text-center text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-[#3a3a3a]">
+          <h1
+            className={clsx(
+              "text-center font-prata font-bold text-[#3a3a3a]",
+              responsiveFontSizeArray(32, 120)
+            )}
+          >
             SERVICES NAIL LOUNGE!
           </h1>
         </Wrapper>
