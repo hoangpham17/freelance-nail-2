@@ -1,54 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useAirtable } from "../../hooks/useAirtable";
-import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
+import { useServiceCategories } from "../../hooks/useServiceCategories";
 import ServiceCategorySection from "./components/ServiceCategorySection";
 import CategoryTabs from "./components/CategoryTabs";
-import {
-  ServiceCategory,
-  ServiceItem,
-  ServiceCategoryRecord,
-  AirtableAttachment,
-} from "./types";
 import { Wrapper } from "@/based/components/Wrapper";
-
-const resolveImageUrl = (image?: string | AirtableAttachment[]): string => {
-  if (typeof image === "string") return image;
-  if (Array.isArray(image) && image.length > 0) return image[0]?.url || "";
-  return "";
-};
 
 const Services: React.FC = () => {
   const location = useLocation();
-  const { data: servicesData } = useAirtable<ServiceItem>(
-    AIRTABLE_ENDPOINTS.services
-  );
-  const { data: categoriesData } = useAirtable<ServiceCategoryRecord>(
-    AIRTABLE_ENDPOINTS.list_services
-  );
-
-  const serviceCategories: ServiceCategory[] = useMemo(() => {
-    if (!categoriesData || categoriesData.length === 0) {
-      return [];
-    }
-
-    return categoriesData
-      .sort((a, b) => (a?.index ?? 0) - (b?.index ?? 0))
-      .map((category) => ({
-        id: category.id || "",
-        title: category.name || "",
-        slug: category.slug || "",
-        description: category.description || "",
-        titleBackgroundImage: resolveImageUrl(category.title_background_image),
-        sectionBackgroundImage: resolveImageUrl(
-          category.section_background_image
-        ),
-        services:
-          servicesData?.filter((service) =>
-            (service.category as string[])?.includes(category.slug || "")
-          ) || [],
-      }));
-  }, [categoriesData, servicesData]);
+  const serviceCategories = useServiceCategories();
 
   useEffect(() => {
     if (location.hash) {

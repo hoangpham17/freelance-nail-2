@@ -17,17 +17,20 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
   return (
     <div
       id={category.id}
-      className="relative w-full py-12 md:py-16 lg:py-20 overflow-hidden"
+      className={
+        category.sectionBackgroundImage
+          ? "relative w-full min-h-screen bg-center bg-no-repeat bg-cover py-12 md:py-16 lg:py-20 overflow-hidden"
+          : "relative w-full min-h-screen bg-white py-12 md:py-16 lg:py-20 overflow-hidden"
+      }
+      style={
+        category.sectionBackgroundImage
+          ? {
+              backgroundImage: `url(${category.sectionBackgroundImage})`,
+              backgroundAttachment: "fixed",
+            }
+          : undefined
+      }
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 w-full h-full">
-        <img
-          src={category.sectionBackgroundImage}
-          alt={category.title}
-          className="w-full h-full object-cover"
-        />
-      </div>
-
       <Wrapper className="relative z-10 px-4 md:px-6 lg:px-8">
         <div>
           <div className="flex-shrink-0 mb-6 lg:mb-0 lg:w-1/3">
