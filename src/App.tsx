@@ -8,14 +8,16 @@ import RouteWrapper from "./components/RouteWrapper";
 import { routes } from "./routes";
 import "./App.css";
 import { useCampaignStore } from "./shared/store/campaignStore";
+import { useScreen } from "./hooks/useScreen";
 
 function App() {
+  const { isDesktop } = useScreen();
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
 
-  const baseOffset = 100;
+  const baseOffset = isDesktop ? 100 : 64;
   const mainMarginTop = showCampaignBar
     ? baseOffset + campaignBarHeight
     : baseOffset;

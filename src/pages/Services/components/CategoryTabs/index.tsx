@@ -5,12 +5,16 @@ import { useCampaignStore } from "@/shared/store/campaignStore";
 import Slider, { Settings } from "react-slick";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { Flex } from "antd";
+import { useScreen } from "@/hooks/useScreen";
 
 interface CategoryTabsProps {
   categories: ServiceCategory[];
 }
 
 const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
+  const { isDesktop } = useScreen();
+
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const sliderRef = useRef<Slider | null>(null);
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
@@ -18,7 +22,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
     (state) => state.campaignBarHeight
   );
 
-  const baseTop = 100;
+  const baseTop = isDesktop ? 100 : 64;
   const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
 
   useEffect(() => {
@@ -70,9 +74,11 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                 <div key={category.id} className="px-1">
                   <div
                     onClick={() => handleTabClick(category.slug)}
-                    className="cursor-pointer py-3 md:py-4 "
+                    className="cursor-pointer py-2 lg:py-4"
                   >
-                    <div
+                    <Flex
+                      align="center"
+                      justify="center"
                       className={clsx(
                         "px-2 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap",
                         isActive ? "bg-white/80" : "bg-white/30",
@@ -84,7 +90,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                       }}
                     >
                       {category.title}
-                    </div>
+                    </Flex>
                   </div>
                 </div>
               );
