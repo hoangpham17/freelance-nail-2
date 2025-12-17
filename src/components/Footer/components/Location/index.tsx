@@ -31,7 +31,7 @@ const Location: React.FC = () => {
           className="block"
         >
           <Image
-            src="/assets/images/Background/map.jpg"
+            src="/assets/images/Footer/map.jpg"
             alt="Location Map"
             className="w-full max-w-[450px] rounded-lg transition-all"
             preview={false}
