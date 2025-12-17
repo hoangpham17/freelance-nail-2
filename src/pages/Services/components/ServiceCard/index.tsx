@@ -29,7 +29,7 @@ const ServiceCard: React.FC<ServiceItem> = ({
   return (
     <div
       id={id}
-      className="py-2 lg:py-3 px-3 lg:px-4 mb-4 lg:mb-6 rounded-2xl bg-[#F7F7F7CC] break-inside-avoid"
+      className="py-2 lg:py-3 px-3 lg:px-4 mb-2 lg:mb-3 rounded-2xl bg-[#F7F7F7CC] break-inside-avoid"
     >
       <Flex className="flex-col md:flex-row justify-between gap-2 md:gap-3">
         <Flex gap={12} className="w-full">

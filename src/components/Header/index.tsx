@@ -14,6 +14,7 @@ import { BurgerMenu } from "./components/BurgerMenu";
 import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import { useScreen } from "@/hooks/useScreen";
+import { useCheckOpacityHeader } from "@/hooks/useCheckOpacityHeader";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -39,9 +40,12 @@ const getPromotionText = (promotion?: PromotionData) =>
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const isOpacityHeader = useCheckOpacityHeader();
+
   const { isDesktop } = useScreen();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
+  const [isAtTop, setIsAtTop] = useState(true);
   const [hasDismissedCampaignText, setHasDismissedCampaignText] =
     useState(false);
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
@@ -104,6 +108,7 @@ const Header: React.FC = () => {
     if (typeof window === "undefined") return;
     const handleScroll = () => {
       setIsHeaderSolid(window.scrollY > 50);
+      setIsAtTop(window.scrollY === 0);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -179,7 +184,12 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-[2px_6px_6px_0px_#0000000F]">
+    <header
+      className={clsx(
+        "fixed top-0 left-0 w-full z-50  shadow-[2px_6px_6px_0px_#0000000F]",
+        isOpacityHeader && isAtTop ? "bg-white/60" : "bg-white"
+      )}
+    >
       <Promotion
         promotion={promotion}
         promotionText={promotionText}

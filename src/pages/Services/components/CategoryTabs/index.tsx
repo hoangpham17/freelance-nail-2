@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ServiceCategory } from "../../types";
-import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import Slider, { Settings } from "react-slick";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { Flex } from "antd";
 import { useScreen } from "@/hooks/useScreen";
+import { Wrapper } from "@/based/components/Wrapper";
 
 interface CategoryTabsProps {
   categories: ServiceCategory[];
@@ -64,7 +64,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
   if (!categories.length) return null;
 
   return (
-    <section className="sticky z-30" style={{ top: stickyTop }}>
+    <section
+      className="sticky z-30 transition-all duration-300"
+      style={{ top: stickyTop }}
+    >
       <Wrapper>
         <div className="flex-1 min-w-0 overflow-hidden relative">
           <Slider ref={sliderRef} {...sliderSettings}>

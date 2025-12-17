@@ -9,6 +9,7 @@ import { routes } from "./routes";
 import "./App.css";
 import { useCampaignStore } from "./shared/store/campaignStore";
 import { useScreen } from "./hooks/useScreen";
+import { useMemo } from "react";
 
 function App() {
   const { isDesktop } = useScreen();
@@ -18,9 +19,12 @@ function App() {
   );
 
   const baseOffset = isDesktop ? 100 : 64;
-  const mainMarginTop = showCampaignBar
-    ? baseOffset + campaignBarHeight
-    : baseOffset;
+  const mainMarginTop = useMemo(() => {
+    if (showCampaignBar) {
+      return baseOffset + campaignBarHeight;
+    }
+    return baseOffset;
+  }, [showCampaignBar, baseOffset, campaignBarHeight]);
 
   return (
     <HelmetProvider>
