@@ -37,7 +37,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
           : undefined
       }
     >
-      <Wrapper className="relative z-10 px-4 md:px-6 lg:px-8">
+      <Wrapper className="relative z-10">
         <div>
           <div
             className={clsx(

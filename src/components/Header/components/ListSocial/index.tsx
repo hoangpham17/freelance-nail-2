@@ -27,12 +27,12 @@ const listSocial = [
 ];
 
 export const ListSocial = () => {
-  const { isMobile } = useScreen();
+  const { isDesktop } = useScreen();
 
-  const iconSize = useMemo(() => (isMobile ? 14 : 24), [isMobile]);
+  const iconSize = useMemo(() => (isDesktop ? 14 : 24), [isDesktop]);
 
   return (
-    <Flex className="gap-[6px] md:gap-2">
+    <Flex className="gap-[6px] lg:gap-2">
       {listSocial.map((item) => (
         <a
           key={item.name}

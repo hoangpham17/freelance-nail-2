@@ -13,6 +13,7 @@ import { ButtonStyle1 } from "../../based/components/Button/Style1";
 import { BurgerMenu } from "./components/BurgerMenu";
 import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
+import { useScreen } from "@/hooks/useScreen";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -38,6 +39,7 @@ const getPromotionText = (promotion?: PromotionData) =>
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const { isDesktop } = useScreen();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
   const [hasDismissedCampaignText, setHasDismissedCampaignText] =
@@ -202,12 +204,21 @@ const Header: React.FC = () => {
             onClick={closeMenu}
             className="flex-shrink-0 max-h-[32px] md:max-h-[45px] lg:max-h-[70px]"
           >
-            <Image
-              src="/assets/images/Logo/logo-desktop.png"
-              alt="THE VEIRA NAIL LOUNGE & SPA"
-              className="max-h-[32px] md:max-h-[45px] lg:max-h-[70px]"
-              preview={false}
-            />
+            {isDesktop ? (
+              <Image
+                src="/assets/images/logo/logo-desktop.png"
+                alt="THE VEIRA NAIL LOUNGE & SPA"
+                className="max-h-[70px]"
+                preview={false}
+              />
+            ) : (
+              <Image
+                src="/assets/images/logo/logo-mobile.png"
+                alt="THE VEIRA NAIL LOUNGE & SPA"
+                className="max-h-[32px] md:max-h-[45px]"
+                preview={false}
+              />
+            )}
           </Link>
 
           <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center">
@@ -231,17 +242,17 @@ const Header: React.FC = () => {
             })}
           </nav>
 
-          <div className="flex flex-col items-end gap-1 md:flex-row md:items-center md:gap-4 flex-shrink-0">
+          <div className="flex flex-col items-end gap-1 lg:flex-row lg:items-center lg:gap-4 flex-shrink-0">
             {/* Phone Number - Mobile Only */}
             <a
               href="tel:608000000"
-              className="md:hidden text-[#8B7355] text-sm font-medium"
+              className="lg:hidden text-[#8B7355] text-sm font-medium"
             >
               (608) 000 000
             </a>
 
             <ListSocial />
-            <Link to={PATHS.contactUs} className="hidden md:block">
+            <Link to={PATHS.contactUs} className="hidden lg:block">
               <ButtonStyle1 className="font-lexend">CONTACT US</ButtonStyle1>
             </Link>
           </div>

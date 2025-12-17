@@ -85,7 +85,7 @@ const WelcomeSection: React.FC = () => {
       <div
         className="bg-cover bg-center pt-[150px] text-center z-[1]"
         style={{
-          backgroundImage: `url(/assets/images/Background/home-1.jpg)`,
+          backgroundImage: `url(/assets/images/HomePage/bg-welcome.png)`,
         }}
       >
         <Wrapper>
@@ -111,7 +111,8 @@ const WelcomeSection: React.FC = () => {
             </p>
           </Flex>
           <Flex
-            className="flex-wrap gap-4 z-[1] translate-y-[60px] lg:translate-y-[80px]"
+            className="flex-wrap gap-4 z-[1] pt-[40px] lg:pt-[30px] -translate-y-[40px] lg:-translate-y-[30px]"
+            // className="flex-wrap gap-4 z-[1] translate-y-[60px] lg:translate-y-[80px]"
             align="center"
             justify="center"
           >
@@ -145,7 +146,7 @@ const WelcomeSection: React.FC = () => {
           </Flex>
         </Wrapper>
       </div>
-      <div className="pb-28 bg-white" />
+      {/* <div className="pb-28 bg-white" /> */}
     </section>
   );
 };

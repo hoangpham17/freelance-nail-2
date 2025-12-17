@@ -78,20 +78,12 @@ const TestimonialSection: React.FC = () => {
     };
   }, [commentRecords]);
 
-  // Water droplet pattern background
-  const waterDropletPattern = useMemo(
-    () =>
-      `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='%23D4AF37' opacity='0.1'/%3E%3C/svg%3E")`,
-    []
-  );
-
   return (
     <section className="relative pt-10 lg:pt-16 lg:pb-0 overflow-hidden bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
       <div
-        className="absolute inset-0 opacity-60"
+        className="bg-cover bg-center absolute inset-0 opacity-60"
         style={{
-          backgroundImage: `radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%), radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%), ${waterDropletPattern}`,
-          backgroundRepeat: "repeat",
+          backgroundImage: `url(/assets/images/HomePage/bg-comment.png)`,
         }}
       />
       <Wrapper className="px-4 lg:px-6 relative z-10">
