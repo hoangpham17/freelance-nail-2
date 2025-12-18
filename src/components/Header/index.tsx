@@ -216,14 +216,14 @@ const Header: React.FC = () => {
           >
             {isDesktop ? (
               <Image
-                src="/assets/images/logo/logo-desktop.png"
+                src="/assets/images/logo/desktop.png"
                 alt="THE VEIRA NAIL LOUNGE & SPA"
                 className="max-h-[70px]"
                 preview={false}
               />
             ) : (
               <Image
-                src="/assets/images/logo/logo-mobile.png"
+                src="/assets/images/logo/mobile.png"
                 alt="THE VEIRA NAIL LOUNGE & SPA"
                 className="max-h-[32px] md:max-h-[45px]"
                 preview={false}

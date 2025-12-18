@@ -15,7 +15,7 @@ const SEO: React.FC<SEOProps> = ({
   title = "THE VEIRA NAIL LOUNGE & SPA - Premium Nail Care Services",
   description = "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.",
   keywords = "nail salon, manicure, pedicure, nail art, Madison WI, spa services, nail enhancements",
-  image = "/assets/images/Logo/logo-desktop.png",
+  image = "/assets/images/logo/desktop.png",
   url = typeof window !== "undefined" ? window.location.href : "",
   type = "website",
   siteName = "THE VEIRA NAIL LOUNGE & SPA",

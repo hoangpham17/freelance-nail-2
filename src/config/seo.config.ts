@@ -11,7 +11,7 @@ export const SEO_CONFIG = {
     "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.",
   defaultKeywords:
     "nail salon, manicure, pedicure, nail art, Madison WI, spa services, nail enhancements",
-  defaultImage: "/assets/images/Logo/logo-desktop.png",
+  defaultImage: "/assets/images/logo/desktop.png",
   twitterHandle: "@veiranail",
   business: {
     name: "THE VEIRA NAIL LOUNGE & SPA",

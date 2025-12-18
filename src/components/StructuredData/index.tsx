@@ -13,7 +13,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ data }) => {
     name: "THE VEIRA NAIL LOUNGE & SPA",
     image:
       typeof window !== "undefined"
-        ? `${window.location.origin}/assets/images/Logo/logo-desktop.png`
+        ? `${window.location.origin}/assets/images/logo/desktop.png`
         : "",
     "@id": typeof window !== "undefined" ? window.location.origin : "",
     url: typeof window !== "undefined" ? window.location.origin : "",

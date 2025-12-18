@@ -28,7 +28,7 @@ const BannerSection: React.FC = () => {
         />
       </Wrapper>
 
-      <Wrapper className="relative pt-[200px] lg:pt-[105px] !pb-8 md:!px-6 lg:!px-8 !px-0">
+      <Wrapper className="relative pt-[55px] lg:pt-[105px] !pb-8 md:!px-6 lg:!px-8 !px-0">
         <div
           className={clsx(
             "w-full h-full p-6 lg:p-8 relative min-h-[450px] lg:border-4 border-white lg:rounded-[32px]"

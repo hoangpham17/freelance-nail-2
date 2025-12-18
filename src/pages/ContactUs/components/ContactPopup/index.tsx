@@ -6,7 +6,10 @@ interface ContactPopupProps {
   isSuccess: boolean;
 }
 
-const ContactPopup: React.FC<ContactPopupProps> = ({ isVisible, isSuccess }) => {
+const ContactPopup: React.FC<ContactPopupProps> = ({
+  isVisible,
+  isSuccess,
+}) => {
   if (!isVisible) return null;
 
   return (
@@ -14,7 +17,7 @@ const ContactPopup: React.FC<ContactPopupProps> = ({ isVisible, isSuccess }) => 
       <div className="contact-us__popup-body">
         <div className="contact-us__block_logo">
           <img
-            src="/assets/images/Logo/logo-desktop.png"
+            src="/assets/images/logo/desktop.png"
             alt="Logo"
             className="contact-us__logo"
           />
