@@ -26,7 +26,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
   if (loading) {
     return (
-      <Wrapper className="py-8 lg:py-12">
+      <Wrapper>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
           {[...Array(6)].map((_, index) => (
             <Skeleton.Image
@@ -41,8 +41,8 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   }
 
   return (
-    <div className="w-full pt-16 lg:pt-20">
-      <Wrapper className="py-8 lg:py-12">
+    <div className="w-full">
+      <Wrapper>
         {/* First 3 items */}
         {firstThreeItems.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-8 lg:mb-12">

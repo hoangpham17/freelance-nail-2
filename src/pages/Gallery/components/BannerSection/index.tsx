@@ -13,34 +13,39 @@ const BannerSection: React.FC = () => {
     <>
       <Wrapper
         className={clsx(
-          "absolute left-1/2 -translate-x-1/2 w-full h-[328px]",
+          "absolute lg:left-1/2 lg:-translate-x-1/2 h-[328px] overflow-hidden",
           isDesktop ? "-top-[100px]" : "-top-[64px]"
         )}
       >
         <div
-          className="bg-center w-full h-full"
+          className="h-full"
           style={{
             backgroundImage: `url(/assets/images/Gallery/banner.png)`,
             backgroundSize: "auto 100%",
+            backgroundPosition: isDesktop ? "center" : "right center",
             backgroundRepeat: "no-repeat",
           }}
         />
       </Wrapper>
 
-      <Wrapper className="relative pt-[200px] lg:pt-[105px] pb-8">
+      <Wrapper className="relative pt-[200px] lg:pt-[105px] !pb-8 md:!px-6 lg:!px-8 !px-0">
         <div
-          className={clsx("w-full p-6 lg:p-8 relative min-h-[450px]")}
+          className={clsx(
+            "w-full h-full p-6 lg:p-8 relative min-h-[450px] lg:border-4 border-white lg:rounded-[32px]"
+          )}
           style={{
-            backgroundImage: `url(/assets/images/Gallery/bg-info-card.png)`,
+            backgroundImage: isDesktop
+              ? `url(/assets/images/Gallery/bg-info-card-desktop.png)`
+              : `url(/assets/images/Gallery/bg-info-card-mobile.png)`,
             backgroundSize: "cover",
-            backgroundPosition: isDesktop ? "center" : "right center",
+            backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}
         >
           <Flex vertical className="max-w-[600px]">
             <h1
               className={clsx(
-                "font-prata font-bold text-[#F5F0E8] mb-6 leading-tight",
+                "font-prata font-bold text-[#F5F0E8] mb-6 leading-tight mt-[130px] lg:mt-0",
                 responsiveFontSizeArray(36, 90)
               )}
               style={{
