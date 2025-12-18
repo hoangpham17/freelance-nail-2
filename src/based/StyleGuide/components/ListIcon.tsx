@@ -58,6 +58,7 @@ export const ListIcon: React.FC<ListIconProps> = ({ handleCopy }) => {
     "assets/svgs/chevron-right.svg",
     "assets/svgs/search.svg",
     "assets/svgs/arrow-detail.svg",
+    "assets/svgs/foward.svg",
   ];
 
   return (

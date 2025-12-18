@@ -47,7 +47,7 @@ const Services: React.FC = () => {
           <h1
             className={clsx(
               "text-center font-prata text-black/80",
-              responsiveFontSizeArray(32, 120)
+              responsiveFontSizeArray(32, 100)
             )}
           >
             SERVICES NAIL LOUNGE!

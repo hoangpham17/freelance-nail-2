@@ -41,7 +41,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
         <div>
           <div
             className={clsx(
-              "lg:min-h-[236px] mb-4 md:mb-8",
+              "lg:min-h-[236px] mb-4 md:mb-8 mt-[30px] lg:mt-[50px]",
               category.titleBackgroundImage
                 ? "bg-center bg-no-repeat bg-cover"
                 : "bg-white"

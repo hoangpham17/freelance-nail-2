@@ -58,10 +58,19 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
         {/* Control Your Day Image */}
         <div className="w-full mb-8 lg:mb-12">
+          {/* Mobile Image */}
           <Image
-            src="/assets/images/Gallery/control-your-day.png"
+            src="/assets/images/Gallery/control-your-day-mobile.png"
             alt="Control Your Day"
-            className="w-full"
+            className="block lg:hidden mx-auto"
+            style={{ height: "auto", maxWidth: "375px" }}
+            preview={false}
+          />
+          {/* Desktop Image */}
+          <Image
+            src="/assets/images/Gallery/control-your-day-desktop.png"
+            alt="Control Your Day"
+            className="hidden lg:block w-full"
             style={{ height: "auto" }}
             preview={false}
           />

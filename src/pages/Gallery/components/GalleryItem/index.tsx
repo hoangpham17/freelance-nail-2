@@ -13,14 +13,17 @@ interface GalleryItemProps {
 const GalleryItem: React.FC<GalleryItemProps> = ({ item, onClick }) => {
   return (
     <div
-      className="group relative w-full aspect-square rounded-xl lg:rounded-2xl overflow-hidden cursor-pointer bg-white shadow-md hover:shadow-xl transition-all duration-300"
+      className="group relative w-full h-[420px] lg:h-[520px] rounded-xl lg:rounded-2xl overflow-hidden cursor-pointer bg-white shadow-md hover:shadow-xl transition-all duration-300"
       onClick={onClick}
     >
-      <Image
-        src={item.url}
-        alt={item.description || "Gallery"}
-        className="w-full h-full object-cover"
-        preview={false}
+      <div
+        className="w-full h-full transition-transform duration-300 group-hover:scale-110"
+        style={{
+          backgroundImage: `url(${item.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
       />
 
       {item.description && (
