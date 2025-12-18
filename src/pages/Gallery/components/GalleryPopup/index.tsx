@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
+import { Skeleton } from "antd";
 import { GalleryItem } from "../../types";
-import "./style.css";
+import SvgIcon from "@/based/SvgIcon";
 
 interface GalleryPopupProps {
   isOpen: boolean;
@@ -29,60 +30,95 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
     return () => window.removeEventListener("keydown", handleKey);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const settings: Settings = {
+    arrows: true,
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: true,
     initialSlide: selectedIndex,
+    nextArrow: (
+      <button
+        className="absolute right-2 lg:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-white border border-gray-200 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+        type="button"
+        aria-label="Next"
+      >
+        <i className="bi bi-chevron-right text-gray-700" />
+      </button>
+    ),
+    prevArrow: (
+      <button
+        className="absolute left-2 lg:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-white/90 hover:bg-white border border-gray-200 flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110 active:scale-95"
+        type="button"
+        aria-label="Previous"
+      >
+        <i className="bi bi-chevron-left text-gray-700" />
+      </button>
+    ),
   };
 
   return (
-    <div className="popup-modal popup-gallery" data-popup data-popup-gallery>
-      <div className="overlay" data-popup-close onClick={onClose}></div>
-      <div className="popup-inner">
-        <button className="popup-btn-close" data-popup-close onClick={onClose}>
-          <img src="/assets/images/Icons/icon-close.svg" alt="Close" className="icon" />
+    <div className="fixed top-0 left-0 w-full h-full z-[101]">
+      {/* Overlay */}
+      <div
+        className="absolute top-0 left-0 w-full h-full bg-black/80"
+        onClick={onClose}
+      ></div>
+      {/* Popup Inner */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] lg:w-[60%] max-h-[90vh] z-[102]">
+        {/* Close Button */}
+        <button
+          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 w-8 h-8 lg:w-10 lg:h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center"
+          onClick={onClose}
+          aria-label="Close popup"
+        >
+          <SvgIcon
+            src={"assets/svgs/x-close.svg"}
+            ariaLabel="text"
+            width={24}
+            height={24}
+            className="size-[24px] shrink-0"
+          />
         </button>
-        <div className="slide-wrapper">
-          <div className="thumbail-wrapper inner-img">
+        {/* Slider Wrapper */}
+        <div className="relative">
+          <div className="[&_.slick-list]:m-0 [&_.slick-slide]:p-0">
             <Slider ref={sliderRef} {...settings}>
-              {items.map((item) => (
-                <div key={`${item.id}-popup`}>
-                  <img src={item.url} alt={item.description || "Gallery"} className="img" />
-                  <div className="decs">
+              {items.map((item, index) => (
+                <div key={item.id || index} className="px-2">
+                  {item.url ? (
                     <img
-                      src="/assets/images/Icons/gallery-icon.svg"
-                      alt="Gallery icon"
-                      className="icon-thumb"
+                      src={item.url}
+                      alt={item.description || "Gallery"}
+                      className="block mx-auto max-h-[75vh] w-auto rounded-lg"
                     />
-                    <span>{item.description || "Gallery Image"}</span>
-                    <img
-                      src="/assets/images/Icons/gallery-arrow-down.svg"
-                      alt="Close gallery"
-                      className="icon-arrow"
-                      onClick={onClose}
-                    />
-                  </div>
+                  ) : (
+                    <div className="flex items-center justify-center min-h-[400px]">
+                      <Skeleton.Image
+                        active
+                        style={{
+                          width: "100%",
+                          maxWidth: "800px",
+                          height: "400px",
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
             </Slider>
-            <button
-              className="slick-prev-btn slick-arrow"
-              data-prev-item
-              onClick={() => sliderRef.current?.slickPrev()}
-            >
-              <i className="bi bi-chevron-left"></i>
-            </button>
-            <button
-              className="slick-next-btn slick-arrow"
-              data-next-item
-              onClick={() => sliderRef.current?.slickNext()}
-            >
-              <i className="bi bi-chevron-right"></i>
-            </button>
           </div>
         </div>
       </div>
