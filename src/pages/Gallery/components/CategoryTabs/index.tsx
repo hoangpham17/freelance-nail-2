@@ -83,15 +83,15 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                   onSearchChange("");
                 }}
                 className={clsx(
-                  "flex items-center gap-2 transition-colors flex-1 justify-center",
+                  "flex items-center gap-2 transition-colors flex-1 justify-center  md:whitespace-nowrap",
                   responsiveFontSizeArray(12, 32),
-                  isActive ? "text-white" : "text-gray-400 hover:text-gray-200"
+                  isActive ? "text-white" : "text-[#D9D9D9] hover:text-white"
                 )}
               >
                 <span
                   className={clsx(
                     "w-1.5 h-1.5 rounded-full flex-shrink-0",
-                    isActive ? "bg-white" : "bg-gray-400"
+                    isActive ? "bg-white" : "bg-[#D9D9D9] hover:bg-white"
                   )}
                 />
                 <span>{filter.label}</span>
