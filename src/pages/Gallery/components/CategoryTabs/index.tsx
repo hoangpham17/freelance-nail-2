@@ -38,7 +38,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   const fixedTop =
     baseTop + (showCampaignBar ? campaignBarHeight : 0) + spacing;
 
-  const searchIconSize = useMemo(() => (isDesktop ? 35 : 24), [isDesktop]);
+  const searchIconSize = useMemo(() => (isDesktop ? 35 : 12), [isDesktop]);
 
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
@@ -65,8 +65,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       className="fixed left-0 right-0 z-30 transition-all duration-300"
       style={{ top: fixedTop }}
     >
-      <div className="flex items-center gap-4 bg-black/60 rounded-full p-1 lg:p-2 shadow-lg max-w-[1227px] mx-auto border border-white h-auto lg:h-[75px] backdrop-blur-sm">
-        <div className="flex items-center justify-between flex-1 gap-2 lg:gap-4">
+      <div className="flex items-center gap-4 bg-black/60 rounded-full p-1 lg:p-2 shadow-lg max-w-[calc(100%_-_24px)] lg:max-w-[1227px] mx-auto border border-white h-auto lg:h-[75px] backdrop-blur-sm">
+        <div
+          className={clsx(
+            "flex items-center justify-between flex-1 gap-2 lg:gap-4 transition-all duration-300",
+            isSearchOpen && !isDesktop ? "hidden" : "flex"
+          )}
+        >
           {filters.map((filter) => {
             const isActive = filter.id === activeFilter;
             return (
@@ -78,7 +83,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                   onSearchChange("");
                 }}
                 className={clsx(
-                  "flex items-center gap-2 whitespace-nowrap transition-colors flex-1 justify-center",
+                  "flex items-center gap-2 transition-colors flex-1 justify-center",
                   responsiveFontSizeArray(12, 32),
                   isActive ? "text-white" : "text-gray-400 hover:text-gray-200"
                 )}
@@ -96,12 +101,19 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         </div>
 
         {/* Search Section */}
-        <div className="flex items-center gap-2 flex-shrink-0 overflow-hidden">
+        <div
+          className={clsx(
+            "flex items-center gap-2 overflow-hidden transition-all duration-300",
+            isSearchOpen && !isDesktop ? "flex-1" : "flex-shrink-0"
+          )}
+        >
           <div
             className={clsx(
-              "flex items-center gap-2 bg-[#3a3a3a] border border-white rounded-2xl px-3 lg:px-4 py-1.5 lg:py-2 transition-all duration-300 ease-in-out",
+              "flex items-center gap-2 bg-[#3a3a3a] border border-white rounded-full px-3 lg:px-4 py-1.5 lg:py-2 transition-all duration-300 ease-in-out",
               isSearchOpen
-                ? "w-[200px] lg:w-[300px] opacity-100"
+                ? isDesktop
+                  ? "w-[300px] opacity-100"
+                  : "w-full opacity-100 border-none "
                 : "w-0 opacity-0 border-0 px-0"
             )}
           >
@@ -134,7 +146,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
               type="button"
               onClick={handleSearchClick}
               aria-label="Search"
-              className="w-5 h-5 lg:w-[59px] lg:h-[59px] rounded-full bg-[#3a3a3a] hover:bg-[#4a4a4a] flex items-center justify-center flex-shrink-0 transition-colors"
+              className="mr-2 lg:mr-0 w-5 h-5 lg:w-[59px] lg:h-[59px] rounded-full bg-[#3a3a3a] hover:bg-[#4a4a4a] flex items-center justify-center flex-shrink-0 transition-colors"
             >
               <SvgIcon
                 src="/assets/svgs/search.svg"
