@@ -34,11 +34,13 @@ const BannerSection: React.FC = () => {
             "w-full p-6 lg:p-8 relative min-h-[350px] md:min-h-[450px] md:border-4 border-white md:rounded-[32px]"
           )}
           style={{
-            backgroundImage: isTablet
-              ? `url(/assets/images/Gallery/bg-info-card-desktop.png)`
-              : `url(/assets/images/Gallery/bg-info-card-mobile.png)`,
-            backgroundSize: isTablet ? "cover" : "auto 100%",
-            backgroundPosition: isTablet ? "right center" : "center",
+            backgroundImage:
+              isTablet || isDesktop
+                ? `url(/assets/images/Gallery/bg-info-card-desktop.png)`
+                : `url(/assets/images/Gallery/bg-info-card-mobile.png)`,
+            backgroundSize: isTablet || isDesktop ? "cover" : "auto 100%",
+            backgroundPosition:
+              isTablet || isDesktop ? "right center" : "center",
             backgroundRepeat: "no-repeat",
           }}
         >
