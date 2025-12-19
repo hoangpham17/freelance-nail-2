@@ -1,12 +1,12 @@
 import React from "react";
-import HeroSection from "./components/HeroSection";
-import InquiryForm from "./components/InquiryForm";
+import BannerSection from "./components/BannerSection";
+import PartyForm from "./components/PartyForm";
 
 const HostAParty: React.FC = () => {
   return (
     <div className="w-full bg-white">
-      <HeroSection />
-      <InquiryForm />
+      <BannerSection />
+      <PartyForm />
     </div>
   );
 };
