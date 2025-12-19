@@ -23,6 +23,7 @@ export const AIRTABLE_ENDPOINTS = {
   promotion: "tblFjrUsoWmeWV82J",
   home_comments: "tblZbWKvBilnZB6ge",
   host_a_party: "tblRWjOo4Her93N0l",
+  policies: "tblhhzm1SgbRiBJcc",
 } as const;
 
 export const fetchAirtableData = async <T = Record<string, unknown>>(

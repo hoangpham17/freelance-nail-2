@@ -1,5 +1,6 @@
 export type PolicyItem = {
+  id?: string;
   title: string;
-  content: string;
-  icon: React.ReactNode | null;
+  description: string;
+  order?: number;
 };
