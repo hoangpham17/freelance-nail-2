@@ -7,7 +7,7 @@ import { Flex } from "antd";
 import SvgIcon from "@/based/SvgIcon";
 
 const BannerSection: React.FC = () => {
-  const { isDesktop } = useScreen();
+  const { isDesktop, isTablet } = useScreen();
 
   return (
     <>
@@ -28,24 +28,24 @@ const BannerSection: React.FC = () => {
         />
       </Wrapper>
 
-      <Wrapper className="relative pt-[55px] lg:pt-[105px] !pb-8 md:!px-6 lg:!px-8 !px-0">
+      <Wrapper className="relative pt-[65px] lg:pt-[105px] !pb-8 md:!px-6 lg:!px-8 !px-0">
         <div
           className={clsx(
-            "w-full h-full p-6 lg:p-8 relative min-h-[450px] lg:border-4 border-white lg:rounded-[32px]"
+            "w-full p-6 lg:p-8 relative min-h-[350px] md:min-h-[450px] md:border-4 border-white md:rounded-[32px]"
           )}
           style={{
-            backgroundImage: isDesktop
+            backgroundImage: isTablet
               ? `url(/assets/images/Gallery/bg-info-card-desktop.png)`
               : `url(/assets/images/Gallery/bg-info-card-mobile.png)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            backgroundSize: isTablet ? "cover" : "auto 100%",
+            backgroundPosition: isTablet ? "right center" : "center",
             backgroundRepeat: "no-repeat",
           }}
         >
           <Flex vertical className="max-w-[600px]">
             <h1
               className={clsx(
-                "font-prata font-bold text-[#F5F0E8] mb-6 leading-tight mt-[130px] lg:mt-0",
+                "font-prata font-bold text-[#F5F0E8] md-2 md:mb-6 leading-tight mt-[130px] lg:mt-0",
                 responsiveFontSizeArray(36, 90)
               )}
               style={{
@@ -56,7 +56,7 @@ const BannerSection: React.FC = () => {
               <div>ENHANCEMENT</div>
             </h1>
             <Flex
-              className="px-3 py-4 gap-2 border border-white rounded-2xl"
+              className="px-3 py-3 md:py-4 gap-2 border border-white rounded-2xl"
               vertical
             >
               <p

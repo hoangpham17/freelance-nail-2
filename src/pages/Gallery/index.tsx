@@ -116,14 +116,30 @@ const Gallery: React.FC = () => {
       return LEGACY_GALLERY;
     }
 
-    return galleryData.map((record, index) => ({
-      id: record.id || `gallery-${index}`,
-      url: Array.isArray(record.url)
-        ? record.url[0]?.url || ""
-        : record.url || "",
-      description: record.description,
-      category: record.category?.toLowerCase(),
-    }));
+    return galleryData.map((record, index) => {
+      // Get image URL from new image field structure
+      let imageUrl = "";
+      if (
+        record.image &&
+        Array.isArray(record.image) &&
+        record.image.length > 0
+      ) {
+        // Use the first image's URL
+        imageUrl = record.image[0].url || "";
+      } else if (record.url) {
+        // Fallback to legacy url field for backward compatibility
+        imageUrl = Array.isArray(record.url)
+          ? record.url[0]?.url || ""
+          : record.url || "";
+      }
+
+      return {
+        id: record.id || `gallery-${index}`,
+        url: imageUrl,
+        description: record.description,
+        category: record.category?.toLowerCase(),
+      };
+    });
   }, [galleryData]);
 
   const filteredItems = useMemo(() => {

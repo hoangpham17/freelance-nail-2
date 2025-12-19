@@ -27,7 +27,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ item, onClick }) => {
       />
 
       {item.description && (
-        <div className="absolute bottom-5 left-5 right-5 bg-white/60 rounded-2xl p-3 lg:p-4">
+        <div className="absolute bottom-3 left-3 right-3 lg:bottom-5 lg:left-5 lg:right-5 bg-white/60 rounded-2xl p-3 lg:p-4">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 lg:gap-3 flex-1 min-w-0">
               <Image
