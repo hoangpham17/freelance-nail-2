@@ -1,24 +1,57 @@
 import React from "react";
-import { AboutUsCardData } from "../../types";
-import AboutUsCard from "../AboutUsCard";
-import "./style.css";
+import clsx from "clsx";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { AboutUsSection } from "../../data";
 
 interface AboutUsSectionProps {
-  items: AboutUsCardData[];
+  section: AboutUsSection;
 }
 
-const AboutUsSection: React.FC<AboutUsSectionProps> = ({ items }) => {
+const AboutUsSectionComponent: React.FC<AboutUsSectionProps> = ({
+  section,
+}) => {
+  const isImageLeft = section.position === "left";
+
   return (
-    <section className="about-us-block">
-      <div className="container">
-        <div className="about-us-block__inner">
-          {items.map((item) => (
-            <AboutUsCard key={item.id} {...item} />
-          ))}
-        </div>
+    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+      <div
+        className={clsx(
+          "w-full mb-6 lg:mb-0 lg:flex-1",
+          isImageLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"
+        )}
+      >
+        <img
+          src={section.image}
+          alt={section.imageAlt}
+          className="w-full h-auto rounded-lg"
+        />
       </div>
-    </section>
+
+      <div
+        className={clsx(
+          "w-full lg:flex-1",
+          isImageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"
+        )}
+      >
+        <h2
+          className={clsx(
+            "font-prata text-[#D1A054] mb-4 lg:mb-6 border-b border-[#D1A054] pb-2",
+            responsiveFontSizeArray(64, 90)
+          )}
+        >
+          {section.title}
+        </h2>
+        <p
+          className={clsx(
+            "text-black font-light",
+            responsiveFontSizeArray(16, 20)
+          )}
+        >
+          {section.description}
+        </p>
+      </div>
+    </div>
   );
 };
 
-export default AboutUsSection;
+export default AboutUsSectionComponent;
