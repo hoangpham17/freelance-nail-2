@@ -18,7 +18,7 @@ const HeaderSection: React.FC = () => {
         backgroundSize: "100% auto",
       }}
     >
-      <div className="max-w-[85%] lg:max-w-[640px]">
+      <div className="max-w-[85%] lg:max-w-[640px] lg:pl-10">
         <h2 className={clsx("font-prata", responsiveFontSizeArray(36, 70))}>
           Your nail beautify {isDesktop && <br />}
           Elevate your style!
@@ -30,7 +30,12 @@ const HeaderSection: React.FC = () => {
         <Link to={PATHS.services} className="hidden lg:block">
           <ButtonStyle1 className="mt-4 lg:mt-6">
             <Flex className="gap-2" align="center">
-              <span className={clsx(responsiveFontSizeArray(20, 24))}>
+              <span
+                className={clsx(
+                  "font-lexend font-light",
+                  responsiveFontSizeArray(20, 24)
+                )}
+              >
                 View more
               </span>
               <SvgIcon
