@@ -13,10 +13,10 @@ const AboutUsSectionComponent: React.FC<AboutUsSectionProps> = ({
   const isImageLeft = section.position === "left";
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+    <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6">
       <div
         className={clsx(
-          "w-full mb-6 lg:mb-0 lg:flex-1",
+          "w-full",
           isImageLeft ? "order-1 lg:order-1" : "order-1 lg:order-2"
         )}
       >
@@ -29,7 +29,7 @@ const AboutUsSectionComponent: React.FC<AboutUsSectionProps> = ({
 
       <div
         className={clsx(
-          "w-full lg:flex-1",
+          "w-full lg:p-12",
           isImageLeft ? "order-2 lg:order-2" : "order-2 lg:order-1"
         )}
       >

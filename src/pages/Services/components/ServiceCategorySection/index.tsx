@@ -90,7 +90,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                         "bg-white/30 border border-white rounded-2xl py-1 px-3"
                     )}
                   >
-                    <p>{category.description}</p>
+                    <p className="font-light">{category.description}</p>
                   </Flex>
                 )}
               </Flex>

@@ -59,7 +59,7 @@ const ServiceCard: React.FC<ServiceItem> = ({
             {description && (
               <div
                 className={clsx(
-                  "text-xs md:text-sm text-[#10182A] mb-1 md:mb-2 whitespace-pre-wrap",
+                  "text-[#10182A] font-light mb-1 md:mb-2 whitespace-pre-wrap",
                   responsiveFontSizeArray(16, 20)
                 )}
                 dangerouslySetInnerHTML={{
@@ -69,10 +69,10 @@ const ServiceCard: React.FC<ServiceItem> = ({
             )}
 
             {add_on_services && (
-              <Flex vertical className="text-[#9E7B6A] mt-3 md:mt-4">
+              <Flex vertical className="text-[#9E7B6A] font-light mt-3 md:mt-4">
                 <span
                   className={clsx(
-                    "font-prata",
+                    "font-prata font-normal",
                     responsiveFontSizeArray(24, 32)
                   )}
                 >

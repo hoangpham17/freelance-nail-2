@@ -14,7 +14,7 @@ const AboutUs: React.FC = () => {
             className="w-full max-w-[600px] lg:max-w-[800px] h-auto"
           />
         </div>
-        <div className="space-y-12 lg:space-y-20">
+        <div className="space-y-6 lg:space-y-8">
           {aboutUsData.sections.map((section) => (
             <AboutUsSection key={section.id} section={section} />
           ))}
