@@ -21,7 +21,7 @@ const OurPolicies: React.FC = () => {
     });
   }, [policiesData]);
   return (
-    <div className="relative w-full min-h-screen bg-white">
+    <div className="relative w-full min-h-screen bg-[#F4F6F9]">
       <Wrapper className="relative pt-12 lg:pt-20 pb-16 lg:pb-24">
         {/* Background Image - positioned top left, follows wrapper */}
         <div
@@ -37,11 +37,11 @@ const OurPolicies: React.FC = () => {
         {/* Content */}
         <div className="relative z-10">
           {/* Title Section */}
-          <div className="text-center mb-12 lg:mb-16">
+          <div className="text-center mb-12 lg:mb-16 max-w-[934px] mx-auto">
             <h1
               className={clsx(
-                "font-prata font-bold text-[#C19A6B] leading-tight",
-                responsiveFontSizeArray(32, 56)
+                "font-prata text-[#C19A6B]",
+                responsiveFontSizeArray(36, 100)
               )}
             >
               Policies of our The Veira Nail Lounge & Spa

@@ -5,9 +5,9 @@ import { Input, message as antdMessage } from "antd";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import {
+  AIRTABLE_WRITE_ENDPOINTS,
   createAirtableRecord,
-  AIRTABLE_ENDPOINTS,
-} from "@/services/airtable.service";
+} from "@/services/airtable-write.service";
 
 const { TextArea } = Input;
 
@@ -47,7 +47,7 @@ const PartyForm: React.FC = () => {
       };
 
       await createAirtableRecord(
-        AIRTABLE_ENDPOINTS.host_a_party,
+        AIRTABLE_WRITE_ENDPOINTS.host_a_party,
         airtableFields
       );
 
