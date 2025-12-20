@@ -66,16 +66,15 @@ const OurPolicies: React.FC = () => {
                 <div key={policy.id} className="p-6 lg:p-8">
                   <h3
                     className={clsx(
-                      "font-prata font-bold text-[#C19A6B] mb-3 lg:mb-4 pb-2 border-b border-[#C19A6B]",
-                      responsiveFontSizeArray(20, 24)
+                      "font-prata text-[#D1A054] mb-1 lg:mb-2 pb-2 border-b border-[#D1A054] text-[40px] lg:min-h-[96px]"
                     )}
                   >
                     {policy.title}
                   </h3>
                   <p
                     className={clsx(
-                      "text-[#494747] leading-relaxed",
-                      responsiveFontSizeArray(14, 16)
+                      "text-black font-light",
+                      responsiveFontSizeArray(16, 20)
                     )}
                   >
                     {policy.description}

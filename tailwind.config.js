@@ -2,11 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   safelist: [
-    // Pre-declare all font size classes from 8px to 150px
+    // Pre-declare all font size classes from 8px to 200px
     // This ensures Tailwind recognizes all dynamic classes
-    // (150px is the max clamp value in roundFontSize function)
-    ...Array.from({ length: 143 }, (_, i) => {
-      const size = i + 8; // 8 to 150
+    // (200px is the max clamp value in roundFontSize function)
+    ...Array.from({ length: 193 }, (_, i) => {
+      const size = i + 8; // 8 to 200
       return [
         `text-[${size}px]`,
         `sm:text-[${size}px]`,

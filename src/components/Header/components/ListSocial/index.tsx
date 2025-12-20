@@ -29,7 +29,7 @@ const listSocial = [
 export const ListSocial = () => {
   const { isDesktop } = useScreen();
 
-  const iconSize = useMemo(() => (isDesktop ? 14 : 24), [isDesktop]);
+  const iconSize = useMemo(() => (isDesktop ? 24 : 14), [isDesktop]);
 
   return (
     <Flex className="gap-[6px] lg:gap-2">

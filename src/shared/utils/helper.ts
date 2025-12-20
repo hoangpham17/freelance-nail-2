@@ -30,10 +30,10 @@ const clamp = (value: number, min: number, max: number): number => {
 };
 
 /**
- * Round to nearest integer and clamp between 8-150
+ * Round to nearest integer and clamp between 8-200
  */
 const roundFontSize = (size: number): number => {
-  return clamp(Math.round(size), 8, 150);
+  return clamp(Math.round(size), 8, 200);
 };
 
 /**

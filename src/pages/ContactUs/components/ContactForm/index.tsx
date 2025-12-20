@@ -1,294 +1,221 @@
 import React, { useState } from "react";
-import "./style.css";
+import { Input, message as antdMessage } from "antd";
+import clsx from "clsx";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import {
+  AIRTABLE_WRITE_ENDPOINTS,
+  createAirtableRecord,
+} from "@/services/airtable-write.service";
 
-type FormData = {
+const { TextArea } = Input;
+
+type ContactFormData = {
   name: string;
-  email: string;
   phone: string;
+  email: string;
   message: string;
 };
 
-type FormErrors = {
-  name?: string;
-  email?: string;
-  phone?: string;
-  message?: string;
+const defaultData: ContactFormData = {
+  name: "",
+  phone: "",
+  email: "",
+  message: "",
 };
 
-type FieldState = "default" | "error" | "done";
-
-interface ContactFormProps {
-  onSubmitComplete: (success: boolean) => void;
-}
-
-const ContactForm: React.FC<ContactFormProps> = ({ onSubmitComplete }) => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [fieldStates, setFieldStates] = useState<Record<string, FieldState>>(
-    {}
-  );
+const ContactForm: React.FC = () => {
+  const [formData, setFormData] = useState<ContactFormData>(defaultData);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateEmail = (email: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const validatePhone = (phone: string) =>
-    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone);
-
-  const validateField = (name: keyof FormData, value: string): string => {
-    switch (name) {
-      case "name":
-        return value.trim() ? "" : "Please enter your name";
-      case "email":
-        return validateEmail(value) ? "" : "Please enter a valid email address";
-      case "phone":
-        return validatePhone(value) ? "" : "Please enter a valid phone number";
-      case "message":
-        return value.trim() ? "" : "Please enter your message";
-      default:
-        return "";
-    }
-  };
-
-  const handleInputChange = (
+  const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    const error = validateField(name as keyof FormData, value);
-    setErrors((prev) => ({ ...prev, [name]: error || undefined }));
-    setFieldStates((prev) => ({
-      ...prev,
-      [name]: error ? "error" : value ? "done" : "default",
-    }));
-  };
-
-  const handleClear = (fieldName: keyof FormData) => {
-    setFormData((prev) => ({ ...prev, [fieldName]: "" }));
-    setErrors((prev) => ({ ...prev, [fieldName]: undefined }));
-    setFieldStates((prev) => ({ ...prev, [fieldName]: "default" }));
-  };
-
-  const renderError = (field: keyof FormData) =>
-    fieldStates[field] === "error" && errors[field] ? (
-      <p className="error-text" data-error-text>
-        {errors[field]}
-      </p>
-    ) : (
-      <p className="error-text" data-error-text></p>
-    );
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: FormErrors = {};
-    let isValid = true;
-
-    (Object.keys(formData) as (keyof FormData)[]).forEach((key) => {
-      const error = validateField(key, formData[key]);
-      if (error) {
-        newErrors[key] = error;
-        isValid = false;
-        setFieldStates((prev) => ({ ...prev, [key]: "error" }));
-      } else {
-        setFieldStates((prev) => ({
-          ...prev,
-          [key]: formData[key] ? "done" : "default",
-        }));
-      }
-    });
-
-    if (!isValid) {
-      setErrors(newErrors);
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        "https://dev-api.madisonnaillounge.com/email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
+      // Map form data to Airtable fields
+      const airtableFields = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: formData.message || "",
+      };
+
+      await createAirtableRecord(
+        AIRTABLE_WRITE_ENDPOINTS.guest_contact,
+        airtableFields
       );
 
-      if (response.ok) {
-        setFormData({ name: "", email: "", phone: "", message: "" });
-        setFieldStates({});
-        setErrors({});
-        onSubmitComplete(true);
-      } else {
-        onSubmitComplete(false);
-      }
+      antdMessage.success(
+        "Your message has been submitted successfully! We'll contact you soon."
+      );
+      setFormData(defaultData);
     } catch (error) {
-      console.error("Form submission error", error);
-      onSubmitComplete(false);
+      console.error("Error submitting contact form:", error);
+      antdMessage.error(
+        "Failed to submit your message. Please try again later."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="form-wrapper">
-      <form id="form-contact" onSubmit={handleSubmit}>
-        <div className="form-inner">
-          <div className="row-custom">
-            <div className="form-group" data-input-field>
-              <label className="label-form gold">Your name</label>
-              <div className={`input-wrapper ${fieldStates.name ?? ""}`.trim()}>
-                <input
-                  className="input-field"
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your name in here"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  data-input
-                />
-                {renderError("name")}
-                <img
-                  src="/assets/images/Icons/icon-x-red.svg"
-                  alt="Clear"
-                  className="icon icon-clear"
-                  data-clear-text
-                  onClick={() => handleClear("name")}
-                />
-                <img
-                  src="/assets/images/Icons/icon-check-gray.svg"
-                  alt="Done"
-                  className="icon icon-done"
-                />
-              </div>
-            </div>
+    <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
+      {/* Name Field - Beige background, dark placeholder */}
+      <div className="flex flex-col gap-2">
+        <label
+          className={clsx(
+            "text-[#452917] font-medium uppercase tracking-wide font-prata",
+            responsiveFontSizeArray(12, 14)
+          )}
+        >
+          Name
+        </label>
+        <div className="relative">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+            <i className="bi bi-person text-[#494747] text-lg"></i>
           </div>
+          <Input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Your name in here"
+            required
+            className={clsx(
+              "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
+              "bg-[#EDE5DE] text-[#494747]",
+              "focus:border-[#C19A6B] focus:shadow-none",
+              "[&::placeholder]:text-[#494747]",
+              responsiveFontSizeArray(14, 16)
+            )}
+          />
+        </div>
+      </div>
 
-          <div className="row-custom two-column">
-            <div className="form-group" data-input-field>
-              <label className="label-form gold">Phone number</label>
-              <div
-                className={`input-wrapper ${fieldStates.phone ?? ""}`.trim()}
-              >
-                <input
-                  className="input-field"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="Phone number in here"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  data-input
-                />
-                {renderError("phone")}
-                <img
-                  src="/assets/images/Icons/icon-x-red.svg"
-                  alt="Clear"
-                  className="icon icon-clear"
-                  data-clear-text
-                  onClick={() => handleClear("phone")}
-                />
-                <img
-                  src="/assets/images/Icons/icon-check-gray.svg"
-                  alt="Done"
-                  className="icon icon-done"
-                />
-              </div>
+      {/* Phone and Email - 2 columns on desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+        {/* Phone Field - White background, light placeholder */}
+        <div className="flex flex-col gap-2">
+          <label
+            className={clsx(
+              "text-[#452917] font-medium uppercase tracking-wide font-prata",
+              responsiveFontSizeArray(12, 14)
+            )}
+          >
+            Your phone
+          </label>
+          <div className="relative">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+              <i className="bi bi-telephone text-[#494747] text-lg"></i>
             </div>
-
-            <div className="form-group" data-input-field>
-              <label className="label-form gold">Email address</label>
-              <div
-                className={`input-wrapper ${fieldStates.email ?? ""}`.trim()}
-              >
-                <input
-                  className="input-field"
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email address in here"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  data-input
-                />
-                {renderError("email")}
-                <img
-                  src="/assets/images/Icons/icon-x-red.svg"
-                  alt="Clear"
-                  className="icon icon-clear"
-                  data-clear-text
-                  onClick={() => handleClear("email")}
-                />
-                <img
-                  src="/assets/images/Icons/icon-check-gray.svg"
-                  alt="Done"
-                  className="icon icon-done"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="row-custom">
-            <div className="form-group" data-input-field>
-              <label className="label-form gold">Message</label>
-              <div
-                className={`input-wrapper text-area-wrapper ${
-                  fieldStates.message ?? ""
-                }`.trim()}
-              >
-                <textarea
-                  className="input-field input-textarea"
-                  id="your-messenger"
-                  name="message"
-                  rows={1}
-                  placeholder="Your message in here"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  data-input
-                ></textarea>
-                {renderError("message")}
-                <img
-                  src="/assets/images/Icons/icon-x-red.svg"
-                  alt="Clear"
-                  className="icon icon-clear"
-                  data-clear-text
-                  onClick={() => handleClear("message")}
-                />
-                <img
-                  src="/assets/images/Icons/icon-check-gray.svg"
-                  alt="Done"
-                  className="icon icon-done"
-                />
-              </div>
-            </div>
+            <Input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              placeholder="Your phone in here"
+              required
+              className={clsx(
+                "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
+                "bg-white text-[#494747]",
+                "focus:border-[#C19A6B] focus:shadow-none",
+                "[&::placeholder]:text-[#D3D3D3]",
+                responsiveFontSizeArray(14, 16)
+              )}
+            />
           </div>
         </div>
-        <input
+
+        {/* Email Field - White background, light placeholder */}
+        <div className="flex flex-col gap-2">
+          <label
+            className={clsx(
+              "text-[#452917] font-medium uppercase tracking-wide font-prata",
+              responsiveFontSizeArray(12, 14)
+            )}
+          >
+            Your Email
+          </label>
+          <div className="relative">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+              <i className="bi bi-envelope text-[#494747] text-lg"></i>
+            </div>
+            <Input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your Email in here"
+              required
+              className={clsx(
+                "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
+                "bg-white text-[#494747]",
+                "focus:border-[#C19A6B] focus:shadow-none",
+                "[&::placeholder]:text-[#D3D3D3]",
+                responsiveFontSizeArray(14, 16)
+              )}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Message Field - White background, light placeholder */}
+      <div className="flex flex-col gap-2">
+        <label
+          className={clsx(
+            "text-[#452917] font-medium uppercase tracking-wide font-prata",
+            responsiveFontSizeArray(12, 14)
+          )}
+        >
+          Your messenger
+        </label>
+        <div className="relative">
+          <div className="absolute left-3 top-4 z-10">
+            <i className="bi bi-chat-dots text-[#494747] text-lg"></i>
+          </div>
+          <TextArea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Your information in here"
+            rows={5}
+            required
+            className={clsx(
+              "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
+              "bg-white text-[#494747]",
+              "focus:border-[#C19A6B] focus:shadow-none",
+              "[&::placeholder]:text-[#D3D3D3]",
+              responsiveFontSizeArray(14, 16)
+            )}
+          />
+        </div>
+      </div>
+
+      {/* Submit Button */}
+      <div className="pt-4">
+        <button
           type="submit"
-          value={isSubmitting ? "SENDING" : "SEND"}
-          className="btn-submit"
-          data-submit-form
           disabled={isSubmitting}
-        />
-      </form>
-    </div>
+          className={clsx(
+            "w-full py-3 lg:py-4 rounded-xl bg-[#8B7355] text-white",
+            "font-semibold uppercase tracking-wider",
+            "hover:bg-[#A67C52] transition-colors",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
+            responsiveFontSizeArray(16, 18)
+          )}
+        >
+          {isSubmitting ? "SENDING..." : "SEND"}
+        </button>
+      </div>
+    </form>
   );
 };
 
