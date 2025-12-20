@@ -6,26 +6,28 @@ import { Flex } from "antd";
 import SvgIcon from "@/based/SvgIcon";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { useScreen } from "@/hooks/useScreen";
 
 const HeaderSection: React.FC = () => {
+  const { isDesktop } = useScreen();
   return (
     <div
-      className="relative bg-no-repeat bg-right bg-contain mb-4 lg:mb-8"
+      className="relative bg-no-repeat bg-right bg-cover lg:bg-contain mb-4 lg:mb-8"
       style={{
-        backgroundImage: "url('/assets/images/Background/home-1.jpg')",
+        backgroundImage: "url('/assets/images/HomePage/bg-nail-beauty.png')",
+        backgroundSize: "100% auto",
       }}
     >
-      <div className="lg:max-w-[640px]">
+      <div className="max-w-[85%] lg:max-w-[640px]">
         <h2 className={clsx("font-prata", responsiveFontSizeArray(36, 70))}>
-          Your nail beautify
-          <br />
+          Your nail beautify {isDesktop && <br />}
           Elevate your style!
         </h2>
-        <p className="text-lg lg:text-xl text-gray-600 leading-relaxed">
+        <p className={clsx("font-light", responsiveFontSizeArray(12, 20))}>
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
           commodo ligula eget dolor. Aenean massae.
         </p>
-        <Link to={PATHS.services}>
+        <Link to={PATHS.services} className="hidden lg:block">
           <ButtonStyle1 className="mt-4 lg:mt-6">
             <Flex className="gap-2" align="center">
               <span className={clsx(responsiveFontSizeArray(20, 24))}>

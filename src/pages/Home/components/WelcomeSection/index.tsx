@@ -102,7 +102,12 @@ const WelcomeSection: React.FC = () => {
               Welcome to <br /> The Veira Nail Lounge Spa <br /> and Who we are
               ?
             </p>
-            <p className={clsx("mb-0", responsiveFontSizeArray(12, 20))}>
+            <p
+              className={clsx(
+                "mb-0 font-light",
+                responsiveFontSizeArray(12, 20)
+              )}
+            >
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massae. Cum sociis natoque
               penatibus et magnis dis parturient montes. Donec quam felis,
