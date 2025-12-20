@@ -83,7 +83,7 @@ const WelcomeSection: React.FC = () => {
   return (
     <section>
       <div
-        className="bg-cover bg-center pt-[150px] text-center z-[1]"
+        className="bg-cover bg-center pt-[100px] text-center z-[1]"
         style={{
           backgroundImage: `url(/assets/images/HomePage/bg-welcome.png)`,
         }}

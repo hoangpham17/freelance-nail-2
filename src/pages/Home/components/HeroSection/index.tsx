@@ -7,19 +7,12 @@ import "slick-carousel/slick/slick-theme.css";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 import { useAirtable } from "@/hooks/useAirtable";
 import CustomDots from "@/based/components/CustomDots";
-import { useCampaignStore } from "@/shared/store/campaignStore";
-import { useScreen } from "@/hooks/useScreen";
 
 const HeroSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const mobileSliderRef = useRef<Slider>(null);
   const desktopSliderRef = useRef<Slider>(null);
   const isSyncingRef = useRef(false);
-  const { isDesktop } = useScreen();
-  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
-  const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight
-  );
 
   const { data: bannerRecords } = useAirtable<BannerRecord>(
     AIRTABLE_ENDPOINTS.banner
@@ -103,7 +96,7 @@ const HeroSection: React.FC = () => {
 
   if (bannerItems.length === 0) {
     return (
-      <section className="relative w-full h-screen min-h-[700px] overflow-hidden">
+      <section className="relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
           <Skeleton.Image
             active
@@ -114,18 +107,10 @@ const HeroSection: React.FC = () => {
     );
   }
 
-  // Calculate section height: 100dvh - header height - campaign bar height
-  const headerHeight = isDesktop ? 100 : 64;
-  const totalOffset = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
-  const sectionHeight = `calc(100dvh - ${totalOffset}px)`;
-
   return (
-    <section
-      className="relative w-full overflow-hidden lg:!h-auto transition-all duration-300"
-      style={{ height: sectionHeight }}
-    >
-      {/* Mobile Slider - Keep absolute positioning */}
-      <div className="absolute inset-0 w-full h-full lg:hidden">
+    <section className="relative w-full overflow-hidden lg:!h-auto transition-all duration-300">
+      {/* Mobile Slider - Use img tags */}
+      <div className="w-full h-full lg:hidden">
         <Slider ref={mobileSliderRef} {...mobileSettings}>
           {bannerItems.map((item, index) => {
             const imageUrl = item.mobile;
@@ -136,41 +121,32 @@ const HeroSection: React.FC = () => {
                   key={item.id || index}
                   className="relative w-full h-screen min-h-[700px]"
                 >
-                  <div className="absolute inset-0 w-full h-full">
-                    <Skeleton.Image
-                      active
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        minHeight: "700px",
-                      }}
-                    />
-                  </div>
+                  <Skeleton.Image
+                    active
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: "700px",
+                    }}
+                  />
                 </div>
               );
             }
 
             return (
-              <div
-                key={item.id || index}
-                className="relative w-full h-screen min-h-[700px]"
-              >
-                <div
-                  className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: `url('${imageUrl}')`,
-                  }}
-                >
-                  {/* Subtle warm gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
-                </div>
+              <div key={item.id || index} className="w-full">
+                <img
+                  src={imageUrl}
+                  alt={`Banner ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
               </div>
             );
           })}
         </Slider>
       </div>
 
-      {/* Desktop Slider - No absolute positioning, use img tags */}
+      {/* Desktop Slider - Use img tags */}
       <div className="hidden lg:block w-full h-full">
         <Slider ref={desktopSliderRef} {...desktopSettings}>
           {bannerItems.map((item, index) => {
