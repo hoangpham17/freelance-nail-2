@@ -82,7 +82,6 @@ const ContactForm: React.FC = () => {
       layout="vertical"
       className="[&_.ant-form-item]:mb-4 [&_.ant-form-item]:lg:mb-6"
     >
-      {/* Name Field - Beige background, dark placeholder */}
       <Form.Item
         name="name"
         label={
@@ -111,19 +110,15 @@ const ContactForm: React.FC = () => {
             type="text"
             placeholder="Your name in here"
             className={clsx(
-              "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
-              "bg-[#EDE5DE] text-[#494747]",
-              "focus:border-[#C19A6B] focus:shadow-none",
-              "[&::placeholder]:text-[#494747]",
+              "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+              "bg-[#D5B994]/40 placeholder:text-[#9E7B6A]",
               responsiveFontSizeArray(14, 16)
             )}
           />
         </div>
       </Form.Item>
 
-      {/* Phone and Email - 2 columns on desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-        {/* Phone Field - White background, light placeholder */}
         <Form.Item
           name="phone"
           label={
@@ -152,17 +147,13 @@ const ContactForm: React.FC = () => {
               type="tel"
               placeholder="Your phone in here"
               className={clsx(
-                "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
-                "bg-white text-[#494747]",
-                "focus:border-[#C19A6B] focus:shadow-none",
-                "[&::placeholder]:text-[#D3D3D3]",
+                "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+                "bg-white text-black",
                 responsiveFontSizeArray(14, 16)
               )}
             />
           </div>
         </Form.Item>
-
-        {/* Email Field - White background, light placeholder */}
         <Form.Item
           name="email"
           label={
@@ -194,10 +185,8 @@ const ContactForm: React.FC = () => {
               type="email"
               placeholder="Your Email in here"
               className={clsx(
-                "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
-                "bg-white text-[#494747]",
-                "focus:border-[#C19A6B] focus:shadow-none",
-                "[&::placeholder]:text-[#D3D3D3]",
+                "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+                "bg-white text-black",
                 responsiveFontSizeArray(14, 16)
               )}
             />
@@ -205,7 +194,6 @@ const ContactForm: React.FC = () => {
         </Form.Item>
       </div>
 
-      {/* Message Field - White background, light placeholder */}
       <Form.Item
         name="message"
         label={
@@ -233,17 +221,14 @@ const ContactForm: React.FC = () => {
             placeholder="Your information in here"
             rows={5}
             className={clsx(
-              "pl-10 pr-4 py-3 rounded-xl border border-[#C19A6B]",
-              "bg-white text-[#494747]",
-              "focus:border-[#C19A6B] focus:shadow-none",
-              "[&::placeholder]:text-[#D3D3D3]",
+              "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+              "bg-white text-black",
               responsiveFontSizeArray(14, 16)
             )}
           />
         </div>
       </Form.Item>
 
-      {/* Submit Button */}
       <Form.Item className="pt-4 mb-0">
         <Button
           type="primary"

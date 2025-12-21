@@ -63,7 +63,6 @@ const PartyForm: React.FC = () => {
     <section className="relative">
       <Wrapper>
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 lg:p-6">
-          {/* Left Side - Form */}
           <div className="w-2/3">
             <Form
               form={form}
@@ -71,7 +70,6 @@ const PartyForm: React.FC = () => {
               layout="vertical"
               className="[&_.ant-form-item]:mb-4 [&_.ant-form-item]:lg:mb-6"
             >
-              {/* Name Field */}
               <Form.Item
                 name="name"
                 label={
@@ -100,18 +98,15 @@ const PartyForm: React.FC = () => {
                     type="text"
                     placeholder="Your name in here"
                     className={clsx(
-                      "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                      "bg-[#F5F0E8] text-[#10182A]",
-                      "focus:border-[#8B7355] focus:shadow-none",
+                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                      "bg-[#D5B994]/40 placeholder:text-[#9E7B6A]",
                       responsiveFontSizeArray(14, 16)
                     )}
                   />
                 </div>
               </Form.Item>
 
-              {/* Phone and Email - 2 columns on desktop */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                {/* Phone Field */}
                 <Form.Item
                   name="phone"
                   label={
@@ -142,16 +137,13 @@ const PartyForm: React.FC = () => {
                       type="tel"
                       placeholder="Your phone in here"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#10182A]",
-                        "focus:border-[#8B7355] focus:shadow-none",
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
                   </div>
                 </Form.Item>
 
-                {/* Email Field */}
                 <Form.Item
                   name="email"
                   label={
@@ -183,9 +175,7 @@ const PartyForm: React.FC = () => {
                       type="email"
                       placeholder="Your Email in here"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#10182A]",
-                        "focus:border-[#8B7355] focus:shadow-none",
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
@@ -193,9 +183,7 @@ const PartyForm: React.FC = () => {
                 </Form.Item>
               </div>
 
-              {/* Date and Party Size - 2 columns on desktop */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-                {/* Date Field */}
                 <Form.Item
                   name="date"
                   label={
@@ -210,11 +198,9 @@ const PartyForm: React.FC = () => {
                   }
                   rules={[{ required: true, message: "Please select a date" }]}
                   getValueFromEvent={(value: Dayjs | null) => {
-                    // Convert dayjs to YYYY-MM-DD format for storage
                     return value ? value.format("YYYY-MM-DD") : "";
                   }}
                   normalize={(value) => {
-                    // Convert string to dayjs when loading form
                     if (typeof value === "string" && value) {
                       return dayjs(value);
                     }
@@ -235,11 +221,7 @@ const PartyForm: React.FC = () => {
                       disabledDate={disabledDate}
                       format="MM/DD/YYYY"
                       className={clsx(
-                        "w-full pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#10182A]",
-                        "[&_.ant-picker-input>input]:text-[#10182A]",
-                        "[&_.ant-picker-input>input]:placeholder:text-[#10182A]/50",
-                        "focus-within:border-[#8B7355] focus-within:shadow-none",
+                        "w-full pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
                         "[&_.ant-picker-suffix]:hidden",
                         responsiveFontSizeArray(14, 16)
                       )}
@@ -247,7 +229,6 @@ const PartyForm: React.FC = () => {
                   </div>
                 </Form.Item>
 
-                {/* Party Size Field */}
                 <Form.Item
                   name="partySize"
                   label={
@@ -283,9 +264,7 @@ const PartyForm: React.FC = () => {
                       placeholder="Your party size in here"
                       min="1"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#10182A]",
-                        "focus:border-[#8B7355] focus:shadow-none",
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
@@ -293,7 +272,6 @@ const PartyForm: React.FC = () => {
                 </Form.Item>
               </div>
 
-              {/* Message Field */}
               <Form.Item
                 name="message"
                 label={
@@ -321,16 +299,13 @@ const PartyForm: React.FC = () => {
                     placeholder="Your information in here"
                     rows={5}
                     className={clsx(
-                      "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                      "bg-white text-[#10182A]",
-                      "focus:border-[#8B7355] focus:shadow-none",
+                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
                       responsiveFontSizeArray(14, 16)
                     )}
                   />
                 </div>
               </Form.Item>
 
-              {/* Submit Button */}
               <Form.Item className="pt-4 mb-0">
                 <Button
                   type="primary"
@@ -351,7 +326,6 @@ const PartyForm: React.FC = () => {
             </Form>
           </div>
 
-          {/* Right Side - Decorative Image */}
           <div className="w-1/3 lg:sticky lg:top-20">
             <div className="relative w-full h-64 lg:h-auto rounded-2xl overflow-hidden">
               <img
