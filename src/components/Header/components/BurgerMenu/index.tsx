@@ -2,22 +2,33 @@ import SvgIcon from "../../../../based/SvgIcon";
 
 type BurgerMenuProps = {
   toggleMenu: () => void;
+  isMenuOpen: boolean;
 };
 
-export const BurgerMenu: React.FC<BurgerMenuProps> = ({ toggleMenu }) => {
+export const BurgerMenu: React.FC<BurgerMenuProps> = ({ toggleMenu, isMenuOpen }) => {
   return (
     <button
-      className="lg:hidden flex flex-col gap-1.5 p-2"
+      className="lg:hidden flex items-center justify-center p-2"
       onClick={toggleMenu}
-      aria-label="Toggle menu"
+      aria-label={isMenuOpen ? "Close menu" : "Open menu"}
     >
-      <SvgIcon
-        src={"/assets/svgs/burger-menu.svg"}
-        ariaLabel="text"
-        width={20}
-        height={20}
-        className="size-[20px] shrink-0 "
-      />
+      {isMenuOpen ? (
+        <SvgIcon
+          src={"/assets/svgs/x-close.svg"}
+          ariaLabel="Close menu"
+          width={20}
+          height={20}
+          className="size-[20px] shrink-0"
+        />
+      ) : (
+        <SvgIcon
+          src={"/assets/svgs/burger-menu.svg"}
+          ariaLabel="Open menu"
+          width={20}
+          height={20}
+          className="size-[20px] shrink-0"
+        />
+      )}
     </button>
   );
 };

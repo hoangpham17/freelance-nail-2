@@ -16,6 +16,7 @@ import { useCampaignStore } from "@/shared/store/campaignStore";
 import { useScreen } from "@/hooks/useScreen";
 import { useCheckOpacityHeader } from "@/hooks/useCheckOpacityHeader";
 import ServicesSubmenu from "./components/ServicesSubmenu";
+import SvgIcon from "@/based/SvgIcon";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -198,7 +199,7 @@ const Header: React.FC = () => {
   return (
     <header
       className={clsx(
-        "fixed top-0 left-0 w-full z-50  shadow-[2px_6px_6px_0px_#0000000F]",
+        "fixed top-0 left-0 w-full z-[100] shadow-[2px_6px_6px_0px_#0000000F]",
         isOpacityHeader && isAtTop ? "bg-white/60" : "bg-white"
       )}
     >
@@ -220,7 +221,7 @@ const Header: React.FC = () => {
           gap={16}
           className="h-[64px] lg:h-[100px]"
         >
-          <BurgerMenu toggleMenu={toggleMenu} />
+          <BurgerMenu toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
           <Link
             to={PATHS.home}
             onClick={closeMenu}
@@ -343,31 +344,86 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed inset-0 bg-white z-40 transform transition-transform duration-300 ${
+        className={`lg:hidden fixed inset-0 bg-white z-[100] transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="pt-20 px-6">
-          <nav className="flex flex-col gap-6">
-            {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={closeMenu}
-                  className={`text-lg font-lexend uppercase transition-colors ${
-                    isActive
-                      ? "text-[#8B7355] font-semibold"
-                      : "text-[#8B7355] hover:text-[#A67C52]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
+        <Wrapper className="h-full flex flex-col">
+          {/* Mobile Menu Header */}
+          <div className="flex items-center justify-between h-[64px] px-4 border-b border-gray-100">
+            <Link
+              to={PATHS.home}
+              onClick={closeMenu}
+              className="flex-shrink-0 max-h-[32px]"
+            >
+              <Image
+                src="/assets/images/logo/mobile.png"
+                alt="THE VEIRA NAIL LOUNGE & SPA"
+                className="max-h-[32px]"
+                preview={false}
+              />
+            </Link>
+            <button
+              onClick={closeMenu}
+              className="p-2 flex items-center justify-center"
+              aria-label="Close menu"
+            >
+              <SvgIcon
+                src={"/assets/svgs/x-close.svg"}
+                ariaLabel="Close menu"
+                width={24}
+                height={24}
+                className="size-[24px] shrink-0 text-[#0F172A]"
+              />
+            </button>
+          </div>
+
+          {/* Mobile Menu Content */}
+          <div className="flex-1 overflow-y-auto">
+            <nav className="flex flex-col pt-8 px-6 pb-6">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={closeMenu}
+                    className={clsx(
+                      "block py-3 font-lexend uppercase transition-colors",
+                      responsiveFontSizeArray(16, 18),
+                      isActive
+                        ? "text-[#9E7B6A] font-semibold"
+                        : "text-[#0F172A] hover:text-[#9E7B6A]"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Mobile Menu Footer */}
+          <div className="border-t border-gray-100 px-6 py-6 space-y-4">
+            <div className="flex flex-col gap-4">
+              <Link to={PATHS.contactUs} onClick={closeMenu} className="w-full">
+                <ButtonStyle1 className="font-lexend w-full">
+                  CONTACT US
+                </ButtonStyle1>
+              </Link>
+              <a
+                href="tel:608000000"
+                onClick={closeMenu}
+                className="text-[#8B7355] text-base font-medium text-center"
+              >
+                (608) 000 000
+              </a>
+            </div>
+            <div className="flex justify-center pt-2">
+              <ListSocial />
+            </div>
+          </div>
+        </Wrapper>
       </div>
     </header>
   );
