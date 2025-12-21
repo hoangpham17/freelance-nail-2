@@ -21,6 +21,7 @@ export type GalleryRecord = {
       }>;
   description?: string;
   index?: number;
+  order?: number;
   text_color?: string;
   text_position?: "left" | "right";
 };

@@ -1,53 +1,18 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef } from "react";
 import Slider, { Settings } from "react-slick";
 import { Skeleton } from "antd";
-import { BannerItem, BannerRecord } from "../../types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
-import { useAirtable } from "@/hooks/useAirtable";
 import CustomDots from "@/based/components/CustomDots";
 import { useScreen } from "@/hooks/useScreen";
+import { useBannerItems } from "./useBannerItems";
 
 const HeroSection: React.FC = () => {
   const { isDesktop } = useScreen();
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
-  const { data: bannerRecords } = useAirtable<BannerRecord>(
-    AIRTABLE_ENDPOINTS.banner
-  );
-
-  const bannerItems: BannerItem[] = useMemo(() => {
-    if (!bannerRecords || bannerRecords.length === 0) {
-      return [];
-    }
-
-    return bannerRecords
-      .slice()
-      .sort((a, b) => (a.index ?? a.order ?? 0) - (b.index ?? b.order ?? 0))
-      .map((record) => {
-        const desktopUrl =
-          Array.isArray(record.desktop) &&
-          record.desktop.length > 0 &&
-          record.desktop[0]?.url
-            ? record.desktop[0].url
-            : undefined;
-        const mobileUrl =
-          Array.isArray(record.mobile) &&
-          record.mobile.length > 0 &&
-          record.mobile[0]?.url
-            ? record.mobile[0].url
-            : undefined;
-
-        return {
-          id: record.id,
-          desktop: desktopUrl,
-          mobile: mobileUrl,
-        };
-      })
-      .filter((item) => item.desktop || item.mobile);
-  }, [bannerRecords]);
+  const bannerItems = useBannerItems();
 
   const handleBeforeChange = (_current: number, next: number) => {
     setCurrentSlide(next);
