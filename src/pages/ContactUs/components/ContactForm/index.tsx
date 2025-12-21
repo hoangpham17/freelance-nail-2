@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, message as antdMessage } from "antd";
+import { Form, Input, Button } from "antd";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import {
@@ -7,6 +7,7 @@ import {
   createAirtableRecord,
 } from "@/services/airtable-write.service";
 import SvgIcon from "@/based/SvgIcon";
+import FormResultModal from "@/components/FormResultModal";
 
 const { TextArea } = Input;
 
@@ -20,6 +21,8 @@ type ContactFormData = {
 const ContactForm: React.FC = () => {
   const [form] = Form.useForm<ContactFormData>();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   // Get only digits from phone number
   const getPhoneDigits = (value: string): string => {
@@ -61,18 +64,20 @@ const ContactForm: React.FC = () => {
         airtableFields
       );
 
-      antdMessage.success(
-        "Your message has been submitted successfully! We'll contact you soon."
-      );
+      setIsSuccess(true);
+      setIsModalOpen(true);
       form.resetFields();
     } catch (error) {
       console.error("Error submitting contact form:", error);
-      antdMessage.error(
-        "Failed to submit your message. Please try again later."
-      );
+      setIsSuccess(false);
+      setIsModalOpen(true);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -229,16 +234,15 @@ const ContactForm: React.FC = () => {
         </div>
       </Form.Item>
 
-      <Form.Item className="pt-4 mb-0">
+      <Form.Item className="mb-0">
         <Button
           type="primary"
           htmlType="submit"
           loading={isSubmitting}
           disabled={isSubmitting}
           className={clsx(
-            "w-full py-3 lg:py-4 rounded-xl !bg-[#8B7355] text-white border-none",
-            "font-semibold uppercase tracking-wider h-auto",
-            "hover:!bg-[#A67C52] transition-colors",
+            "w-full rounded-full !bg-[#9E7B6A] text-white h-[54px] lg:h-[70px]",
+            "font-bold hover:opacity-85",
             "disabled:opacity-50 disabled:cursor-not-allowed",
             responsiveFontSizeArray(16, 18)
           )}
@@ -246,6 +250,11 @@ const ContactForm: React.FC = () => {
           {isSubmitting ? "SENDING..." : "SEND"}
         </Button>
       </Form.Item>
+      <FormResultModal
+        open={isModalOpen}
+        isSuccess={isSuccess}
+        onClose={handleCloseModal}
+      />
     </Form>
   );
 };

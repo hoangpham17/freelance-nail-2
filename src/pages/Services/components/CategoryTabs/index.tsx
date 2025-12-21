@@ -17,7 +17,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
   const { isDesktop } = useScreen();
   const location = useLocation();
 
-  const [activeCategorySlug, setActiveCategorySlug] = useState<string | null>(null);
+  const [activeCategorySlug, setActiveCategorySlug] = useState<string | null>(
+    null
+  );
   const sliderRef = useRef<Slider | null>(null);
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(
@@ -53,7 +55,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
       // Calculate offset for sticky header (CategoryTabs)
       const categoryTabsHeight = isDesktop ? 56 : 32;
       const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
-      
+
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -107,7 +109,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                       justify="center"
                       className={clsx(
                         "px-2 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap",
-                        isActive ? "bg-white/80" : "bg-white/30",
+                        isActive ? "bg-white/80" : "bg-white/30 text-[#8B4B20]",
                         responsiveFontSizeArray(24, 32)
                       )}
                       style={{

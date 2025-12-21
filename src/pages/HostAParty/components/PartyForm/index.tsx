@@ -1,8 +1,8 @@
 import React from "react";
 import { PartyFormData } from "../../types";
 import { Wrapper } from "@/based/components/Wrapper";
-import { Form, Input, Button, DatePicker, message as antdMessage } from "antd";
-import dayjs, { Dayjs } from "dayjs";
+import { Form, Input, Button, DatePicker } from "antd";
+import dayjs from "dayjs";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import {
@@ -10,23 +10,16 @@ import {
   createAirtableRecord,
 } from "@/services/airtable-write.service";
 import SvgIcon from "@/based/SvgIcon";
+import FormResultModal from "@/components/FormResultModal";
 
 const { TextArea } = Input;
 
 const PartyForm: React.FC = () => {
   const [form] = Form.useForm<PartyFormData>();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-
-  // Get today's date and max date for DatePicker
-  const today = dayjs();
-  const maxDate = dayjs("2100-12-31");
-
-  // Disable dates before today and after max date
-  const disabledDate = (current: Dayjs | null) => {
-    if (!current) return false;
-    return current.isBefore(today, "day") || current.isAfter(maxDate, "day");
-  };
-
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
+  console.log(form.getFieldsValue());
   const handleSubmit = async (values: PartyFormData) => {
     setIsSubmitting(true);
     try {
@@ -37,7 +30,7 @@ const PartyForm: React.FC = () => {
         email: values.email,
         party_size: values.partySize ? parseInt(values.partySize, 10) : 0,
         message: values.message || "",
-        date: values.date || "",
+        date: values.date ? values.date.format("YYYY-MM-DD") : "",
       };
 
       await createAirtableRecord(
@@ -45,18 +38,20 @@ const PartyForm: React.FC = () => {
         airtableFields
       );
 
-      antdMessage.success(
-        "Your party inquiry has been submitted successfully!"
-      );
+      setIsSuccess(true);
+      setIsModalOpen(true);
       form.resetFields();
     } catch (error) {
       console.error("Error submitting party inquiry:", error);
-      antdMessage.error(
-        "Failed to submit your inquiry. Please try again later."
-      );
+      setIsSuccess(false);
+      setIsModalOpen(true);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -196,16 +191,12 @@ const PartyForm: React.FC = () => {
                       Date
                     </span>
                   }
-                  rules={[{ required: true, message: "Please select a date" }]}
-                  getValueFromEvent={(value: Dayjs | null) => {
-                    return value ? value.format("YYYY-MM-DD") : "";
-                  }}
-                  normalize={(value) => {
-                    if (typeof value === "string" && value) {
-                      return dayjs(value);
-                    }
-                    return value;
-                  }}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a date",
+                    },
+                  ]}
                 >
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
@@ -218,13 +209,17 @@ const PartyForm: React.FC = () => {
                       />
                     </div>
                     <DatePicker
-                      disabledDate={disabledDate}
                       format="MM/DD/YYYY"
                       className={clsx(
                         "w-full pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
-                        "[&_.ant-picker-suffix]:hidden",
                         responsiveFontSizeArray(14, 16)
                       )}
+                      suffixIcon={null}
+                      minDate={dayjs()}
+                      maxDate={dayjs("2100-12-31")}
+                      onChange={(date) => {
+                        form.setFieldValue("date", date);
+                      }}
                     />
                   </div>
                 </Form.Item>
@@ -306,16 +301,15 @@ const PartyForm: React.FC = () => {
                 </div>
               </Form.Item>
 
-              <Form.Item className="pt-4 mb-0">
+              <Form.Item className="mb-0">
                 <Button
                   type="primary"
                   htmlType="submit"
                   loading={isSubmitting}
                   disabled={isSubmitting}
                   className={clsx(
-                    "w-full py-3 lg:py-4 rounded-xl !bg-[#8B7355] text-white border-none",
-                    "font-semibold h-auto",
-                    "hover:bg-[#A67C52] transition-colors",
+                    "w-full rounded-full !bg-[#9E7B6A] text-white h-[54px] lg:h-[70px]",
+                    "font-bold hover:opacity-85",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
                     responsiveFontSizeArray(16, 18)
                   )}
@@ -340,6 +334,11 @@ const PartyForm: React.FC = () => {
           </div>
         </div>
       </Wrapper>
+      <FormResultModal
+        open={isModalOpen}
+        isSuccess={isSuccess}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };

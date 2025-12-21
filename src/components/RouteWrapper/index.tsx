@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { getRouteByPath } from "@/routes";
 import SEO from "@/components/SEO";
@@ -25,6 +25,23 @@ const PageLoader = () => (
 const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
   const location = useLocation();
   const route = getRouteByPath(location.pathname);
+  const previousPathnameRef = useRef<string>("");
+
+  // Scroll to top when pathname changes (but not when only hash changes)
+  useEffect(() => {
+    const currentPathname = location.pathname;
+    
+    // Only scroll if pathname actually changed (not just hash)
+    if (currentPathname !== previousPathnameRef.current) {
+      previousPathnameRef.current = currentPathname;
+      
+      // Scroll to top when navigating to a new page
+      window.scrollTo({
+        top: 0,
+        behavior: "instant",
+      });
+    }
+  }, [location.pathname]);
 
   // Get SEO data from route config
   const seoTitle = route?.title || "THE VEIRA NAIL LOUNGE & SPA";
