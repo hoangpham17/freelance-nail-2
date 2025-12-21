@@ -5,7 +5,7 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 const BannerSection: React.FC = () => {
   return (
-    <section className="relative w-full bg-white overflow-hidden pt-8 lg:pt-16 pb-8 lg:pb-12">
+    <section className="relative pt-3 lg:pt-6 pb-3 lg:pb-5">
       <Wrapper>
         <div className="space-y-8 lg:space-y-12">
           {/* Title Section */}
@@ -40,7 +40,7 @@ const BannerSection: React.FC = () => {
               <p
                 className={clsx(
                   "text-black font-light lg:max-w-[600px]",
-                  responsiveFontSizeArray(14, 18)
+                  responsiveFontSizeArray(16, 20)
                 )}
               >
                 Our Nail Lounge is the perfect setting for bridal showers,

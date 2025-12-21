@@ -1,49 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import { PartyFormData } from "../../types";
 import { Wrapper } from "@/based/components/Wrapper";
-import { Input, message as antdMessage } from "antd";
+import { Form, Input, Button, DatePicker, message as antdMessage } from "antd";
+import dayjs, { Dayjs } from "dayjs";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import {
   AIRTABLE_WRITE_ENDPOINTS,
   createAirtableRecord,
 } from "@/services/airtable-write.service";
+import SvgIcon from "@/based/SvgIcon";
 
 const { TextArea } = Input;
 
-const defaultData: PartyFormData = {
-  name: "",
-  email: "",
-  phone: "",
-  date: "",
-  partySize: "",
-  message: "",
-};
-
 const PartyForm: React.FC = () => {
-  const [formData, setFormData] = useState<PartyFormData>(defaultData);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form] = Form.useForm<PartyFormData>();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  // Get today's date and max date for DatePicker
+  const today = dayjs();
+  const maxDate = dayjs("2100-12-31");
+
+  // Disable dates before today and after max date
+  const disabledDate = (current: Dayjs | null) => {
+    if (!current) return false;
+    return current.isBefore(today, "day") || current.isAfter(maxDate, "day");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (values: PartyFormData) => {
     setIsSubmitting(true);
-
     try {
       // Map form data to Airtable fields
       const airtableFields = {
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        party_size: formData.partySize ? parseInt(formData.partySize, 10) : 0,
-        message: formData.message || "",
-        date: formData.date || "",
+        name: values.name,
+        phone: values.phone,
+        email: values.email,
+        party_size: values.partySize ? parseInt(values.partySize, 10) : 0,
+        message: values.message || "",
+        date: values.date || "",
       };
 
       await createAirtableRecord(
@@ -54,7 +48,7 @@ const PartyForm: React.FC = () => {
       antdMessage.success(
         "Your party inquiry has been submitted successfully!"
       );
-      setFormData(defaultData);
+      form.resetFields();
     } catch (error) {
       console.error("Error submitting party inquiry:", error);
       antdMessage.error(
@@ -66,220 +60,295 @@ const PartyForm: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full bg-white py-8 lg:py-12">
+    <section className="relative">
       <Wrapper>
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 lg:px-6">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 lg:p-6">
           {/* Left Side - Form */}
           <div className="w-2/3">
-            <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
+            <Form
+              form={form}
+              onFinish={handleSubmit}
+              layout="vertical"
+              className="[&_.ant-form-item]:mb-4 [&_.ant-form-item]:lg:mb-6"
+            >
               {/* Name Field */}
-              <div className="flex flex-col gap-2">
-                <label
-                  className={clsx(
-                    "text-[#452917] font-medium uppercase tracking-wide",
-                    responsiveFontSizeArray(12, 14)
-                  )}
-                >
-                  Name
-                </label>
+              <Form.Item
+                name="name"
+                label={
+                  <span
+                    className={clsx(
+                      "text-[#10182A] font-prata",
+                      responsiveFontSizeArray(12, 14)
+                    )}
+                  >
+                    Name
+                  </span>
+                }
+                rules={[{ required: true, message: "Please enter your name" }]}
+              >
                 <div className="relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                    <i className="bi bi-person text-[#8B7355] text-lg"></i>
+                    <SvgIcon
+                      src="/assets/svgs/user.svg"
+                      ariaLabel="user"
+                      width={24}
+                      height={24}
+                      className="size-[24px] shrink-0 text-[#9E7B6A]"
+                    />
                   </div>
                   <Input
                     type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
                     placeholder="Your name in here"
-                    required
                     className={clsx(
                       "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                      "bg-[#F5F0E8] text-[#452917]",
+                      "bg-[#F5F0E8] text-[#10182A]",
                       "focus:border-[#8B7355] focus:shadow-none",
                       responsiveFontSizeArray(14, 16)
                     )}
                   />
                 </div>
-              </div>
+              </Form.Item>
 
               {/* Phone and Email - 2 columns on desktop */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 {/* Phone Field */}
-                <div className="flex flex-col gap-2">
-                  <label
-                    className={clsx(
-                      "text-[#452917] font-medium uppercase tracking-wide",
-                      responsiveFontSizeArray(12, 14)
-                    )}
-                  >
-                    Your phone
-                  </label>
+                <Form.Item
+                  name="phone"
+                  label={
+                    <span
+                      className={clsx(
+                        "text-[#10182A] font-prata",
+                        responsiveFontSizeArray(12, 14)
+                      )}
+                    >
+                      Your phone
+                    </span>
+                  }
+                  rules={[
+                    { required: true, message: "Please enter your phone" },
+                  ]}
+                >
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                      <i className="bi bi-telephone text-[#8B7355] text-lg"></i>
+                      <SvgIcon
+                        src="/assets/svgs/phone-2.svg"
+                        ariaLabel="phone"
+                        width={24}
+                        height={24}
+                        className="size-[24px] shrink-0 text-[#9E7B6A]"
+                      />
                     </div>
                     <Input
                       type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
                       placeholder="Your phone in here"
-                      required
                       className={clsx(
                         "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#452917]",
+                        "bg-white text-[#10182A]",
                         "focus:border-[#8B7355] focus:shadow-none",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
                   </div>
-                </div>
+                </Form.Item>
 
                 {/* Email Field */}
-                <div className="flex flex-col gap-2">
-                  <label
-                    className={clsx(
-                      "text-[#452917] font-medium uppercase tracking-wide",
-                      responsiveFontSizeArray(12, 14)
-                    )}
-                  >
-                    Your Email
-                  </label>
+                <Form.Item
+                  name="email"
+                  label={
+                    <span
+                      className={clsx(
+                        "text-[#10182A] font-prata",
+                        responsiveFontSizeArray(12, 14)
+                      )}
+                    >
+                      Your Email
+                    </span>
+                  }
+                  rules={[
+                    { required: true, message: "Please enter your email" },
+                    { type: "email", message: "Please enter a valid email" },
+                  ]}
+                >
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                      <i className="bi bi-envelope text-[#8B7355] text-lg"></i>
+                      <SvgIcon
+                        src="/assets/svgs/email.svg"
+                        ariaLabel="email"
+                        width={24}
+                        height={24}
+                        className="size-[24px] shrink-0 text-[#9E7B6A]"
+                      />
                     </div>
                     <Input
                       type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
                       placeholder="Your Email in here"
-                      required
                       className={clsx(
                         "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#452917]",
+                        "bg-white text-[#10182A]",
                         "focus:border-[#8B7355] focus:shadow-none",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
                   </div>
-                </div>
+                </Form.Item>
               </div>
 
               {/* Date and Party Size - 2 columns on desktop */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
                 {/* Date Field */}
-                <div className="flex flex-col gap-2">
-                  <label
-                    className={clsx(
-                      "text-[#452917] font-medium uppercase tracking-wide",
-                      responsiveFontSizeArray(12, 14)
-                    )}
-                  >
-                    Date
-                  </label>
+                <Form.Item
+                  name="date"
+                  label={
+                    <span
+                      className={clsx(
+                        "text-[#10182A] font-prata",
+                        responsiveFontSizeArray(12, 14)
+                      )}
+                    >
+                      Date
+                    </span>
+                  }
+                  rules={[{ required: true, message: "Please select a date" }]}
+                  getValueFromEvent={(value: Dayjs | null) => {
+                    // Convert dayjs to YYYY-MM-DD format for storage
+                    return value ? value.format("YYYY-MM-DD") : "";
+                  }}
+                  normalize={(value) => {
+                    // Convert string to dayjs when loading form
+                    if (typeof value === "string" && value) {
+                      return dayjs(value);
+                    }
+                    return value;
+                  }}
+                >
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
-                      <i className="bi bi-calendar text-[#8B7355] text-lg"></i>
+                      <SvgIcon
+                        src="/assets/svgs/calendar.svg"
+                        ariaLabel="calendar"
+                        width={24}
+                        height={24}
+                        className="size-[24px] shrink-0 text-[#9E7B6A]"
+                      />
                     </div>
-                    <Input
-                      type="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      required
+                    <DatePicker
+                      disabledDate={disabledDate}
+                      format="MM/DD/YYYY"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#452917]",
-                        "focus:border-[#8B7355] focus:shadow-none",
+                        "w-full pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
+                        "bg-white text-[#10182A]",
+                        "[&_.ant-picker-input>input]:text-[#10182A]",
+                        "[&_.ant-picker-input>input]:placeholder:text-[#10182A]/50",
+                        "focus-within:border-[#8B7355] focus-within:shadow-none",
+                        "[&_.ant-picker-suffix]:hidden",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
                   </div>
-                </div>
+                </Form.Item>
 
                 {/* Party Size Field */}
-                <div className="flex flex-col gap-2">
-                  <label
-                    className={clsx(
-                      "text-[#452917] font-medium uppercase tracking-wide",
-                      responsiveFontSizeArray(12, 14)
-                    )}
-                  >
-                    Party Size
-                  </label>
+                <Form.Item
+                  name="partySize"
+                  label={
+                    <span
+                      className={clsx(
+                        "text-[#10182A] font-prata",
+                        responsiveFontSizeArray(12, 14)
+                      )}
+                    >
+                      Party Size
+                    </span>
+                  }
+                  rules={[
+                    { required: true, message: "Please enter party size" },
+                    {
+                      pattern: /^[1-9]\d*$/,
+                      message: "Party size must be at least 1",
+                    },
+                  ]}
+                >
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
-                      <i className="bi bi-people text-[#8B7355] text-lg"></i>
+                      <SvgIcon
+                        src="/assets/svgs/group-user.svg"
+                        ariaLabel="group-user"
+                        width={24}
+                        height={24}
+                        className="size-[24px] shrink-0 text-[#9E7B6A]"
+                      />
                     </div>
                     <Input
                       type="number"
-                      name="partySize"
-                      value={formData.partySize}
-                      onChange={handleChange}
                       placeholder="Your party size in here"
                       min="1"
-                      required
                       className={clsx(
                         "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                        "bg-white text-[#452917]",
+                        "bg-white text-[#10182A]",
                         "focus:border-[#8B7355] focus:shadow-none",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
                   </div>
-                </div>
+                </Form.Item>
               </div>
 
               {/* Message Field */}
-              <div className="flex flex-col gap-2">
-                <label
-                  className={clsx(
-                    "text-[#452917] font-medium uppercase tracking-wide",
-                    responsiveFontSizeArray(12, 14)
-                  )}
-                >
-                  Your messenger
-                </label>
+              <Form.Item
+                name="message"
+                label={
+                  <span
+                    className={clsx(
+                      "text-[#10182A] font-prata",
+                      responsiveFontSizeArray(12, 14)
+                    )}
+                  >
+                    Your messenger
+                  </span>
+                }
+              >
                 <div className="relative">
                   <div className="absolute left-3 top-4 z-10">
-                    <i className="bi bi-chat-dots text-[#8B7355] text-lg"></i>
+                    <SvgIcon
+                      src="/assets/svgs/chat.svg"
+                      ariaLabel="chat"
+                      width={24}
+                      height={24}
+                      className="size-[24px] shrink-0 text-[#9E7B6A]"
+                    />
                   </div>
                   <TextArea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
                     placeholder="Your information in here"
                     rows={5}
                     className={clsx(
                       "pl-10 pr-4 py-3 rounded-xl border border-[#8B7355]/30",
-                      "bg-white text-[#452917]",
+                      "bg-white text-[#10182A]",
                       "focus:border-[#8B7355] focus:shadow-none",
                       responsiveFontSizeArray(14, 16)
                     )}
                   />
                 </div>
-              </div>
+              </Form.Item>
 
               {/* Submit Button */}
-              <div className="pt-4">
-                <button
-                  type="submit"
+              <Form.Item className="pt-4 mb-0">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={isSubmitting}
                   disabled={isSubmitting}
                   className={clsx(
-                    "w-full py-3 lg:py-4 rounded-xl bg-[#8B7355] text-white",
-                    "font-semibold uppercase tracking-wider",
+                    "w-full py-3 lg:py-4 rounded-xl !bg-[#8B7355] text-white border-none",
+                    "font-semibold h-auto",
                     "hover:bg-[#A67C52] transition-colors",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
                     responsiveFontSizeArray(16, 18)
                   )}
                 >
                   {isSubmitting ? "SENDING..." : "SEND"}
-                </button>
-              </div>
-            </form>
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
 
           {/* Right Side - Decorative Image */}

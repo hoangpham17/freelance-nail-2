@@ -27,15 +27,14 @@ const ContactUs: React.FC = () => {
 
               <h1
                 className={clsx(
-                  "font-prata text-[#452917] mb-4",
+                  "font-prata text-[#10182A] mb-4 lg:max-w-[90%]",
                   responsiveFontSizeArray(32, 80)
                 )}
               >
-                Unlock the secrets of captivating <br /> beauty with our
-                luxurious
+                Unlock the secrets of captivating beauty with our luxurious
                 <span
                   className={clsx(
-                    "font-prata text-[#C19A6B] block",
+                    "font-prata text-[#D1A054] block",
                     responsiveFontSizeArray(45, 160)
                   )}
                 >
