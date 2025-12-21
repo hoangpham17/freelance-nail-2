@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Slider, { Settings } from "react-slick";
 import { Skeleton } from "antd";
 import { BannerItem, BannerRecord } from "../../types";
@@ -7,12 +7,12 @@ import "slick-carousel/slick/slick-theme.css";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 import { useAirtable } from "@/hooks/useAirtable";
 import CustomDots from "@/based/components/CustomDots";
+import { useScreen } from "@/hooks/useScreen";
 
 const HeroSection: React.FC = () => {
+  const { isDesktop } = useScreen();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const mobileSliderRef = useRef<Slider>(null);
-  const desktopSliderRef = useRef<Slider>(null);
-  const isSyncingRef = useRef(false);
+  const sliderRef = useRef<Slider>(null);
 
   const { data: bannerRecords } = useAirtable<BannerRecord>(
     AIRTABLE_ENDPOINTS.banner
@@ -49,26 +49,11 @@ const HeroSection: React.FC = () => {
       .filter((item) => item.desktop || item.mobile);
   }, [bannerRecords]);
 
-  // Sync sliders when currentSlide changes
-  useEffect(() => {
-    if (isSyncingRef.current) return;
-
-    isSyncingRef.current = true;
-    mobileSliderRef.current?.slickGoTo(currentSlide, false);
-    desktopSliderRef.current?.slickGoTo(currentSlide, false);
-
-    // Reset flag after a short delay
-    setTimeout(() => {
-      isSyncingRef.current = false;
-    }, 100);
-  }, [currentSlide]);
-
   const handleBeforeChange = (_current: number, next: number) => {
-    if (isSyncingRef.current) return;
     setCurrentSlide(next);
   };
 
-  const mobileSettings: Settings = {
+  const sliderSettings: Settings = {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -81,27 +66,49 @@ const HeroSection: React.FC = () => {
     beforeChange: handleBeforeChange,
   };
 
-  const desktopSettings: Settings = {
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    dots: false,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    fade: true,
-    cssEase: "linear",
-    beforeChange: handleBeforeChange,
+  const renderSlides = () => {
+    return bannerItems.map((item, index) => {
+      const mobileUrl = item.mobile;
+      const desktopUrl = item.desktop;
+
+      if (!mobileUrl && !desktopUrl) {
+        return (
+          <div
+            key={item.id || index}
+            className="relative w-full h-screen min-h-[700px]"
+          >
+            <Skeleton.Image
+              active
+              style={{
+                width: "100vw",
+                height: "100vh",
+              }}
+            />
+          </div>
+        );
+      }
+
+      const imageUrl = isDesktop ? desktopUrl : mobileUrl;
+
+      return (
+        <div key={item.id || index} className="w-full relative">
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt={`Banner ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          )}
+        </div>
+      );
+    });
   };
 
   if (bannerItems.length === 0) {
     return (
       <section className="relative w-full h-screen overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
-          <Skeleton.Image
-            active
-            style={{ width: "100%", height: "100%", minHeight: "700px" }}
-          />
+          <Skeleton.Image active style={{ width: "100vw", height: "100vh" }} />
         </div>
       </section>
     );
@@ -109,77 +116,10 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative w-full overflow-hidden lg:!h-auto transition-all duration-300">
-      {/* Mobile Slider - Use img tags */}
-      <div className="w-full h-full lg:hidden">
-        <Slider ref={mobileSliderRef} {...mobileSettings}>
-          {bannerItems.map((item, index) => {
-            const imageUrl = item.mobile;
-
-            if (!imageUrl) {
-              return (
-                <div
-                  key={item.id || index}
-                  className="relative w-full h-screen min-h-[700px]"
-                >
-                  <Skeleton.Image
-                    active
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      minHeight: "700px",
-                    }}
-                  />
-                </div>
-              );
-            }
-
-            return (
-              <div key={item.id || index} className="w-full">
-                <img
-                  src={imageUrl}
-                  alt={`Banner ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            );
-          })}
-        </Slider>
-      </div>
-
-      {/* Desktop Slider - Use img tags */}
-      <div className="hidden lg:block w-full h-full">
-        <Slider ref={desktopSliderRef} {...desktopSettings}>
-          {bannerItems.map((item, index) => {
-            const imageUrl = item.desktop;
-
-            if (!imageUrl) {
-              return (
-                <div
-                  key={item.id || index}
-                  className="relative w-full h-screen min-h-[700px]"
-                >
-                  <Skeleton.Image
-                    active
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      minHeight: "700px",
-                    }}
-                  />
-                </div>
-              );
-            }
-
-            return (
-              <div key={item.id || index} className="w-full">
-                <img
-                  src={imageUrl}
-                  alt={`Banner ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            );
-          })}
+      {/* Single Slider with Responsive Images */}
+      <div className="w-full h-full">
+        <Slider ref={sliderRef} {...sliderSettings}>
+          {renderSlides()}
         </Slider>
       </div>
 
@@ -188,8 +128,7 @@ const HeroSection: React.FC = () => {
         totalSlides={bannerItems.length}
         currentIndex={currentSlide}
         onDotClick={(index) => {
-          mobileSliderRef.current?.slickGoTo(index);
-          desktopSliderRef.current?.slickGoTo(index);
+          sliderRef.current?.slickGoTo(index);
         }}
       />
     </section>
