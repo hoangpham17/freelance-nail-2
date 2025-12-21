@@ -9,12 +9,12 @@ const ContactUs: React.FC = () => {
   const { isDesktop } = useScreen();
 
   return (
-    <div className="relative w-full min-h-screen bg-white">
-      <Wrapper className="relative pt-12 lg:pt-20 pb-16 lg:pb-24">
+    <div className="relative w-full bg-white">
+      <Wrapper className="relative pt-12 lg:pt-20 pb-10 lg:pb-24">
         <div className="z-10 max-w-6xl mx-auto">
           <div className="mb-12 lg:mb-16">
             <div className="relative">
-              <div className="absolute right-0 top-0 w-[160px] h-[160px] lg:w-[263px] lg:h-[263px] pointer-events-none z-0">
+              <div className="absolute -right-[20%] lg:right-0 top-0 w-[160px] h-[160px] lg:w-[263px] lg:h-[263px] pointer-events-none z-0">
                 <img
                   src="/assets/images/Contact-Us/circle-image.png"
                   alt="Let's connect"
@@ -27,7 +27,7 @@ const ContactUs: React.FC = () => {
 
               <h1
                 className={clsx(
-                  "font-prata text-[#10182A] mb-4 lg:max-w-[90%]",
+                  "font-prata text-[#10182A] mb-4 max-w-[90%]",
                   responsiveFontSizeArray(32, 80)
                 )}
               >
@@ -66,8 +66,8 @@ const ContactUs: React.FC = () => {
               className="relative rounded-2xl pt-[42px] lg:pt-0"
               style={{
                 backgroundImage: `url(/assets/images/Contact-Us/left-image-mobile.png)`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                backgroundSize: "contain",
+                backgroundPosition: "top center",
                 backgroundRepeat: "no-repeat",
               }}
             >

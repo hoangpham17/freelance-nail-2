@@ -58,7 +58,7 @@ const PartyForm: React.FC = () => {
     <section className="relative">
       <Wrapper>
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 lg:p-6">
-          <div className="w-2/3">
+          <div className="lg:w-2/3">
             <Form
               form={form}
               onFinish={handleSubmit}
@@ -101,7 +101,7 @@ const PartyForm: React.FC = () => {
                 </div>
               </Form.Item>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-6">
                 <Form.Item
                   name="phone"
                   label={
@@ -178,7 +178,7 @@ const PartyForm: React.FC = () => {
                 </Form.Item>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-6">
                 <Form.Item
                   name="date"
                   label={
@@ -301,7 +301,7 @@ const PartyForm: React.FC = () => {
                 </div>
               </Form.Item>
 
-              <Form.Item className="mb-0">
+              <Form.Item className="!mb-0">
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -320,12 +320,12 @@ const PartyForm: React.FC = () => {
             </Form>
           </div>
 
-          <div className="w-1/3 lg:sticky lg:top-20">
-            <div className="relative w-full h-64 lg:h-auto rounded-2xl overflow-hidden">
+          <div className="lg:w-1/3">
+            <div className="relative">
               <img
                 src="/assets/images/Host-A-Party/host-a-party.png"
                 alt="Nail polish bottles"
-                className="w-full h-full object-cover"
+                className="max-w-[380px] mx-auto lg:max-w-full w-full lg:w-auto h-[344px] lg:h-full object-cover max-h-[560px] object-top"
                 onError={(e) => {
                   e.currentTarget.src = "https://picsum.photos/800/600";
                 }}

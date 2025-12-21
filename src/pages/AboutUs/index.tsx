@@ -5,7 +5,7 @@ import AboutUsSection from "./components/AboutUsSection";
 
 const AboutUs: React.FC = () => {
   return (
-    <div className="relative w-full min-h-screen">
+    <div className="relative w-full">
       <Wrapper className="relative pt-8 lg:pt-16 pb-12 lg:pb-20">
         <div className="flex justify-center mb-8 lg:mb-16">
           <img
