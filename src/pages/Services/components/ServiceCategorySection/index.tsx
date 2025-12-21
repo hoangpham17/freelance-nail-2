@@ -39,7 +39,8 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
     >
       <Wrapper className="relative z-10">
         <div>
-          <div
+          <Flex
+            align="center"
             className={clsx(
               "lg:min-h-[236px] mb-4 md:mb-8 mt-[30px] lg:mt-[50px]",
               category.titleBackgroundImage
@@ -85,7 +86,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                   <Flex
                     align="center"
                     className={clsx(
-                      "lg:max-w-[50%]",
+                      "lg:max-w-[50%] w-full",
                       !isDesktop &&
                         "bg-white/30 border border-white rounded-2xl py-1 px-3"
                     )}
@@ -95,7 +96,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 )}
               </Flex>
             </Flex>
-          </div>
+          </Flex>
 
           <div className="columns-1 lg:columns-2 gap-4 lg:gap-6">
             {category.services.map((service) => (
