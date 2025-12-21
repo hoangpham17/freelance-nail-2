@@ -4,60 +4,13 @@ import { Flex } from "antd";
 import Link from "antd/es/typography/Link";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import SvgIcon from "@/based/SvgIcon";
 import { useScreen } from "@/hooks/useScreen";
 import { Wrapper } from "@/based/components/Wrapper";
-
-const SERVICES_MENU = [
-  {
-    title: "Manicure",
-    href: `${PATHS.services}#manicure`,
-    icon: "/assets/svgs/manicure.svg",
-  },
-  {
-    title: "Pedicure",
-    href: `${PATHS.services}#pedicure`,
-    icon: "/assets/svgs/pedicure.svg",
-  },
-  {
-    title: "Nail Enhancements",
-    href: `${PATHS.services}#nails-enhancements`,
-    icon: "/assets/svgs/nail-enhancements.svg",
-  },
-  {
-    title: "Additional Services",
-    href: `${PATHS.services}#additional-services`,
-    icon: "/assets/svgs/additional-services.svg",
-  },
-  {
-    title: "Waxing",
-    href: `${PATHS.services}#waxing`,
-    icon: "/assets/svgs/waxing.svg",
-  },
-  {
-    title: "Kid Service",
-    href: `${PATHS.services}#kid-services`,
-    icon: "/assets/svgs/kid-service.svg",
-  },
-  {
-    title: "Facial Relax",
-    href: `${PATHS.services}#facial-relax`,
-    icon: "/assets/svgs/facial-relax.svg",
-  },
-  {
-    title: "HeadSpa",
-    href: `${PATHS.services}#headspa`,
-    icon: "/assets/svgs/head-spa.svg",
-  },
-  {
-    title: "Eyelash",
-    href: `${PATHS.services}#eyelash`,
-    icon: "/assets/svgs/eyelash.svg",
-  },
-];
+import { useServiceCategories } from "@/hooks/useServiceCategories";
 
 const WelcomeSection: React.FC = () => {
   const { isMobile } = useScreen();
+  const serviceCategories = useServiceCategories();
 
   const renderTitle = (title: string) => {
     // split first word and last word
@@ -121,33 +74,36 @@ const WelcomeSection: React.FC = () => {
             align="center"
             justify="center"
           >
-            {SERVICES_MENU.map((service) => (
-              <Link key={service.title} href={service.href}>
-                <Flex
-                  className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full"
-                  align="center"
-                  justify="center"
-                  vertical
-                  gap={4}
-                  style={{
-                    backdropFilter: "blur(16px)",
-                    boxShadow: "0px 5px 16px 0px #8B4B2026",
-                  }}
-                >
-                  <SvgIcon
-                    src={service.icon}
-                    ariaLabel="text"
-                    width={isMobile ? 40 : 60}
-                    height={isMobile ? 40 : 60}
-                    className={clsx(
-                      "shrink-0 text-[#D1A054]",
-                      isMobile ? "size-[40px]" : "size-[60px]"
-                    )}
-                  />
-                  {renderTitle(service.title)}
-                </Flex>
-              </Link>
-            ))}
+            {serviceCategories.map((category) => {
+              const href = `${PATHS.services}#${category.slug}`;
+              const iconUrl = category.icon || "/assets/svgs/manicure.svg"; // Fallback icon
+
+              return (
+                <Link key={category.id} href={href}>
+                  <Flex
+                    className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full"
+                    align="center"
+                    justify="center"
+                    vertical
+                    gap={4}
+                    style={{
+                      backdropFilter: "blur(16px)",
+                      boxShadow: "0px 5px 16px 0px #8B4B2026",
+                    }}
+                  >
+                    <img
+                      src={iconUrl}
+                      alt={category.title}
+                      className={clsx(
+                        "shrink-0 object-contain",
+                        isMobile ? "w-10 h-10" : "w-[60px] h-[60px]"
+                      )}
+                    />
+                    {renderTitle(category.title)}
+                  </Flex>
+                </Link>
+              );
+            })}
           </Flex>
         </Wrapper>
       </div>

@@ -25,6 +25,7 @@ export type ServiceCategory = {
   description: string;
   titleBackgroundImage: string;
   sectionBackgroundImage: string;
+  icon: string;
   services: ServiceItem[];
 };
 
@@ -36,4 +37,5 @@ export type ServiceCategoryRecord = {
   slug?: string;
   description?: string;
   index?: number;
+  icon?: string | AirtableAttachment[];
 };

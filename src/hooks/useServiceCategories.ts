@@ -39,6 +39,7 @@ export const useServiceCategories = (): ServiceCategory[] => {
         sectionBackgroundImage: resolveImageUrl(
           category.section_background_image
         ),
+        icon: resolveImageUrl(category.icon),
         services:
           servicesData
             ?.filter((service) =>
