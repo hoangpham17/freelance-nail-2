@@ -8,7 +8,7 @@ import { useScreen } from "@/hooks/useScreen";
 import { useBannerItems } from "./useBannerItems";
 
 const HeroSection: React.FC = () => {
-  const { isDesktop } = useScreen();
+  const { isDesktop, isTablet } = useScreen();
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
@@ -53,7 +53,7 @@ const HeroSection: React.FC = () => {
         );
       }
 
-      const imageUrl = isDesktop ? desktopUrl : mobileUrl;
+      const imageUrl = isDesktop || isTablet ? desktopUrl : mobileUrl;
 
       return (
         <div key={item.id || index} className="w-full relative">

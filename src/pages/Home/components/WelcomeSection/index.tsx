@@ -34,7 +34,7 @@ const WelcomeSection: React.FC = () => {
   };
 
   return (
-    <section>
+    <section className="-mt-2">
       <div
         className="bg-cover bg-center pt-[100px] text-center z-[1]"
         style={{
