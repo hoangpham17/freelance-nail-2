@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useServiceCategories } from "../../hooks/useServiceCategories";
 import ServiceCategorySection from "./components/ServiceCategorySection";
@@ -17,12 +17,23 @@ const Services: React.FC = () => {
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
+  const previousHashRef = useRef<string>("");
 
   useEffect(() => {
-    if (location.hash) {
-      const hash = location.hash.replace("#", "");
+    // Only scroll when hash actually changes, not when other dependencies change
+    const currentHash = location.hash.replace("#", "");
+
+    // Skip if hash hasn't changed
+    if (currentHash === previousHashRef.current) {
+      return;
+    }
+
+    // Update previous hash
+    previousHashRef.current = currentHash;
+
+    if (currentHash) {
       setTimeout(() => {
-        const element = document.getElementById(hash);
+        const element = document.getElementById(currentHash);
         if (element) {
           // Calculate offset for sticky header (CategoryTabs)
           const baseTop = isDesktop ? 100 : 64;
@@ -33,14 +44,26 @@ const Services: React.FC = () => {
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth",
-          });
+          // Check if element is already at the correct position (within 100px tolerance)
+          const currentScrollY = window.pageYOffset;
+          const targetScrollY = offsetPosition;
+          const distance = Math.abs(currentScrollY - targetScrollY);
+
+          // Only scroll if not already at the correct position
+          if (distance > 100) {
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
         }
       }, 150);
+    } else {
+      // If hash is cleared, reset the ref
+      previousHashRef.current = "";
     }
-  }, [location.hash, isDesktop, showCampaignBar, campaignBarHeight]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.hash]);
 
   return (
     <main className="w-full relative">

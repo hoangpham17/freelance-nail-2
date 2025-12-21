@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Flex, Image } from "antd";
 import { PATHS } from "../../routes/Routes";
@@ -15,6 +15,7 @@ import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import { useScreen } from "@/hooks/useScreen";
 import { useCheckOpacityHeader } from "@/hooks/useCheckOpacityHeader";
+import ServicesSubmenu from "./components/ServicesSubmenu";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -50,6 +51,8 @@ const Header: React.FC = () => {
     useState(false);
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isServicesHovered, setIsServicesHovered] = useState(false);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const setShowCampaignBar = useCampaignStore(
     (state) => state.setShowCampaignBar
@@ -163,6 +166,15 @@ const Header: React.FC = () => {
     };
   }, [hasPendingCampaign]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const closeMenu = () => {
     setIsMenuOpen(false);
@@ -231,23 +243,83 @@ const Header: React.FC = () => {
             )}
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center relative h-full">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
+              const isServices = item.path === PATHS.services;
+
               return (
-                <Link
+                <div
                   key={item.path}
-                  to={item.path}
                   className={clsx(
-                    "uppercase transition-colors text-center",
-                    responsiveFontSizeArray(14, 16),
-                    isActive
-                      ? "text-[#9E7B6A] font-semibold"
-                      : "text-[#0F172A] hover:text-[#9E7B6A]"
+                    "relative h-full flex items-center",
+                    isServices && "group"
                   )}
+                  onMouseEnter={() => {
+                    if (isServices) {
+                      if (hoverTimeoutRef.current) {
+                        clearTimeout(hoverTimeoutRef.current);
+                        hoverTimeoutRef.current = null;
+                      }
+                      setIsServicesHovered(true);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (isServices) {
+                      // Delay hiding to allow mouse to move to submenu
+                      hoverTimeoutRef.current = setTimeout(() => {
+                        setIsServicesHovered(false);
+                      }, 150);
+                    }
+                  }}
                 >
-                  {item.label}
-                </Link>
+                  <Link
+                    to={item.path}
+                    className={clsx(
+                      "uppercase transition-colors text-center h-full flex items-center",
+                      responsiveFontSizeArray(14, 16),
+                      isActive
+                        ? "!text-[#9E7B6A] font-semibold"
+                        : "text-[#0F172A] hover:text-[#9E7B6A]"
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                  {isServices && (
+                    <>
+                      <div
+                        className="absolute top-full left-0 right-0 h-2 bg-transparent"
+                        onMouseEnter={() => {
+                          if (hoverTimeoutRef.current) {
+                            clearTimeout(hoverTimeoutRef.current);
+                            hoverTimeoutRef.current = null;
+                          }
+                          setIsServicesHovered(true);
+                        }}
+                        onMouseLeave={() => {
+                          hoverTimeoutRef.current = setTimeout(() => {
+                            setIsServicesHovered(false);
+                          }, 150);
+                        }}
+                      />
+                      <ServicesSubmenu
+                        isVisible={isServicesHovered}
+                        onMouseEnter={() => {
+                          if (hoverTimeoutRef.current) {
+                            clearTimeout(hoverTimeoutRef.current);
+                            hoverTimeoutRef.current = null;
+                          }
+                          setIsServicesHovered(true);
+                        }}
+                        onMouseLeave={() => {
+                          hoverTimeoutRef.current = setTimeout(() => {
+                            setIsServicesHovered(false);
+                          }, 150);
+                        }}
+                      />
+                    </>
+                  )}
+                </div>
               );
             })}
           </nav>
