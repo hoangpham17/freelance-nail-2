@@ -218,7 +218,7 @@ const Header: React.FC = () => {
               <Image
                 src="/assets/images/logo/desktop.png"
                 alt="THE VEIRA NAIL LOUNGE & SPA"
-                className="max-h-[70px]"
+                className="max-h-[40px] xl:max-h-[70px]"
                 preview={false}
               />
             ) : (
@@ -239,11 +239,11 @@ const Header: React.FC = () => {
                   key={item.path}
                   to={item.path}
                   className={clsx(
-                    "font-lexend uppercase transition-colors",
+                    "uppercase transition-colors text-center",
                     responsiveFontSizeArray(14, 16),
                     isActive
-                      ? "text-[#8B7355] font-semibold"
-                      : "text-[#0F172A] hover:text-[#A67C52]"
+                      ? "text-[#9E7B6A] font-semibold"
+                      : "text-[#0F172A] hover:text-[#9E7B6A]"
                   )}
                 >
                   {item.label}

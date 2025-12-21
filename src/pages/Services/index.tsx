@@ -7,21 +7,40 @@ import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
+import { useCampaignStore } from "@/shared/store/campaignStore";
 
 const Services: React.FC = () => {
   const { isDesktop } = useScreen();
   const location = useLocation();
   const serviceCategories = useServiceCategories();
+  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
+  const campaignBarHeight = useCampaignStore(
+    (state) => state.campaignBarHeight
+  );
 
   useEffect(() => {
     if (location.hash) {
       const hash = location.hash.replace("#", "");
       setTimeout(() => {
         const element = document.getElementById(hash);
-        element?.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (element) {
+          // Calculate offset for sticky header (CategoryTabs)
+          const baseTop = isDesktop ? 100 : 64;
+          const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
+          const categoryTabsHeight = isDesktop ? 56 : 32; // Height of CategoryTabs
+          const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
+
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
       }, 150);
     }
-  }, [location.hash]);
+  }, [location.hash, isDesktop, showCampaignBar, campaignBarHeight]);
 
   return (
     <main className="w-full relative">

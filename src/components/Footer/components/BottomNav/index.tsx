@@ -1,30 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { PATHS } from "@/routes/Routes";
 import clsx from "clsx";
 import { Wrapper } from "@/based/components/Wrapper";
+import { useServiceCategories } from "@/hooks/useServiceCategories";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 const BottomNav: React.FC = () => {
-  const serviceNavItems = [
-    { path: `${PATHS.services}#manicure`, label: "Manicure" },
-    { path: `${PATHS.services}#pedicure`, label: "Pedicure" },
-    {
-      path: `${PATHS.services}#nails-enhancements`,
-      label: "Nail Enhancements",
-    },
-    {
-      path: `${PATHS.services}#additional-services`,
-      label: "Additional Services",
-    },
-    { path: `${PATHS.services}#waxing`, label: "Waxing" },
-    { path: `${PATHS.services}#kid-services`, label: "Kid Services" },
-    { path: `${PATHS.services}#headspa`, label: "Headspa" },
-    { path: `${PATHS.services}#facial-relax`, label: "Facial Relax" },
-    { path: `${PATHS.services}#eyelash`, label: "Eye lash" },
-  ];
+  const location = useLocation();
+  const serviceCategories = useServiceCategories();
 
-  const checkIsActive = (path: string) => {
-    return location.pathname === path;
+  const serviceNavItems = serviceCategories.map((category) => ({
+    path: `${PATHS.services}#${category.slug}`,
+    label: category.title,
+    slug: category.slug,
+  }));
+
+  const checkIsActive = (slug: string) => {
+    const isServicesPage = location.pathname === PATHS.services;
+    const currentHash = location.hash.replace("#", "");
+    return isServicesPage && currentHash === slug;
   };
 
   return (
@@ -36,8 +31,9 @@ const BottomNav: React.FC = () => {
               key={item.path}
               to={item.path}
               className={clsx(
-                "text-xs lg:text-sm uppercase transition-colors hover:bg-white hover:text-black py-3 px-6",
-                checkIsActive(item.path)
+                " flex items-center justify-center uppercase transition-colors hover:bg-white hover:text-black py-3 px-6",
+                responsiveFontSizeArray(16, 24),
+                checkIsActive(item.slug)
                   ? "text-black bg-white"
                   : "text-[#8B4B20]"
               )}

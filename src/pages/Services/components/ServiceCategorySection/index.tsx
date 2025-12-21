@@ -21,7 +21,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
 
   return (
     <div
-      id={category.id}
+      id={category.slug}
       className={clsx(
         "relative w-full overflow-hidden pb-[16px] lg:pb-[38px]",
         category.sectionBackgroundImage

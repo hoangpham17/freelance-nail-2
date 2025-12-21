@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ServiceCategory } from "../../types";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import Slider, { Settings } from "react-slick";
@@ -14,8 +15,9 @@ interface CategoryTabsProps {
 
 const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
   const { isDesktop } = useScreen();
+  const location = useLocation();
 
-  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
+  const [activeCategorySlug, setActiveCategorySlug] = useState<string | null>(null);
   const sliderRef = useRef<Slider | null>(null);
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(
@@ -26,18 +28,39 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
   const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
 
   useEffect(() => {
-    if (categories.length && !activeCategoryId) {
-      setActiveCategoryId(categories[0].id);
+    if (categories.length && !activeCategorySlug) {
+      setActiveCategorySlug(categories[0].slug);
     }
-  }, [categories, activeCategoryId]);
+  }, [categories, activeCategorySlug]);
+
+  // Update active category when hash changes (e.g., from BottomNav)
+  useEffect(() => {
+    if (location.hash) {
+      const hash = location.hash.replace("#", "");
+      const category = categories.find((cat) => cat.slug === hash);
+      if (category) {
+        setActiveCategorySlug(hash);
+      }
+    }
+  }, [location.hash, categories]);
 
   const handleTabClick = (categorySlug: string) => {
-    setActiveCategoryId(categorySlug);
+    setActiveCategorySlug(categorySlug);
     // Update URL hash (e.g., #manicure)
     window.location.hash = categorySlug;
     const element = document.getElementById(categorySlug);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Calculate offset for sticky header (CategoryTabs)
+      const categoryTabsHeight = isDesktop ? 56 : 32;
+      const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
+      
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -72,7 +95,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
         <div className="flex-1 min-w-0 overflow-hidden relative">
           <Slider ref={sliderRef} {...sliderSettings}>
             {categories.map((category) => {
-              const isActive = category.id === activeCategoryId;
+              const isActive = category.slug === activeCategorySlug;
               return (
                 <div key={category.id} className="px-1">
                   <div
