@@ -10,7 +10,7 @@ const HeaderSection: React.FC = () => {
         <div className="relative flex-shrink-0">
           <p
             className={clsx(
-              "font-prata font-semibold text-black",
+              "font-prata font-semibold text-black leading-none",
               responsiveFontSizeArray(54, 130)
             )}
           >
@@ -24,17 +24,22 @@ const HeaderSection: React.FC = () => {
           >
             COMMENT
           </p>
+          <img
+            src="/assets/images/HomePage/image-comment.png"
+            alt="comment"
+            className="w-full absolute top-0 lg:top-10 right-0 -z-[1]"
+          />
         </div>
         <div className="flex-1">
           <p
             className={clsx(
-              "font-prata font-bold text-black",
+              "font-prata font-bold text-black leading-[30px] lg:leading-[85px]",
               responsiveFontSizeArray(24, 75)
             )}
           >
             Your nail has never felt <br /> better
-            <span className="text-[#D1A054]"> Brighter</span> and
-            <span className="text-[#D1A054]"> Healthier</span>
+            <span className="text-[#9E7B6A]"> Brighter</span> and
+            <span className="text-[#9E7B6A]"> Healthier</span>
             <br />
             with Veira
           </p>

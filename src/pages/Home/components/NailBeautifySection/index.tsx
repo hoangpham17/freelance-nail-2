@@ -21,14 +21,12 @@ const NailBeautifySection: React.FC<NailBeautifySectionProps> = ({
 
   const galleryItems = useGalleryItems();
 
-  // Notify parent component about gallery items change
   useEffect(() => {
     if (onGalleryItemsChange) {
       onGalleryItemsChange(galleryItems);
     }
   }, [galleryItems, onGalleryItemsChange]);
 
-  // Group items into slides of 5
   const slides = useMemo(() => {
     const result: GalleryItem[][] = [];
     for (let i = 0; i < galleryItems.length; i += 5) {
@@ -38,11 +36,11 @@ const NailBeautifySection: React.FC<NailBeautifySectionProps> = ({
   }, [galleryItems]);
 
   return (
-    <section className="relative pt-10 pb-4 lg:py-[50px] bg-white">
+    <section className="relative pt-10 pb-4 md:py-[50px] bg-white">
       <Wrapper>
         <HeaderSection />
         {galleryItems.length > 0 && (
-          <Flex vertical className="gap-4 lg:gap-0">
+          <Flex vertical className="gap-4 md:gap-0">
             <NavigationArrows sliderRef={sliderRef} />
             <GallerySlider
               slides={slides}

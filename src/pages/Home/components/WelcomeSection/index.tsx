@@ -48,7 +48,7 @@ const WelcomeSection: React.FC = () => {
           >
             <p
               className={clsx(
-                "font-prata tracking-[-2%] 2xl:text-[70px]",
+                "font-prata tracking-[-2%] leading-[30px] lg:leading-[70px] 2xl:text-[70px]",
                 responsiveFontSizeArray(24, 70)
               )}
             >
