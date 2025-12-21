@@ -95,6 +95,7 @@ const HeroSection: React.FC = () => {
         onDotClick={(index) => {
           sliderRef.current?.slickGoTo(index);
         }}
+        className="hidden lg:block"
       />
     </section>
   );

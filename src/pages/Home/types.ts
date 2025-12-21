@@ -47,6 +47,7 @@ export type HomeCommentRecord = {
   id?: string;
   guest_name?: string;
   comment?: string;
+  order?: number;
   image?:
     | string
     | Array<{
