@@ -17,6 +17,7 @@ import { useScreen } from "@/hooks/useScreen";
 import { useCheckOpacityHeader } from "@/hooks/useCheckOpacityHeader";
 import ServicesSubmenu from "./components/ServicesSubmenu";
 import SvgIcon from "@/based/SvgIcon";
+import { useServiceCategories } from "@/hooks/useServiceCategories";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -53,6 +54,7 @@ const Header: React.FC = () => {
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isServicesHovered, setIsServicesHovered] = useState(false);
+  const [isServicesExpanded, setIsServicesExpanded] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const setShowCampaignBar = useCampaignStore(
@@ -176,9 +178,17 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  const serviceCategories = useServiceCategories();
+
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const closeMenu = () => {
     setIsMenuOpen(false);
+    setIsServicesExpanded(false);
+  };
+
+  const toggleServicesExpanded = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsServicesExpanded((prev) => !prev);
   };
 
   const handleCloseCampaign = () => {
@@ -350,7 +360,8 @@ const Header: React.FC = () => {
       >
         <Wrapper className="h-full flex flex-col">
           {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between h-[64px] px-4 border-b border-gray-100">
+          <div className="flex items-center justify-between h-[56px] border-b border-gray-100">
+            <div className="w-10" />
             <Link
               to={PATHS.home}
               onClick={closeMenu}
@@ -383,6 +394,72 @@ const Header: React.FC = () => {
             <nav className="flex flex-col pt-8 px-6 pb-6">
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
+                const isServices = item.path === PATHS.services;
+
+                if (isServices) {
+                  const serviceNavItems = serviceCategories.map((category) => ({
+                    path: `${PATHS.services}#${category.slug}`,
+                    label: category.title,
+                    slug: category.slug,
+                  }));
+
+                  const checkIsActive = (slug: string) => {
+                    const isServicesPage = location.pathname === PATHS.services;
+                    const currentHash = location.hash.replace("#", "");
+                    return isServicesPage && currentHash === slug;
+                  };
+
+                  return (
+                    <div key={item.path} className="mb-2">
+                      <button
+                        onClick={toggleServicesExpanded}
+                        className={clsx(
+                          "w-full flex items-center justify-between py-3 font-lexend uppercase transition-colors",
+                          responsiveFontSizeArray(16, 18),
+                          isActive
+                            ? "text-[#9E7B6A] font-semibold"
+                            : "text-[#0F172A]"
+                        )}
+                      >
+                        <span>{item.label}</span>
+                        <SvgIcon
+                          src={"/assets/svgs/chevron-right.svg"}
+                          ariaLabel="Toggle submenu"
+                          width={16}
+                          height={16}
+                          className={clsx(
+                            "size-4 shrink-0 transition-transform duration-200",
+                            isServicesExpanded && "rotate-90"
+                          )}
+                        />
+                      </button>
+                      {isServicesExpanded && serviceNavItems.length > 0 && (
+                        <div className="pl-4 mt-2 space-y-1">
+                          {serviceNavItems.map((subItem) => {
+                            const isSubActive = checkIsActive(subItem.slug);
+                            return (
+                              <Link
+                                key={subItem.path}
+                                to={subItem.path}
+                                onClick={closeMenu}
+                                className={clsx(
+                                  "block py-2 font-lexend capitalize transition-colors",
+                                  responsiveFontSizeArray(14, 16),
+                                  isSubActive
+                                    ? "text-[#9E7B6A] font-semibold"
+                                    : "text-[#0F172A]/80 hover:text-[#9E7B6A]"
+                                )}
+                              >
+                                {subItem.label}
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
                 return (
                   <Link
                     key={item.path}
@@ -404,8 +481,8 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Menu Footer */}
-          <div className="border-t border-gray-100 px-6 py-6 space-y-4">
-            <div className="flex flex-col gap-4">
+          <div className="border-t border-gray-100 py-4 space-y-1">
+            <div className="flex flex-col gap-2">
               <Link to={PATHS.contactUs} onClick={closeMenu} className="w-full">
                 <ButtonStyle1 className="font-lexend w-full">
                   CONTACT US
@@ -419,7 +496,7 @@ const Header: React.FC = () => {
                 (608) 000 000
               </a>
             </div>
-            <div className="flex justify-center pt-2">
+            <div className="flex justify-center">
               <ListSocial />
             </div>
           </div>
