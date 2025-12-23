@@ -36,11 +36,11 @@ const NailBeautifySection: React.FC<NailBeautifySectionProps> = ({
   }, [galleryItems]);
 
   return (
-    <section className="relative pt-10 pb-4 md:py-[50px] bg-white">
+    <section className="relative pt-10 pb-2 lg:pb-4 md:py-[50px] bg-white">
       <Wrapper>
         <HeaderSection />
         {galleryItems.length > 0 && (
-          <Flex vertical className="gap-4 md:gap-0">
+          <Flex vertical className="gap-2 md:gap-0">
             <NavigationArrows sliderRef={sliderRef} />
             <GallerySlider
               slides={slides}

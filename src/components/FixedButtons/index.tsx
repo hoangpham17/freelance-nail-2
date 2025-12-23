@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Flex } from "antd";
 import clsx from "clsx";
 import PhoneConfirmModal from "./components/PhoneConfirmModal";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 const FixedButtons: React.FC = () => {
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
@@ -24,9 +25,8 @@ const FixedButtons: React.FC = () => {
   return (
     <>
       <Flex
-        className="fixed p-3 md:p-0 bottom-0 md:bottom-10 right-0 md:right-[8%] md:flex-col gap-2 md:gap-4 w-full md:w-auto z-[99]"
+        className="fixed p-3 md:p-0 bottom-0 md:bottom-10 right-0 md:right-[8%] md:flex-col gap-2 md:gap-4 w-full md:w-auto z-[99] justify-between md:justify-center"
         align="center"
-        justify="center"
       >
         <div
           className="absolute top-0 left-0 w-full h-full bg-white/40 md:hidden block"
@@ -34,7 +34,8 @@ const FixedButtons: React.FC = () => {
         ></div>
         <a
           className={clsx(
-            "z-[1] md:px-7 md:py-4 p-3 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl text-center font-prata md:rotate-[-2deg] text-2xl md:text-[45px] border border-[#9E7B6A]"
+            "z-[1] md:px-7 md:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl text-center font-prata md:rotate-[-2deg] border border-[#9E7B6A]",
+            responsiveFontSizeArray(24, 47)
           )}
           title="BOOKING"
           href="https://booking.spacepos.net/?id=jzOR8l!BpuM="

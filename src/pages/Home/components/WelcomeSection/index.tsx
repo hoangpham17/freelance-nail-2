@@ -23,12 +23,11 @@ const WelcomeSection: React.FC = () => {
         align="center"
         justify="center"
         className={clsx(
-          "font-prata tracking-[-2%] text-[#9E7B6A] leading-none",
-          responsiveFontSizeArray(20, 24)
+          "font-prata tracking-[-2%] text-[#9E7B6A] leading-none text-lg"
         )}
       >
         <span className="inline-block">{firstWord}</span>
-        {lastWord && <span className="text-base inline-block">{lastWord}</span>}
+        {lastWord && <span className="inline-block text-sm">{lastWord}</span>}
       </Flex>
     );
   };
@@ -48,7 +47,7 @@ const WelcomeSection: React.FC = () => {
           >
             <p
               className={clsx(
-                "font-prata tracking-[-2%] leading-[30px] lg:leading-[70px] 2xl:text-[70px]",
+                "font-prata tracking-[-2%] leading-[30px] lg:leading-[70px]",
                 responsiveFontSizeArray(24, 70)
               )}
             >
@@ -81,11 +80,10 @@ const WelcomeSection: React.FC = () => {
               return (
                 <Link key={category.id} href={href}>
                   <Flex
-                    className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full"
+                    className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full gap-1 lg:gap-4"
                     align="center"
                     justify="center"
                     vertical
-                    gap={4}
                     style={{
                       backdropFilter: "blur(16px)",
                       boxShadow: "0px 5px 16px 0px #8B4B2026",

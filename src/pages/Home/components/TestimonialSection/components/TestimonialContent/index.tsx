@@ -53,21 +53,23 @@ const TestimonialContent: React.FC<TestimonialContentProps> = ({
 
   return (
     <div className="order-2 lg:order-1">
-      <div className="relative mb-3 lg:mb-4">
+      <div className="relative mb-1 lg:mb-4">
         <span
           className={clsx(
-            "font-prata font-bold text-black relative z-10",
-            responsiveFontSizeArray(24, 45)
+            "font-prata relative z-10 leading-[28px] lg:leading-[64px]",
+            responsiveFontSizeArray(24, 57)
           )}
         >
           {currentTestimonial?.name}
         </span>
       </div>
-      <div className=" bg-[#E1B1681A] rounded-2xl p-6 lg:p-8 shadow-lg border border-[rgba(212,175,55,0.2)] w-full lg:relative">
+      <div className=" bg-[#E1B1681A] rounded-2xl py-5 px-4 lg:p-8 shadow-md w-full lg:relative">
         <Slider ref={testimonialSliderRef} {...testimonialSettings}>
           {testimonials.map((testimonial) => (
             <div key={testimonial.id}>
-              <p className="text-base lg:text-lg leading-relaxed text-black italic">
+              <p
+                className={clsx("font-light", responsiveFontSizeArray(16, 20))}
+              >
                 "{testimonial.comment}"
               </p>
             </div>

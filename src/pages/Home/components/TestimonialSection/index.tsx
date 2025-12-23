@@ -11,7 +11,7 @@ const TestimonialSection: React.FC = () => {
   const { galleryImages, testimonials, loading } = useTestimonials();
 
   return (
-    <section className="relative pt-10 lg:pt-16 lg:pb-0 overflow-hidden bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
+    <section className="relative pt-[60px] lg:pt-11 lg:pb-0 overflow-hidden bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
       <div
         className="bg-cover bg-center absolute inset-0 opacity-60"
         style={{
@@ -20,7 +20,7 @@ const TestimonialSection: React.FC = () => {
       />
       <Wrapper className="px-4 lg:px-6 relative z-10">
         <HeaderSection />
-        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-12 items-center lg:-translate-y-20 pb-14 lg:pb-0">
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-12 items-center lg:-translate-y-16 pb-14 lg:pb-0 mt-5 lg:mt-0">
           <TestimonialContent
             testimonials={testimonials}
             currentIndex={currentIndex}

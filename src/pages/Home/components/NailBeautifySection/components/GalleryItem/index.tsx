@@ -23,14 +23,15 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
 }) => {
   const isLarge = size === "large";
   const containerClasses = isLarge
-    ? "relative overflow-hidden rounded-xl aspect-[16/10] w-full h-[140px] lg:h-[270px] lg:h-[320px] cursor-pointer transition-transform duration-300 hover:-translate-y-1"
-    : "relative overflow-hidden rounded-xl aspect-square w-full h-[140px] lg:h-[250px] lg:h-[300px] cursor-pointer transition-transform duration-300 hover:-translate-y-1";
-
-  const paddingClasses = isLarge ? "p-6 lg:p-8" : "p-4 lg:p-6";
+    ? " aspect-[16/10] lg:h-[270px] lg:h-[320px]"
+    : " aspect-square lg:h-[250px] lg:h-[300px]";
 
   return (
     <div
-      className={containerClasses}
+      className={clsx(
+        "relative overflow-hidden rounded-xl w-full h-[140px] cursor-pointer transition-transform duration-300 hover:-translate-y-1",
+        containerClasses
+      )}
       onClick={onClick}
       style={{
         backgroundImage: url ? `url(${url})` : undefined,
@@ -45,9 +46,9 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
             <>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               <div
-                className={`absolute inset-0 flex flex-col justify-end ${paddingClasses} ${
+                className={`absolute inset-0 flex flex-col justify-end p-2 lg:p-4 ${
                   textPosition === "right"
-                    ? "lg:items-end"
+                    ? "items-end"
                     : textPosition === "left"
                     ? "items-start"
                     : "items-start"
@@ -55,8 +56,8 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
               >
                 <span
                   className={clsx(
-                    "lg:max-w-[50%]",
-                    responsiveFontSizeArray(32, 45)
+                    "lg:max-w-[50%] leading-[24px] lg:leading-[54px] font-prata",
+                    responsiveFontSizeArray(18, 45)
                   )}
                   style={{
                     color: textColor || "#ffffff",

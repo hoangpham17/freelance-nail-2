@@ -29,7 +29,6 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
         <Slider ref={sliderRef} {...sliderSettings}>
           {slides.map((slide, slideIndex) => (
             <div key={`slide-${slideIndex}`}>
-              {/* Mobile: 1 column, Desktop: 2x3 grid */}
               <div className="flex flex-col md:flex-col gap-4">
                 {/* Row 1: 2 large images - hidden on mobile */}
                 <div className="hidden md:grid md:grid-cols-2 gap-4">

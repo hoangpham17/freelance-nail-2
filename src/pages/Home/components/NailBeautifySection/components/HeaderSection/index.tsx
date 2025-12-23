@@ -12,10 +12,11 @@ const HeaderSection: React.FC = () => {
   const { isDesktop } = useScreen();
   return (
     <div
-      className="relative bg-no-repeat bg-right bg-cover md:bg-contain mb-4 md:mb-8"
+      className="relative bg-no-repeat bg-right bg-cover md:bg-contain mb-4"
       style={{
         backgroundImage: "url('/assets/images/HomePage/bg-nail-beauty.png')",
         backgroundSize: "100% auto",
+        backgroundPosition: "right bottom",
       }}
     >
       <div className="max-w-[85%] md:max-w-[640px] md:pl-10">
@@ -33,8 +34,8 @@ const HeaderSection: React.FC = () => {
           commodo ligula eget dolor. Aenean massae.
         </p>
         <Link to={PATHS.services} className="hidden md:block">
-          <ButtonStyle1 className="mt-4 md:mt-6">
-            <Flex className="gap-2" align="center">
+          <ButtonStyle1 className="mt-4 md:mt-6 mb-4">
+            <Flex className="gap-4" align="center">
               <span
                 className={clsx(
                   "font-lexend font-light",

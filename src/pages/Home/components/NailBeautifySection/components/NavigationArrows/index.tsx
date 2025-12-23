@@ -8,7 +8,7 @@ interface NavigationArrowsProps {
 }
 
 const NavigationArrows: React.FC<NavigationArrowsProps> = ({ sliderRef }) => {
-  const { isMobile } = useScreen();
+  const { isMobile, isDesktop } = useScreen();
 
   const iconSize = useMemo(() => (isMobile ? 16 : 20), [isMobile]);
 
@@ -16,9 +16,11 @@ const NavigationArrows: React.FC<NavigationArrowsProps> = ({ sliderRef }) => {
     <div className="flex justify-center lg:justify-end order-2 lg:order-1">
       <div className="flex gap-2 lg:h-0 lg:translate-y-[-80px] lg:pr-4">
         <button
-          className="w-10 h-10 lg:w-[50px] lg:h-[50px] rounded-full bg-white/60 border border-[rgba(139,111,71,0.2)] text-[#D1A054] flex items-center justify-center cursor-pointer transition-all duration-300 text-xl font-bold leading-none hover:bg-[rgba(245,230,211,1)]"
+          className="w-8 h-8 lg:w-[50px] lg:h-[50px] rounded-full bg-white/60 lg:border border-[rgba(139,111,71,0.2)] text-[#D1A054] flex items-center justify-center cursor-pointer transition-all duration-300 text-xl font-bold leading-none hover:bg-white"
           onClick={() => sliderRef.current?.slickPrev()}
-          style={{ boxShadow: "0px 4px 12px 0px #E24C881F" }}
+          style={
+            isDesktop ? { boxShadow: "0px 4px 12px 0px #E24C881F" } : undefined
+          }
           aria-label="Previous"
         >
           <SvgIcon
@@ -30,9 +32,11 @@ const NavigationArrows: React.FC<NavigationArrowsProps> = ({ sliderRef }) => {
           />
         </button>
         <button
-          className="w-10 h-10 lg:w-[50px] lg:h-[50px] rounded-full bg-white/60 border border-[rgba(139,111,71,0.2)] text-[#D1A054] flex items-center justify-center cursor-pointer transition-all duration-300 text-xl font-bold leading-none hover:bg-[rgba(245,230,211,1)]"
+          className="w-8 h-8 lg:w-[50px] lg:h-[50px] rounded-full bg-white/60 lg:border border-[rgba(139,111,71,0.2)] text-[#D1A054] flex items-center justify-center cursor-pointer transition-all duration-300 text-xl font-bold leading-none hover:bg-white"
           onClick={() => sliderRef.current?.slickNext()}
-          style={{ boxShadow: "0px 4px 12px 0px #E24C881F" }}
+          style={
+            isDesktop ? { boxShadow: "0px 4px 12px 0px #E24C881F" } : undefined
+          }
           aria-label="Next"
         >
           <SvgIcon

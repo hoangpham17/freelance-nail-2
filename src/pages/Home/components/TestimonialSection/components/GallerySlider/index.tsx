@@ -86,7 +86,7 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
                     src={image.url}
                     alt="Gallery"
                     className={clsx(
-                      "object-cover rounded-2xl border-2 border-white w-full h-full transition-all duration-400"
+                      "object-cover rounded-2xl border-4 border-white w-full h-full transition-all duration-400"
                     )}
                   />
                 </div>
@@ -96,7 +96,7 @@ const GallerySlider: React.FC<GallerySliderProps> = ({
         </div>
       </div>
 
-      <div className="lg:mt-12 flex justify-center">
+      <div className="lg:mt-16 flex justify-center">
         <CustomDots
           position="bottom"
           totalSlides={galleryImages.length}
