@@ -68,7 +68,7 @@ const WelcomeSection: React.FC = () => {
             </p>
           </Flex>
           <Flex
-            className="flex-wrap gap-4 z-[1] pt-[40px] lg:pt-[30px] -translate-y-[40px] lg:-translate-y-[30px]"
+            className="flex-wrap gap-4 z-[1] pt-[80px] lg:pt-[30px] -translate-y-[80px] lg:-translate-y-[30px]"
             // className="flex-wrap gap-4 z-[1] translate-y-[60px] lg:translate-y-[80px]"
             align="center"
             justify="center"

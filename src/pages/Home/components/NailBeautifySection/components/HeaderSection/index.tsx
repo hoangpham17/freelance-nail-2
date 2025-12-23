@@ -9,27 +9,32 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
 
 const HeaderSection: React.FC = () => {
-  const { isDesktop } = useScreen();
+  const { isDesktop, isTablet } = useScreen();
   return (
     <div
-      className="relative bg-no-repeat bg-right bg-cover md:bg-contain mb-4"
+      className="relative bg-no-repeat bg-right bg-cover md:bg-contain mb-4 pb-4 lg:pb-0"
       style={{
         backgroundImage: "url('/assets/images/HomePage/bg-nail-beauty.png')",
         backgroundSize: "100% auto",
         backgroundPosition: "right bottom",
       }}
     >
-      <div className="max-w-[85%] md:max-w-[640px] md:pl-10">
+      <div className="md:max-w-[55%] lg:max-w-[640px] lg:pl-10">
         <h2
           className={clsx(
-            "font-prata leading-[30px] lg:leading-[100px]",
+            "font-prata leading-[40px] md:leading-[50px] lg:leading-[100px] mb-2 lg:mb-0",
             responsiveFontSizeArray(36, 70)
           )}
         >
-          Your nail beautify {isDesktop && <br />}
+          Your nail beautify {isDesktop || (isTablet && <br />)}
           Elevate your style!
         </h2>
-        <p className={clsx("font-light", responsiveFontSizeArray(12, 20))}>
+        <p
+          className={clsx(
+            "font-light max-w-[75%] md:max-w-none",
+            responsiveFontSizeArray(12, 20)
+          )}
+        >
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
           commodo ligula eget dolor. Aenean massae.
         </p>

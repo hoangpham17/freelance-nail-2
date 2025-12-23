@@ -36,7 +36,7 @@ const NailBeautifySection: React.FC<NailBeautifySectionProps> = ({
   }, [galleryItems]);
 
   return (
-    <section className="relative pt-10 pb-2 lg:pb-4 md:py-[50px] bg-white">
+    <section className="relative pt-2 md:pt-10 pb-2 lg:pb-4 md:py-[50px] bg-white">
       <Wrapper>
         <HeaderSection />
         {galleryItems.length > 0 && (
