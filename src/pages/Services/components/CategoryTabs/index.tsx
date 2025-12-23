@@ -8,6 +8,7 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { Flex } from "antd";
 import { useScreen } from "@/hooks/useScreen";
 import { Wrapper } from "@/based/components/Wrapper";
+import SvgIcon from "@/based/SvgIcon";
 
 interface CategoryTabsProps {
   categories: ServiceCategory[];
@@ -108,13 +109,15 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                       align="center"
                       justify="center"
                       className={clsx(
-                        "px-2 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap",
+                        "px-6 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap",
                         isActive ? "bg-white/80" : "bg-white/30 text-[#8B4B20]",
-                        responsiveFontSizeArray(24, 32)
+                        responsiveFontSizeArray(18, 24)
                       )}
                       style={{
                         backdropFilter: "blur(10px)",
-                        boxShadow: "0px 5px 16px 0px #E24C881F",
+                        boxShadow: isActive
+                          ? "0px 5px 16px 0px #E24C881F"
+                          : "0px 5px 16px 0px #8B4B2026",
                       }}
                     >
                       {category.title}
@@ -124,7 +127,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
               );
             })}
           </Slider>
-          <div className="absolute top-1/2 -translate-y-1/2 right-0 flex items-center gap-1 ml-1 flex-shrink-0">
+          <div className="absolute top-1/2 -translate-y-1/2 right-0 flex items-center ml-1 flex-shrink-0">
             <button
               type="button"
               aria-label="Previous"
@@ -135,7 +138,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                 background: "linear-gradient(180deg, #FFFFFF 0%, #F6E7EE 100%)",
               }}
             >
-              <i className="bi bi-chevron-left" />
+              <SvgIcon
+                src={"assets/svgs/chevron-right.svg"}
+                ariaLabel="text"
+                width={14}
+                height={14}
+                className="size-[14px] shrink-0 rotate-180"
+              />
             </button>
             <button
               type="button"
@@ -147,7 +156,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
                 background: "linear-gradient(180deg, #FFFFFF 0%, #F6E7EE 100%)",
               }}
             >
-              <i className="bi bi-chevron-right" />
+              <SvgIcon
+                src={"assets/svgs/chevron-right.svg"}
+                ariaLabel="text"
+                width={14}
+                height={14}
+                className="size-[14px] shrink-0"
+              />
             </button>
           </div>
         </div>

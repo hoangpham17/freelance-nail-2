@@ -50,7 +50,7 @@ const ServiceCard: React.FC<ServiceItem> = ({
             <h3
               className={clsx(
                 "font-prata text-[#10182A] flex-1",
-                responsiveFontSizeArray(24, 32)
+                responsiveFontSizeArray(18, 24)
               )}
             >
               {displayName}

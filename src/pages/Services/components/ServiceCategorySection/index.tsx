@@ -42,10 +42,11 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
           <Flex
             align="center"
             className={clsx(
-              "lg:min-h-[236px] mb-4 md:mb-8 mt-[30px] lg:mt-[50px]",
+              "lg:min-h-[236px] mb-4 md:mb-8",
               category.titleBackgroundImage
                 ? "bg-center bg-no-repeat bg-cover"
-                : "bg-white"
+                : "bg-white",
+              index === 1 ? "mt-0" : "mt-[30px] lg:mt-[50px]"
             )}
             style={
               category.titleBackgroundImage
@@ -55,10 +56,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 : undefined
             }
           >
-            <Flex
-              gap={16}
-              className="h-full p-4 w-full lg:items-center bg-white/40 lg:bg-transparent"
-            >
+            <Flex className="h-full p-4 w-full lg:items-center bg-white/40 lg:bg-transparent gap-4 lg:gap-16">
               <p
                 className={clsx(
                   "font-prata text-[#9E7B6A] underline text-left",
@@ -91,7 +89,14 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                         "bg-white/30 border border-white rounded-2xl py-1 px-3"
                     )}
                   >
-                    <p className="font-light">{category.description}</p>
+                    <p
+                      className={clsx(
+                        "font-light",
+                        responsiveFontSizeArray(16, 20)
+                      )}
+                    >
+                      {category.description}
+                    </p>
                   </Flex>
                 )}
               </Flex>
