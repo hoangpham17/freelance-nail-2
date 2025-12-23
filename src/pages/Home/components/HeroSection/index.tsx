@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Slider, { Settings } from "react-slick";
 import { Skeleton } from "antd";
 import "slick-carousel/slick/slick.css";
@@ -6,13 +6,27 @@ import "slick-carousel/slick/slick-theme.css";
 import CustomDots from "@/based/components/CustomDots";
 import { useScreen } from "@/hooks/useScreen";
 import { useBannerItems } from "./useBannerItems";
+import { useCampaignStore } from "@/shared/store/campaignStore";
 
 const HeroSection: React.FC = () => {
   const { isDesktop, isTablet } = useScreen();
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
+  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
+  const campaignBarHeight = useCampaignStore(
+    (state) => state.campaignBarHeight
+  );
 
   const bannerItems = useBannerItems();
+
+  // Calculate mobile height: dvh - header height (64px) - campaignBar height
+  const mobileHeight = useMemo(() => {
+    if (isDesktop || isTablet) return undefined;
+    const headerHeight = 64;
+    const totalOffset =
+      headerHeight + (showCampaignBar ? campaignBarHeight : 0) + 78;
+    return `calc(100dvh - ${totalOffset}px)`;
+  }, [isDesktop, isTablet, showCampaignBar, campaignBarHeight]);
 
   const handleBeforeChange = (_current: number, next: number) => {
     setCurrentSlide(next);
@@ -40,13 +54,18 @@ const HeroSection: React.FC = () => {
         return (
           <div
             key={item.id || index}
-            className="relative w-full h-screen min-h-[700px]"
+            className="relative w-full"
+            style={{
+              height:
+                mobileHeight || (isDesktop || isTablet ? undefined : "100vh"),
+              minHeight: isDesktop || isTablet ? "700px" : undefined,
+            }}
           >
             <Skeleton.Image
               active
               style={{
                 width: "100vw",
-                height: "100vh",
+                height: "100%",
               }}
             />
           </div>
@@ -61,7 +80,11 @@ const HeroSection: React.FC = () => {
             <img
               src={imageUrl}
               alt={`Banner ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full lg:h-full object-cover"
+              style={{
+                height: mobileHeight || undefined,
+                maxHeight: isDesktop || isTablet ? undefined : "812px",
+              }}
             />
           )}
         </div>
@@ -71,9 +94,14 @@ const HeroSection: React.FC = () => {
 
   if (bannerItems.length === 0) {
     return (
-      <section className="relative w-full h-screen overflow-hidden">
+      <section
+        className="relative w-full overflow-hidden"
+        style={{
+          height: mobileHeight || (isDesktop || isTablet ? "100vh" : undefined),
+        }}
+      >
         <div className="absolute inset-0 w-full h-full">
-          <Skeleton.Image active style={{ width: "100vw", height: "100vh" }} />
+          <Skeleton.Image active style={{ width: "100vw", height: "100%" }} />
         </div>
       </section>
     );
@@ -81,14 +109,12 @@ const HeroSection: React.FC = () => {
 
   return (
     <section className="relative w-full overflow-hidden lg:!h-auto transition-all duration-300">
-      {/* Single Slider with Responsive Images */}
       <div className="w-full h-full">
         <Slider ref={sliderRef} {...sliderSettings}>
           {renderSlides()}
         </Slider>
       </div>
 
-      {/* Custom Dots */}
       <CustomDots
         totalSlides={bannerItems.length}
         currentIndex={currentSlide}
