@@ -83,7 +83,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                   onSearchChange("");
                 }}
                 className={clsx(
-                  "flex items-center gap-2 transition-colors flex-1 justify-center  md:whitespace-nowrap",
+                  "flex items-center gap-2 transition-colors flex-1 justify-center font-light md:whitespace-nowrap",
                   responsiveFontSizeArray(12, 32),
                   isActive ? "text-white" : "text-[#D9D9D9] hover:text-white"
                 )}

@@ -21,10 +21,8 @@ const BannerSection: React.FC = () => {
             </h1>
           </div>
 
-          {/* Content Section - Left Image, Right Description */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left - Image */}
-            <div className="w-full order-2 lg:order-1">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 items-center">
+            <div className="w-full">
               <img
                 src="/assets/images/Host-A-Party/bg-host-a-party.png"
                 alt="Party decorative elements"
@@ -35,11 +33,10 @@ const BannerSection: React.FC = () => {
               />
             </div>
 
-            {/* Right - Description */}
-            <div className="w-full order-1 lg:order-2">
+            <div className="w-full">
               <p
                 className={clsx(
-                  "text-black font-light lg:max-w-[600px]",
+                  "font-light lg:max-w-[600px]",
                   responsiveFontSizeArray(16, 20)
                 )}
               >

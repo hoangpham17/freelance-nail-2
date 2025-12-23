@@ -71,7 +71,7 @@ const PartyForm: React.FC = () => {
                   <span
                     className={clsx(
                       "text-[#10182A] font-prata",
-                      responsiveFontSizeArray(12, 14)
+                      responsiveFontSizeArray(18, 24)
                     )}
                   >
                     Name
@@ -93,7 +93,7 @@ const PartyForm: React.FC = () => {
                     type="text"
                     placeholder="Your name in here"
                     className={clsx(
-                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
                       "bg-[#D5B994]/40 placeholder:text-[#9E7B6A]",
                       responsiveFontSizeArray(14, 16)
                     )}
@@ -101,14 +101,14 @@ const PartyForm: React.FC = () => {
                 </div>
               </Form.Item>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-6">
                 <Form.Item
                   name="phone"
                   label={
                     <span
                       className={clsx(
                         "text-[#10182A] font-prata",
-                        responsiveFontSizeArray(12, 14)
+                        responsiveFontSizeArray(18, 24)
                       )}
                     >
                       Your phone
@@ -132,7 +132,7 @@ const PartyForm: React.FC = () => {
                       type="tel"
                       placeholder="Your phone in here"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
@@ -145,7 +145,7 @@ const PartyForm: React.FC = () => {
                     <span
                       className={clsx(
                         "text-[#10182A] font-prata",
-                        responsiveFontSizeArray(12, 14)
+                        responsiveFontSizeArray(18, 24)
                       )}
                     >
                       Your Email
@@ -170,7 +170,7 @@ const PartyForm: React.FC = () => {
                       type="email"
                       placeholder="Your Email in here"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
@@ -178,14 +178,14 @@ const PartyForm: React.FC = () => {
                 </Form.Item>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-6">
                 <Form.Item
                   name="date"
                   label={
                     <span
                       className={clsx(
                         "text-[#10182A] font-prata",
-                        responsiveFontSizeArray(12, 14)
+                        responsiveFontSizeArray(18, 24)
                       )}
                     >
                       Date
@@ -211,7 +211,7 @@ const PartyForm: React.FC = () => {
                     <DatePicker
                       format="MM/DD/YYYY"
                       className={clsx(
-                        "w-full pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                        "w-full pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
                         responsiveFontSizeArray(14, 16)
                       )}
                       suffixIcon={null}
@@ -230,7 +230,7 @@ const PartyForm: React.FC = () => {
                     <span
                       className={clsx(
                         "text-[#10182A] font-prata",
-                        responsiveFontSizeArray(12, 14)
+                        responsiveFontSizeArray(18, 24)
                       )}
                     >
                       Party Size
@@ -259,7 +259,7 @@ const PartyForm: React.FC = () => {
                       placeholder="Your party size in here"
                       min="1"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
                         responsiveFontSizeArray(14, 16)
                       )}
                     />
@@ -273,7 +273,7 @@ const PartyForm: React.FC = () => {
                   <span
                     className={clsx(
                       "text-[#10182A] font-prata",
-                      responsiveFontSizeArray(12, 14)
+                      responsiveFontSizeArray(18, 24)
                     )}
                   >
                     Your messenger
@@ -294,7 +294,7 @@ const PartyForm: React.FC = () => {
                     placeholder="Your information in here"
                     rows={5}
                     className={clsx(
-                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A]",
+                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
                       responsiveFontSizeArray(14, 16)
                     )}
                   />

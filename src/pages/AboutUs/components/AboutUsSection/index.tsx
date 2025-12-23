@@ -35,18 +35,13 @@ const AboutUsSectionComponent: React.FC<AboutUsSectionProps> = ({
       >
         <h2
           className={clsx(
-            "font-prata text-[#D1A054] mb-4 lg:mb-6 border-b border-[#D1A054] pb-2",
-            responsiveFontSizeArray(64, 90)
+            "font-prata text-[#D1A054] mb-2 lg:mb-4 border-b border-[#D1A054] pb-2",
+            responsiveFontSizeArray(64, 70)
           )}
         >
           {section.title}
         </h2>
-        <p
-          className={clsx(
-            "text-black font-light",
-            responsiveFontSizeArray(16, 20)
-          )}
-        >
+        <p className={clsx("font-light", responsiveFontSizeArray(16, 20))}>
           {section.description}
         </p>
       </div>
