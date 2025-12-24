@@ -6,93 +6,7 @@ import CategoryTabs from "./components/CategoryTabs";
 import BannerSection from "./components/BannerSection";
 import GalleryGrid from "./components/GalleryGrid";
 import GalleryPopup from "./components/GalleryPopup";
-
-const LEGACY_GALLERY: GalleryItem[] = [
-  {
-    id: "gallery-1",
-    url: "/assets/images/Gallery/img-1.jpg",
-    category: "nail_lounge",
-    description: "Nail Lounge Service",
-  },
-  {
-    id: "gallery-2",
-    url: "/assets/images/Gallery/img-2.jpg",
-    category: "nail_lounge",
-    description: "Manicure Service",
-  },
-  {
-    id: "gallery-3",
-    url: "/assets/images/Gallery/img-3.jpg",
-    category: "nail_lounge",
-    description: "Pedicure Service",
-  },
-  {
-    id: "gallery-4",
-    url: "/assets/images/Gallery/img-4.jpg",
-    category: "nail_art",
-    description: "Nail Art Design",
-  },
-  {
-    id: "gallery-5",
-    url: "/assets/images/Gallery/img-5.jpg",
-    category: "nail_art",
-    description: "Creative Nail Art",
-  },
-  {
-    id: "gallery-6",
-    url: "/assets/images/Gallery/img-6.jpg",
-    category: "nail_art",
-    description: "Artistic Nail Design",
-  },
-  {
-    id: "gallery-7",
-    url: "/assets/images/Gallery/img-7.jpg",
-    category: "nail_art",
-    description: "Custom Nail Art",
-  },
-  {
-    id: "gallery-8",
-    url: "/assets/images/Gallery/img-8.jpg",
-    category: "nail_lounge",
-    description: "Lounge Experience",
-  },
-  {
-    id: "gallery-9",
-    url: "/assets/images/Gallery/img-9.jpg",
-    category: "nail_lounge",
-    description: "Premium Service",
-  },
-  {
-    id: "gallery-10",
-    url: "/assets/images/Gallery/img-10.jpg",
-    category: "nail_lounge",
-    description: "Relaxing Treatment",
-  },
-  {
-    id: "gallery-11",
-    url: "/assets/images/Gallery/img-11.jpg",
-    category: "nail_art",
-    description: "Unique Design",
-  },
-  {
-    id: "gallery-12",
-    url: "/assets/images/Gallery/img-12.jpg",
-    category: "nail_art",
-    description: "Beautiful Artwork",
-  },
-  {
-    id: "gallery-13",
-    url: "/assets/images/Gallery/img-13.jpg",
-    category: "nail_art",
-    description: "Elegant Design",
-  },
-  {
-    id: "gallery-14",
-    url: "/assets/images/Gallery/img-14.jpg",
-    category: "nail_art",
-    description: "Stylish Nail Art",
-  },
-];
+import LoadingPage from "../../components/LoadingPage";
 
 const FILTERS = [
   { id: "All", label: "All" },
@@ -113,7 +27,7 @@ const Gallery: React.FC = () => {
 
   const galleryItems: GalleryItem[] = useMemo(() => {
     if (!galleryData || galleryData.length === 0) {
-      return LEGACY_GALLERY;
+      return [];
     }
 
     return galleryData.map((record, index) => {
@@ -179,6 +93,8 @@ const Gallery: React.FC = () => {
 
   return (
     <main className="w-full relative">
+      {loading && (!galleryData || galleryData.length === 0) && <LoadingPage />}
+
       <BannerSection />
 
       <CategoryTabs

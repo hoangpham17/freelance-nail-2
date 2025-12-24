@@ -5,6 +5,7 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { PolicyItem } from "./types";
 import { useAirtable } from "@/hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
+import LoadingPage from "../../components/LoadingPage";
 
 const OurPolicies: React.FC = () => {
   const { data: policiesData, loading } = useAirtable<PolicyItem>(
@@ -20,8 +21,13 @@ const OurPolicies: React.FC = () => {
       return orderA - orderB;
     });
   }, [policiesData]);
+
   return (
     <div className="relative w-full min-h-screen bg-[#F4F6F9]">
+      {loading && (!policiesData || policiesData.length === 0) && (
+        <LoadingPage />
+      )}
+
       <Wrapper className="relative pt-12 lg:pt-20 pb-16 lg:pb-24">
         {/* Background Image - positioned top left, follows wrapper */}
         <div
@@ -49,41 +55,28 @@ const OurPolicies: React.FC = () => {
           </div>
 
           {/* List Policy - Grid Layout */}
-          {loading ? (
-            <div className="text-center py-12">
-              <p
-                className={clsx(
-                  "text-[#494747]",
-                  responsiveFontSizeArray(14, 16)
-                )}
-              >
-                Loading policies...
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
-              {policies.map((policy) => (
-                <div key={policy.id} className="p-6 lg:p-8">
-                  <h3
-                    className={clsx(
-                      "font-prata text-[#D1A054] mb-1 lg:mb-2 border-b border-[#D1A054] md:min-h-[96px] md:leading-[42px]",
-                      responsiveFontSizeArray(24, 32)
-                    )}
-                  >
-                    {policy.title}
-                  </h3>
-                  <p
-                    className={clsx(
-                      "font-light",
-                      responsiveFontSizeArray(16, 20)
-                    )}
-                  >
-                    {policy.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
+            {policies.map((policy) => (
+              <div key={policy.id} className="p-6 lg:p-8">
+                <h3
+                  className={clsx(
+                    "font-prata text-[#D1A054] mb-1 lg:mb-2 border-b border-[#D1A054] md:min-h-[96px] md:leading-[42px]",
+                    responsiveFontSizeArray(24, 32)
+                  )}
+                >
+                  {policy.title}
+                </h3>
+                <p
+                  className={clsx(
+                    "font-light",
+                    responsiveFontSizeArray(16, 20)
+                  )}
+                >
+                  {policy.description}
+                </p>
+              </div>
+            ))}
+          </div>
 
           {/* Thank You Text */}
           <div className="text-center">

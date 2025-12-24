@@ -65,7 +65,7 @@ const HeroSection: React.FC = () => {
               active
               style={{
                 width: "100vw",
-                height: "100%",
+                height: "700px",
               }}
             />
           </div>
@@ -101,7 +101,7 @@ const HeroSection: React.FC = () => {
         }}
       >
         <div className="absolute inset-0 w-full h-full">
-          <Skeleton.Image active style={{ width: "100vw", height: "100%" }} />
+          <Skeleton.Image active style={{ width: "100vw", height: "700px" }} />
         </div>
       </section>
     );

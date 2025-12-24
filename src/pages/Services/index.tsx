@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
 import { useCampaignStore } from "@/shared/store/campaignStore";
+import LoadingPage from "../../components/LoadingPage";
 
 const Services: React.FC = () => {
   const { isDesktop } = useScreen();
@@ -68,6 +69,8 @@ const Services: React.FC = () => {
 
   return (
     <main className="w-full relative">
+      {isLoadingCategories && serviceCategories.length === 0 && <LoadingPage />}
+
       <Wrapper
         className={clsx(
           "absolute left-1/2 -translate-x-1/2 w-full h-[328px]",
