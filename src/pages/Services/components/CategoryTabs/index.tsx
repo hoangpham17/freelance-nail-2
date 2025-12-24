@@ -5,16 +5,20 @@ import { useCampaignStore } from "@/shared/store/campaignStore";
 import Slider, { Settings } from "react-slick";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { Flex } from "antd";
+import { Flex, Skeleton } from "antd";
 import { useScreen } from "@/hooks/useScreen";
 import { Wrapper } from "@/based/components/Wrapper";
 import SvgIcon from "@/based/SvgIcon";
 
 interface CategoryTabsProps {
   categories: ServiceCategory[];
+  loading?: boolean;
 }
 
-const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
+const CategoryTabs: React.FC<CategoryTabsProps> = ({
+  categories,
+  loading = false,
+}) => {
   const { isDesktop } = useScreen();
   const location = useLocation();
 
@@ -86,6 +90,34 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
     draggable: true,
     speed: 400,
   };
+
+  if (loading) {
+    return (
+      <section
+        className="sticky z-30 transition-all duration-300"
+        style={{ top: stickyTop }}
+      >
+        <Wrapper>
+          <div className="flex-1 min-w-0 overflow-hidden relative">
+            <div className="flex gap-2 py-2 lg:py-4">
+              {[1, 2, 3].map((i) => (
+                <Skeleton.Button
+                  key={i}
+                  active
+                  size="large"
+                  style={{
+                    width: "120px",
+                    height: isDesktop ? "56px" : "32px",
+                    borderRadius: "16px",
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </Wrapper>
+      </section>
+    );
+  }
 
   if (!categories.length) return null;
 

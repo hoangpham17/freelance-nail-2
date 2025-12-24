@@ -10,7 +10,7 @@ import { useServiceCategories } from "@/hooks/useServiceCategories";
 
 const WelcomeSection: React.FC = () => {
   const { isMobile } = useScreen();
-  const serviceCategories = useServiceCategories();
+  const { categories: serviceCategories } = useServiceCategories();
 
   const renderTitle = (title: string) => {
     // split first word and last word

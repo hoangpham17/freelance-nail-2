@@ -178,7 +178,7 @@ const Header: React.FC = () => {
     };
   }, []);
 
-  const serviceCategories = useServiceCategories();
+  const { categories: serviceCategories } = useServiceCategories();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const closeMenu = () => {

@@ -19,7 +19,7 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   onMouseLeave,
 }) => {
   const location = useLocation();
-  const serviceCategories = useServiceCategories();
+  const { categories: serviceCategories } = useServiceCategories();
   const { isDesktop } = useScreen();
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(

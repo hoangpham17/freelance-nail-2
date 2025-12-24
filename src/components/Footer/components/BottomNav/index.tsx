@@ -8,7 +8,7 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 const BottomNav: React.FC = () => {
   const location = useLocation();
-  const serviceCategories = useServiceCategories();
+  const { categories: serviceCategories } = useServiceCategories();
 
   const serviceNavItems = serviceCategories.map((category) => ({
     path: `${PATHS.services}#${category.slug}`,
@@ -31,11 +31,9 @@ const BottomNav: React.FC = () => {
               key={item.path}
               to={item.path}
               className={clsx(
-                " flex items-center justify-center uppercase transition-colors hover:bg-white hover:text-black py-3 px-6",
-                responsiveFontSizeArray(16, 24),
-                checkIsActive(item.slug)
-                  ? "text-black bg-white"
-                  : "text-[#8B4B20]"
+                " flex items-center justify-center transition-colors hover:bg-white hover:text-black py-3 px-6",
+                responsiveFontSizeArray(16, 18),
+                checkIsActive(item.slug) ? "bg-white" : "text-[#8B4B20]"
               )}
             >
               {item.label}

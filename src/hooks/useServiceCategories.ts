@@ -14,12 +14,16 @@ const resolveImageUrl = (image?: string | AirtableAttachment[]): string => {
   return "";
 };
 
-export const useServiceCategories = (): ServiceCategory[] => {
-  const { data: categoriesData } = useAirtable<ServiceCategoryRecord>(
-    AIRTABLE_ENDPOINTS.list_services
-  );
+export const useServiceCategories = (): {
+  categories: ServiceCategory[];
+  loading: boolean;
+} => {
+  const {
+    data: categoriesData,
+    loading: categoriesLoading,
+  } = useAirtable<ServiceCategoryRecord>(AIRTABLE_ENDPOINTS.list_services);
 
-  const { data: servicesData } = useAirtable<ServiceItem>(
+  const { data: servicesData, loading: servicesLoading } = useAirtable<ServiceItem>(
     AIRTABLE_ENDPOINTS.services
   );
 
@@ -54,5 +58,8 @@ export const useServiceCategories = (): ServiceCategory[] => {
       }));
   }, [categoriesData, servicesData]);
 
-  return serviceCategories;
+  return {
+    categories: serviceCategories,
+    loading: categoriesLoading || servicesLoading,
+  };
 };
