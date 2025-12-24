@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
-import { Skeleton } from "antd";
+import { Flex, Skeleton } from "antd";
 import { GalleryItem } from "../../types";
 import SvgIcon from "@/based/SvgIcon";
 
@@ -55,7 +55,13 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
         type="button"
         aria-label="Next"
       >
-        <i className="bi bi-chevron-right text-gray-700" />
+        <SvgIcon
+          src={"assets/svgs/chevron-right.svg"}
+          ariaLabel="text"
+          width={24}
+          height={24}
+          className="size-[24px] shrink-0 rotate-180"
+        />
       </button>
     ),
     prevArrow: (
@@ -64,7 +70,13 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
         type="button"
         aria-label="Previous"
       >
-        <i className="bi bi-chevron-left text-gray-700" />
+        <SvgIcon
+          src={"assets/svgs/chevron-right.svg"}
+          ariaLabel="text"
+          width={24}
+          height={24}
+          className="size-[24px] shrink-0"
+        />
       </button>
     ),
   };
@@ -94,16 +106,27 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
         </button>
         {/* Slider Wrapper */}
         <div className="relative">
-          <div className="[&_.slick-list]:m-0 [&_.slick-slide]:p-0">
+          <div
+            className={`[&_.slick-list]:m-0 [&_.slick-slide]:p-0 
+            [&_.slick-prev:before]:text-[20px] lg:[&_.slick-prev:before]:text-[40px] [&_.slick-next:before]:text-[20px] lg:[&_.slick-next:before]:text-[40px]
+            [&_.slick-next]:-right-[18px] [&_.slick-prev]:-left-[18px]
+            `}
+          >
             <Slider ref={sliderRef} {...settings}>
               {items.map((item, index) => (
                 <div key={item.id || index} className="px-2">
                   {item.url ? (
-                    <img
-                      src={item.url}
-                      alt={item.description || "Gallery"}
-                      className="block mx-auto max-h-[75vh] w-auto rounded-lg"
-                    />
+                    <Flex
+                      align="center"
+                      justify="center"
+                      className="min-h-[75vh] h-full"
+                    >
+                      <img
+                        src={item.url}
+                        alt={item.description || "Gallery"}
+                        className="block mx-auto max-h-[75vh] w-auto rounded-lg"
+                      />
+                    </Flex>
                   ) : (
                     <div className="flex items-center justify-center min-h-[400px]">
                       <Skeleton.Image

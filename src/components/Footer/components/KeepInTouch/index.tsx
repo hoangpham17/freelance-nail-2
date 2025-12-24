@@ -40,16 +40,16 @@ const KeepInTouch: React.FC = () => {
       <Flex vertical gap={6}>
         <a
           href="tel:6087201011"
-          className="text-2xl transition-colors hover:opacity-80"
+          className="text-[32px] transition-colors hover:opacity-80"
           style={{ color: "#494747" }}
         >
-          <Flex className="gap-5" align="center">
+          <Flex className="gap-2" align="center">
             <SvgIcon
               src={"/assets/svgs/phone.svg"}
               ariaLabel="text"
-              width={24}
-              height={24}
-              className="size-[24px] shrink-0"
+              width={28}
+              height={28}
+              className="size-[28px] shrink-0"
             />
             <span>(608) 720 1011</span>
           </Flex>
@@ -57,7 +57,7 @@ const KeepInTouch: React.FC = () => {
         <a
           href="mailto:naillounge@mail.com"
           className={clsx(
-            "transition-colors hover:opacity-80 !text-[#494747]",
+            "transition-colors hover:opacity-80 !text-[#494747] text-[20px] font-light",
             responsiveFontSizeArray(12, 20)
           )}
         >

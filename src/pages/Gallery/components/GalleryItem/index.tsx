@@ -37,14 +37,8 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ item, onClick }) => {
                 preview={false}
               />
 
-              <p
-                className={clsx(
-                  "text-black font-medium uppercase leading-tight",
-                  "line-clamp-2",
-                  responsiveFontSizeArray(14, 24)
-                )}
-              >
-                {item.description || "SOME INFORMATION PUT HERE"}
+              <p className={clsx(responsiveFontSizeArray(16, 24))}>
+                {item.description || ""}
               </p>
             </div>
 

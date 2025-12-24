@@ -7,17 +7,30 @@ const BannerSection: React.FC = () => {
   return (
     <section className="relative pt-3 lg:pt-6 pb-3 lg:pb-5">
       <Wrapper>
-        <div className="space-y-8 lg:space-y-12">
+        <div className="space-y-3 lg:space-y-4">
           {/* Title Section */}
           <div className="flex flex-col items-center justify-center text-center">
             <h1
-              className={clsx(
-                "font-prata font-bold text-[#C19A6B] leading-tight",
-                responsiveFontSizeArray(28, 64)
-              )}
+              className={clsx("font-prata")}
+              style={{
+                background:
+                  "linear-gradient(90.41deg, #E1B168 2.52%, #C77E11 87.05%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
-              <div>Host a party at The Veira</div>
-              <div>Nail Lounge & Spa</div>
+              <div
+                className={clsx(
+                  "leading-none",
+                  responsiveFontSizeArray(32, 80)
+                )}
+              >
+                Host a party at The Veira
+              </div>
+              <div className={clsx(responsiveFontSizeArray(36, 110))}>
+                Nail Lounge & Spa
+              </div>
             </h1>
           </div>
 

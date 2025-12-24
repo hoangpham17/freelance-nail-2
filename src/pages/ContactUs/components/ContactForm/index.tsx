@@ -115,7 +115,7 @@ const ContactForm: React.FC = () => {
             type="text"
             placeholder="Your name in here"
             className={clsx(
-              "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+              "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B] h-[50px] lg:h-[72px]",
               "bg-[#D5B994]/40 placeholder:text-[#9E7B6A]",
               responsiveFontSizeArray(14, 16)
             )}
@@ -123,7 +123,7 @@ const ContactForm: React.FC = () => {
         </div>
       </Form.Item>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 lg:gap-6">
         <Form.Item
           name="phone"
           label={
@@ -152,7 +152,7 @@ const ContactForm: React.FC = () => {
               type="tel"
               placeholder="Your phone in here"
               className={clsx(
-                "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+                "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B] h-[50px] lg:h-[72px]",
                 "bg-white text-black",
                 responsiveFontSizeArray(14, 16)
               )}
@@ -190,7 +190,7 @@ const ContactForm: React.FC = () => {
               type="email"
               placeholder="Your Email in here"
               className={clsx(
-                "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+                "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B] h-[50px] lg:h-[72px]",
                 "bg-white text-black",
                 responsiveFontSizeArray(14, 16)
               )}
@@ -226,7 +226,7 @@ const ContactForm: React.FC = () => {
             placeholder="Your information in here"
             rows={5}
             className={clsx(
-              "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B]",
+              "pl-10 pr-4 py-3 rounded-xl border !border-[#C19A6B] h-[50px] lg:h-[72px]",
               "bg-white text-black",
               responsiveFontSizeArray(14, 16)
             )}

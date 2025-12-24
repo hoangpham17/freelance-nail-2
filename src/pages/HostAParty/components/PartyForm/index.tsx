@@ -93,9 +93,8 @@ const PartyForm: React.FC = () => {
                     type="text"
                     placeholder="Your name in here"
                     className={clsx(
-                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
-                      "bg-[#D5B994]/40 placeholder:text-[#9E7B6A]",
-                      responsiveFontSizeArray(14, 16)
+                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px] font-light text-[20px]",
+                      "bg-[#D5B994]/40 placeholder:text-[#9E7B6A]"
                     )}
                   />
                 </div>
@@ -132,8 +131,7 @@ const PartyForm: React.FC = () => {
                       type="tel"
                       placeholder="Your phone in here"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
-                        responsiveFontSizeArray(14, 16)
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px] font-light text-[20px]"
                       )}
                     />
                   </div>
@@ -170,8 +168,7 @@ const PartyForm: React.FC = () => {
                       type="email"
                       placeholder="Your Email in here"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
-                        responsiveFontSizeArray(14, 16)
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px] font-light text-[20px]"
                       )}
                     />
                   </div>
@@ -212,7 +209,7 @@ const PartyForm: React.FC = () => {
                       format="MM/DD/YYYY"
                       className={clsx(
                         "w-full pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
-                        responsiveFontSizeArray(14, 16)
+                        "[&_.ant-picker-input>input]:text-[20px] [&_.ant-picker-input>input]:font-light"
                       )}
                       suffixIcon={null}
                       minDate={dayjs()}
@@ -259,8 +256,7 @@ const PartyForm: React.FC = () => {
                       placeholder="Your party size in here"
                       min="1"
                       className={clsx(
-                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
-                        responsiveFontSizeArray(14, 16)
+                        "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px] font-light text-[20px]"
                       )}
                     />
                   </div>
@@ -294,8 +290,7 @@ const PartyForm: React.FC = () => {
                     placeholder="Your information in here"
                     rows={5}
                     className={clsx(
-                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px]",
-                      responsiveFontSizeArray(14, 16)
+                      "pl-10 pr-4 py-3 rounded-xl border !border-[#9E7B6A] h-[50px] lg:h-[72px] font-light text-[20px]"
                     )}
                   />
                 </div>

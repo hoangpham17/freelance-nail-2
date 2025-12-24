@@ -90,7 +90,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
               >
                 <span
                   className={clsx(
-                    "w-1.5 h-1.5 rounded-full flex-shrink-0",
+                    "w-1.5 h-1.5 md:w-3 md:h-3 rounded-full flex-shrink-0",
                     isActive ? "bg-white" : "bg-[#D9D9D9] hover:bg-white"
                   )}
                 />
@@ -109,11 +109,11 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         >
           <div
             className={clsx(
-              "flex items-center gap-2 bg-[#3a3a3a] border border-white rounded-full px-3 lg:px-4 py-1.5 lg:py-2 transition-all duration-300 ease-in-out",
+              "flex items-center gap-2 bg-[#3a3a3a] border border-white rounded-full lg:px-4 py-1.5 lg:py-2 transition-all duration-300 ease-in-out",
               isSearchOpen
                 ? isDesktop
                   ? "w-[300px] opacity-100"
-                  : "w-full opacity-100 border-none "
+                  : "w-full opacity-100 border-none px-3"
                 : "w-0 opacity-0 border-0 px-0"
             )}
           >

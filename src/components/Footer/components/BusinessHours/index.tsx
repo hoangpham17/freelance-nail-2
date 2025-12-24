@@ -19,16 +19,16 @@ const BusinessHours: React.FC = () => {
           <Flex key={hour.day} align="center">
             <span
               className={clsx(
-                "font-medium text-[#452917] w-1/2",
-                responsiveFontSizeArray(12, 20)
+                "font-light text-[#452917] w-1/2",
+                responsiveFontSizeArray(16, 20)
               )}
             >
               {hour.day}
             </span>
             <span
               className={clsx(
-                "text-[#494747] font-semibold w-1/2",
-                responsiveFontSizeArray(18, 24)
+                "text-[#494747] font-medium w-1/2",
+                responsiveFontSizeArray(16, 20)
               )}
             >
               {hour.time}

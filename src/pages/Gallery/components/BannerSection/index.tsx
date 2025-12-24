@@ -47,8 +47,8 @@ const BannerSection: React.FC = () => {
           <Flex vertical className="max-w-[600px]">
             <h1
               className={clsx(
-                "font-prata text-[#F2F2F7] mb-2 md:mb-6 leading-[40px] md:leading-[64px] mt-[130px] lg:mt-0",
-                responsiveFontSizeArray(40, 57)
+                "font-prata text-[#F2F2F7] mb-2 md:mb-6 leading-[32px] md:leading-[64px] mt-[130px] lg:mt-0",
+                responsiveFontSizeArray(32, 57)
               )}
               style={{
                 textShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
@@ -58,13 +58,13 @@ const BannerSection: React.FC = () => {
               <div>ENHANCEMENT</div>
             </h1>
             <Flex
-              className="px-3 py-3 md:py-4 gap-2 border border-white rounded-2xl"
+              className="px-3 py-3 md:px-[38px] md:py-4 gap-2 border border-white rounded-2xl"
               vertical
             >
               <p
                 className={clsx(
-                  "text-white uppercase text-center",
-                  responsiveFontSizeArray(14, 24)
+                  "text-white uppercase text-center font-light",
+                  responsiveFontSizeArray(16, 21)
                 )}
               >
                 IF YOU'VE ALWAYS HAD GENERAL OUR, SUCH AS HOW TO VIEW OR LIGHT
@@ -73,11 +73,11 @@ const BannerSection: React.FC = () => {
 
               <button
                 className={clsx(
-                  "bg-white/80 text-black uppercase rounded-full h-[34px] lg:h-[48px]",
+                  "bg-white/80 text-[#494747] uppercase rounded-full h-[34px] lg:h-[48px] font-light",
                   "p2 w-full",
                   "hover:bg-white transition-colors",
                   "border border-white",
-                  responsiveFontSizeArray(16, 21)
+                  responsiveFontSizeArray(16, 20)
                 )}
                 style={{
                   boxShadow: "0px 4px 4px 0px #FFFFFF40",

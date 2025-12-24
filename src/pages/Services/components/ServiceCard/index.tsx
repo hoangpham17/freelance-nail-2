@@ -94,8 +94,8 @@ const ServiceCard: React.FC<ServiceItem> = ({
 
         <span
           className={clsx(
-            "text-[#D1A054] whitespace-nowrap font-bold text-right lg:text-left",
-            responsiveFontSizeArray(24, 32)
+            "text-[#D1A054] whitespace-nowrap font-prata text-right lg:text-left",
+            responsiveFontSizeArray(24, 40)
           )}
         >
           ${displayPrice}

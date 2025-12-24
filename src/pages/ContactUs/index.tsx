@@ -14,7 +14,7 @@ const ContactUs: React.FC = () => {
         <div className="z-10 max-w-6xl mx-auto">
           <div className="mb-12 lg:mb-16">
             <div className="relative">
-              <div className="absolute -right-[20%] lg:right-0 top-0 w-[160px] h-[160px] lg:w-[263px] lg:h-[263px] pointer-events-none z-0">
+              <div className="absolute -right-[20%] lg:-right-16 -top-3 lg:top-0 w-[160px] h-[160px] lg:w-[263px] lg:h-[263px] pointer-events-none z-0">
                 <img
                   src="/assets/images/Contact-Us/circle-image.png"
                   alt="Let's connect"
@@ -28,14 +28,14 @@ const ContactUs: React.FC = () => {
               <h1
                 className={clsx(
                   "font-prata text-[#10182A] mb-4 max-w-[90%]",
-                  responsiveFontSizeArray(32, 80)
+                  responsiveFontSizeArray(21, 65)
                 )}
               >
                 Unlock the secrets of captivating beauty with our luxurious
                 <span
                   className={clsx(
                     "font-prata text-[#D1A054] block",
-                    responsiveFontSizeArray(45, 160)
+                    responsiveFontSizeArray(35, 120)
                   )}
                 >
                   We'll contact you
