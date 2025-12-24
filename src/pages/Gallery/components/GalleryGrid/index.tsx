@@ -78,7 +78,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
         {/* Remaining items grid */}
         {remainingItems.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-4 md:mb-8">
             {remainingItems.map((item, index) => (
               <GalleryItemComponent
                 key={item.id}

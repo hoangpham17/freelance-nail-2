@@ -116,7 +116,7 @@ const Promotion: React.FC<PromotionProps> = ({
             data-popup-close
             onClick={onClosePopup}
           ></div>
-          <div className="relative max-w-[90%] md:max-w-[75%] lg:max-w-[30%] z-10 w-full">
+          <div className="relative max-w-[90%] md:max-w-[75%] lg:max-w-[30%] z-110 w-full">
             <button
               className="absolute -top-2.5 -right-2.5 w-10 h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] md:w-8 md:h-8 hover:scale-110 active:scale-95"
               data-popup-close

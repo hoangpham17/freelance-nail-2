@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { useServiceCategories } from "../../hooks/useServiceCategories";
 import ServiceCategorySection from "./components/ServiceCategorySection";
 import CategoryTabs from "./components/CategoryTabs";
 import { Wrapper } from "@/based/components/Wrapper";
@@ -12,7 +11,8 @@ import { useCampaignStore } from "@/shared/store/campaignStore";
 const Services: React.FC = () => {
   const { isDesktop } = useScreen();
   const location = useLocation();
-  const serviceCategories = useServiceCategories();
+  // const serviceCategories = useServiceCategories();
+  const serviceCategories = [];
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
