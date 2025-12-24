@@ -107,7 +107,7 @@ const Promotion: React.FC<PromotionProps> = ({
       {/* Popup Campaign */}
       {isPopupOpen && (
         <div
-          className="fixed inset-0 z-[101] flex items-center justify-center"
+          className="fixed inset-0 z-[110] flex items-center justify-center px-4"
           data-popup
           data-campaign-popup
         >
@@ -116,11 +116,12 @@ const Promotion: React.FC<PromotionProps> = ({
             data-popup-close
             onClick={onClosePopup}
           ></div>
-          <div className="relative max-w-[30%] md:max-w-[75%] z-10">
+          <div className="relative max-w-[90%] md:max-w-[75%] lg:max-w-[30%] z-10 w-full">
             <button
-              className="absolute -top-2.5 -right-2.5 w-10 h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] md:w-8 md:h-8"
+              className="absolute -top-2.5 -right-2.5 w-10 h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] md:w-8 md:h-8 hover:scale-110 active:scale-95"
               data-popup-close
               onClick={onClosePopup}
+              aria-label="Close popup"
             >
               <Flex justify="center" align="center">
                 <SvgIcon
@@ -138,7 +139,7 @@ const Promotion: React.FC<PromotionProps> = ({
                 alt="Promotion"
                 className="w-full h-full object-cover rounded-lg"
               />
-              <div className="absolute left-6 right-6 bottom-6 text-white text-center text-xl uppercase tracking-[0.08em]">
+              <div className="absolute left-4 right-4 bottom-2 md:left-6 md:right-6 md:bottom-6 text-white text-center text-xs md:text-base uppercase">
                 {promotionText}
               </div>
             </div>
