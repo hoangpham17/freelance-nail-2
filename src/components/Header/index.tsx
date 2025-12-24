@@ -191,6 +191,15 @@ const Header: React.FC = () => {
     setIsServicesExpanded((prev) => !prev);
   };
 
+  // Auto-expand Services submenu if on Services page when menu opens
+  useEffect(() => {
+    if (isMenuOpen && location.pathname === PATHS.services) {
+      setIsServicesExpanded(true);
+    } else if (!isMenuOpen) {
+      setIsServicesExpanded(false);
+    }
+  }, [isMenuOpen, location.pathname]);
+
   const handleCloseCampaign = () => {
     setHasDismissedCampaignText(true);
     if (typeof window !== "undefined") {
@@ -209,7 +218,7 @@ const Header: React.FC = () => {
   return (
     <header
       className={clsx(
-        "fixed top-0 left-0 w-full z-[100] shadow-[2px_6px_6px_0px_#0000000F]",
+        "fixed top-0 left-0 w-full z-[98] shadow-[2px_6px_6px_0px_#0000000F]",
         isOpacityHeader && isAtTop ? "bg-white/60" : "bg-white"
       )}
     >
@@ -354,26 +363,13 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed inset-0 bg-white z-[100] transform transition-transform duration-300 ${
+        className={`lg:hidden fixed inset-0 bg-white z-[98] transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <Wrapper className="h-full flex flex-col">
+        <Flex vertical className="h-full">
           {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between h-[56px] border-b border-gray-100">
-            <div className="w-10" />
-            <Link
-              to={PATHS.home}
-              onClick={closeMenu}
-              className="flex-shrink-0 max-h-[32px]"
-            >
-              <Image
-                src="/assets/images/logo/mobile.png"
-                alt="THE VEIRA NAIL LOUNGE & SPA"
-                className="max-h-[32px]"
-                preview={false}
-              />
-            </Link>
+          <div className="flex items-center justify-end h-[56px]">
             <button
               onClick={closeMenu}
               className="p-2 flex items-center justify-center"
@@ -391,7 +387,7 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Content */}
           <div className="flex-1 overflow-y-auto">
-            <nav className="flex flex-col pt-8 px-6 pb-6">
+            <nav className="flex flex-col">
               {navItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 const isServices = item.path === PATHS.services;
@@ -410,31 +406,38 @@ const Header: React.FC = () => {
                   };
 
                   return (
-                    <div key={item.path} className="mb-2">
+                    <div key={item.path}>
                       <button
                         onClick={toggleServicesExpanded}
                         className={clsx(
-                          "w-full flex items-center justify-between py-3 font-lexend uppercase transition-colors",
-                          responsiveFontSizeArray(16, 18),
+                          "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5",
                           isActive
                             ? "text-[#9E7B6A] font-semibold"
-                            : "text-[#0F172A]"
+                            : "text-[#0F172A]",
+                          isServicesExpanded && "border-b border-[#D5B994]"
                         )}
+                        style={{
+                          boxShadow: isServicesExpanded
+                            ? "0px 4px 6px 0px #0000000F"
+                            : "none",
+                        }}
                       >
                         <span>{item.label}</span>
-                        <SvgIcon
-                          src={"/assets/svgs/chevron-right.svg"}
-                          ariaLabel="Toggle submenu"
-                          width={16}
-                          height={16}
-                          className={clsx(
-                            "size-4 shrink-0 transition-transform duration-200",
-                            isServicesExpanded && "rotate-90"
-                          )}
-                        />
+                        <Flex className="w-6 h-6 items-center justify-center rounded-full bg-[#F4F4F5]">
+                          <SvgIcon
+                            src={"/assets/svgs/chevron-right.svg"}
+                            ariaLabel="Toggle submenu"
+                            width={8}
+                            height={8}
+                            className={clsx(
+                              "size-2 shrink-0 transition-transform duration-200 text-[#333333]",
+                              isServicesExpanded && "rotate-90"
+                            )}
+                          />
+                        </Flex>
                       </button>
                       {isServicesExpanded && serviceNavItems.length > 0 && (
-                        <div className="pl-4 mt-2 space-y-1">
+                        <div className="px-8 mt-2 space-y-1">
                           {serviceNavItems.map((subItem) => {
                             const isSubActive = checkIsActive(subItem.slug);
                             return (
@@ -443,11 +446,10 @@ const Header: React.FC = () => {
                                 to={subItem.path}
                                 onClick={closeMenu}
                                 className={clsx(
-                                  "block py-2 font-lexend capitalize transition-colors",
-                                  responsiveFontSizeArray(14, 16),
+                                  "block py-2 capitalize transition-colors font-light text-base",
                                   isSubActive
-                                    ? "text-[#9E7B6A] font-semibold"
-                                    : "text-[#0F172A]/80 hover:text-[#9E7B6A]"
+                                    ? "border-b border-[#D5B994CC]"
+                                    : "text-[#8B4B20]"
                                 )}
                               >
                                 {subItem.label}
@@ -466,7 +468,7 @@ const Header: React.FC = () => {
                     to={item.path}
                     onClick={closeMenu}
                     className={clsx(
-                      "block py-3 font-lexend uppercase transition-colors",
+                      "block py-3 font-lexend uppercase transition-colors px-5",
                       responsiveFontSizeArray(16, 18),
                       isActive
                         ? "text-[#9E7B6A] font-semibold"
@@ -481,26 +483,8 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Menu Footer */}
-          <div className="border-t border-gray-100 py-4 space-y-1">
-            <div className="flex flex-col gap-2">
-              <Link to={PATHS.contactUs} onClick={closeMenu} className="w-full">
-                <ButtonStyle1 className="font-lexend w-full">
-                  CONTACT US
-                </ButtonStyle1>
-              </Link>
-              <a
-                href="tel:608000000"
-                onClick={closeMenu}
-                className="text-[#8B7355] text-base font-medium text-center"
-              >
-                (608) 000 000
-              </a>
-            </div>
-            <div className="flex justify-center">
-              <ListSocial />
-            </div>
-          </div>
-        </Wrapper>
+          <div className="pt-20 bg-[#F7F7F7CC]"></div>
+        </Flex>
       </div>
     </header>
   );
