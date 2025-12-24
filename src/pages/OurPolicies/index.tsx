@@ -25,7 +25,7 @@ const OurPolicies: React.FC = () => {
       <Wrapper className="relative pt-12 lg:pt-20 pb-16 lg:pb-24">
         {/* Background Image - positioned top left, follows wrapper */}
         <div
-          className="absolute top-0 left-0 w-full max-w-[600px] lg:max-w-[800px] h-[400px] lg:h-[600px] pointer-events-none opacity-30 lg:opacity-40 z-0"
+          className="absolute -top-12 md:top-0 -left-14 md:left-0 w-full max-w-[600px] lg:max-w-[800px] h-[400px] lg:h-[600px] pointer-events-none opacity-80 z-0"
           style={{
             backgroundImage: `url(/assets/images/Our-Policies/bg.png)`,
             backgroundSize: "contain",
@@ -37,11 +37,11 @@ const OurPolicies: React.FC = () => {
         {/* Content */}
         <div className="relative z-10">
           {/* Title Section */}
-          <div className="text-center mb-12 lg:mb-16 max-w-[934px] mx-auto">
+          <div className="text-center mb-12 lg:mb-16 max-w-[1074px] mx-auto ml-[120px] lg:ml-auto">
             <h1
               className={clsx(
                 "font-prata text-[#C19A6B]",
-                responsiveFontSizeArray(36, 100)
+                responsiveFontSizeArray(32, 90)
               )}
             >
               Policies of our The Veira Nail Lounge & Spa
@@ -66,14 +66,15 @@ const OurPolicies: React.FC = () => {
                 <div key={policy.id} className="p-6 lg:p-8">
                   <h3
                     className={clsx(
-                      "font-prata text-[#D1A054] mb-1 lg:mb-2 pb-2 border-b border-[#D1A054] text-[40px] lg:min-h-[96px]"
+                      "font-prata text-[#D1A054] mb-1 lg:mb-2 border-b border-[#D1A054] md:min-h-[96px] md:leading-[42px]",
+                      responsiveFontSizeArray(24, 32)
                     )}
                   >
                     {policy.title}
                   </h3>
                   <p
                     className={clsx(
-                      "text-black font-light",
+                      "font-light",
                       responsiveFontSizeArray(16, 20)
                     )}
                   >
