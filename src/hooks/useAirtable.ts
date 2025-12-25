@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { fetchAirtableData } from "../services/airtable.service";
 
 interface UseAirtableResult<T> {
@@ -8,53 +8,35 @@ interface UseAirtableResult<T> {
   refetch: () => Promise<void>;
 }
 
-/**
- * Custom hook for fetching data from Airtable API
- * @param tableId - The Airtable table ID
- * @param autoFetch - Whether to automatically fetch data on mount (default: true)
- * @returns Object containing data, loading state, error, and refetch function
- *
- * @example
- * ```tsx
- * const { data, loading, error } = useAirtable<AboutUsData>(AIRTABLE_ENDPOINTS.aboutUs);
- * ```
- */
 export const useAirtable = <T = Record<string, unknown>>(
   tableId: string,
   autoFetch: boolean = true
 ): UseAirtableResult<T> => {
-  const [data, setData] = useState<T[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(autoFetch);
-  const [error, setError] = useState<Error | null>(null);
+  const {
+    data,
+    isLoading,
+    isFetching,
+    error,
+    refetch: queryRefetch,
+  } = useQuery({
+    queryKey: ["airtable", tableId],
+    queryFn: () => fetchAirtableData<T>(tableId),
+    enabled: autoFetch,
+    staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
+    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes (formerly cacheTime)
+  });
 
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await fetchAirtableData<T>(tableId);
-      setData(result);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err : new Error("Unknown error occurred")
-      );
-      console.error("Error fetching Airtable data:", err);
-    } finally {
-      setLoading(false);
-    }
+  const refetch = async () => {
+    await queryRefetch();
   };
 
-  useEffect(() => {
-    if (autoFetch) {
-      fetchData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tableId, autoFetch]);
+  const loading = (isLoading || (isFetching && !data)) && !data;
 
   return {
-    data,
+    data: data ?? null,
     loading,
-    error,
-    refetch: fetchData,
+    error:
+      error instanceof Error ? error : error ? new Error(String(error)) : null,
+    refetch,
   };
 };

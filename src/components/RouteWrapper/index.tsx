@@ -3,18 +3,11 @@ import { useLocation } from "react-router-dom";
 import { getRouteByPath } from "@/routes";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
+import LoadingPage from "@/components/LoadingPage";
 
 interface RouteWrapperProps {
   children: React.ReactNode;
 }
-
-// Loading component for lazy loaded routes
-const PageLoader = () => (
-  <div className="flex flex-col justify-center items-center min-h-[60vh]">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary mb-4"></div>
-    <p className="text-secondary-light text-lg">Loading...</p>
-  </div>
-);
 
 /**
  * RouteWrapper component
@@ -30,11 +23,11 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
   // Scroll to top when pathname changes (but not when only hash changes)
   useEffect(() => {
     const currentPathname = location.pathname;
-    
+
     // Only scroll if pathname actually changed (not just hash)
     if (currentPathname !== previousPathnameRef.current) {
       previousPathnameRef.current = currentPathname;
-      
+
       // Scroll to top when navigating to a new page
       window.scrollTo({
         top: 0,
@@ -65,7 +58,7 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
       {/* Structured Data only on home page */}
       {location.pathname === "/" && <StructuredData type="LocalBusiness" />}
       {/* Lazy loaded page content */}
-      <Suspense fallback={<PageLoader />}>{children}</Suspense>
+      <Suspense fallback={<LoadingPage />}>{children}</Suspense>
     </>
   );
 };

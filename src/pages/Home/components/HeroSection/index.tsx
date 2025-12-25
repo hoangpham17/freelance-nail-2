@@ -7,6 +7,7 @@ import CustomDots from "@/based/components/CustomDots";
 import { useScreen } from "@/hooks/useScreen";
 import { useBannerItems } from "./useBannerItems";
 import { useCampaignStore } from "@/shared/store/campaignStore";
+import LoadingPage from "@/components/LoadingPage";
 
 const HeroSection: React.FC = () => {
   const { isDesktop, isTablet } = useScreen();
@@ -17,7 +18,7 @@ const HeroSection: React.FC = () => {
     (state) => state.campaignBarHeight
   );
 
-  const bannerItems = useBannerItems();
+  const { bannerItems, loading: isLoadingBanners } = useBannerItems();
 
   // Calculate mobile height: dvh - header height (64px) - campaignBar height
   const mobileHeight = useMemo(() => {
@@ -92,27 +93,22 @@ const HeroSection: React.FC = () => {
     });
   };
 
-  if (bannerItems.length === 0) {
-    return (
-      <section
-        className="relative w-full overflow-hidden"
-        style={{
-          height: mobileHeight || (isDesktop || isTablet ? "100vh" : undefined),
-        }}
-      >
-        <div className="absolute inset-0 w-full h-full">
-          <Skeleton.Image active style={{ width: "100vw", height: "700px" }} />
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="relative w-full overflow-hidden lg:!h-auto transition-all duration-300">
+      {isLoadingBanners && <LoadingPage />}
       <div className="w-full h-full">
-        <Slider ref={sliderRef} {...sliderSettings}>
-          {renderSlides()}
-        </Slider>
+        {bannerItems.length > 0 ? (
+          <Slider ref={sliderRef} {...sliderSettings}>
+            {renderSlides()}
+          </Slider>
+        ) : (
+          <div className="w-full h-full">
+            <Skeleton.Image
+              active
+              style={{ width: "100vw", height: "700px" }}
+            />
+          </div>
+        )}
       </div>
 
       <CustomDots

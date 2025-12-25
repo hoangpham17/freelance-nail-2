@@ -3,8 +3,11 @@ import { BannerItem, BannerRecord } from "../../types";
 import { useAirtable } from "@/hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 
-export const useBannerItems = (): BannerItem[] => {
-  const { data: bannerRecords } = useAirtable<BannerRecord>(
+export const useBannerItems = (): {
+  bannerItems: BannerItem[];
+  loading: boolean;
+} => {
+  const { data: bannerRecords, loading } = useAirtable<BannerRecord>(
     AIRTABLE_ENDPOINTS.banner
   );
 
@@ -39,5 +42,5 @@ export const useBannerItems = (): BannerItem[] => {
       .filter((item) => item.desktop || item.mobile);
   }, [bannerRecords]);
 
-  return bannerItems;
+  return { bannerItems, loading };
 };
