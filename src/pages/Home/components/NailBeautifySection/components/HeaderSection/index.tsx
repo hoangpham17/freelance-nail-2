@@ -19,7 +19,7 @@ const HeaderSection: React.FC = () => {
         backgroundPosition: "right bottom",
       }}
     >
-      <div className="md:max-w-[55%] lg:max-w-[640px] lg:pl-10">
+      <div className="md:max-w-[55%] lg:max-w-[650px] lg:pl-10">
         <h2
           className={clsx(
             "font-prata leading-[40px] md:leading-[50px] lg:leading-[100px] mb-2 lg:mb-0",

@@ -8,16 +8,6 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 const KeepInTouch: React.FC = () => {
   const socialLinks = [
     {
-      href: "https://www.google.com",
-      icon: "bi-google",
-      label: "Google",
-    },
-    {
-      href: "https://www.linkedin.com",
-      icon: "bi-linkedin",
-      label: "LinkedIn",
-    },
-    {
       href: "https://www.facebook.com/madisonnailloungewi",
       icon: "bi-facebook",
       label: "Facebook",
@@ -26,11 +16,6 @@ const KeepInTouch: React.FC = () => {
       href: "https://www.instagram.com/madisonnaillounge/",
       icon: "bi-instagram",
       label: "Instagram",
-    },
-    {
-      href: "https://www.pinterest.com",
-      icon: "bi-pinterest",
-      label: "Pinterest",
     },
   ];
 
@@ -47,9 +32,9 @@ const KeepInTouch: React.FC = () => {
             <SvgIcon
               src={"/assets/svgs/phone.svg"}
               ariaLabel="text"
-              width={28}
-              height={28}
-              className="size-[28px] shrink-0"
+              width={32}
+              height={32}
+              className="size-[32px] shrink-0 text-[#494747]"
             />
             <span>(608) 720 1011</span>
           </Flex>

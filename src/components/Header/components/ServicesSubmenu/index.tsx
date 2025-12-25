@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { PATHS } from "@/routes/Routes";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
@@ -25,6 +25,8 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
+
+  const [isHovered, setIsHovered] = useState<string>("");
 
   // Calculate top position based on header height and campaign bar
   const headerHeight = isDesktop ? 100 : 64;
@@ -59,14 +61,16 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
               <Link
                 key={item.path}
                 to={item.path}
+                onMouseEnter={() => setIsHovered(item.slug)}
+                onMouseLeave={() => setIsHovered("")}
                 className={clsx(
-                  "px-4 py-4 text-2xl capitalize transition-colors whitespace-nowrap",
+                  "px-4 py-4 text-2xl capitalize transition-colors whitespace-nowrap cursor-pointer",
                   checkIsActive(item.slug)
                     ? "!text-black bg-white/80"
-                    : "text-[#8B4B20] hover:text-black hover:bg-white/50"
+                    : "text-[#8B4B20] hover:text-black hover:bg-white"
                 )}
                 style={
-                  checkIsActive(item.slug)
+                  checkIsActive(item.slug) || isHovered === item.slug
                     ? {
                         border: "1px solid",
                         borderImageSource:

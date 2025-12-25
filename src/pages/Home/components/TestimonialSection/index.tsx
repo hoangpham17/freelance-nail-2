@@ -20,7 +20,7 @@ const TestimonialSection: React.FC = () => {
       />
       <Wrapper className="px-4 lg:px-6 relative z-10">
         <HeaderSection />
-        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-12 items-center lg:-translate-y-8 pb-14 lg:pb-0 mt-5 lg:mt-0">
+        <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-12 items-center lg:-translate-y-24 pb-14 lg:pb-0 mt-5 lg:mt-0">
           <TestimonialContent
             testimonials={testimonials}
             currentIndex={currentIndex}
