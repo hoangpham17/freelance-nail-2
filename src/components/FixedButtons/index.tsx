@@ -25,7 +25,7 @@ const FixedButtons: React.FC = () => {
   return (
     <>
       <Flex
-        className="fixed p-3 md:p-0 bottom-0 md:bottom-10 right-0 md:right-[8%] md:flex-col gap-2 md:gap-4 w-full md:w-auto z-[99] justify-between md:justify-center"
+        className="fixed p-3 md:p-0 bottom-0 md:bottom-10 right-0 md:right-[8%] md:flex-col gap-2 md:gap-4 w-full md:w-auto z-[99] justify-center"
         align="center"
       >
         <div
