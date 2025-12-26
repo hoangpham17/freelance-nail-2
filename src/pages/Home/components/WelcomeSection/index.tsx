@@ -11,26 +11,6 @@ const WelcomeSection: React.FC = () => {
   const { isMobile } = useScreen();
   const { categories: serviceCategories } = useServiceCategories();
 
-  const renderTitle = (title: string) => {
-    // split first word and last word
-    const firstWord = title.split(" ").slice(0, -1).join(" ");
-    const lastWord = title.split(" ").slice(-1).join(" ");
-
-    return (
-      <Flex
-        vertical
-        align="center"
-        justify="center"
-        className={clsx(
-          "font-prata tracking-[-2%] text-[#9E7B6A] leading-none text-lg"
-        )}
-      >
-        <span className="inline-block">{firstWord}</span>
-        {lastWord && <span className="inline-block text-sm">{lastWord}</span>}
-      </Flex>
-    );
-  };
-
   return (
     <section className="-mt-2">
       <Flex
@@ -86,7 +66,16 @@ const WelcomeSection: React.FC = () => {
                       isMobile ? "w-10 h-10" : "w-[60px] h-[60px]"
                     )}
                   />
-                  {renderTitle(category.title)}
+                  <Flex
+                    vertical
+                    align="center"
+                    justify="center"
+                    className={clsx(
+                      "font-prata tracking-[-2%] text-[#9E7B6A] leading-none text-lg flex-wrap mb-2"
+                    )}
+                  >
+                    {category.title}
+                  </Flex>
                 </Flex>
               </Link>
             );
