@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import { GalleryItem } from "../../types";
 import GalleryItemComponent from "../GalleryItem";
 import { Wrapper } from "@/based/components/Wrapper";
@@ -8,13 +8,21 @@ interface GalleryGridProps {
   items: GalleryItem[];
   loading: boolean;
   onItemClick: (index: number) => void;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
+  isFetchingNextPage?: boolean;
 }
 
 const GalleryGrid: React.FC<GalleryGridProps> = ({
   items,
   loading,
   onItemClick,
+  hasNextPage = false,
+  fetchNextPage,
+  isFetchingNextPage = false,
 }) => {
+  const observerTarget = useRef<HTMLDivElement>(null);
+
   const { firstThreeItems, remainingItems } = useMemo(() => {
     const firstThree = items.slice(0, 3);
     const remaining = items.slice(3);
@@ -23,6 +31,38 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
       remainingItems: remaining,
     };
   }, [items]);
+
+  // Infinite scroll observer - trigger when 500px from bottom
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          hasNextPage &&
+          fetchNextPage &&
+          !isFetchingNextPage
+        ) {
+          fetchNextPage();
+        }
+      },
+      {
+        // rootMargin: "0px 0px 500px 0px" means trigger when element is 500px from bottom of viewport
+        rootMargin: "0px 0px 500px 0px",
+        threshold: 0,
+      }
+    );
+
+    const currentTarget = observerTarget.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
+    };
+  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (loading) {
     return (
@@ -86,6 +126,26 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
                 onClick={() => onItemClick(index + firstThreeItems.length)}
               />
             ))}
+          </div>
+        )}
+
+        {/* Infinite scroll trigger and loading indicator */}
+        {true && (
+          <div ref={observerTarget} className="w-full mb-4 md:mb-8">
+            {true && (
+              <div className="flex justify-center items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 w-full">
+                  {[...Array(3)].map((_, index) => (
+                    <Skeleton.Image
+                      key={`loading-${index}`}
+                      active
+                      style={{ width: "100%", height: "100%" }}
+                      className="h-[420px] lg:h-[520px] rounded-xl lg:rounded-2xl overflow-hidden"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </Wrapper>

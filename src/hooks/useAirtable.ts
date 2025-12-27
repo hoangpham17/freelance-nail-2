@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAirtableData } from "../services/airtable.service";
+import { fetchAllAirtableData } from "../services/airtable.service";
 
 interface UseAirtableResult<T> {
   data: T[] | null;
@@ -20,9 +20,9 @@ export const useAirtable = <T = Record<string, unknown>>(
     refetch: queryRefetch,
   } = useQuery({
     queryKey: ["airtable", tableId],
-    queryFn: () => fetchAirtableData<T>(tableId),
+    queryFn: () => fetchAllAirtableData<T>(tableId),
     enabled: autoFetch,
-    staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
+    staleTime: 3 * 60 * 1000, // Cache data for 3 minutes
     gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes (formerly cacheTime)
   });
 

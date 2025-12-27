@@ -1,6 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { useAirtable } from "../../hooks/useAirtable";
-import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
+import React, { useMemo, useState, useEffect } from "react";
+import { useInfiniteGallery } from "../../hooks/useInfiniteGallery";
 import { GalleryItem, GalleryRecord } from "./types";
 import CategoryTabs from "./components/CategoryTabs";
 import BannerSection from "./components/BannerSection";
@@ -21,8 +20,18 @@ const Gallery: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupItems, setPopupItems] = useState<GalleryItem[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const { data: galleryData, loading } = useAirtable<GalleryRecord>(
-    AIRTABLE_ENDPOINTS.gallery
+
+  // Use infinite scroll hook with category filter
+  const {
+    data: galleryData,
+    loading,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteGallery<GalleryRecord>(
+    activeFilter !== "All" ? activeFilter : undefined,
+    21
   );
 
   const galleryItems: GalleryItem[] = useMemo(() => {
@@ -30,7 +39,7 @@ const Gallery: React.FC = () => {
       return [];
     }
 
-    return galleryData.map((record, index) => {
+    const items = galleryData.map((record, index) => {
       // Get image URL from new image field structure
       let imageUrl = "";
       if (
@@ -47,24 +56,25 @@ const Gallery: React.FC = () => {
           : record.url || "";
       }
 
-      return {
+      const item = {
         id: record.id || `gallery-${index}`,
         url: imageUrl,
         description: record.description,
         category: record.category?.toLowerCase(),
       };
+
+      return item;
     });
+
+    const itemsWithImages = items.filter((item) => item.url);
+
+    // Return only items with images
+    return itemsWithImages;
   }, [galleryData]);
 
+  // Only filter by search query (category filtering is done via API)
   const filteredItems = useMemo(() => {
     let items = galleryItems;
-
-    // Filter by category
-    if (activeFilter !== "All") {
-      items = items.filter(
-        (item) => item.category?.toLowerCase() === activeFilter.toLowerCase()
-      );
-    }
 
     // Filter by search query (description or category)
     if (searchQuery.trim()) {
@@ -79,7 +89,7 @@ const Gallery: React.FC = () => {
     }
 
     return items;
-  }, [activeFilter, searchQuery, galleryItems]);
+  }, [searchQuery, galleryItems]);
 
   const openPopup = (index: number) => {
     setPopupItems(filteredItems);
@@ -91,9 +101,21 @@ const Gallery: React.FC = () => {
     setIsPopupOpen(false);
   };
 
+  // Scroll to top when filter changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [activeFilter]);
+
   return (
     <main className="w-full relative">
       {loading && (!galleryData || galleryData.length === 0) && <LoadingPage />}
+
+      {error && (
+        <div className="p-4 bg-red-100 text-red-800 rounded m-4">
+          <p>Error loading gallery: {error.message}</p>
+          <p className="text-sm mt-2">Check console for more details</p>
+        </div>
+      )}
 
       <BannerSection />
 
@@ -109,6 +131,9 @@ const Gallery: React.FC = () => {
         items={filteredItems}
         loading={loading}
         onItemClick={openPopup}
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
       />
 
       <GalleryPopup
