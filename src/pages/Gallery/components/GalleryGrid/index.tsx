@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { GalleryItem } from "../../types";
 import GalleryItemComponent from "../GalleryItem";
 import { Wrapper } from "@/based/components/Wrapper";
-import { Image, Skeleton } from "antd";
+import { Flex, Image, Skeleton } from "antd";
 
 interface GalleryGridProps {
   items: GalleryItem[];
@@ -57,7 +57,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
         )}
 
         {/* Control Your Day Image */}
-        <div className="w-full mb-8 lg:mb-12">
+        <Flex align="center" justify="center" className="w-full mb-8 lg:mb-12">
           {/* Mobile Image */}
           <Image
             src="/assets/images/Gallery/control-your-day-mobile.png"
@@ -74,7 +74,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
             style={{ height: "auto" }}
             preview={false}
           />
-        </div>
+        </Flex>
 
         {/* Remaining items grid */}
         {remainingItems.length > 0 && (
