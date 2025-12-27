@@ -33,7 +33,7 @@ const HeaderSection: React.FC = () => {
         <div className="flex-1">
           <p
             className={clsx(
-              "font-prata leading-[28px] md:leading-[100px] max-w-[90%] text-2xl md:text-[75px]"
+              "font-prata leading-[28px] md:leading-[60px] xl:leading-[100px] max-w-[90%] text-2xl md:text-[55px] xl:text-[75px]"
             )}
           >
             Your nail has never felt better{" "}

@@ -14,16 +14,6 @@ const listSocial = [
     href: "https://www.facebook.com/madisonnailloungewi",
     iconUrl: "/assets/svgs/fb.svg",
   },
-  {
-    name: "Google",
-    href: "https://www.google.com",
-    iconUrl: "/assets/svgs/google.svg",
-  },
-  {
-    name: "Pinterest",
-    href: "https://www.pinterest.com",
-    iconUrl: "/assets/svgs/pinterest.svg",
-  },
 ];
 
 export const ListSocial = () => {
