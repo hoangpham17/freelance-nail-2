@@ -6,10 +6,8 @@ import { Flex } from "antd";
 import SvgIcon from "@/based/SvgIcon";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { useScreen } from "@/hooks/useScreen";
 
 const HeaderSection: React.FC = () => {
-  const { isDesktop, isTablet } = useScreen();
   return (
     <div
       className="relative bg-no-repeat bg-right bg-cover md:bg-contain mb-4 pb-4 lg:pb-0"
@@ -26,7 +24,8 @@ const HeaderSection: React.FC = () => {
             responsiveFontSizeArray(36, 70)
           )}
         >
-          Your nail beautify {isDesktop || (isTablet && <br />)}
+          Your nail beautify
+          <br />
           Elevate your style!
         </h2>
         <p
