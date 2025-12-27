@@ -42,6 +42,29 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
     route?.description ||
     "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.";
 
+  // Get keywords based on route
+  const getKeywords = () => {
+    if (location.pathname === "/services") {
+      return "nail services, manicure, pedicure, nail enhancements, nail art, waxing, spa treatments, Madison WI nail salon, professional nail care, gel nails, dip powder, acrylic nails, nail extensions";
+    }
+    return undefined;
+  };
+
+  const keywords = getKeywords();
+
+  // Determine structured data type based on route
+  const getStructuredDataType = () => {
+    if (location.pathname === "/") {
+      return "LocalBusiness";
+    }
+    if (location.pathname === "/services") {
+      return "Service";
+    }
+    return undefined;
+  };
+
+  const structuredDataType = getStructuredDataType();
+
   return (
     <>
       {/* SEO components are loaded immediately, not lazy */}
@@ -49,14 +72,17 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
       <SEO
         title={seoTitle}
         description={seoDescription}
+        keywords={keywords}
         url={
           typeof window !== "undefined"
             ? `${window.location.origin}${location.pathname}`
             : ""
         }
       />
-      {/* Structured Data only on home page */}
-      {location.pathname === "/" && <StructuredData type="LocalBusiness" />}
+      {/* Structured Data for home and services pages */}
+      {structuredDataType && (
+        <StructuredData type={structuredDataType} />
+      )}
       {/* Lazy loaded page content */}
       <Suspense fallback={<LoadingPage />}>{children}</Suspense>
     </>

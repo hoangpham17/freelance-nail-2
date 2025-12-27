@@ -26,13 +26,14 @@ export const routes: RouteConfig[] = [
     path: PATHS.home,
     element: Home,
     title: "Home",
-    description: "Welcome to Madison Nail Lounge",
+    description: "Welcome to VEIRA NAIL LOUNGE & SPA",
   },
   {
     path: PATHS.services,
     element: Services,
-    title: "Services",
-    description: "Our nail care services",
+    title: "Nail Services & Spa Treatments - Manicure, Pedicure, Nail Enhancements",
+    description:
+      "Discover our comprehensive range of premium nail services at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Professional manicures, pedicures, nail enhancements, waxing, and spa treatments. Book your appointment today!",
   },
   {
     path: PATHS.hostAParty,

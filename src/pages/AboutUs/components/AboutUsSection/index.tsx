@@ -13,7 +13,7 @@ const AboutUsSectionComponent: React.FC<AboutUsSectionProps> = ({
   const isImageLeft = section.position === "left";
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6">
+    <article className="flex flex-col lg:flex-row items-center gap-4 lg:gap-6">
       <div
         className={clsx(
           "w-full",
@@ -45,7 +45,7 @@ const AboutUsSectionComponent: React.FC<AboutUsSectionProps> = ({
           {section.description}
         </p>
       </div>
-    </div>
+    </article>
   );
 };
 

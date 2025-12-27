@@ -57,7 +57,7 @@ const OurPolicies: React.FC = () => {
           {/* List Policy - Grid Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
             {policies.map((policy) => (
-              <div key={policy.id} className="p-6 lg:p-8">
+              <article key={policy.id} className="p-6 lg:p-8">
                 <h3
                   className={clsx(
                     "font-prata text-[#D1A054] mb-1 lg:mb-2 border-b border-[#D1A054] md:min-h-[96px] md:leading-[42px]",
@@ -74,7 +74,7 @@ const OurPolicies: React.FC = () => {
                 >
                   {policy.description}
                 </p>
-              </div>
+              </article>
             ))}
           </div>
 

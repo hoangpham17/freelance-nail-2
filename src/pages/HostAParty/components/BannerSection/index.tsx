@@ -46,7 +46,7 @@ const BannerSection: React.FC = () => {
               />
             </div>
 
-            <div className="w-full">
+            <article className="w-full">
               <p
                 className={clsx(
                   "font-light lg:max-w-[600px]",
@@ -66,7 +66,7 @@ const BannerSection: React.FC = () => {
                 ideal destination for fun, relaxation, and flawless nail
                 services awaits!
               </p>
-            </div>
+            </article>
           </div>
         </div>
       </Wrapper>

@@ -6,7 +6,7 @@ interface StructuredDataProps {
   data?: Record<string, any>;
 }
 
-const StructuredData: React.FC<StructuredDataProps> = ({ data }) => {
+const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
   const defaultLocalBusiness = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -58,7 +58,71 @@ const StructuredData: React.FC<StructuredDataProps> = ({ data }) => {
     ],
   };
 
-  const structuredData = data || defaultLocalBusiness;
+  const defaultService = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    serviceType: "Nail Care Services",
+    provider: {
+      "@type": "LocalBusiness",
+      name: "THE VEIRA NAIL LOUNGE & SPA",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "795 University Ave",
+        addressLocality: "Madison",
+        addressRegion: "WI",
+        postalCode: "53517",
+        addressCountry: "US",
+      },
+      telephone: "+1-608-720-1011",
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Madison",
+      containedIn: {
+        "@type": "State",
+        name: "Wisconsin",
+      },
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Nail Services",
+      itemListElement: [
+        {
+          "@type": "OfferCatalog",
+          name: "Manicure Services",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Pedicure Services",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Nail Enhancements",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Additional Services",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Waxing Services",
+        },
+        {
+          "@type": "OfferCatalog",
+          name: "Kid Services",
+        },
+      ],
+    },
+  };
+
+  let structuredData = data;
+  if (!structuredData) {
+    if (type === "Service") {
+      structuredData = defaultService;
+    } else {
+      structuredData = defaultLocalBusiness;
+    }
+  }
 
   return (
     <Helmet>

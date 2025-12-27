@@ -20,7 +20,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
   const formattedIndex = String(index).padStart(2, "0");
 
   return (
-    <div
+    <article
       id={category.slug}
       className={clsx(
         "relative w-full overflow-hidden pb-[16px] lg:pb-[38px]",
@@ -110,7 +110,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
           </div>
         </div>
       </Wrapper>
-    </div>
+    </article>
   );
 };
 

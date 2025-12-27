@@ -120,7 +120,7 @@ const PartyForm: React.FC = () => {
                   <div className="relative">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
                       <SvgIcon
-                        src="/assets/svgs/phone-2.svg"
+                        src="/assets/svgs/phone.svg"
                         ariaLabel="phone"
                         width={24}
                         height={24}
