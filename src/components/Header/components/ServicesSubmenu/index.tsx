@@ -64,7 +64,7 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
                 onMouseEnter={() => setIsHovered(item.slug)}
                 onMouseLeave={() => setIsHovered("")}
                 className={clsx(
-                  "px-4 py-4 text-2xl capitalize transition-colors whitespace-nowrap cursor-pointer",
+                  "px-4 py-4 capitalize transition-colors whitespace-nowrap cursor-pointer font-prata text-lg",
                   checkIsActive(item.slug)
                     ? "!text-black bg-white/80"
                     : "text-[#8B4B20] hover:text-black hover:bg-white"

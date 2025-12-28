@@ -80,7 +80,12 @@ const OurPolicies: React.FC = () => {
 
           {/* Thank You Text */}
           <div className="text-center">
-            <p className={clsx("italic", responsiveFontSizeArray(24, 32))}>
+            <p
+              className={clsx(
+                "italic font-light",
+                responsiveFontSizeArray(16, 20)
+              )}
+            >
               Thank you for your understanding and support of our business.
               <br />
               If you have any questions or concerns, please don't hesitate to
