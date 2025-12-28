@@ -10,6 +10,7 @@ const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const OurPolicies = lazy(() => import("../pages/OurPolicies"));
 const StyleGuide = lazy(() => import("../based/StyleGuide"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 export interface RouteConfig {
   path: string;
   element: React.LazyExoticComponent<React.FC>;
@@ -31,7 +32,8 @@ export const routes: RouteConfig[] = [
   {
     path: PATHS.services,
     element: Services,
-    title: "Nail Services & Spa Treatments - Manicure, Pedicure, Nail Enhancements",
+    title:
+      "Nail Services & Spa Treatments - Manicure, Pedicure, Nail Enhancements",
     description:
       "Discover our comprehensive range of premium nail services at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Professional manicures, pedicures, nail enhancements, waxing, and spa treatments. Book your appointment today!",
   },
@@ -70,6 +72,13 @@ export const routes: RouteConfig[] = [
     element: StyleGuide,
     title: "Style Guide",
     description: "Style guide for development",
+  },
+  {
+    path: PATHS.notFound,
+    element: NotFound,
+    title: "404 - Page Not Found | THE VEIRA NAIL LOUNGE & SPA",
+    description:
+      "The page you're looking for doesn't exist. Return to THE VEIRA NAIL LOUNGE & SPA homepage or explore our services in Madison, WI.",
   },
 ];
 

@@ -25,20 +25,23 @@ const BottomNav: React.FC = () => {
   return (
     <div className="hidden lg:block bg-white/20">
       <Wrapper>
-        <nav className="flex justify-center">
-          {serviceNavItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={clsx(
-                " flex items-center justify-center transition-colors hover:bg-white hover:text-black py-3 px-6",
-                responsiveFontSizeArray(16, 18),
-                checkIsActive(item.slug) ? "bg-white" : "text-[#8B4B20]"
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <nav className="flex justify-center" aria-label="Services navigation">
+          <ul className="flex list-none m-0 p-0">
+            {serviceNavItems.map((item) => (
+              <li key={item.path}>
+                <Link
+                  to={item.path}
+                  className={clsx(
+                    " flex items-center justify-center transition-colors hover:bg-white hover:text-black py-3 px-6",
+                    responsiveFontSizeArray(16, 18),
+                    checkIsActive(item.slug) ? "bg-white" : "text-[#8B4B20]"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
       </Wrapper>
     </div>

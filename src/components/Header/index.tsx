@@ -263,85 +263,90 @@ const Header: React.FC = () => {
             )}
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center relative h-full">
-            {navItems.map((item) => {
-              const isActive = location.pathname === item.path;
-              const isServices = item.path === PATHS.services;
+          <nav
+            className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center relative h-full"
+            aria-label="Main navigation"
+          >
+            <ul className="flex items-center gap-6 xl:gap-8 h-full list-none m-0 p-0">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                const isServices = item.path === PATHS.services;
 
-              return (
-                <div
-                  key={item.path}
-                  className={clsx(
-                    "relative h-full flex items-center",
-                    isServices && "group"
-                  )}
-                  onMouseEnter={() => {
-                    if (isServices) {
-                      if (hoverTimeoutRef.current) {
-                        clearTimeout(hoverTimeoutRef.current);
-                        hoverTimeoutRef.current = null;
-                      }
-                      setIsServicesHovered(true);
-                    }
-                  }}
-                  onMouseLeave={() => {
-                    if (isServices) {
-                      // Delay hiding to allow mouse to move to submenu
-                      hoverTimeoutRef.current = setTimeout(() => {
-                        setIsServicesHovered(false);
-                      }, 150);
-                    }
-                  }}
-                >
-                  <Link
-                    to={item.path}
+                return (
+                  <li
+                    key={item.path}
                     className={clsx(
-                      "uppercase transition-colors text-center h-full flex items-center",
-                      responsiveFontSizeArray(14, 16),
-                      isActive
-                        ? "!text-[#9E7B6A] font-semibold"
-                        : "text-[#0F172A] hover:text-[#9E7B6A]"
+                      "relative h-full flex items-center",
+                      isServices && "group"
                     )}
+                    onMouseEnter={() => {
+                      if (isServices) {
+                        if (hoverTimeoutRef.current) {
+                          clearTimeout(hoverTimeoutRef.current);
+                          hoverTimeoutRef.current = null;
+                        }
+                        setIsServicesHovered(true);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (isServices) {
+                        // Delay hiding to allow mouse to move to submenu
+                        hoverTimeoutRef.current = setTimeout(() => {
+                          setIsServicesHovered(false);
+                        }, 150);
+                      }
+                    }}
                   >
-                    {item.label}
-                  </Link>
-                  {isServices && (
-                    <>
-                      <div
-                        className="absolute top-full left-0 right-0 h-2 bg-transparent"
-                        onMouseEnter={() => {
-                          if (hoverTimeoutRef.current) {
-                            clearTimeout(hoverTimeoutRef.current);
-                            hoverTimeoutRef.current = null;
-                          }
-                          setIsServicesHovered(true);
-                        }}
-                        onMouseLeave={() => {
-                          hoverTimeoutRef.current = setTimeout(() => {
-                            setIsServicesHovered(false);
-                          }, 150);
-                        }}
-                      />
-                      <ServicesSubmenu
-                        isVisible={isServicesHovered}
-                        onMouseEnter={() => {
-                          if (hoverTimeoutRef.current) {
-                            clearTimeout(hoverTimeoutRef.current);
-                            hoverTimeoutRef.current = null;
-                          }
-                          setIsServicesHovered(true);
-                        }}
-                        onMouseLeave={() => {
-                          hoverTimeoutRef.current = setTimeout(() => {
-                            setIsServicesHovered(false);
-                          }, 150);
-                        }}
-                      />
-                    </>
-                  )}
-                </div>
-              );
-            })}
+                    <Link
+                      to={item.path}
+                      className={clsx(
+                        "uppercase transition-colors text-center h-full flex items-center",
+                        responsiveFontSizeArray(14, 16),
+                        isActive
+                          ? "!text-[#9E7B6A] font-semibold"
+                          : "text-[#0F172A] hover:text-[#9E7B6A]"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                    {isServices && (
+                      <>
+                        <div
+                          className="absolute top-full left-0 right-0 h-2 bg-transparent"
+                          onMouseEnter={() => {
+                            if (hoverTimeoutRef.current) {
+                              clearTimeout(hoverTimeoutRef.current);
+                              hoverTimeoutRef.current = null;
+                            }
+                            setIsServicesHovered(true);
+                          }}
+                          onMouseLeave={() => {
+                            hoverTimeoutRef.current = setTimeout(() => {
+                              setIsServicesHovered(false);
+                            }, 150);
+                          }}
+                        />
+                        <ServicesSubmenu
+                          isVisible={isServicesHovered}
+                          onMouseEnter={() => {
+                            if (hoverTimeoutRef.current) {
+                              clearTimeout(hoverTimeoutRef.current);
+                              hoverTimeoutRef.current = null;
+                            }
+                            setIsServicesHovered(true);
+                          }}
+                          onMouseLeave={() => {
+                            hoverTimeoutRef.current = setTimeout(() => {
+                              setIsServicesHovered(false);
+                            }, 150);
+                          }}
+                        />
+                      </>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
 
           <div className="flex flex-col items-end gap-1 lg:flex-row lg:items-center lg:gap-4 flex-shrink-0">
@@ -387,98 +392,105 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Content */}
           <div className="flex-1 overflow-y-auto">
-            <nav className="flex flex-col">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                const isServices = item.path === PATHS.services;
+            <nav className="flex flex-col" aria-label="Mobile navigation">
+              <ul className="flex flex-col list-none m-0 p-0">
+                {navItems.map((item) => {
+                  const isActive = location.pathname === item.path;
+                  const isServices = item.path === PATHS.services;
 
-                if (isServices) {
-                  const serviceNavItems = serviceCategories.map((category) => ({
-                    path: `${PATHS.services}#${category.slug}`,
-                    label: category.title,
-                    slug: category.slug,
-                  }));
+                  if (isServices) {
+                    const serviceNavItems = serviceCategories.map(
+                      (category) => ({
+                        path: `${PATHS.services}#${category.slug}`,
+                        label: category.title,
+                        slug: category.slug,
+                      })
+                    );
 
-                  const checkIsActive = (slug: string) => {
-                    const isServicesPage = location.pathname === PATHS.services;
-                    const currentHash = location.hash.replace("#", "");
-                    return isServicesPage && currentHash === slug;
-                  };
+                    const checkIsActive = (slug: string) => {
+                      const isServicesPage =
+                        location.pathname === PATHS.services;
+                      const currentHash = location.hash.replace("#", "");
+                      return isServicesPage && currentHash === slug;
+                    };
+
+                    return (
+                      <li key={item.path} className="w-full">
+                        <button
+                          onClick={toggleServicesExpanded}
+                          className={clsx(
+                            "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5",
+                            isActive
+                              ? "text-[#9E7B6A] font-semibold"
+                              : "text-[#0F172A]",
+                            isServicesExpanded && "border-b border-[#D5B994]"
+                          )}
+                          style={{
+                            boxShadow: isServicesExpanded
+                              ? "0px 4px 6px 0px #0000000F"
+                              : "none",
+                          }}
+                        >
+                          <span>{item.label}</span>
+                          <Flex className="w-6 h-6 items-center justify-center rounded-full bg-[#F4F4F5]">
+                            <SvgIcon
+                              src={"/assets/svgs/chevron-right.svg"}
+                              ariaLabel="Toggle submenu"
+                              width={8}
+                              height={8}
+                              className={clsx(
+                                "size-2 shrink-0 transition-transform duration-200 text-[#333333]",
+                                isServicesExpanded && "rotate-90"
+                              )}
+                            />
+                          </Flex>
+                        </button>
+                        {isServicesExpanded && serviceNavItems.length > 0 && (
+                          <ul className="px-8 mt-2 space-y-1 list-none">
+                            {serviceNavItems.map((subItem) => {
+                              const isSubActive = checkIsActive(subItem.slug);
+                              return (
+                                <li key={subItem.path}>
+                                  <Link
+                                    to={subItem.path}
+                                    onClick={closeMenu}
+                                    className={clsx(
+                                      "block py-2 capitalize transition-colors font-light text-base",
+                                      isSubActive
+                                        ? "border-b border-[#D5B994CC]"
+                                        : "text-[#8B4B20]"
+                                    )}
+                                  >
+                                    {subItem.label}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </li>
+                    );
+                  }
 
                   return (
-                    <div key={item.path}>
-                      <button
-                        onClick={toggleServicesExpanded}
+                    <li key={item.path}>
+                      <Link
+                        to={item.path}
+                        onClick={closeMenu}
                         className={clsx(
-                          "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5",
+                          "block py-3 font-lexend uppercase transition-colors px-5",
+                          responsiveFontSizeArray(16, 18),
                           isActive
                             ? "text-[#9E7B6A] font-semibold"
-                            : "text-[#0F172A]",
-                          isServicesExpanded && "border-b border-[#D5B994]"
+                            : "text-[#0F172A] hover:text-[#9E7B6A]"
                         )}
-                        style={{
-                          boxShadow: isServicesExpanded
-                            ? "0px 4px 6px 0px #0000000F"
-                            : "none",
-                        }}
                       >
-                        <span>{item.label}</span>
-                        <Flex className="w-6 h-6 items-center justify-center rounded-full bg-[#F4F4F5]">
-                          <SvgIcon
-                            src={"/assets/svgs/chevron-right.svg"}
-                            ariaLabel="Toggle submenu"
-                            width={8}
-                            height={8}
-                            className={clsx(
-                              "size-2 shrink-0 transition-transform duration-200 text-[#333333]",
-                              isServicesExpanded && "rotate-90"
-                            )}
-                          />
-                        </Flex>
-                      </button>
-                      {isServicesExpanded && serviceNavItems.length > 0 && (
-                        <div className="px-8 mt-2 space-y-1">
-                          {serviceNavItems.map((subItem) => {
-                            const isSubActive = checkIsActive(subItem.slug);
-                            return (
-                              <Link
-                                key={subItem.path}
-                                to={subItem.path}
-                                onClick={closeMenu}
-                                className={clsx(
-                                  "block py-2 capitalize transition-colors font-light text-base",
-                                  isSubActive
-                                    ? "border-b border-[#D5B994CC]"
-                                    : "text-[#8B4B20]"
-                                )}
-                              >
-                                {subItem.label}
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
+                        {item.label}
+                      </Link>
+                    </li>
                   );
-                }
-
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={closeMenu}
-                    className={clsx(
-                      "block py-3 font-lexend uppercase transition-colors px-5",
-                      responsiveFontSizeArray(16, 18),
-                      isActive
-                        ? "text-[#9E7B6A] font-semibold"
-                        : "text-[#0F172A] hover:text-[#9E7B6A]"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
+                })}
+              </ul>
             </nav>
           </div>
 

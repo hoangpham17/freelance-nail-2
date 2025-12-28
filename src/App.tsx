@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import FixedButtons from "./components/FixedButtons";
 import RouteWrapper from "./components/RouteWrapper";
 import { routes } from "./routes";
+import NotFound from "./pages/NotFound";
 import "./App.css";
 import { useCampaignStore } from "./shared/store/campaignStore";
 import { useScreen } from "./hooks/useScreen";
@@ -38,20 +39,31 @@ function App() {
               style={{ marginTop: `${mainMarginTop}px` }}
             >
               <Routes>
-                {routes.map((route) => {
-                  const Component = route.element;
-                  return (
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      element={
-                        <RouteWrapper>
-                          <Component />
-                        </RouteWrapper>
-                      }
-                    />
-                  );
-                })}
+                {routes
+                  .filter((route) => route.path !== "*")
+                  .map((route) => {
+                    const Component = route.element;
+                    return (
+                      <Route
+                        key={route.path}
+                        path={route.path}
+                        element={
+                          <RouteWrapper>
+                            <Component />
+                          </RouteWrapper>
+                        }
+                      />
+                    );
+                  })}
+                {/* 404 Route - must be last */}
+                <Route
+                  path="*"
+                  element={
+                    <RouteWrapper>
+                      <NotFound />
+                    </RouteWrapper>
+                  }
+                />
               </Routes>
             </div>
             <Footer />

@@ -7,4 +7,5 @@ export const PATHS = {
   contactUs: "/contact-us",
   ourPolicies: "/our-policies",
   styleguide: "/style-guide-for-dev",
+  notFound: "*",
 };
