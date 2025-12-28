@@ -7,7 +7,6 @@ import { Flex } from "antd";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
-import SvgIcon from "@/based/SvgIcon";
 
 const NotFound: React.FC = () => {
   const { isDesktop } = useScreen();
@@ -141,4 +140,3 @@ const NotFound: React.FC = () => {
 };
 
 export default NotFound;
-
