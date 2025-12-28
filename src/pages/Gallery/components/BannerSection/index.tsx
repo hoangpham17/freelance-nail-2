@@ -38,9 +38,9 @@ const BannerSection: React.FC = () => {
               isTablet || isDesktop
                 ? `url(/assets/images/Gallery/bg-info-card-desktop.png)`
                 : `url(/assets/images/Gallery/bg-info-card-mobile.png)`,
-            backgroundSize: isTablet || isDesktop ? "cover" : "auto 100%",
+            backgroundSize: "cover",
             backgroundPosition:
-              isTablet || isDesktop ? "right center" : "center",
+              isTablet || isDesktop ? "right center" : "70% center",
             backgroundRepeat: "no-repeat",
           }}
         >
@@ -73,7 +73,7 @@ const BannerSection: React.FC = () => {
 
               <button
                 className={clsx(
-                  "bg-white/80 text-[#494747] uppercase rounded-full h-[34px] lg:h-[48px] font-light",
+                  "bg-white/80 text-[#494747] uppercase rounded-full min-h-[34px] lg:min-h-[48px] font-light",
                   "p2 w-full",
                   "hover:bg-white transition-colors",
                   "border border-white",

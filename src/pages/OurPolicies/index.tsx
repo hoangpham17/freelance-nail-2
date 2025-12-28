@@ -43,7 +43,7 @@ const OurPolicies: React.FC = () => {
         {/* Content */}
         <article className="relative z-10">
           {/* Title Section */}
-          <header className="text-center mb-12 lg:mb-16 max-w-[1074px] mx-auto ml-[120px] lg:ml-auto md:pl-20">
+          <header className="text-center mb-12 lg:mb-16 max-w-[1074px] mx-auto ml-[120px] lg:ml-auto md:translate-x-14">
             <h1
               className={clsx(
                 "font-prata text-[#C19A6B]",
