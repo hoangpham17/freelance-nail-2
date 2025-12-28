@@ -117,24 +117,30 @@ const Gallery: React.FC = () => {
         </div>
       )}
 
-      <BannerSection />
+      <article>
+        <BannerSection />
 
-      <CategoryTabs
-        filters={FILTERS}
-        activeFilter={activeFilter}
-        onChange={setActiveFilter}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
+        <section aria-label="Gallery filters">
+          <CategoryTabs
+            filters={FILTERS}
+            activeFilter={activeFilter}
+            onChange={setActiveFilter}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+          />
+        </section>
 
-      <GalleryGrid
-        items={filteredItems}
-        loading={loading}
-        onItemClick={openPopup}
-        hasNextPage={hasNextPage}
-        fetchNextPage={fetchNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-      />
+        <section aria-label="Gallery images">
+          <GalleryGrid
+            items={filteredItems}
+            loading={loading}
+            onItemClick={openPopup}
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+            isFetchingNextPage={isFetchingNextPage}
+          />
+        </section>
+      </article>
 
       <GalleryPopup
         isOpen={isPopupOpen && popupItems.length > 0}

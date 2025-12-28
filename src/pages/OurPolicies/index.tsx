@@ -23,7 +23,7 @@ const OurPolicies: React.FC = () => {
   }, [policiesData]);
 
   return (
-    <div className="relative w-full min-h-screen bg-[#F4F6F9]">
+    <main className="relative w-full min-h-screen bg-[#F4F6F9]">
       {loading && (!policiesData || policiesData.length === 0) && (
         <LoadingPage />
       )}
@@ -31,7 +31,7 @@ const OurPolicies: React.FC = () => {
       <Wrapper className="relative pt-12 lg:pt-20 pb-16 lg:pb-24">
         {/* Background Image - positioned top left, follows wrapper */}
         <div
-          className="absolute -top-12 md:top-0 -left-14 md:left-0 w-full max-w-[600px] lg:max-w-[800px] h-[400px] lg:h-[600px] pointer-events-none opacity-80 z-0"
+          className="absolute -top-12 md:-top-[220px] -left-14 md:left-0 w-full max-w-[600px] lg:max-w-[800px] h-[400px] md:h-[600px] lg:h-[800px] pointer-events-none opacity-80 z-0"
           style={{
             backgroundImage: `url(/assets/images/Our-Policies/bg.png)`,
             backgroundSize: "contain",
@@ -41,9 +41,9 @@ const OurPolicies: React.FC = () => {
         />
 
         {/* Content */}
-        <div className="relative z-10">
+        <article className="relative z-10">
           {/* Title Section */}
-          <div className="text-center mb-12 lg:mb-16 max-w-[1074px] mx-auto ml-[120px] lg:ml-auto">
+          <header className="text-center mb-12 lg:mb-16 max-w-[1074px] mx-auto ml-[120px] lg:ml-auto md:pl-20">
             <h1
               className={clsx(
                 "font-prata text-[#C19A6B]",
@@ -52,20 +52,23 @@ const OurPolicies: React.FC = () => {
             >
               Policies of our The Veira Nail Lounge & Spa
             </h1>
-          </div>
+          </header>
 
           {/* List Policy - Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 lg:mb-16">
+          <section
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-8 mb-12 lg:mb-16"
+            aria-label="Policies list"
+          >
             {policies.map((policy) => (
               <article key={policy.id} className="p-6 lg:p-8">
-                <h3
+                <h2
                   className={clsx(
                     "font-prata text-[#D1A054] mb-1 lg:mb-2 border-b border-[#D1A054] md:min-h-[96px] md:leading-[42px]",
                     responsiveFontSizeArray(24, 32)
                   )}
                 >
                   {policy.title}
-                </h3>
+                </h2>
                 <p
                   className={clsx(
                     "font-light",
@@ -76,10 +79,10 @@ const OurPolicies: React.FC = () => {
                 </p>
               </article>
             ))}
-          </div>
+          </section>
 
           {/* Thank You Text */}
-          <div className="text-center">
+          <footer className="text-center">
             <p
               className={clsx(
                 "italic font-light",
@@ -91,10 +94,10 @@ const OurPolicies: React.FC = () => {
               If you have any questions or concerns, please don't hesitate to
               contact us.
             </p>
-          </div>
-        </div>
+          </footer>
+        </article>
       </Wrapper>
-    </div>
+    </main>
   );
 };
 

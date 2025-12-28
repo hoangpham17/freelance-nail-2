@@ -41,31 +41,36 @@ export const routes: RouteConfig[] = [
     path: PATHS.hostAParty,
     element: HostAParty,
     title: "Host A Party",
-    description: "Book a party at our salon",
+    description:
+      "Host a memorable party at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Perfect for birthdays, bridal parties, and group events. Book your private party experience today!",
   },
   {
     path: PATHS.gallery,
     element: Gallery,
     title: "Gallery",
-    description: "View our work",
+    description:
+      "Explore our stunning nail art gallery at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. View our latest manicure, pedicure, and nail enhancement designs. Get inspired for your next appointment!",
   },
   {
     path: PATHS.aboutUs,
     element: AboutUs,
     title: "About Us",
-    description: "Learn more about us",
+    description:
+      "Learn about THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Discover our story, expert team, and commitment to providing premium nail care and spa services. Experience luxury beauty treatments.",
   },
   {
     path: PATHS.contactUs,
     element: ContactUs,
     title: "Contact",
-    description: "Get in touch with us",
+    description:
+      "Contact THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Located at 795 University Ave. Call us at (608) 720-1011 or send us a message. We're here to help with all your nail care needs!",
   },
   {
     path: PATHS.ourPolicies,
     element: OurPolicies,
     title: "Our Policies",
-    description: "Salon policies and guidelines",
+    description:
+      "Review our salon policies and guidelines at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Learn about our cancellation policy, appointment booking, and service terms. We value your understanding.",
   },
   {
     path: PATHS.styleguide,

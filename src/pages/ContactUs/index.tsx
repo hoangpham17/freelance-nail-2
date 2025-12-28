@@ -9,10 +9,10 @@ const ContactUs: React.FC = () => {
   const { isDesktop } = useScreen();
 
   return (
-    <div className="relative w-full bg-white">
+    <main className="relative w-full bg-white">
       <Wrapper className="relative pt-12 lg:pt-20 pb-10 lg:pb-24">
-        <div className="z-10 max-w-6xl mx-auto">
-          <div className="mb-12 lg:mb-16">
+        <article className="z-10 max-w-6xl mx-auto">
+          <header className="mb-12 lg:mb-16">
             <div className="relative">
               <div className="absolute -right-[20%] lg:-right-16 -top-3 lg:top-0 w-[160px] h-[160px] lg:w-[263px] lg:h-[263px] pointer-events-none z-0">
                 <img
@@ -42,43 +42,45 @@ const ContactUs: React.FC = () => {
                 </span>
               </h1>
             </div>
-          </div>
+          </header>
 
-          {isDesktop ? (
-            <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
-              <div className="col-span-4 relative">
-                <img
-                  src="/assets/images/Contact-Us/left-image.png"
-                  alt="Decorative element"
-                  className="w-full h-auto object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
-              </div>
+          <section>
+            {isDesktop ? (
+              <div className="grid grid-cols-12 gap-8 lg:gap-12 items-start">
+                <div className="col-span-4 relative">
+                  <img
+                    src="/assets/images/Contact-Us/left-image.png"
+                    alt="Decorative element"
+                    className="w-full h-auto object-contain"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                </div>
 
-              <div className="col-span-8">
-                <ContactForm />
+                <div className="col-span-8">
+                  <ContactForm />
+                </div>
               </div>
-            </div>
-          ) : (
-            <div
-              className="relative rounded-2xl pt-[42px] lg:pt-0"
-              style={{
-                backgroundImage: `url(/assets/images/Contact-Us/left-image-mobile.png)`,
-                backgroundSize: "contain",
-                backgroundPosition: "top center",
-                backgroundRepeat: "no-repeat",
-              }}
-            >
-              <div className="relative z-10 bg-white/80 lg:mt-0">
-                <ContactForm />
+            ) : (
+              <div
+                className="relative rounded-2xl pt-[42px] lg:pt-0"
+                style={{
+                  backgroundImage: `url(/assets/images/Contact-Us/left-image-mobile.png)`,
+                  backgroundSize: "contain",
+                  backgroundPosition: "top center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <div className="relative z-10 bg-white/80 lg:mt-0">
+                  <ContactForm />
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </section>
+        </article>
       </Wrapper>
-    </div>
+    </main>
   );
 };
 
