@@ -65,7 +65,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       className="fixed left-0 right-0 z-30 transition-all duration-300"
       style={{ top: fixedTop }}
     >
-      <div className="flex items-center gap-4 bg-black/60 rounded-full p-1 lg:p-2 shadow-lg max-w-[calc(100%_-_24px)] md:max-w-[1227px] mx-auto border border-white h-auto lg:h-[75px] backdrop-blur-sm">
+      <div className="flex items-center gap-4 bg-black/60 rounded-full p-1 lg:p-2 shadow-lg max-w-[calc(100%_-_24px)] lg:max-w-[1227px] mx-auto border border-white h-auto lg:h-[75px] backdrop-blur-sm">
         <div
           className={clsx(
             "flex items-center justify-between flex-1 gap-2 lg:gap-4 transition-all duration-300",

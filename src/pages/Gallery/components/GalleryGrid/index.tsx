@@ -67,7 +67,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   if (loading) {
     return (
       <Wrapper>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {[...Array(6)].map((_, index) => (
             <Skeleton.Image
               key={index}
@@ -85,7 +85,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
       <Wrapper>
         {/* First 3 items */}
         {firstThreeItems.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-8 lg:mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
             {firstThreeItems.map((item, index) => (
               <GalleryItemComponent
                 key={item.id}
@@ -118,7 +118,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
         {/* Remaining items grid */}
         {remainingItems.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-4 md:mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-8">
             {remainingItems.map((item, index) => (
               <GalleryItemComponent
                 key={item.id}
@@ -134,7 +134,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
           <div ref={observerTarget} className="w-full mb-4 md:mb-8">
             {true && (
               <div className="flex justify-center items-center">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full">
                   {[...Array(3)].map((_, index) => (
                     <Skeleton.Image
                       key={`loading-${index}`}
