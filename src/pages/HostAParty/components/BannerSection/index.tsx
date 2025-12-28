@@ -34,15 +34,12 @@ const BannerSection: React.FC = () => {
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 items-center">
             <div className="w-full">
               <img
                 src="/assets/images/Host-A-Party/bg-host-a-party.png"
                 alt="Party decorative elements"
-                className="w-full h-auto rounded-2xl"
-                onError={(e) => {
-                  e.currentTarget.src = "https://picsum.photos/800/600";
-                }}
+                className="w-auto md:w-full max-h-[150px] md:max-h-full h-auto rounded-2xl mx-auto"
               />
             </div>
 
