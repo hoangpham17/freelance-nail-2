@@ -233,7 +233,7 @@ const Header: React.FC = () => {
       />
 
       {/* Main Header */}
-      <Wrapper className="px-4 md:px-4 lg:px-8">
+      <Wrapper className="px-4 md:px-4 lg:px-8 overflow-hidden">
         <Flex
           justify="space-between"
           align="center"
