@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PATHS } from "@/routes/Routes";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
 import { useCampaignStore } from "@/shared/store/campaignStore";
@@ -18,7 +18,6 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   onMouseEnter,
   onMouseLeave,
 }) => {
-  const location = useLocation();
   const { categories: serviceCategories } = useServiceCategories();
   const { isDesktop } = useScreen();
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
@@ -39,8 +38,8 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   }));
 
   const checkIsActive = (slug: string) => {
-    const isServicesPage = location.pathname === PATHS.services;
-    const currentHash = location.hash.replace("#", "");
+    const isServicesPage = window.location.pathname === PATHS.services;
+    const currentHash = window.location.hash.replace("#", "");
     return isServicesPage && currentHash === slug;
   };
 
