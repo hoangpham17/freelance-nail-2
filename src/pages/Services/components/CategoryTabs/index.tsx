@@ -30,6 +30,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
+  const isUpdatingHashRef = useRef(false);
 
   const baseTop = isDesktop ? 100 : 64;
   const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
@@ -70,7 +71,101 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     }
   }, [activeCategorySlug, categories]);
 
+  // Detect which section is in view and update hash on scroll
+  useEffect(() => {
+    if (categories.length === 0) return;
+
+    let observer: IntersectionObserver | null = null;
+    let timeoutId: NodeJS.Timeout | null = null;
+
+    const categoryTabsHeight = isDesktop ? 56 : 32;
+    const offset = stickyTop + categoryTabsHeight + 20;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: `-${offset}px 0px -50% 0px`,
+      threshold: [0, 0.1, 0.5, 1],
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      // Don't update hash if we're currently updating it programmatically
+      if (isUpdatingHashRef.current) return;
+
+      // Find the entry with the highest intersection ratio that's above the threshold
+      const visibleEntries = entries.filter(
+        (entry) => entry.intersectionRatio > 0.1
+      );
+
+      if (visibleEntries.length === 0) return;
+
+      // Sort by intersection ratio and position (top to bottom)
+      visibleEntries.sort((a, b) => {
+        if (Math.abs(a.intersectionRatio - b.intersectionRatio) > 0.1) {
+          return b.intersectionRatio - a.intersectionRatio;
+        }
+        return a.boundingClientRect.top - b.boundingClientRect.top;
+      });
+
+      const mostVisible = visibleEntries[0];
+      const sectionId = mostVisible.target.id;
+
+      if (sectionId && categories.some((cat) => cat.slug === sectionId)) {
+        const currentHash = location.hash.replace("#", "");
+        if (currentHash !== sectionId) {
+          isUpdatingHashRef.current = true;
+          setActiveCategorySlug(sectionId);
+          // Update URL hash without triggering scroll
+          window.history.replaceState(
+            null,
+            "",
+            `${location.pathname}#${sectionId}`
+          );
+          // Reset flag after a short delay
+          setTimeout(() => {
+            isUpdatingHashRef.current = false;
+          }, 100);
+        }
+      }
+    };
+
+    const setupObserver = () => {
+      // Observe all category sections
+      const sections = categories
+        .map((cat) => document.getElementById(cat.slug))
+        .filter((el) => el !== null) as HTMLElement[];
+
+      if (sections.length === 0) {
+        // Retry after a short delay if sections aren't ready yet
+        timeoutId = setTimeout(setupObserver, 100);
+        return;
+      }
+
+      observer = new IntersectionObserver(observerCallback, observerOptions);
+      sections.forEach((section) => {
+        observer?.observe(section);
+      });
+    };
+
+    // Wait a bit for DOM to be ready, then setup observer
+    timeoutId = setTimeout(setupObserver, 200);
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      if (observer) {
+        const sections = categories
+          .map((cat) => document.getElementById(cat.slug))
+          .filter((el) => el !== null) as HTMLElement[];
+        sections.forEach((section) => {
+          observer?.unobserve(section);
+        });
+      }
+    };
+  }, [categories, location.pathname, location.hash, stickyTop, isDesktop]);
+
   const handleTabClick = (categorySlug: string) => {
+    isUpdatingHashRef.current = true;
     setActiveCategorySlug(categorySlug);
     // Update URL hash (e.g., #manicure)
     window.location.hash = categorySlug;
@@ -98,6 +193,11 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         behavior: "smooth",
       });
     }
+
+    // Reset flag after scroll completes
+    setTimeout(() => {
+      isUpdatingHashRef.current = false;
+    }, 500);
   };
 
   const scrollTabs = (direction: "prev" | "next") => {
