@@ -79,7 +79,12 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
         </button>
         {/* Slider Wrapper */}
         <div className="relative">
-          <div className="[&_.slick-list]:m-0 [&_.slick-slide]:p-0">
+          <div
+            className={`[&_.slick-list]:m-0 [&_.slick-slide]:p-0
+            [&_.slick-prev:before]:text-[20px] lg:[&_.slick-prev:before]:text-[40px] [&_.slick-next:before]:text-[20px] lg:[&_.slick-next:before]:text-[40px]
+            [&_.slick-next]:-right-[18px] [&_.slick-prev]:-left-[18px]
+            `}
+          >
             <Slider ref={sliderRef} {...settings}>
               {items.map((item, index) => (
                 <div key={item.id || index} className="px-2">

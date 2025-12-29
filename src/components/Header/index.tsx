@@ -75,15 +75,40 @@ const Header: React.FC = () => {
 
   const isPromotionActive = useMemo(() => {
     if (!promotion) return false;
-    const now = Math.floor(Date.now() / 1000);
-    const start = promotion.start_date ?? 0;
-    const end = promotion.end_date ?? now + 1;
-    return Boolean(promotion.enabled) && now >= start && now <= end;
+
+    // Parse date strings (YYYY-MM-DD) to Date objects
+    const now = new Date();
+    now.setHours(0, 0, 0, 0); // Set to start of day for comparison
+
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+
+    if (promotion.start_date) {
+      startDate = new Date(promotion.start_date);
+      startDate.setHours(0, 0, 0, 0);
+    }
+
+    if (promotion.end_date) {
+      endDate = new Date(promotion.end_date);
+      endDate.setHours(23, 59, 59, 999); // Set to end of day
+    }
+
+    // Check if promotion is enabled and within date range
+    const isEnabled = Boolean(promotion.enabled);
+    const isAfterStart = !startDate || now >= startDate;
+    const isBeforeEnd = !endDate || now <= endDate;
+
+    return isEnabled && isAfterStart && isBeforeEnd;
   }, [promotion]);
 
   const canShowCampaignText = isPromotionActive && hasCampaignCopy;
   const canShowPopup =
-    isPromotionActive && Boolean(promotion?.icon || promotion?.image);
+    isPromotionActive &&
+    Boolean(
+      promotion?.image &&
+        Array.isArray(promotion.image) &&
+        promotion.image.length > 0
+    );
 
   const shouldShowCampaignBar =
     canShowCampaignText && !hasDismissedCampaignText && !isHeaderSolid;

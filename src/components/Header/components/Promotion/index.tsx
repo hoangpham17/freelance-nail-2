@@ -1,10 +1,22 @@
 import React, { useEffect, useRef } from "react";
-import { PromotionData } from "../../types";
+import { PromotionData, AirtableAttachment } from "../../types";
 import clsx from "clsx";
 import SvgIcon from "@/based/SvgIcon";
 import { Wrapper } from "@/based/components/Wrapper";
 import { Flex } from "antd";
 import { useCampaignStore } from "@/shared/store/campaignStore";
+
+const resolveImageUrl = (image?: AirtableAttachment[]): string => {
+  if (!image || !Array.isArray(image) || image.length === 0) {
+    return "";
+  }
+  // Use full thumbnail if available, otherwise use url
+  const firstImage = image[0];
+  if (firstImage?.thumbnails?.full?.url) {
+    return firstImage.thumbnails.full.url;
+  }
+  return firstImage?.url || "";
+};
 
 interface PromotionProps {
   promotion?: PromotionData;
@@ -61,9 +73,7 @@ const Promotion: React.FC<PromotionProps> = ({
   }, [setCampaignBarHeight, showCampaignBar]);
 
   const imageSrc =
-    promotion?.icon ||
-    promotion?.image ||
-    "/assets/images/Background/home-1.jpg";
+    resolveImageUrl(promotion?.image) || "/assets/images/Background/home-1.jpg";
 
   return (
     <>
