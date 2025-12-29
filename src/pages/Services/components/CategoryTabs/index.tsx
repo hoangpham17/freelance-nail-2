@@ -31,6 +31,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     (state) => state.campaignBarHeight
   );
   const isUpdatingHashRef = useRef(false);
+  const currentHashRef = useRef<string>("");
 
   const baseTop = isDesktop ? 100 : 64;
   const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
@@ -44,11 +45,14 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   // Update active category when hash changes (e.g., from BottomNav)
   useEffect(() => {
     if (location.hash) {
-      const hash = location.hash.replace("#", "");
+      const hash = decodeURIComponent(location.hash.replace("#", ""));
       const category = categories.find((cat) => cat.slug === hash);
       if (category) {
         setActiveCategorySlug(hash);
+        currentHashRef.current = hash;
       }
+    } else {
+      currentHashRef.current = "";
     }
   }, [location.hash, categories]);
 
@@ -110,10 +114,15 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       const sectionId = mostVisible.target.id;
 
       if (sectionId && categories.some((cat) => cat.slug === sectionId)) {
-        const currentHash = location.hash.replace("#", "");
-        if (currentHash !== sectionId) {
+        // Use ref to track current hash instead of location.hash to avoid stale closures
+        const decodedSectionId = decodeURIComponent(sectionId);
+
+        // Always update if different, even if it's the initial hash
+        // This ensures we update hash when scrolling back to the initial section
+        if (currentHashRef.current !== decodedSectionId) {
           isUpdatingHashRef.current = true;
-          setActiveCategorySlug(sectionId);
+          setActiveCategorySlug(decodedSectionId);
+          currentHashRef.current = decodedSectionId;
           // Update URL hash without triggering scroll
           window.history.replaceState(
             null,
@@ -167,6 +176,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   const handleTabClick = (categorySlug: string) => {
     isUpdatingHashRef.current = true;
     setActiveCategorySlug(categorySlug);
+    currentHashRef.current = categorySlug;
     // Update URL hash (e.g., #manicure)
     window.location.hash = categorySlug;
 
