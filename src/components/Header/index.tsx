@@ -495,7 +495,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Menu Footer */}
-          <div className="pt-20 bg-[#F7F7F7CC]"></div>
+          <div className="pt-20 bg-[#F7F7F7CC] border-t border-[#D5B994]"></div>
         </Flex>
       </div>
     </header>

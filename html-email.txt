@@ -1,7 +1,0 @@
-# 📧 New Contact Information You have a new message from a customer
-## Guest Name: **{{guestName}}** 
-## Phone Number: [{{phoneNumber}}](tel:{{phoneNumber}}) 
-## Email: [{{email}}](mailto:{{email}}) 
-## Message: {{message}}
-_This email was automatically sent from the contact system_ 
-© 2025 Nail Salon. All rights reserved.

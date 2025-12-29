@@ -52,7 +52,7 @@ Cập nhật `public/robots.txt`:
 Tạo file `.env`:
 
 ```env
-VITE_SITE_URL=https://yourdomain.com
+VITE_SITE_URL=https://theveiranailspa.com
 ```
 
 ## 🚀 Next Steps (Optional - để SEO tốt hơn)

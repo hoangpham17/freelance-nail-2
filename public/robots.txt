@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://theveiranailspa.com/sitemap.xml
 
 # Disallow admin or private areas if any
 # Disallow: /admin/

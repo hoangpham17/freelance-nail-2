@@ -5,7 +5,7 @@
 
 export const SEO_CONFIG = {
   siteName: "THE VEIRA NAIL LOUNGE & SPA",
-  siteUrl: process.env.VITE_SITE_URL || "https://yourdomain.com",
+  siteUrl: process.env.VITE_SITE_URL || "https://theveiranailspa.com",
   defaultTitle: "THE VEIRA NAIL LOUNGE & SPA - Premium Nail Care Services",
   defaultDescription:
     "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.",
