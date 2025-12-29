@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { PATHS } from "@/routes/Routes";
 import { Flex } from "antd";
-import Link from "antd/es/typography/Link";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
@@ -43,11 +43,11 @@ const WelcomeSection: React.FC = () => {
         </Flex>
         <Flex className="flex-wrap gap-4 z-[1]" align="center" justify="center">
           {serviceCategories.map((category) => {
-            const href = `${PATHS.services}#${category.slug}`;
+            const to = `${PATHS.services}#${category.slug}`;
             const iconUrl = category.icon || "/assets/svgs/manicure.svg"; // Fallback icon
 
             return (
-              <Link key={category.id} href={href}>
+              <Link key={category.id} to={to}>
                 <Flex
                   className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full gap-1 lg:gap-4"
                   align="center"

@@ -20,9 +20,42 @@ const Services: React.FC = () => {
     (state) => state.campaignBarHeight
   );
   const previousHashRef = useRef<string>("");
+  const hasScrolledRef = useRef(false);
 
+  const scrollToHash = (hash: string, delay: number = 150) => {
+    if (!hash) return;
+
+    setTimeout(() => {
+      const element = document.getElementById(hash);
+      if (element) {
+        // Calculate offset for sticky header (CategoryTabs)
+        const baseTop = isDesktop ? 100 : 64;
+        const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
+        const categoryTabsHeight = isDesktop ? 56 : 32; // Height of CategoryTabs
+        const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
+
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        // Check if element is already at the correct position (within 100px tolerance)
+        const currentScrollY = window.pageYOffset;
+        const targetScrollY = offsetPosition;
+        const distance = Math.abs(currentScrollY - targetScrollY);
+
+        // Only scroll if not already at the correct position
+        if (distance > 100) {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+          hasScrolledRef.current = true;
+        }
+      }
+    }, delay);
+  };
+
+  // Handle hash change (from navigation or URL)
   useEffect(() => {
-    // Only scroll when hash actually changes, not when other dependencies change
     const currentHash = location.hash.replace("#", "");
 
     // Skip if hash hasn't changed
@@ -32,40 +65,34 @@ const Services: React.FC = () => {
 
     // Update previous hash
     previousHashRef.current = currentHash;
+    hasScrolledRef.current = false;
 
     if (currentHash) {
-      setTimeout(() => {
-        const element = document.getElementById(currentHash);
-        if (element) {
-          // Calculate offset for sticky header (CategoryTabs)
-          const baseTop = isDesktop ? 100 : 64;
-          const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
-          const categoryTabsHeight = isDesktop ? 56 : 32; // Height of CategoryTabs
-          const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
-
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-          // Check if element is already at the correct position (within 100px tolerance)
-          const currentScrollY = window.pageYOffset;
-          const targetScrollY = offsetPosition;
-          const distance = Math.abs(currentScrollY - targetScrollY);
-
-          // Only scroll if not already at the correct position
-          if (distance > 100) {
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth",
-            });
-          }
-        }
-      }, 150);
+      // Wait for categories to load and DOM to be ready
+      if (!isLoadingCategories && serviceCategories.length > 0) {
+        scrollToHash(currentHash, 300);
+      }
     } else {
       // If hash is cleared, reset the ref
       previousHashRef.current = "";
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.hash]);
+  }, [location.hash, isLoadingCategories, serviceCategories.length]);
+
+  // Handle initial load with hash (when navigating from home page)
+  useEffect(() => {
+    const currentHash = location.hash.replace("#", "");
+    if (
+      currentHash &&
+      !isLoadingCategories &&
+      serviceCategories.length > 0 &&
+      !hasScrolledRef.current
+    ) {
+      scrollToHash(currentHash, 500);
+      previousHashRef.current = currentHash;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingCategories, serviceCategories.length, location.hash]);
 
   return (
     <main className="w-full relative">

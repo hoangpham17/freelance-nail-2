@@ -51,10 +51,39 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     }
   }, [location.hash, categories]);
 
+  // Scroll active category into view when activeCategorySlug changes
+  useEffect(() => {
+    if (!activeCategorySlug || !sliderRef.current || categories.length === 0) {
+      return;
+    }
+
+    // Find index of active category
+    const activeIndex = categories.findIndex(
+      (cat) => cat.slug === activeCategorySlug
+    );
+
+    if (activeIndex !== -1 && sliderRef.current) {
+      // Use setTimeout to ensure slider is fully initialized
+      setTimeout(() => {
+        sliderRef.current?.slickGoTo(activeIndex);
+      }, 100);
+    }
+  }, [activeCategorySlug, categories]);
+
   const handleTabClick = (categorySlug: string) => {
     setActiveCategorySlug(categorySlug);
     // Update URL hash (e.g., #manicure)
     window.location.hash = categorySlug;
+
+    // Scroll the active tab into view in the slider
+    const activeIndex = categories.findIndex(
+      (cat) => cat.slug === categorySlug
+    );
+    if (activeIndex !== -1 && sliderRef.current) {
+      sliderRef.current.slickGoTo(activeIndex);
+    }
+
+    // Scroll to the content section
     const element = document.getElementById(categorySlug);
     if (element) {
       // Calculate offset for sticky header (CategoryTabs)
@@ -81,7 +110,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   };
 
   const sliderSettings: Settings = {
-    infinite: false,
+    infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     variableWidth: true,
@@ -89,6 +118,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     swipeToSlide: true,
     draggable: true,
     speed: 400,
+    focusOnSelect: false, // Don't auto-focus on click, we handle it manually
+    centerMode: false, // Not compatible with variableWidth
+    centerPadding: "0px", // No padding needed
   };
 
   if (loading) {
