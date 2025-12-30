@@ -42,7 +42,6 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     }
   }, [categories, activeCategorySlug]);
 
-  // Update active category when hash changes (e.g., from BottomNav)
   useEffect(() => {
     if (location.hash) {
       const hash = decodeURIComponent(location.hash.replace("#", ""));
@@ -56,26 +55,22 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     }
   }, [location.hash, categories]);
 
-  // Scroll active category into view when activeCategorySlug changes
   useEffect(() => {
     if (!activeCategorySlug || !sliderRef.current || categories.length === 0) {
       return;
     }
 
-    // Find index of active category
     const activeIndex = categories.findIndex(
       (cat) => cat.slug === activeCategorySlug
     );
 
     if (activeIndex !== -1 && sliderRef.current) {
-      // Use setTimeout to ensure slider is fully initialized
       setTimeout(() => {
         sliderRef.current?.slickGoTo(activeIndex);
       }, 100);
     }
   }, [activeCategorySlug, categories]);
 
-  // Detect which section is in view and update hash on scroll
   useEffect(() => {
     if (categories.length === 0) return;
 
@@ -85,28 +80,32 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     const categoryTabsHeight = isDesktop ? 56 : 32;
     const offset = stickyTop + categoryTabsHeight + 20;
 
+    const bottomMargin = isDesktop ? "-50%" : "-35%";
+
+    const minIntersectionRatio = isDesktop ? 0.1 : 0.05;
+
     const observerOptions = {
       root: null,
-      rootMargin: `-${offset}px 0px -50% 0px`,
-      threshold: [0, 0.1, 0.5, 1],
+      rootMargin: `-${offset}px 0px ${bottomMargin} 0px`,
+      threshold: [0, 0.05, 0.1, 0.5, 1],
     };
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      // Don't update hash if we're currently updating it programmatically
       if (isUpdatingHashRef.current) return;
 
-      // Find the entry with the highest intersection ratio that's above the threshold
       const visibleEntries = entries.filter(
-        (entry) => entry.intersectionRatio > 0.1
+        (entry) => entry.intersectionRatio > minIntersectionRatio
       );
 
+      console.log(2222, entries, visibleEntries);
       if (visibleEntries.length === 0) return;
 
-      // Sort by intersection ratio and position (top to bottom)
       visibleEntries.sort((a, b) => {
+        // First sort by intersection ratio
         if (Math.abs(a.intersectionRatio - b.intersectionRatio) > 0.1) {
           return b.intersectionRatio - a.intersectionRatio;
         }
+        // Then by position (top to bottom)
         return a.boundingClientRect.top - b.boundingClientRect.top;
       });
 
@@ -114,22 +113,17 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       const sectionId = mostVisible.target.id;
 
       if (sectionId && categories.some((cat) => cat.slug === sectionId)) {
-        // Use ref to track current hash instead of location.hash to avoid stale closures
         const decodedSectionId = decodeURIComponent(sectionId);
 
-        // Always update if different, even if it's the initial hash
-        // This ensures we update hash when scrolling back to the initial section
         if (currentHashRef.current !== decodedSectionId) {
           isUpdatingHashRef.current = true;
           setActiveCategorySlug(decodedSectionId);
           currentHashRef.current = decodedSectionId;
-          // Update URL hash without triggering scroll
           window.history.replaceState(
             null,
             "",
             `${location.pathname}#${sectionId}`
           );
-          // Reset flag after a short delay
           setTimeout(() => {
             isUpdatingHashRef.current = false;
           }, 100);
@@ -138,24 +132,21 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     };
 
     const setupObserver = () => {
-      // Observe all category sections
       const sections = categories
         .map((cat) => document.getElementById(cat.slug))
         .filter((el) => el !== null) as HTMLElement[];
 
       if (sections.length === 0) {
-        // Retry after a short delay if sections aren't ready yet
         timeoutId = setTimeout(setupObserver, 100);
         return;
       }
-
+      console.log(1111, sections);
       observer = new IntersectionObserver(observerCallback, observerOptions);
       sections.forEach((section) => {
         observer?.observe(section);
       });
     };
 
-    // Wait a bit for DOM to be ready, then setup observer
     timeoutId = setTimeout(setupObserver, 200);
 
     return () => {
@@ -177,10 +168,8 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     isUpdatingHashRef.current = true;
     setActiveCategorySlug(categorySlug);
     currentHashRef.current = categorySlug;
-    // Update URL hash (e.g., #manicure)
     window.location.hash = categorySlug;
 
-    // Scroll the active tab into view in the slider
     const activeIndex = categories.findIndex(
       (cat) => cat.slug === categorySlug
     );
@@ -188,12 +177,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       sliderRef.current.slickGoTo(activeIndex);
     }
 
-    // Scroll to the content section
     const element = document.getElementById(categorySlug);
     if (element) {
-      // Calculate offset for sticky header (CategoryTabs)
       const categoryTabsHeight = isDesktop ? 56 : 32;
-      const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
+      const offset = stickyTop + categoryTabsHeight + 20;
 
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
@@ -204,7 +191,6 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       });
     }
 
-    // Reset flag after scroll completes
     setTimeout(() => {
       isUpdatingHashRef.current = false;
     }, 500);
@@ -228,9 +214,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     swipeToSlide: true,
     draggable: true,
     speed: 400,
-    focusOnSelect: false, // Don't auto-focus on click, we handle it manually
-    centerMode: false, // Not compatible with variableWidth
-    centerPadding: "0px", // No padding needed
+    focusOnSelect: false,
+    centerMode: false,
+    centerPadding: "0px",
   };
 
   if (loading) {

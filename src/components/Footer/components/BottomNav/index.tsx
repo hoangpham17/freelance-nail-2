@@ -32,7 +32,7 @@ const BottomNav: React.FC = () => {
                 <Link
                   to={item.path}
                   className={clsx(
-                    " flex items-center justify-center transition-colors hover:bg-white hover:text-black py-3 px-6",
+                    "flex items-center justify-center transition-colors hover:bg-white hover:text-black py-3 px-6 h-full text-center",
                     responsiveFontSizeArray(16, 18),
                     checkIsActive(item.slug) ? "bg-white" : "text-[#8B4B20]"
                   )}
