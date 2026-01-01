@@ -23,13 +23,13 @@ const GalleryItem: React.FC<GalleryItemProps> = ({
 }) => {
   const isLarge = size === "large";
   const containerClasses = isLarge
-    ? " aspect-[16/10] lg:h-[270px] lg:h-[320px]"
-    : " aspect-square lg:h-[250px] lg:h-[300px]";
+    ? " aspect-[16/10] lg:h-[320px]"
+    : " aspect-square lg:h-[300px]";
 
   return (
     <div
       className={clsx(
-        "relative overflow-hidden rounded-xl w-full h-[140px] cursor-pointer transition-transform duration-300 hover:-translate-y-1",
+        "relative overflow-hidden rounded-xl w-full h-[240px] cursor-pointer transition-transform duration-300 hover:-translate-y-1",
         containerClasses
       )}
       onClick={onClick}
