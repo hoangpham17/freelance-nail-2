@@ -7,12 +7,17 @@ import { Flex } from "antd";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
+import { useBaseOffset } from "@/hooks/useBaseOffset";
 
 const NotFound: React.FC = () => {
   const { isDesktop } = useScreen();
+  const { mainTopSpacing } = useBaseOffset();
 
   return (
-    <main className="w-full min-h-screen bg-white flex items-center justify-center">
+    <main
+      className="w-full min-h-screen bg-white flex items-center justify-center"
+      style={{ paddingTop: `${mainTopSpacing}px` }}
+    >
       <Wrapper className="py-12 lg:py-24">
         <div className="max-w-2xl mx-auto text-center">
           {/* 404 Number */}

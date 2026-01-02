@@ -97,7 +97,6 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         (entry) => entry.intersectionRatio > minIntersectionRatio
       );
 
-      console.log(2222, entries, visibleEntries);
       if (visibleEntries.length === 0) return;
 
       visibleEntries.sort((a, b) => {
@@ -140,7 +139,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         timeoutId = setTimeout(setupObserver, 100);
         return;
       }
-      console.log(1111, sections);
+
       observer = new IntersectionObserver(observerCallback, observerOptions);
       sections.forEach((section) => {
         observer?.observe(section);

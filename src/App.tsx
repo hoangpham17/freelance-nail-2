@@ -8,25 +8,8 @@ import RouteWrapper from "./components/RouteWrapper";
 import { routes } from "./routes";
 import NotFound from "./pages/NotFound";
 import "./App.css";
-import { useCampaignStore } from "./shared/store/campaignStore";
-import { useScreen } from "./hooks/useScreen";
-import { useMemo } from "react";
 
 function App() {
-  const { isDesktop } = useScreen();
-  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
-  const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight
-  );
-
-  const baseOffset = isDesktop ? 100 : 64;
-  const mainMarginTop = useMemo(() => {
-    if (showCampaignBar) {
-      return baseOffset + campaignBarHeight;
-    }
-    return baseOffset;
-  }, [showCampaignBar, baseOffset, campaignBarHeight]);
-
   return (
     <HelmetProvider>
       <ConfigProvider>
@@ -34,10 +17,7 @@ function App() {
           <div className="app min-h-screen flex flex-col">
             <Header />
             <FixedButtons />
-            <div
-              className="main flex-1"
-              style={{ marginTop: `${mainMarginTop}px` }}
-            >
+            <div className="main flex-1">
               <Routes>
                 {routes
                   .filter((route) => route.path !== "*")

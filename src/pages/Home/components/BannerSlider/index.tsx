@@ -15,7 +15,7 @@ const settings: Settings = {
   arrows: false,
   dots: false,
   autoplay: true,
-  autoplaySpeed: 5000,
+  autoplaySpeed: 3500,
   fade: true,
   cssEase: "linear",
 };
@@ -26,7 +26,8 @@ const BannerSlider: React.FC<BannerSliderProps> = ({ items, campaignText }) => {
       <div className="banner-swiper" id="banner-swiper" data-change-background>
         <Slider {...settings}>
           {items.map((item, index) => {
-            const desktop = item.desktop || "/assets/images/Background/home-1.jpg";
+            const desktop =
+              item.desktop || "/assets/images/Background/home-1.jpg";
             const mobile = item.mobile || desktop;
             return (
               <div className="swiper-slide" key={item.id || index}>

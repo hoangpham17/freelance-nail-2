@@ -4,12 +4,17 @@ import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
 import ContactForm from "./components/ContactForm";
+import { useBaseOffset } from "@/hooks/useBaseOffset";
 
 const ContactUs: React.FC = () => {
   const { isDesktop } = useScreen();
+  const { mainTopSpacing } = useBaseOffset();
 
   return (
-    <main className="relative w-full bg-white">
+    <main
+      className="relative w-full bg-white"
+      style={{ paddingTop: `${mainTopSpacing}px` }}
+    >
       <Wrapper className="relative pt-12 lg:pt-20 pb-10 lg:pb-24">
         <article className="z-10 max-w-6xl mx-auto">
           <header className="mb-12 lg:mb-16">

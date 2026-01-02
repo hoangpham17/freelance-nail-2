@@ -9,6 +9,7 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import LoadingPage from "../../components/LoadingPage";
+import { useBaseOffset } from "@/hooks/useBaseOffset";
 
 const Services: React.FC = () => {
   const { isDesktop } = useScreen();
@@ -21,6 +22,7 @@ const Services: React.FC = () => {
   );
   const previousHashRef = useRef<string>("");
   const hasScrolledRef = useRef(false);
+  const { mainTopSpacing } = useBaseOffset();
 
   const scrollToHash = (hash: string, delay: number = 150) => {
     if (!hash) return;
@@ -95,7 +97,10 @@ const Services: React.FC = () => {
   }, [isLoadingCategories, serviceCategories.length, location.hash]);
 
   return (
-    <main className="w-full relative">
+    <main
+      className="w-full relative"
+      style={{ paddingTop: `${mainTopSpacing}px` }}
+    >
       {isLoadingCategories && serviceCategories.length === 0 && <LoadingPage />}
 
       <Wrapper

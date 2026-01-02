@@ -6,6 +6,8 @@ import BannerSection from "./components/BannerSection";
 import GalleryGrid from "./components/GalleryGrid";
 import GalleryPopup from "./components/GalleryPopup";
 import LoadingPage from "../../components/LoadingPage";
+import { useBaseOffset } from "@/hooks/useBaseOffset";
+import { useScreen } from "@/hooks/useScreen";
 
 const FILTERS = [
   { id: "All", label: "All" },
@@ -15,6 +17,8 @@ const FILTERS = [
 ];
 
 const Gallery: React.FC = () => {
+  const { isDesktop } = useScreen();
+  const { mainTopSpacing, campaignBarHeight } = useBaseOffset();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -107,7 +111,10 @@ const Gallery: React.FC = () => {
   }, [activeFilter]);
 
   return (
-    <main className="w-full relative">
+    <main
+      className="w-full relative"
+      style={{ paddingTop: `${mainTopSpacing}px` }}
+    >
       {loading && (!galleryData || galleryData.length === 0) && <LoadingPage />}
 
       {error && (
@@ -116,6 +123,17 @@ const Gallery: React.FC = () => {
           <p className="text-sm mt-2">Check console for more details</p>
         </div>
       )}
+
+      <div
+        className="absolute lg:left-1/2 lg:-translate-x-1/2 h-[328px] lg:h-[657px] w-full"
+        style={{
+          backgroundImage: `url(/assets/images/Gallery/banner.png)`,
+          backgroundSize: "auto 100%",
+          backgroundPosition: isDesktop ? "center" : "80% center",
+          backgroundRepeat: "no-repeat",
+          top: campaignBarHeight,
+        }}
+      />
 
       <article>
         <BannerSection />

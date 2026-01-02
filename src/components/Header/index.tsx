@@ -14,7 +14,6 @@ import { BurgerMenu } from "./components/BurgerMenu";
 import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import { useScreen } from "@/hooks/useScreen";
-import { useCheckOpacityHeader } from "@/hooks/useCheckOpacityHeader";
 import ServicesSubmenu from "./components/ServicesSubmenu";
 import SvgIcon from "@/based/SvgIcon";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
@@ -43,7 +42,8 @@ const getPromotionText = (promotion?: PromotionData) =>
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const isOpacityHeader = useCheckOpacityHeader();
+
+  const isServicesPage = location.pathname === PATHS.services;
 
   const { isDesktop } = useScreen();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -244,7 +244,7 @@ const Header: React.FC = () => {
     <header
       className={clsx(
         "fixed top-0 left-0 w-full z-[98] shadow-[2px_6px_6px_0px_#0000000F]",
-        isOpacityHeader && isAtTop ? "bg-white/60" : "bg-white"
+        isAtTop ? "bg-white/60" : "bg-white"
       )}
     >
       <Promotion
@@ -305,6 +305,7 @@ const Header: React.FC = () => {
                       isServices && "group"
                     )}
                     onMouseEnter={() => {
+                      if (isServicesPage) return;
                       if (isServices) {
                         if (hoverTimeoutRef.current) {
                           clearTimeout(hoverTimeoutRef.current);
@@ -328,16 +329,18 @@ const Header: React.FC = () => {
                         "uppercase transition-colors text-center h-full flex items-center",
                         responsiveFontSizeArray(14, 16),
                         isActive
-                          ? "!text-[#9E7B6A] font-semibold"
+                          ? "!text-[#9E7B6A]"
                           : "text-[#0F172A] hover:text-[#9E7B6A]"
                       )}
                     >
                       {item.label}
                     </Link>
-                    {isServices && (
+                    {isServices && !isServicesPage && (
                       <>
                         <div
-                          className="absolute top-full left-0 right-0 h-2 bg-transparent"
+                          className={
+                            "absolute top-full left-0 right-0 h-2 bg-transparent"
+                          }
                           onMouseEnter={() => {
                             if (hoverTimeoutRef.current) {
                               clearTimeout(hoverTimeoutRef.current);

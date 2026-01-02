@@ -6,8 +6,10 @@ import { PolicyItem } from "./types";
 import { useAirtable } from "@/hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 import LoadingPage from "../../components/LoadingPage";
+import { useBaseOffset } from "@/hooks/useBaseOffset";
 
 const OurPolicies: React.FC = () => {
+  const { mainTopSpacing } = useBaseOffset();
   const { data: policiesData, loading } = useAirtable<PolicyItem>(
     AIRTABLE_ENDPOINTS.policies
   );
@@ -23,7 +25,10 @@ const OurPolicies: React.FC = () => {
   }, [policiesData]);
 
   return (
-    <main className="relative w-full min-h-screen bg-[#F4F6F9]">
+    <main
+      className="relative w-full min-h-screen bg-[#F4F6F9]"
+      style={{ paddingTop: `${mainTopSpacing}px` }}
+    >
       {loading && (!policiesData || policiesData.length === 0) && (
         <LoadingPage />
       )}
