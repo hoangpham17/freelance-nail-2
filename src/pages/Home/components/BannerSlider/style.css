@@ -64,7 +64,11 @@
   max-width: 80%;
   width: 53.125rem;
   padding: 1.625rem 1.25rem 1.25rem;
-  background: linear-gradient(0deg, rgba(38, 38, 38, 0.8), rgba(38, 38, 38, 0.8));
+  background: linear-gradient(
+    0deg,
+    rgba(38, 38, 38, 0.8),
+    rgba(38, 38, 38, 0.8)
+  );
   border: 1px solid #000;
   border-radius: 3.75rem;
   font-size: 1.6875rem;

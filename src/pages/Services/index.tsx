@@ -103,21 +103,21 @@ const Services: React.FC = () => {
     >
       {isLoadingCategories && serviceCategories.length === 0 && <LoadingPage />}
 
-      <Wrapper
+      <div
         className={clsx(
           "absolute left-1/2 -translate-x-1/2 w-full h-[328px]",
-          isDesktop ? "-top-[100px]" : "-top-[64px]"
+          isDesktop ? "top-[50px]" : "top-[10px]"
         )}
       >
         <div
           className="bg-center w-full h-full"
           style={{
             backgroundImage: `url(/assets/images/Services/banner.png)`,
-            backgroundSize: "auto 100%",
+            backgroundSize: isDesktop ? "auto 100%" : "170%",
             backgroundRepeat: "no-repeat",
           }}
         />
-      </Wrapper>
+      </div>
 
       <CategoryTabs
         categories={serviceCategories}

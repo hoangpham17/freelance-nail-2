@@ -6,28 +6,22 @@ import "slick-carousel/slick/slick-theme.css";
 import CustomDots from "@/based/components/CustomDots";
 import { useScreen } from "@/hooks/useScreen";
 import { useBannerItems } from "./useBannerItems";
-import { useCampaignStore } from "@/shared/store/campaignStore";
 import LoadingPage from "@/components/LoadingPage";
+import { useBaseOffset } from "@/hooks/useBaseOffset";
 
 const HeroSection: React.FC = () => {
   const { isDesktop, isTablet } = useScreen();
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
-  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
-  const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight
-  );
+
+  const { campaignBarHeight } = useBaseOffset();
 
   const { bannerItems, loading: isLoadingBanners } = useBannerItems();
 
-  // Calculate mobile height: dvh - header height (64px) - campaignBar height
-  const mobileHeight = useMemo(() => {
-    if (isDesktop || isTablet) return undefined;
-    const headerHeight = 64;
-    const totalOffset =
-      headerHeight + (showCampaignBar ? campaignBarHeight : 0) + 78;
-    return `calc(100dvh - ${totalOffset}px)`;
-  }, [isDesktop, isTablet, showCampaignBar, campaignBarHeight]);
+  // Calculate height: 100dvh - campaignBarHeight
+  const bannerHeight = useMemo(() => {
+    return `calc(100dvh - ${campaignBarHeight}px)`;
+  }, [campaignBarHeight]);
 
   const handleBeforeChange = (_current: number, next: number) => {
     setCurrentSlide(next);
@@ -40,7 +34,7 @@ const HeroSection: React.FC = () => {
     arrows: false,
     dots: false,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 3500,
     fade: true,
     cssEase: "linear",
     beforeChange: handleBeforeChange,
@@ -57,16 +51,14 @@ const HeroSection: React.FC = () => {
             key={item.id || index}
             className="relative w-full"
             style={{
-              height:
-                mobileHeight || (isDesktop || isTablet ? undefined : "100vh"),
-              minHeight: isDesktop || isTablet ? "700px" : undefined,
+              height: bannerHeight,
             }}
           >
             <Skeleton.Image
               active
               style={{
                 width: "100vw",
-                height: "700px",
+                height: "100%",
               }}
             />
           </div>
@@ -76,27 +68,31 @@ const HeroSection: React.FC = () => {
       const imageUrl = isDesktop || isTablet ? desktopUrl : mobileUrl;
 
       return (
-        <div key={item.id || index} className="w-full relative">
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              alt={`Banner ${index + 1}`}
-              className="w-full lg:h-full object-cover"
-              style={{
-                height: mobileHeight || undefined,
-                maxHeight: isDesktop || isTablet ? undefined : "812px",
-              }}
-            />
-          )}
+        <div key={item.id || index}>
+          <div
+            className="w-full relative"
+            style={{
+              height: bannerHeight,
+              backgroundImage: imageUrl ? `url('${imageUrl}')` : "none",
+              backgroundPosition: "center center",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              width: "100%",
+              display: "block",
+            }}
+          />
         </div>
       );
     });
   };
 
   return (
-    <section className="relative w-full overflow-hidden lg:!h-auto transition-all duration-300">
+    <section
+      className="relative w-full overflow-hidden h-dvh transition-all duration-300"
+      style={{ paddingTop: `${campaignBarHeight}px` }}
+    >
       {isLoadingBanners && <LoadingPage />}
-      <div className="w-full h-full">
+      <div className="w-full h-full [&_.slick-list]:h-full [&_.slick-track]:h-full [&_.slick-slide]:h-full [&_.slick-slide>div]:h-full">
         {bannerItems.length > 0 ? (
           <Slider ref={sliderRef} {...sliderSettings}>
             {renderSlides()}
