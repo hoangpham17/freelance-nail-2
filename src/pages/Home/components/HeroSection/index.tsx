@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import { Skeleton } from "antd";
 import "slick-carousel/slick/slick.css";
@@ -35,10 +35,23 @@ const HeroSection: React.FC = () => {
     dots: false,
     autoplay: true,
     autoplaySpeed: 3500,
+    pauseOnHover: false,
     fade: true,
+    speed: 500,
     cssEase: "linear",
     beforeChange: handleBeforeChange,
   };
+
+  // Ensure autoplay starts after slider is initialized
+  useEffect(() => {
+    if (sliderRef.current && bannerItems.length > 0 && !isLoadingBanners) {
+      // Force autoplay to start by calling slickPlay
+      const timer = setTimeout(() => {
+        sliderRef.current?.slickPlay();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [bannerItems.length, isLoadingBanners]);
 
   const renderSlides = () => {
     return bannerItems.map((item, index) => {
