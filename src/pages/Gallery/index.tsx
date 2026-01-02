@@ -18,7 +18,7 @@ const FILTERS = [
 
 const Gallery: React.FC = () => {
   const { isDesktop } = useScreen();
-  const { mainTopSpacing, campaignBarOffset } = useBaseOffset();
+  const { mainTopSpacing, campaignBarHeight } = useBaseOffset();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -131,7 +131,7 @@ const Gallery: React.FC = () => {
           backgroundSize: "auto 100%",
           backgroundPosition: isDesktop ? "center" : "80% center",
           backgroundRepeat: "no-repeat",
-          top: campaignBarOffset,
+          top: campaignBarHeight,
         }}
       />
 
