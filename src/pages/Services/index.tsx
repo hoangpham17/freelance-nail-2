@@ -30,7 +30,6 @@ const Services: React.FC = () => {
   useOnePageScroll({
     sectionSelector: 'article[data-service-section="true"]',
     enabled: filteredCategories.length > 0,
-    scrollThreshold: 0.7,
     firstSectionOffset: 100,
   });
 

@@ -3,14 +3,12 @@ import { useEffect, useRef, useCallback } from "react";
 interface UseOnePageScrollOptions {
   sectionSelector: string;
   enabled?: boolean;
-  scrollThreshold?: number; // Percentage of section scrolled before snapping to next
   firstSectionOffset?: number; // Offset to subtract when scrolling to first section (index 0)
 }
 
 export const useOnePageScroll = ({
   sectionSelector,
   enabled = true,
-  scrollThreshold = 0.8, // 80% scrolled
   firstSectionOffset = 0,
 }: UseOnePageScrollOptions) => {
   const isScrollingRef = useRef(false);
