@@ -109,9 +109,7 @@ const HeroSection: React.FC = () => {
                   gap-1.5 lg:gap-8 w-[95%] lg:w-[auto]
                   bg-white/60 py-3 pl-5 lg:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
                 `,
-                window.scrollY > 50
-                  ? "bottom-[2%] md:bottom-[4%] "
-                  : "bottom-[14%] md:bottom-[11%] "
+                window.scrollY > 50 ? "bottom-[40px]" : "bottom-[100px]"
               )}
               style={{
                 boxShadow: "0px 4px 6px 0px #0000000F",
