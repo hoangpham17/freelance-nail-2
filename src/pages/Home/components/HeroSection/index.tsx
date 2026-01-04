@@ -1,17 +1,17 @@
-import React, { useState, useRef, useMemo, useEffect } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
-import { Skeleton } from "antd";
+import { Button, Flex, Skeleton } from "antd";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import CustomDots from "@/based/components/CustomDots";
 import { useScreen } from "@/hooks/useScreen";
 import { useBannerItems } from "./useBannerItems";
 import LoadingPage from "@/components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
+import SvgIcon from "@/based/SvgIcon";
 
 const HeroSection: React.FC = () => {
   const { isDesktop, isTablet } = useScreen();
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
   const { campaignBarHeight } = useBaseOffset();
@@ -23,9 +23,9 @@ const HeroSection: React.FC = () => {
     return `calc(100dvh - ${campaignBarHeight}px)`;
   }, [campaignBarHeight]);
 
-  const handleBeforeChange = (_current: number, next: number) => {
-    setCurrentSlide(next);
-  };
+  // const handleBeforeChange = (_current: number, next: number) => {
+  //   setCurrentSlide(next);
+  // };
 
   const sliderSettings: Settings = {
     infinite: true,
@@ -39,7 +39,7 @@ const HeroSection: React.FC = () => {
     fade: true,
     speed: 500,
     cssEase: "linear",
-    beforeChange: handleBeforeChange,
+    // beforeChange: handleBeforeChange,
   };
 
   // Ensure autoplay starts after slider is initialized
@@ -57,8 +57,9 @@ const HeroSection: React.FC = () => {
     return bannerItems.map((item, index) => {
       const mobileUrl = item.mobile;
       const desktopUrl = item.desktop;
+      const tabletUrl = item.tablet;
 
-      if (!mobileUrl && !desktopUrl) {
+      if (!mobileUrl && !desktopUrl && !tabletUrl) {
         return (
           <div
             key={item.id || index}
@@ -78,7 +79,11 @@ const HeroSection: React.FC = () => {
         );
       }
 
-      const imageUrl = isDesktop || isTablet ? desktopUrl : mobileUrl;
+      const imageUrl = isDesktop
+        ? desktopUrl
+        : isTablet
+        ? tabletUrl || desktopUrl
+        : mobileUrl;
 
       return (
         <div key={item.id || index}>
@@ -87,13 +92,43 @@ const HeroSection: React.FC = () => {
             style={{
               height: bannerHeight,
               backgroundImage: imageUrl ? `url('${imageUrl}')` : "none",
-              backgroundPosition: "center center",
+              backgroundPosition: "top center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
-              width: "100%",
               display: "block",
             }}
-          />
+          >
+            <Flex
+              align="center"
+              className="absolute bottom-[8%] left-1/2 -translate-x-1/2 gap-8 bg-white/60 py-3 pl-8 pr-3 rounded-[32px] backdrop-blur-sm"
+              style={{
+                boxShadow: "0px 4px 6px 0px #0000000F",
+              }}
+            >
+              <span className="text-[#9E7B6A] ">
+                Gift card are available for purchase in store only
+              </span>
+              <Button
+                className="bg-white/60 border px-4 py-3 rounded-[32px] h-[56px]"
+                style={{
+                  borderImageSource:
+                    "linear-gradient(180deg, #FFFFFF 0%, #F6E7EE 100%)",
+                  boxShadow: "0px 4px 4px 0px #74582826",
+                }}
+              >
+                Contact
+                <div className="size-[24px] shrink-0 rounded-full bg-[#A16C0C]">
+                  <SvgIcon
+                    src={"assets/svgs/arrow-right-circle.svg"}
+                    ariaLabel="text"
+                    width={24}
+                    height={24}
+                    className="size-[24px] shrink-0 text-white"
+                  />
+                </div>
+              </Button>
+            </Flex>
+          </div>
         </div>
       );
     });
@@ -120,14 +155,14 @@ const HeroSection: React.FC = () => {
         )}
       </div>
 
-      <CustomDots
+      {/* <CustomDots
         totalSlides={bannerItems.length}
         currentIndex={currentSlide}
         onDotClick={(index) => {
           sliderRef.current?.slickGoTo(index);
         }}
         className="hidden lg:block"
-      />
+      /> */}
     </section>
   );
 };

@@ -32,14 +32,21 @@ export const useBannerItems = (): {
           record.mobile[0]?.url
             ? record.mobile[0].url
             : undefined;
+        const tabletUrl =
+          Array.isArray(record.tablet) &&
+          record.tablet.length > 0 &&
+          record.tablet[0]?.url
+            ? record.tablet[0].url
+            : undefined;
 
         return {
           id: record.id,
           desktop: desktopUrl,
           mobile: mobileUrl,
+          tablet: tabletUrl,
         };
       })
-      .filter((item) => item.desktop || item.mobile);
+      .filter((item) => item.desktop || item.mobile || item.tablet);
   }, [bannerRecords]);
 
   return { bannerItems, loading };

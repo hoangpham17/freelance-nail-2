@@ -2,6 +2,7 @@ export type BannerRecord = {
   id?: string;
   desktop?: { url: string }[];
   mobile?: { url: string }[];
+  tablet?: { url: string }[];
   index?: number;
   order?: number;
 };
@@ -30,6 +31,7 @@ export type BannerItem = {
   id?: string;
   desktop?: string;
   mobile?: string;
+  tablet?: string;
 };
 
 export type HomeGalleryItem = {
