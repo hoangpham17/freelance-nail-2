@@ -56,9 +56,14 @@ const Header: React.FC = () => {
   const [isServicesHovered, setIsServicesHovered] = useState(false);
   const [isServicesExpanded, setIsServicesExpanded] = useState(false);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const headerMainRef = useRef<HTMLDivElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   const setShowCampaignBar = useCampaignStore(
     (state) => state.setShowCampaignBar
+  );
+  const setHeaderHeightStore = useCampaignStore(
+    (state) => state.setHeaderHeight
   );
 
   const { data: promotionData } = useAirtable<PromotionData>(
@@ -203,6 +208,32 @@ const Header: React.FC = () => {
     };
   }, []);
 
+  // Measure header height using ref and store it globally
+  useEffect(() => {
+    const element = headerMainRef.current;
+    if (!element) return;
+
+    // Measure initial height
+    const height = element.offsetHeight;
+    setHeaderHeight(height); // Update local state
+    setHeaderHeightStore(height); // Update global store
+
+    // Observe changes in header height (responsive, content changes, etc.)
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      const newHeight = entry.contentRect.height;
+      setHeaderHeight(newHeight); // Update local state
+      setHeaderHeightStore(newHeight); // Update global store
+    });
+
+    resizeObserver.observe(element);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [setHeaderHeight, setHeaderHeightStore]);
+
   const { categories: serviceCategories } = useServiceCategories();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -260,6 +291,7 @@ const Header: React.FC = () => {
       {/* Main Header */}
       <Wrapper className="px-4 md:px-4 lg:px-8 overflow-hidden">
         <Flex
+          ref={headerMainRef}
           justify="space-between"
           align="center"
           gap={16}
@@ -355,6 +387,7 @@ const Header: React.FC = () => {
                           }}
                         />
                         <ServicesSubmenu
+                          headerHeight={headerHeight}
                           isVisible={isServicesHovered}
                           onMouseEnter={() => {
                             if (hoverTimeoutRef.current) {

@@ -30,11 +30,11 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
+  const headerHeight = useCampaignStore((state) => state.headerHeight);
   const isUpdatingHashRef = useRef(false);
   const currentHashRef = useRef<string>("");
 
-  const baseTop = isDesktop ? 100 : 64;
-  const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
+  const stickyTop = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
 
   useEffect(() => {
     if (categories.length && !activeCategorySlug) {
@@ -216,6 +216,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     focusOnSelect: false,
     centerMode: false,
     centerPadding: "0px",
+    className: "[&_.slick-cloned_.tab-item]:!shadow-none",
   };
 
   if (loading) {
@@ -259,7 +260,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
             {categories.map((category) => {
               const isActive = category.slug === activeCategorySlug;
               return (
-                <div key={category.id} className="px-1">
+                <div key={category.id} className="pl-3">
                   <div
                     onClick={() => handleTabClick(category.slug)}
                     className="cursor-pointer py-2 lg:py-4"
@@ -268,7 +269,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                       align="center"
                       justify="center"
                       className={clsx(
-                        "px-6 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap",
+                        "tab-item px-6 h-[32px] lg:h-[56px] rounded-2xl border border-white whitespace-nowrap font-prata",
                         isActive ? "bg-white/80" : "bg-white/30 text-[#8B4B20]",
                         responsiveFontSizeArray(18, 24)
                       )}

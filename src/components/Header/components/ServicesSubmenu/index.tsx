@@ -3,23 +3,23 @@ import { Link } from "react-router-dom";
 import { PATHS } from "@/routes/Routes";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
 import { useCampaignStore } from "@/shared/store/campaignStore";
-import { useScreen } from "@/hooks/useScreen";
 import clsx from "clsx";
 import { Wrapper } from "@/based/components/Wrapper";
 
 interface ServicesSubmenuProps {
+  headerHeight: number;
   isVisible: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
 const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
+  headerHeight,
   isVisible,
   onMouseEnter,
   onMouseLeave,
 }) => {
   const { categories: serviceCategories } = useServiceCategories();
-  const { isDesktop } = useScreen();
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
@@ -28,7 +28,6 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   const [isHovered, setIsHovered] = useState<string>("");
 
   // Calculate top position based on header height and campaign bar
-  const headerHeight = isDesktop ? 100 : 64;
   const topPosition = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
 
   const serviceNavItems = serviceCategories.map((category) => ({

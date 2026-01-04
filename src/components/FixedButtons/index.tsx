@@ -25,7 +25,7 @@ const FixedButtons: React.FC = () => {
   return (
     <>
       <Flex
-        className="fixed p-3 lg:p-0 bottom-0 lg:bottom-16 right-0 lg:right-[8%] lg:flex-col gap-2 lg:gap-4 w-full lg:w-auto z-[99] justify-center"
+        className="fixed p-3 lg:p-0 bottom-0 lg:bottom-8 xl:bottom-16 right-0 lg:right-[1%] xl:right-[8%] lg:flex-col gap-2 w-full lg:w-auto z-[99] justify-center"
         align="center"
       >
         <div
@@ -53,7 +53,8 @@ const FixedButtons: React.FC = () => {
         </a>
         <a
           className={clsx(
-            "text-2xl lg:text-[40px] text-[#9E7B6A] z-[1] hover:text-[#9E7B6A]/80 cursor-pointer"
+            "text-[#9E7B6A] z-[1] hover:text-[#9E7B6A]/80 cursor-pointer",
+            responsiveFontSizeArray(24, 60)
           )}
           onClick={handlePhoneClick}
           style={{

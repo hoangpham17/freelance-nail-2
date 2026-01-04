@@ -20,6 +20,9 @@ const Services: React.FC = () => {
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
+  const headerHeight = useCampaignStore(
+    (state) => state.headerHeight
+  );
   const previousHashRef = useRef<string>("");
   const hasScrolledRef = useRef(false);
   const { mainTopSpacing } = useBaseOffset();
@@ -31,8 +34,7 @@ const Services: React.FC = () => {
       const element = document.getElementById(hash);
       if (element) {
         // Calculate offset for sticky header (CategoryTabs)
-        const baseTop = isDesktop ? 100 : 64;
-        const stickyTop = baseTop + (showCampaignBar ? campaignBarHeight : 0);
+        const stickyTop = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
         const categoryTabsHeight = isDesktop ? 56 : 32; // Height of CategoryTabs
         const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
 

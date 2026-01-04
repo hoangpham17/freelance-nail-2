@@ -32,11 +32,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   const campaignBarHeight = useCampaignStore(
     (state) => state.campaignBarHeight
   );
+  const headerHeight = useCampaignStore(
+    (state) => state.headerHeight
+  );
 
-  const baseTop = isDesktop ? 100 : 64;
   const spacing = isDesktop ? 16 : 12;
   const fixedTop =
-    baseTop + (showCampaignBar ? campaignBarHeight : 0) + spacing;
+    headerHeight + (showCampaignBar ? campaignBarHeight : 0) + spacing;
 
   const searchIconSize = useMemo(() => (isDesktop ? 35 : 12), [isDesktop]);
 
