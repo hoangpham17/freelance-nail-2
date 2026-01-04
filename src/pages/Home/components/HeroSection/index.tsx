@@ -18,7 +18,6 @@ const HeroSection: React.FC = () => {
 
   const { bannerItems, loading: isLoadingBanners } = useBannerItems();
 
-  // Calculate height: 100dvh - campaignBarHeight
   const bannerHeight = useMemo(() => {
     return `calc(100dvh - ${campaignBarHeight}px)`;
   }, [campaignBarHeight]);
@@ -100,7 +99,10 @@ const HeroSection: React.FC = () => {
           >
             <Flex
               align="center"
-              className="absolute bottom-[8%] left-1/2 -translate-x-1/2 gap-8 bg-white/60 py-3 pl-8 pr-3 rounded-[32px] backdrop-blur-sm"
+              className={`absolute bottom-[15%] md:bottom-[8%] left-1/2 -translate-x-1/2 
+                  gap-2 md:gap-8 w-[90%] md:w-[auto]
+                  bg-white/60 py-3 pl-5 md:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
+                `}
               style={{
                 boxShadow: "0px 4px 6px 0px #0000000F",
               }}
