@@ -7,25 +7,32 @@ import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
-import { useCampaignStore } from "@/shared/store/campaignStore";
 import LoadingPage from "../../components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
+import { useOnePageScroll } from "@/hooks/useOnePageScroll";
 
 const Services: React.FC = () => {
   const { isDesktop } = useScreen();
   const location = useLocation();
   const { categories: serviceCategories, loading: isLoadingCategories } =
     useServiceCategories();
-  const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
-  const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight
-  );
-  const headerHeight = useCampaignStore(
-    (state) => state.headerHeight
-  );
   const previousHashRef = useRef<string>("");
-  const hasScrolledRef = useRef(false);
   const { mainTopSpacing } = useBaseOffset();
+
+  // Enable one-page scroll for service sections
+  const filteredCategories = serviceCategories
+    .map((category, originalIndex) => ({
+      category,
+      originalIndex: originalIndex + 1,
+    }))
+    .filter(({ category }) => category.services.length > 0);
+
+  useOnePageScroll({
+    sectionSelector: 'article[data-service-section="true"]',
+    enabled: filteredCategories.length > 0,
+    scrollThreshold: 0.7,
+    firstSectionOffset: 100,
+  });
 
   const scrollToHash = (hash: string, delay: number = 150) => {
     if (!hash) return;
@@ -33,13 +40,10 @@ const Services: React.FC = () => {
     setTimeout(() => {
       const element = document.getElementById(hash);
       if (element) {
-        // Calculate offset for sticky header (CategoryTabs)
-        const stickyTop = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
-        const categoryTabsHeight = isDesktop ? 56 : 32; // Height of CategoryTabs
-        const offset = stickyTop + categoryTabsHeight + 20; // Add extra padding
-
+        const categoryTabsHeight = isDesktop ? 90 : 50;
         const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        const offsetPosition =
+          elementPosition + window.pageYOffset - categoryTabsHeight;
 
         // Check if element is already at the correct position (within 100px tolerance)
         const currentScrollY = window.pageYOffset;
@@ -52,14 +56,15 @@ const Services: React.FC = () => {
             top: offsetPosition,
             behavior: "smooth",
           });
-          hasScrolledRef.current = true;
         }
       }
     }, delay);
   };
 
-  // Handle hash change (from navigation or URL)
+  // Handle hash change (from navigation or URL) and initial load
   useEffect(() => {
+    if (isLoadingCategories || serviceCategories.length === 0) return;
+
     const currentHash = location.hash.replace("#", "");
 
     // Skip if hash hasn't changed
@@ -67,36 +72,21 @@ const Services: React.FC = () => {
       return;
     }
 
+    // Check if this is initial load (previous hash was empty)
+    const isInitialLoad = previousHashRef.current === "";
+
     // Update previous hash
     previousHashRef.current = currentHash;
-    hasScrolledRef.current = false;
 
     if (currentHash) {
-      // Wait for categories to load and DOM to be ready
-      if (!isLoadingCategories && serviceCategories.length > 0) {
-        scrollToHash(currentHash, 300);
-      }
+      // Use longer delay for initial load, shorter for hash changes
+      scrollToHash(currentHash, isInitialLoad ? 500 : 300);
     } else {
       // If hash is cleared, reset the ref
       previousHashRef.current = "";
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.hash, isLoadingCategories, serviceCategories.length]);
-
-  // Handle initial load with hash (when navigating from home page)
-  useEffect(() => {
-    const currentHash = location.hash.replace("#", "");
-    if (
-      currentHash &&
-      !isLoadingCategories &&
-      serviceCategories.length > 0 &&
-      !hasScrolledRef.current
-    ) {
-      scrollToHash(currentHash, 500);
-      previousHashRef.current = currentHash;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingCategories, serviceCategories.length, location.hash]);
 
   return (
     <main
@@ -139,20 +129,19 @@ const Services: React.FC = () => {
       </section>
 
       {/* Service Categories */}
-      <section className="w-full">
-        {serviceCategories
-          .map((category, originalIndex) => ({
-            category,
-            originalIndex: originalIndex + 1,
-          }))
-          .filter(({ category }) => category.services.length > 0)
-          .map(({ category, originalIndex }) => (
-            <ServiceCategorySection
-              key={category.id}
-              category={category}
-              index={originalIndex}
-            />
-          ))}
+      <section
+        className="w-full"
+        style={{
+          scrollSnapType: "y mandatory",
+        }}
+      >
+        {filteredCategories.map(({ category, originalIndex }) => (
+          <ServiceCategorySection
+            key={category.id}
+            category={category}
+            index={originalIndex}
+          />
+        ))}
       </section>
     </main>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { ServiceCategory } from "../../types";
 import ServiceCard from "../ServiceCard";
 import { Wrapper } from "@/based/components/Wrapper";
@@ -6,6 +6,7 @@ import { Flex } from "antd";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
+import { useCampaignStore } from "@/shared/store/campaignStore";
 
 interface ServiceCategorySectionProps {
   category: ServiceCategory;
@@ -18,24 +19,47 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
 }) => {
   const { isDesktop } = useScreen();
   const formattedIndex = String(index).padStart(2, "0");
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerHeight = useCampaignStore((state) => state.headerHeight);
+
+  // Calculate min-height = 100dvh - headerHeight
+  useEffect(() => {
+    const updateMinHeight = () => {
+      if (!sectionRef.current) return;
+
+      sectionRef.current.style.minHeight = `${window.innerHeight}px`;
+    };
+
+    updateMinHeight();
+    window.addEventListener("resize", updateMinHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateMinHeight);
+    };
+  }, [headerHeight]);
 
   return (
     <article
+      ref={sectionRef}
       id={category.slug}
+      data-service-section="true"
       className={clsx(
-        "relative w-full overflow-hidden pb-[16px] lg:pb-[38px]",
+        "relative w-full overflow-hidden pb-[150px] md:pb-[200px]",
         category.sectionBackgroundImage
           ? "bg-center bg-no-repeat bg-cover"
           : "bg-white"
       )}
-      style={
-        category.sectionBackgroundImage
+      style={{
+        paddingTop: index === 1 ? 0 : headerHeight + (isDesktop ? 90 : 50),
+        scrollSnapAlign: "start",
+        scrollSnapStop: "always",
+        ...(category.sectionBackgroundImage
           ? {
               backgroundImage: `url(${category.sectionBackgroundImage})`,
               backgroundAttachment: "fixed",
             }
-          : undefined
-      }
+          : {}),
+      }}
     >
       <Wrapper className="relative z-10">
         <div>
@@ -45,8 +69,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
               "lg:min-h-[236px] mb-4 md:mb-8 w-[calc(100%_+_32px)] -translate-x-[16px] lg:translate-x-0 lg:w-full",
               category.titleBackgroundImage
                 ? "bg-center bg-no-repeat bg-cover"
-                : "bg-white",
-              index === 1 ? "mt-0" : "mt-[30px] lg:mt-[50px]"
+                : "bg-white"
             )}
             style={
               category.titleBackgroundImage
