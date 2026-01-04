@@ -8,6 +8,8 @@ import { useBannerItems } from "./useBannerItems";
 import LoadingPage from "@/components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import SvgIcon from "@/based/SvgIcon";
+import clsx from "clsx";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 const HeroSection: React.FC = () => {
   const { isDesktop, isTablet } = useScreen();
@@ -107,18 +109,28 @@ const HeroSection: React.FC = () => {
                 boxShadow: "0px 4px 6px 0px #0000000F",
               }}
             >
-              <span className="text-[#9E7B6A] ">
+              <span
+                className={clsx(
+                  "text-[#9E7B6A]",
+                  responsiveFontSizeArray(16, 20)
+                )}
+              >
                 Gift card are available for purchase in store only
               </span>
               <Button
-                className="bg-white/60 border px-4 py-3 rounded-[32px] h-[56px]"
+                className="bg-white/60 border px-4 py-3 rounded-[32px] h-[56px] hover:!text-[#A16C0C]"
                 style={{
                   borderImageSource:
                     "linear-gradient(180deg, #FFFFFF 0%, #F6E7EE 100%)",
                   boxShadow: "0px 4px 4px 0px #74582826",
                 }}
+                onClick={() => {
+                  window.location.href = "/contact-us";
+                }}
               >
-                Contact
+                <span className={clsx(responsiveFontSizeArray(16, 20))}>
+                  Contact
+                </span>
                 <div className="size-[24px] shrink-0 rounded-full bg-[#A16C0C]">
                   <SvgIcon
                     src={"assets/svgs/arrow-right-circle.svg"}
