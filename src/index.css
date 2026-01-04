@@ -45,6 +45,10 @@ body {
   overflow-x: hidden;
 }
 
+.freeze {
+  overflow: hidden;
+}
+
 .popup-campaign__text {
   position: absolute;
   left: 1.5rem;

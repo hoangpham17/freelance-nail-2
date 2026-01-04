@@ -6,17 +6,19 @@ import "slick-carousel/slick/slick-theme.css";
 import { useScreen } from "@/hooks/useScreen";
 import { useBannerItems } from "./useBannerItems";
 import LoadingPage from "@/components/LoadingPage";
-import { useBaseOffset } from "@/hooks/useBaseOffset";
 import SvgIcon from "@/based/SvgIcon";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { useCampaignStore } from "@/shared/store/campaignStore";
 
 const HeroSection: React.FC = () => {
   const { isDesktop, isTablet } = useScreen();
   // const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
-  const { campaignBarHeight } = useBaseOffset();
+  const campaignBarHeight = useCampaignStore(
+    (state) => state.campaignBarHeight
+  );
 
   const { bannerItems, loading: isLoadingBanners } = useBannerItems();
 
@@ -102,10 +104,15 @@ const HeroSection: React.FC = () => {
             <Flex
               justify="space-between"
               align="center"
-              className={`absolute bottom-[14%] md:bottom-[11%] lg:bottom-[8%] left-1/2 -translate-x-1/2 
+              className={clsx(
+                `absolute lg:bottom-[8%] left-1/2 -translate-x-1/2 
                   gap-1.5 lg:gap-8 w-[95%] lg:w-[auto]
                   bg-white/60 py-3 pl-5 lg:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
-                `}
+                `,
+                window.scrollY > 50
+                  ? "bottom-[2%] md:bottom-[4%] "
+                  : "bottom-[14%] md:bottom-[11%] "
+              )}
               style={{
                 boxShadow: "0px 4px 6px 0px #0000000F",
               }}
