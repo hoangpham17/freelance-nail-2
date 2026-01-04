@@ -5,6 +5,7 @@ export type BannerRecord = {
   tablet?: { url: string }[];
   index?: number;
   order?: number;
+  note?: string;
 };
 
 export type GalleryRecord = {
@@ -32,6 +33,7 @@ export type BannerItem = {
   desktop?: string;
   mobile?: string;
   tablet?: string;
+  note?: string;
 };
 
 export type HomeGalleryItem = {

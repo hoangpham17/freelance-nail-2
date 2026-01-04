@@ -44,6 +44,7 @@ export const useBannerItems = (): {
           desktop: desktopUrl,
           mobile: mobileUrl,
           tablet: tabletUrl,
+          note: record.note,
         };
       })
       .filter((item) => item.desktop || item.mobile || item.tablet);

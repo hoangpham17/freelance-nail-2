@@ -100,10 +100,11 @@ const HeroSection: React.FC = () => {
             }}
           >
             <Flex
+              justify="space-between"
               align="center"
-              className={`absolute bottom-[15%] md:bottom-[8%] left-1/2 -translate-x-1/2 
-                  gap-2 md:gap-8 w-[90%] md:w-[auto]
-                  bg-white/60 py-3 pl-5 md:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
+              className={`absolute bottom-[14%] md:bottom-[11%] lg:bottom-[8%] left-1/2 -translate-x-1/2 
+                  gap-1.5 lg:gap-8 w-[95%] lg:w-[auto]
+                  bg-white/60 py-3 pl-5 lg:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
                 `}
               style={{
                 boxShadow: "0px 4px 6px 0px #0000000F",
@@ -115,7 +116,8 @@ const HeroSection: React.FC = () => {
                   responsiveFontSizeArray(16, 20)
                 )}
               >
-                Gift card are available for purchase in store only
+                {item.note ||
+                  "Gift card are available for purchase in store only"}
               </span>
               <Button
                 className="bg-white/60 border px-4 py-3 rounded-[32px] h-[56px] hover:!text-[#A16C0C]"

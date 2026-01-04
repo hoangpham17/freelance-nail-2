@@ -25,16 +25,16 @@ const FixedButtons: React.FC = () => {
   return (
     <>
       <Flex
-        className="fixed p-3 md:p-0 bottom-0 md:bottom-16 right-0 md:right-[8%] md:flex-col gap-2 md:gap-4 w-full md:w-auto z-[99] justify-center"
+        className="fixed p-3 lg:p-0 bottom-0 lg:bottom-16 right-0 lg:right-[8%] lg:flex-col gap-2 lg:gap-4 w-full lg:w-auto z-[99] justify-center"
         align="center"
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-white/40 md:hidden block"
+          className="absolute top-0 left-0 w-full h-full bg-white/40 lg:hidden block"
           style={{ backdropFilter: "blur(10px)" }}
         ></div>
         <a
           className={clsx(
-            "z-[1] md:px-7 md:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl text-center font-prata md:rotate-[-2deg] border border-[#9E7B6A]",
+            "z-[1] lg:px-7 lg:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl text-center font-prata lg:rotate-[-2deg] border border-[#9E7B6A]",
             responsiveFontSizeArray(24, 47)
           )}
           title="BOOKING"
@@ -53,7 +53,7 @@ const FixedButtons: React.FC = () => {
         </a>
         <a
           className={clsx(
-            "text-2xl md:text-[40px] text-[#9E7B6A] z-[1] hover:text-[#9E7B6A]/80 cursor-pointer"
+            "text-2xl lg:text-[40px] text-[#9E7B6A] z-[1] hover:text-[#9E7B6A]/80 cursor-pointer"
           )}
           onClick={handlePhoneClick}
           style={{
