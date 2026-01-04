@@ -263,7 +263,7 @@ const Header: React.FC = () => {
           justify="space-between"
           align="center"
           gap={16}
-          className="h-[64px] lg:h-[100px]"
+          className="h-[64px] xl:h-[100px] lg:h-[80px]"
         >
           <BurgerMenu toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
           <Link
@@ -327,7 +327,7 @@ const Header: React.FC = () => {
                       to={item.path}
                       className={clsx(
                         "uppercase transition-colors text-center h-full flex items-center",
-                        responsiveFontSizeArray(14, 16),
+                        responsiveFontSizeArray(14, 16, { lg: 12 }),
                         isActive
                           ? "!text-[#9E7B6A]"
                           : "text-[#0F172A] hover:text-[#9E7B6A]"

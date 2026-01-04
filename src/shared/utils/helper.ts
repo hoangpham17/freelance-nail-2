@@ -79,23 +79,67 @@ export const responsiveFontSize = (
 };
 
 /**
+ * Options for overriding specific breakpoint font sizes
+ */
+export type ResponsiveFontSizeOptions = {
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+  "2xl"?: number;
+};
+
+/**
  * Calculate responsive font size and return as array of classes
  * Perfect for use with clsx
  *
  * @param minSize - Font size at mobile (390px)
  * @param maxSize - Font size at desktop (1920px)
+ * @param options - Optional object to override specific breakpoint sizes. If a breakpoint is provided, it will not be generated automatically.
  * @returns Array of class strings
  *
  * @example
  * import clsx from 'clsx';
  * className={clsx(...responsiveFontSizeArray(14, 20), "other-classes")}
+ *
+ * @example
+ * // Override lg breakpoint - lg will not be auto-generated
+ * className={clsx(...responsiveFontSizeArray(14, 20, { lg: 26 }))}
+ * // Returns: ["text-[14px]", "sm:text-[...]", "md:text-[...]", "lg:text-[26px]", "xl:text-[...]", "2xl:text-[20px]"]
  */
 export const responsiveFontSizeArray = (
   minSize: number,
-  maxSize: number
+  maxSize: number,
+  options?: ResponsiveFontSizeOptions
 ): string[] => {
   const classes = responsiveFontSize(minSize, maxSize);
-  return Object.values(classes);
+  const result: string[] = [];
+
+  // Always use base class (not a breakpoint)
+  result.push(classes.base);
+
+  // Process breakpoints: sm, md, lg, xl, 2xl
+  const breakpoints: Array<keyof ResponsiveFontSizeOptions> = [
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl",
+  ];
+
+  for (const breakpoint of breakpoints) {
+    // If breakpoint is provided in options, use it and skip auto-generated class
+    if (options && options[breakpoint] !== undefined) {
+      result.push(
+        `${breakpoint}:text-[${roundFontSize(options[breakpoint]!)}px]`
+      );
+    } else {
+      // Use auto-generated class
+      result.push(classes[breakpoint]);
+    }
+  }
+
+  return result;
 };
 
 /**
