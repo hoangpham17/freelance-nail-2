@@ -105,11 +105,11 @@ const HeroSection: React.FC = () => {
               justify="space-between"
               align="center"
               className={clsx(
-                `absolute lg:bottom-[8%] left-1/2 -translate-x-1/2 
-                  gap-1.5 lg:gap-8 w-[95%] lg:w-[auto]
-                  bg-white/60 py-3 pl-5 lg:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
+                `absolute lg:bottom-5 left-1/2 -translate-x-1/2 
+                  gap-1.5 lg:gap-8 w-[95%] lg:w-full max-w-[1038px]
+                  bg-white/60 py-2 pl-5 lg:pl-8 pr-3 rounded-[32px] backdrop-blur-sm
                 `,
-                window.scrollY > 50 ? "bottom-[40px]" : "bottom-[100px]"
+                window.scrollY > 50 ? "bottom-5" : "bottom-[100px]"
               )}
               style={{
                 boxShadow: "0px 4px 6px 0px #0000000F",
@@ -117,34 +117,39 @@ const HeroSection: React.FC = () => {
             >
               <span
                 className={clsx(
-                  "text-[#9E7B6A]",
-                  responsiveFontSizeArray(16, 20)
+                  "text-[#9E7B6A] font-prata",
+                  responsiveFontSizeArray(20, 36)
                 )}
               >
                 {item.note ||
                   "Gift card are available for purchase in store only"}
               </span>
               <Button
-                className="bg-white/60 border px-4 py-3 rounded-[32px] h-[56px] hover:!text-[#A16C0C]"
+                className="bg-transparent lg:bg-white/60 lg:border px-4 py-3 rounded-[32px] h-[56px] hover:!text-[#A16C0C]"
                 style={{
                   borderImageSource:
                     "linear-gradient(180deg, #FFFFFF 0%, #F6E7EE 100%)",
-                  boxShadow: "0px 4px 4px 0px #74582826",
+                  boxShadow: isDesktop ? "0px 4px 4px 0px #74582826" : "none",
                 }}
                 onClick={() => {
                   window.location.href = "/contact-us";
                 }}
               >
-                <span className={clsx(responsiveFontSizeArray(16, 20))}>
+                <span
+                  className={clsx(
+                    "hidden lg:block",
+                    responsiveFontSizeArray(16, 20)
+                  )}
+                >
                   Contact
                 </span>
-                <div className="size-[24px] shrink-0 rounded-full bg-[#A16C0C]">
+                <div className="lg:size-[24px] size-[32px] shrink-0 rounded-full bg-[#A16C0C]">
                   <SvgIcon
                     src={"assets/svgs/arrow-right-circle.svg"}
                     ariaLabel="text"
-                    width={24}
-                    height={24}
-                    className="size-[24px] shrink-0 text-white"
+                    width={isDesktop ? 24 : 32}
+                    height={isDesktop ? 24 : 32}
+                    className="lg:size-[24px] size-[32px] shrink-0 text-white"
                   />
                 </div>
               </Button>

@@ -34,9 +34,12 @@ const FixedButtons: React.FC = () => {
         ></div>
         <a
           className={clsx(
-            "z-[1] lg:px-7 lg:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl text-center font-prata lg:rotate-[-2deg] border border-[#9E7B6A] min-[375px]:text-[24px]",
+            "z-[1] lg:px-7 lg:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-[32px] text-center font-prata lg:rotate-[-2deg] border-4 border-[#A16C0C99] min-[375px]:text-[24px]",
             responsiveFontSizeArray(20, 47)
           )}
+          style={{
+            boxShadow: "0px 4px 16px 0px #D3C69C00",
+          }}
           title="BOOKING"
           href="https://booking.spacepos.net/?id=jzOR8l!BpuM="
           target="_blank"
