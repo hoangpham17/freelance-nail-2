@@ -34,7 +34,7 @@ const FixedButtons: React.FC = () => {
         ></div>
         <a
           className={clsx(
-            "z-[1] lg:px-7 lg:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-[32px] text-center font-prata lg:rotate-[-2deg] border-4 border-[#A16C0C99] min-[375px]:text-[24px]",
+            "z-[1] lg:px-7 lg:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl lg:rounded-[32px] text-center font-prata lg:rotate-[-2deg] border lg:border-4 border-[#A16C0C99] min-[375px]:text-[22px]",
             responsiveFontSizeArray(20, 47)
           )}
           style={{
