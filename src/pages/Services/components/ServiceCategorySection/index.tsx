@@ -44,7 +44,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
       id={category.slug}
       data-service-section="true"
       className={clsx(
-        "relative w-full overflow-hidden pb-[150px] md:pb-[200px]",
+        "relative w-full overflow-hidden pb-[150px] md:pb-[180px]",
         category.sectionBackgroundImage
           ? "bg-center bg-no-repeat bg-cover"
           : "bg-white"
