@@ -29,7 +29,7 @@ export const aboutUsData: AboutUsData = {
       title: "OUR",
       description:
         "Our highly skilled technicians have undergone advanced training and consistently stay up-to-date with the latest trends and techniques in nail care. Whether you are seeking a simple, classic manicure or an intricate nail design, our technicians will skillfully bring your vision to life.",
-      image: "/assets/images/About-Us/block-1.png",
+      image: "/assets/images/About-Us/block-2.png",
       imageAlt: "Nail care",
       position: "right",
     },
