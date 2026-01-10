@@ -41,6 +41,10 @@ export const useInfiniteGallery = <T = Record<string, unknown>>(
   pageSize: number = 21,
   searchQuery?: string
 ): UseInfiniteGalleryResult<T> => {
+  // Normalize values for consistent queryKey
+  const normalizedCategory = category && category !== "All" ? category : null;
+  const normalizedSearchQuery = searchQuery?.trim() || null;
+
   const {
     data,
     isLoading,
@@ -53,8 +57,8 @@ export const useInfiniteGallery = <T = Record<string, unknown>>(
     queryKey: [
       "infinite-gallery",
       AIRTABLE_ENDPOINTS.gallery,
-      category,
-      searchQuery,
+      normalizedCategory,
+      normalizedSearchQuery,
     ],
     queryFn: async ({ pageParam }: { pageParam: string | undefined }) => {
       const options: AirtableQueryOptions = {
@@ -63,22 +67,21 @@ export const useInfiniteGallery = <T = Record<string, unknown>>(
 
       // Only sort by order if there's no search query
       // When searching, we want to show results in relevance order (no sorting)
-      const hasSearchQuery = searchQuery && searchQuery.trim();
-      if (!hasSearchQuery) {
+      const hasSearchQuery =
+        normalizedSearchQuery && normalizedSearchQuery.trim();
         options.sort = [{ field: "order", direction: "asc" }];
-      }
 
       // Build filter formulas
       const filters: string[] = [];
 
-      // Category filter
-      if (category && category !== "All") {
-        filters.push(`{category} = "${category}"`);
+      // Category filter - always include if category is selected
+      if (normalizedCategory) {
+        filters.push(`{category} = "${normalizedCategory}"`);
       }
 
-      // Search filter
+      // Search filter - always include if search query exists
       if (hasSearchQuery) {
-        filters.push(buildSearchFormula(searchQuery.trim()));
+        filters.push(buildSearchFormula(normalizedSearchQuery.trim()));
       }
 
       // Combine filters if any
