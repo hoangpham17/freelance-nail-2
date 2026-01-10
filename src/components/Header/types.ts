@@ -20,6 +20,5 @@ export type PromotionData = {
   end_date?: string; // Date string in format "YYYY-MM-DD"
   title?: string;
   image?: AirtableAttachment[];
-  priority?: number;
   index?: number;
 };

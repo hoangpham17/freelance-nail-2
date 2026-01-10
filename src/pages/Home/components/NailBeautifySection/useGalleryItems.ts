@@ -17,8 +17,8 @@ export const useGalleryItems = (): GalleryItem[] => {
     return galleryRecords
       .filter((record) => {
         // Filter out records without valid URLs
-        if (Array.isArray(record.url) && record.url.length > 0) {
-          const firstUrl = record.url[0];
+        if (Array.isArray(record.image) && record.image.length > 0) {
+          const firstUrl = record.image[0];
           return (
             firstUrl &&
             (typeof firstUrl === "string" ||
@@ -29,8 +29,8 @@ export const useGalleryItems = (): GalleryItem[] => {
       })
       .map((record) => {
         let imageUrl: string | undefined = undefined;
-        if (Array.isArray(record.url) && record.url.length > 0) {
-          const firstUrl = record.url[0];
+        if (Array.isArray(record.image) && record.image.length > 0) {
+          const firstUrl = record.image[0];
           if (typeof firstUrl === "object" && firstUrl.thumbnails?.full?.url) {
             imageUrl = firstUrl.thumbnails.full.url;
           } else if (typeof firstUrl === "string") {

@@ -20,6 +20,7 @@ export type ServiceItem = {
 
 export type ServiceCategory = {
   id: string;
+  order: number;
   title: string;
   slug: string;
   description: string;
@@ -38,4 +39,5 @@ export type ServiceCategoryRecord = {
   description?: string;
   index?: number;
   icon?: string | AirtableAttachment[];
+  order?: number;
 };

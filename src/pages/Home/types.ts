@@ -10,7 +10,7 @@ export type BannerRecord = {
 
 export type GalleryRecord = {
   id?: string;
-  url?:
+  image?:
     | string
     | Array<{
         id?: string;

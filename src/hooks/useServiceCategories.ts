@@ -33,9 +33,10 @@ export const useServiceCategories = (): {
     }
 
     return categoriesData
-      .sort((a, b) => (a?.index ?? 0) - (b?.index ?? 0))
+      .sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0))
       .map((category) => ({
         id: category.id || "",
+        order: category.order || 0,
         title: category.name || "",
         slug: category.slug || "",
         description: category.description || "",
