@@ -49,7 +49,7 @@ const WelcomeSection: React.FC = () => {
             return (
               <Link key={category.id} to={to}>
                 <Flex
-                  className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full gap-1 lg:gap-4 hover:translate-y-[-5px] transition-all duration-300"
+                  className="w-32 h-32 lg:w-40 lg:h-40 bg-white/80 rounded-full gap-1 lg:gap-4 hover:translate-y-[-5px] hover:lg:translate-y-[-10px] transition-all duration-300"
                   align="center"
                   justify="center"
                   vertical
