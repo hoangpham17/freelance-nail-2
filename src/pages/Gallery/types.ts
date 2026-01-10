@@ -17,6 +17,7 @@ export type GalleryRecord = {
   id?: string;
   image?: AirtableImage[];
   description?: string;
+  keyword?: string;
   category?: string;
   index?: number;
   order?: number;

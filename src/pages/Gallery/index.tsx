@@ -8,6 +8,7 @@ import GalleryPopup from "./components/GalleryPopup";
 import LoadingPage from "../../components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import { useScreen } from "@/hooks/useScreen";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const FILTERS = [
   { id: "All", label: "All" },
@@ -25,7 +26,10 @@ const Gallery: React.FC = () => {
   const [popupItems, setPopupItems] = useState<GalleryItem[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // Use infinite scroll hook with category filter
+  // Debounce search query to avoid searching on every keystroke
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  // Use infinite scroll hook with category filter and search query
   const {
     data: galleryData,
     loading,
@@ -35,7 +39,8 @@ const Gallery: React.FC = () => {
     isFetchingNextPage,
   } = useInfiniteGallery<GalleryRecord>(
     activeFilter !== "All" ? activeFilter : undefined,
-    21
+    21,
+    debouncedSearchQuery.trim() || undefined
   );
 
   const galleryItems: GalleryItem[] = useMemo(() => {
@@ -76,24 +81,9 @@ const Gallery: React.FC = () => {
     return itemsWithImages;
   }, [galleryData]);
 
-  // Only filter by search query (category filtering is done via API)
-  const filteredItems = useMemo(() => {
-    let items = galleryItems;
-
-    // Filter by search query (description or category)
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      items = items.filter((item) => {
-        const descriptionMatch = item.description
-          ?.toLowerCase()
-          .includes(query);
-        const categoryMatch = item.category?.toLowerCase().includes(query);
-        return descriptionMatch || categoryMatch;
-      });
-    }
-
-    return items;
-  }, [searchQuery, galleryItems]);
+  // Search and category filtering are now done via API
+  // No need for client-side filtering anymore
+  const filteredItems = galleryItems;
 
   const openPopup = (index: number) => {
     setPopupItems(filteredItems);
@@ -105,10 +95,10 @@ const Gallery: React.FC = () => {
     setIsPopupOpen(false);
   };
 
-  // Scroll to top when filter changes
+  // Scroll to top when filter or debounced search query changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [activeFilter]);
+  }, [activeFilter, debouncedSearchQuery]);
 
   return (
     <main

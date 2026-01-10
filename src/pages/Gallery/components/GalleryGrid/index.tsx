@@ -24,6 +24,14 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const { firstThreeItems, remainingItems } = useMemo(() => {
+    // If there are less than 3 items, don't show "First 3 items" section
+    // Show all items in remainingItems instead
+    if (items.length < 3) {
+      return {
+        firstThreeItems: [],
+        remainingItems: items,
+      };
+    }
     const firstThree = items.slice(0, 3);
     const remaining = items.slice(3);
     return {
@@ -83,7 +91,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   return (
     <div className="w-full">
       <Wrapper>
-        {/* First 3 items */}
+        {/* First 3 items - only show if there are at least 3 items */}
         {firstThreeItems.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
             {firstThreeItems.map((item, index) => (
@@ -130,9 +138,10 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
         )}
 
         {/* Infinite scroll trigger and loading indicator */}
-        {true && (
+        {/* Only show skeleton when fetching next page or when there's a next page to load */}
+        {(hasNextPage || isFetchingNextPage) && (
           <div ref={observerTarget} className="w-full mb-4 md:mb-8">
-            {true && (
+            {isFetchingNextPage && (
               <div className="flex justify-center items-center">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full">
                   {[...Array(3)].map((_, index) => (

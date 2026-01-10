@@ -15,9 +15,31 @@ interface UseInfiniteGalleryResult<T> {
   refetch: () => Promise<void>;
 }
 
+/**
+ * Builds Airtable filter formula for search query
+ * Searches in description and keyword fields
+ * Uses FIND with LOWER for case-insensitive search that handles empty fields better
+ */
+const buildSearchFormula = (searchQuery: string): string => {
+  const escapedQuery = searchQuery.replace(/'/g, "''");
+
+  return `OR(
+    AND({description}, FIND(LOWER("${escapedQuery}"), LOWER({description})) > 0),
+    AND({keyword}, FIND(LOWER("${escapedQuery}"), LOWER({keyword})) > 0)
+  )`;
+};
+
+const combineFilters = (...filters: string[]): string => {
+  const validFilters = filters.filter(Boolean);
+  if (validFilters.length === 0) return "";
+  if (validFilters.length === 1) return validFilters[0];
+  return `AND(${validFilters.join(", ")})`;
+};
+
 export const useInfiniteGallery = <T = Record<string, unknown>>(
   category?: string,
-  pageSize: number = 21
+  pageSize: number = 21,
+  searchQuery?: string
 ): UseInfiniteGalleryResult<T> => {
   const {
     data,
@@ -28,15 +50,40 @@ export const useInfiniteGallery = <T = Record<string, unknown>>(
     isFetchingNextPage,
     refetch: queryRefetch,
   } = useInfiniteQuery({
-    queryKey: ["infinite-gallery", AIRTABLE_ENDPOINTS.gallery, category],
+    queryKey: [
+      "infinite-gallery",
+      AIRTABLE_ENDPOINTS.gallery,
+      category,
+      searchQuery,
+    ],
     queryFn: async ({ pageParam }: { pageParam: string | undefined }) => {
       const options: AirtableQueryOptions = {
         pageSize,
-        sort: [{ field: "order", direction: "asc" }],
       };
 
+      // Only sort by order if there's no search query
+      // When searching, we want to show results in relevance order (no sorting)
+      const hasSearchQuery = searchQuery && searchQuery.trim();
+      if (!hasSearchQuery) {
+        options.sort = [{ field: "order", direction: "asc" }];
+      }
+
+      // Build filter formulas
+      const filters: string[] = [];
+
+      // Category filter
       if (category && category !== "All") {
-        options.filterByFormula = `{category} = "${category}"`;
+        filters.push(`{category} = "${category}"`);
+      }
+
+      // Search filter
+      if (hasSearchQuery) {
+        filters.push(buildSearchFormula(searchQuery.trim()));
+      }
+
+      // Combine filters if any
+      if (filters.length > 0) {
+        options.filterByFormula = combineFilters(...filters);
       }
 
       if (pageParam) {
