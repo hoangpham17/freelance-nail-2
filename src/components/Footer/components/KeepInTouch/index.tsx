@@ -40,13 +40,13 @@ const KeepInTouch: React.FC = () => {
           </Flex>
         </a>
         <a
-          href="mailto:naillounge@mail.com"
+          href="mailto:contact@theveiranailspa.com"
           className={clsx(
             "transition-colors hover:opacity-80 !text-[#494747] text-[20px] font-light",
             responsiveFontSizeArray(12, 20)
           )}
         >
-          naillounge@mail.com
+          contact@theveiranailspa.com
         </a>
         <div className="flex gap-3 md:gap-4 mt-2">
           {socialLinks.map((social) => (

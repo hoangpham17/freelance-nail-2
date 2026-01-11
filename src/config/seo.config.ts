@@ -16,7 +16,7 @@ export const SEO_CONFIG = {
   business: {
     name: "THE VEIRA NAIL LOUNGE & SPA",
     phone: "+1-608-720-1011",
-    email: "naillounge@mail.com",
+    email: "contact@theveiranailspa.com",
     address: {
       street: "795 University Ave",
       city: "Madison",
