@@ -2,10 +2,10 @@ import React from "react";
 import { ServiceItem, AirtableAttachment } from "../../types";
 import {
   responsiveFontSizeArray,
-  cleanDescription,
 } from "@/shared/utils/helper";
 import clsx from "clsx";
 import { Flex } from "antd";
+import { parseAirtableRichtext } from "@/shared/utils/richtext";
 
 const resolveImage = (value?: string | AirtableAttachment[]) => {
   if (typeof value === "string") return value;
@@ -63,7 +63,7 @@ const ServiceCard: React.FC<ServiceItem> = ({
                   responsiveFontSizeArray(16, 20)
                 )}
                 dangerouslySetInnerHTML={{
-                  __html: cleanDescription(description),
+                  __html: parseAirtableRichtext(description),
                 }}
               />
             )}
@@ -84,7 +84,7 @@ const ServiceCard: React.FC<ServiceItem> = ({
                     responsiveFontSizeArray(14, 16)
                   )}
                   dangerouslySetInnerHTML={{
-                    __html: cleanDescription(add_on_services),
+                    __html: parseAirtableRichtext(add_on_services),
                   }}
                 />
               </Flex>

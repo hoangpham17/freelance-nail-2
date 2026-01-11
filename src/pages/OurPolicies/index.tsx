@@ -1,37 +1,24 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
-import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { PolicyItem } from "./types";
-import { useAirtable } from "@/hooks/useAirtable";
-import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
+import {
+  responsiveFontSizeArray,
+} from "@/shared/utils/helper";
+import { usePolicies } from "@/pages/OurPolicies/usePolicies";
 import LoadingPage from "../../components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
+import { parseAirtableRichtext } from "@/shared/utils/richtext";
 
 const OurPolicies: React.FC = () => {
   const { mainTopSpacing } = useBaseOffset();
-  const { data: policiesData, loading } = useAirtable<PolicyItem>(
-    AIRTABLE_ENDPOINTS.policies
-  );
-
-  // Sort policies by order field
-  const policies = useMemo(() => {
-    if (!policiesData) return [];
-    return [...policiesData].sort((a, b) => {
-      const orderA = a.order ?? 0;
-      const orderB = b.order ?? 0;
-      return orderA - orderB;
-    });
-  }, [policiesData]);
+  const { data: policies, loading } = usePolicies();
 
   return (
     <main
       className="relative w-full min-h-screen bg-[#F4F6F9]"
       style={{ paddingTop: `${mainTopSpacing}px` }}
     >
-      {loading && (!policiesData || policiesData.length === 0) && (
-        <LoadingPage />
-      )}
+      {loading && (!policies || policies.length === 0) && <LoadingPage />}
 
       <Wrapper className="relative pt-12 lg:pt-20 pb-16 lg:pb-24">
         {/* Background Image - positioned top left, follows wrapper */}
@@ -74,14 +61,15 @@ const OurPolicies: React.FC = () => {
                 >
                   {policy.title}
                 </h2>
-                <p
+                <div
                   className={clsx(
                     "font-light",
                     responsiveFontSizeArray(16, 20)
                   )}
-                >
-                  {policy.description}
-                </p>
+                  dangerouslySetInnerHTML={{
+                    __html: parseAirtableRichtext(policy.description),
+                  }}
+                />
               </article>
             ))}
           </section>
