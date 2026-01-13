@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { PromotionData, AirtableAttachment } from "../../types";
 import clsx from "clsx";
 import SvgIcon from "@/based/SvgIcon";
 import { Wrapper } from "@/based/components/Wrapper";
-import { Flex } from "antd";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 
 const resolveImageUrl = (image?: AirtableAttachment[]): string => {
@@ -18,9 +17,14 @@ const resolveImageUrl = (image?: AirtableAttachment[]): string => {
   return firstImage?.url || "";
 };
 
+const getPromotionText = (promotion?: PromotionData): string => {
+  if (!promotion) return "";
+  return promotion.Content?.trim() || promotion.title?.trim() || "";
+};
+
 interface PromotionProps {
-  promotion?: PromotionData;
-  promotionText: string;
+  textPromotions: PromotionData[];
+  imagePromotions: PromotionData[];
   showCampaignBar: boolean;
   isCampaignDismissed: boolean;
   isPopupOpen: boolean;
@@ -29,9 +33,9 @@ interface PromotionProps {
 }
 
 const Promotion: React.FC<PromotionProps> = ({
-  promotion,
+  textPromotions,
+  imagePromotions,
   showCampaignBar,
-  promotionText,
   isCampaignDismissed,
   isPopupOpen,
   onCloseCampaign,
@@ -41,6 +45,9 @@ const Promotion: React.FC<PromotionProps> = ({
   const setCampaignBarHeight = useCampaignStore(
     (state) => state.setCampaignBarHeight
   );
+
+  // State for text promotion rotation
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
   useEffect(() => {
     const element = campaignBarRef.current;
@@ -72,8 +79,21 @@ const Promotion: React.FC<PromotionProps> = ({
     };
   }, [setCampaignBarHeight, showCampaignBar]);
 
-  const imageSrc =
-    resolveImageUrl(promotion?.image) || "/assets/images/Background/home-1.jpg";
+  // Reset index when promotions change
+  useEffect(() => {
+    setCurrentTextIndex(0);
+  }, [textPromotions]);
+
+  // Handle text promotion rotation with fade in/out (3s each)
+  useEffect(() => {
+    if (textPromotions.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prev) => (prev + 1) % textPromotions.length);
+    }, 3000); // 3 seconds
+
+    return () => clearInterval(interval);
+  }, [textPromotions.length]);
 
   return (
     <>
@@ -105,35 +125,57 @@ const Promotion: React.FC<PromotionProps> = ({
               />
             </button>
             <div
-              className="text-white text-sm xl:text-lg md:text-base text-center"
+              className={clsx(
+                "text-white text-sm xl:text-lg md:text-base text-center",
+                textPromotions.length > 1 && "relative min-h-[1.5em]"
+              )}
               data-campaign-text
             >
-              {promotionText}
+              {textPromotions.length === 1 ? (
+                <div>{getPromotionText(textPromotions[0])}</div>
+              ) : (
+                textPromotions.map((promotion, index) => {
+                  const text = getPromotionText(promotion);
+                  const isActive = index === currentTextIndex;
+                  return (
+                    <div
+                      key={promotion.id || index}
+                      className={clsx(
+                        "transition-opacity duration-500 ease-in-out",
+                        !isActive && "opacity-0 absolute inset-0",
+                        isActive && "opacity-100"
+                      )}
+                    >
+                      {text}
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </Wrapper>
       </div>
 
       {/* Popup Campaign */}
-      {isPopupOpen && (
-        <div
-          className="fixed inset-0 z-[110] flex items-center justify-center px-4"
-          data-popup
-          data-campaign-popup
-        >
+      {isPopupOpen && imagePromotions.length > 0 && (
+        <>
           <div
-            className="absolute inset-0 bg-black/80 cursor-pointer"
+            className="fixed inset-0 z-[110] bg-black/80 cursor-pointer"
             data-popup-close
             onClick={onClosePopup}
           ></div>
-          <div className="relative max-w-[90%] md:max-w-[75%] lg:max-w-[30%] z-110 w-full">
-            <button
-              className="absolute -top-2.5 -right-2.5 w-10 h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] md:w-8 md:h-8 hover:scale-110 active:scale-95"
-              data-popup-close
-              onClick={onClosePopup}
-              aria-label="Close popup"
-            >
-              <Flex justify="center" align="center">
+          <div
+            className="fixed inset-0 z-[111] flex items-start justify-center px-4 overflow-y-auto pointer-events-none"
+            data-popup
+            data-campaign-popup
+          >
+            <div className="relative max-w-[90%] md:max-w-[75%] lg:max-w-[30%] w-full pt-[50vh] pb-8 pointer-events-auto">
+              <button
+                className="sticky top-4 ml-auto w-10 h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] md:w-8 md:h-8 hover:scale-110 active:scale-95 flex items-center justify-center mb-4"
+                data-popup-close
+                onClick={onClosePopup}
+                aria-label="Close popup"
+              >
                 <SvgIcon
                   src={"assets/svgs/x-close.svg"}
                   ariaLabel="text"
@@ -141,20 +183,29 @@ const Promotion: React.FC<PromotionProps> = ({
                   height={24}
                   className="size-[24px] shrink-0"
                 />
-              </Flex>
-            </button>
-            <div className="max-h-[80vh] min-h-[250px] relative">
-              <img
-                src={imageSrc}
-                alt="Promotion"
-                className="w-full h-full object-cover rounded-lg"
-              />
-              <div className="absolute left-4 right-4 bottom-2 md:left-6 md:right-6 md:bottom-6 text-white text-center text-xs md:text-base uppercase">
-                {promotionText}
+              </button>
+              <div className="flex flex-col gap-6">
+                {imagePromotions.map((promotion, index) => {
+                  const imageSrc =
+                    resolveImageUrl(promotion.image) ||
+                    "/assets/images/Background/home-1.jpg";
+                  return (
+                    <div
+                      key={promotion.id || index}
+                      className="relative w-full"
+                    >
+                      <img
+                        src={imageSrc}
+                        alt="Promotion"
+                        className="w-full h-auto object-contain rounded-lg"
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

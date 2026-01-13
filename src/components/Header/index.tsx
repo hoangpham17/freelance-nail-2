@@ -20,8 +20,6 @@ import { useServiceCategories } from "@/hooks/useServiceCategories";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
-const DEFAULT_PROMOTION_TEXT =
-  "GIFT CARDS ARE AVAILABLE FOR PURCHASE IN-STORE ONLY";
 
 type NavItem = {
   path: string;
@@ -36,9 +34,6 @@ const navItems: NavItem[] = [
   { path: PATHS.aboutUs, label: "ABOUT US" },
   { path: PATHS.ourPolicies, label: "OUR POLICIES" },
 ];
-
-const getPromotionText = (promotion?: PromotionData) =>
-  promotion?.title?.trim() || DEFAULT_PROMOTION_TEXT;
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -70,50 +65,74 @@ const Header: React.FC = () => {
     AIRTABLE_ENDPOINTS.promotion
   );
 
-  const promotion = promotionData?.[0];
-  const promotionText = getPromotionText(promotion);
+  // Filter and check active promotions by type
+  const { textPromotions, imagePromotions } = useMemo(() => {
+    if (!promotionData || promotionData.length === 0) {
+      return { textPromotions: [], imagePromotions: [] };
+    }
 
-  const hasCampaignCopy = useMemo(
-    () => Boolean(promotion?.title?.trim()),
-    [promotion]
-  );
-
-  const isPromotionActive = useMemo(() => {
-    if (!promotion) return false;
-
-    // Parse date strings (YYYY-MM-DD) to Date objects
     const now = new Date();
     now.setHours(0, 0, 0, 0); // Set to start of day for comparison
 
-    let startDate: Date | null = null;
-    let endDate: Date | null = null;
+    const textPromos: PromotionData[] = [];
+    const imagePromos: PromotionData[] = [];
 
-    if (promotion.start_date) {
-      startDate = new Date(promotion.start_date);
-      startDate.setHours(0, 0, 0, 0);
-    }
+    promotionData.forEach((promotion) => {
+      // Check if promotion is active
+      let startDate: Date | null = null;
+      let endDate: Date | null = null;
 
-    if (promotion.end_date) {
-      endDate = new Date(promotion.end_date);
-      endDate.setHours(23, 59, 59, 999); // Set to end of day
-    }
+      if (promotion.start_date) {
+        startDate = new Date(promotion.start_date);
+        startDate.setHours(0, 0, 0, 0);
+      }
 
-    // Check if promotion is enabled and within date range
-    const isEnabled = Boolean(promotion.enabled);
-    const isAfterStart = !startDate || now >= startDate;
-    const isBeforeEnd = !endDate || now <= endDate;
+      if (promotion.end_date) {
+        endDate = new Date(promotion.end_date);
+        endDate.setHours(23, 59, 59, 999); // Set to end of day
+      }
 
-    return isEnabled && isAfterStart && isBeforeEnd;
-  }, [promotion]);
+      const isEnabled = Boolean(promotion.enabled);
+      const isAfterStart = !startDate || now >= startDate;
+      const isBeforeEnd = !endDate || now <= endDate;
+      const isActive = isEnabled && isAfterStart && isBeforeEnd;
 
-  const canShowCampaignText = isPromotionActive && hasCampaignCopy;
-  const canShowPopup =
-    isPromotionActive &&
-    Boolean(
-      promotion?.image &&
+      if (!isActive) return;
+
+      // Filter by type
+      if (
+        promotion.type === "Text" &&
+        (promotion.Content?.trim() || promotion.title?.trim())
+      ) {
+        textPromos.push(promotion);
+      } else if (
+        promotion.type === "Image" &&
+        promotion.image &&
         Array.isArray(promotion.image) &&
         promotion.image.length > 0
+      ) {
+        imagePromos.push(promotion);
+      }
+    });
+
+    // Sort by order field (or index as fallback) within each type
+    textPromos.sort(
+      (a, b) => (a.order ?? a.index ?? 0) - (b.order ?? b.index ?? 0)
     );
+    imagePromos.sort(
+      (a, b) => (a.order ?? a.index ?? 0) - (b.order ?? b.index ?? 0)
+    );
+
+    return { textPromotions: textPromos, imagePromotions: imagePromos };
+  }, [promotionData]);
+
+  const hasCampaignCopy = useMemo(
+    () => textPromotions.length > 0,
+    [textPromotions]
+  );
+
+  const canShowCampaignText = hasCampaignCopy;
+  const canShowPopup = imagePromotions.length > 0;
 
   const shouldShowCampaignBar =
     canShowCampaignText && !hasDismissedCampaignText && !isHeaderSolid;
@@ -279,8 +298,8 @@ const Header: React.FC = () => {
       )}
     >
       <Promotion
-        promotion={promotion}
-        promotionText={promotionText}
+        textPromotions={textPromotions}
+        imagePromotions={imagePromotions}
         showCampaignBar={shouldShowCampaignBar}
         isCampaignDismissed={hasDismissedCampaignText}
         isPopupOpen={isPopupOpen}

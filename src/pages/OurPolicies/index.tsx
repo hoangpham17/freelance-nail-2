@@ -1,9 +1,7 @@
 import React from "react";
 import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
-import {
-  responsiveFontSizeArray,
-} from "@/shared/utils/helper";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { usePolicies } from "@/pages/OurPolicies/usePolicies";
 import LoadingPage from "../../components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";

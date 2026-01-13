@@ -1,8 +1,6 @@
 import React from "react";
 import { ServiceItem, AirtableAttachment } from "../../types";
-import {
-  responsiveFontSizeArray,
-} from "@/shared/utils/helper";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import clsx from "clsx";
 import { Flex } from "antd";
 import { parseAirtableRichtext } from "@/shared/utils/richtext";

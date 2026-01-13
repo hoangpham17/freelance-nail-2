@@ -21,4 +21,7 @@ export type PromotionData = {
   title?: string;
   image?: AirtableAttachment[];
   index?: number;
+  order?: number; // For sorting promotions
+  type?: "Image" | "Text";
+  Content?: string; // For Text type promotions
 };
