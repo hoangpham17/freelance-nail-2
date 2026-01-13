@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import {
   fetchAirtableData,
   AIRTABLE_ENDPOINTS,
-} from "../../services/airtable.service";
-import { PolicyItem } from "./types";
+} from "../services/airtable.service";
+import { PolicyItem } from "../pages/OurPolicies/types";
 
 interface UsePoliciesResult {
   data: PolicyItem[];
@@ -22,7 +22,7 @@ const fetchAllPolicies = async (): Promise<PolicyItem[]> => {
   const pageSize = 100; // Airtable max page size
 
   do {
-    const result = await fetchAirtableData<PolicyItem>(
+    const result: { records: PolicyItem[]; offset?: string } = await fetchAirtableData<PolicyItem>(
       AIRTABLE_ENDPOINTS.policies,
       {
         sort: [{ field: "order", direction: "asc" }],
