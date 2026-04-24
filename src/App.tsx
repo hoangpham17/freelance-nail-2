@@ -4,6 +4,7 @@ import { ConfigProvider } from "antd";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FixedButtons from "./components/FixedButtons";
+import CampaignPopup from "./components/CampaignPopup";
 import RouteWrapper from "./components/RouteWrapper";
 import { routes } from "./routes";
 import NotFound from "./pages/NotFound";
@@ -17,6 +18,7 @@ function App() {
           <div className="app min-h-screen flex flex-col">
             <Header />
             <FixedButtons />
+            <CampaignPopup />
             <div className="main flex-1">
               <Routes>
                 {routes

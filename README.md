@@ -180,6 +180,9 @@ For production deployment, add `VITE_AIRTABLE_API_KEY` to your hosting platform'
 - **Netlify**: Site Settings → Environment Variables
 - **GitHub Pages**: Use GitHub Actions secrets
 
+## icon
+https://www.freepik.com/icon/facial-treatment_3789805#fromView=keyword&page=3&position=82&uuid=88362c92-a88e-4dd2-aa19-f784ce5f7cc2
+
 ## 📚 Learn More
 
 - [Vite Documentation](https://vitejs.dev/)

@@ -1,104 +1,145 @@
-import React from "react";
-import { ServiceItem, AirtableAttachment } from "../../types";
+import React, { useState } from "react";
+import { ServiceItem } from "../../types";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import clsx from "clsx";
 import { Flex } from "antd";
 import { parseAirtableRichtext } from "@/shared/utils/richtext";
+import SvgIcon from "@/based/SvgIcon";
+import { useScreen } from "@/hooks/useScreen";
 
-const resolveImage = (value?: string | AirtableAttachment[]) => {
-  if (typeof value === "string") return value;
-  if (Array.isArray(value) && value.length > 0) return value[0]?.url;
-  return null;
+export type ServiceCardProps = ServiceItem & {
+  isExpanded?: boolean;
+  onToggle?: () => void;
+  disableToggle?: boolean;
 };
 
-const ServiceCard: React.FC<ServiceItem> = ({
+const ServiceCard: React.FC<ServiceCardProps> = ({
   id,
   name,
   description,
   price,
-  image,
   add_on_services,
+  isExpanded: isExpandedProp,
+  onToggle,
+  disableToggle,
 }) => {
-  const imageSource = image;
-  const imageUrl = resolveImage(imageSource);
+  const { isDesktop } = useScreen();
+  const [internalExpanded, setInternalExpanded] = useState(false);
+  const isControlled = onToggle !== undefined;
+  const isExpanded = isControlled
+    ? (isExpandedProp ?? false)
+    : internalExpanded;
+  const handleToggle = () => {
+    if (isControlled) {
+      onToggle?.();
+    } else {
+      setInternalExpanded((prev) => !prev);
+    }
+  };
   const displayPrice = price || "";
   const displayName = name || "";
+  const hasContent = description || add_on_services;
+  const isToggleDisabled = disableToggle || !hasContent;
 
   return (
     <div
       id={id}
-      className="py-2 lg:py-3 px-3 lg:px-4 mb-2 lg:mb-3 rounded-2xl bg-[#F7F7F7CC] break-inside-avoid"
+      className={clsx(
+        "w-full transition-all duration-300 rounded-lg overflow-hidden my-1.5 lg:my-2",
+        isExpanded && !isToggleDisabled && "bg-[#805D3D1A]",
+      )}
     >
-      <Flex className="flex-col md:flex-row justify-between gap-2 md:gap-3">
-        <Flex gap={12} className="w-full">
-          {imageUrl && (
-            <div className="flex-shrink-0 w-16 h-16 lg:w-[100px] lg:h-[100px] rounded-md overflow-hidden shadow-sm">
-              <img
-                src={imageUrl}
-                alt={displayName}
-                className="w-full h-full object-cover border-2 border-white rounded-2xl"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    "/assets/images/Services/thumbnail-service-item.png";
-                }}
+      {/* Header - Always visible */}
+      <div
+        className={clsx(
+          "flex items-center justify-between py-3 lg:py-4 px-4 lg:px-6 relative",
+          hasContent &&
+            !isToggleDisabled &&
+            "cursor-pointer hover:opacity-90 transition-opacity",
+        )}
+        onClick={() => hasContent && !isToggleDisabled && handleToggle()}
+      >
+        <h3
+          className={clsx(
+            "font-playfairDisplay font-bold text-[#6B4A2F] m-0 flex-1 pr-4",
+            responsiveFontSizeArray(18, 24),
+          )}
+        >
+          {displayName}
+        </h3>
+
+        <Flex align="center" gap={8} className="flex-shrink-0 relative">
+          {displayPrice && (
+            <div className="px-3 py-1 lg:px-4 lg:py-1.5 rounded-lg bg-[#805D3D1A]">
+              <span
+                className={clsx(
+                  "text-[#6B4A2F] whitespace-nowrap",
+                  responsiveFontSizeArray(16, 18),
+                )}
+              >
+                ${displayPrice}
+              </span>
+            </div>
+          )}
+
+          {hasContent && (
+            <div
+              className={clsx(
+                "absolute left-full top-1/2 flex-shrink-0 w-4 h-4 lg:w-5 lg:h-5 flex items-center justify-center transition-transform duration-300",
+                isToggleDisabled && "hidden",
+              )}
+              style={{
+                transform: `translateY(-50%) ${isExpanded ? "rotate(0deg)" : "rotate(180deg)"}`,
+              }}
+            >
+              <SvgIcon
+                src="/assets/svgs/chevron-right.svg"
+                ariaLabel={isExpanded ? "Collapse" : "Expand"}
+                width={isDesktop ? 14 : 10}
+                height={isDesktop ? 14 : 10}
+                className="text-[#6B4A2F] rotate-[-90deg]"
               />
             </div>
           )}
-          <Flex vertical className="gap-1 md:gap-2">
-            <h3
+        </Flex>
+      </div>
+
+      {/* Expandable Content - grid 0fr→1fr for smooth height animation */}
+      {hasContent && (
+        <div
+          className={clsx(
+            "grid transition-[grid-template-rows] duration-300 ease-out",
+            isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+          )}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <Flex
+              vertical
+              gap={12}
               className={clsx(
-                "font-prata text-[#10182A] flex-1",
-                responsiveFontSizeArray(18, 24)
+                "px-4 lg:px-6 pb-4 lg:pb-6 pt-2 text-[#4A3A2F] font-light",
+                responsiveFontSizeArray(14, 16),
               )}
             >
-              {displayName}
-            </h3>
-
-            {description && (
-              <div
-                className={clsx(
-                  "text-[#10182A] font-light mb-1 md:mb-2 whitespace-pre-wrap",
-                  responsiveFontSizeArray(16, 20)
-                )}
-                dangerouslySetInnerHTML={{
-                  __html: parseAirtableRichtext(description),
-                }}
-              />
-            )}
-
-            {add_on_services && (
-              <Flex vertical className="text-[#9E7B6A] font-light mt-3 md:mt-4">
-                <span
-                  className={clsx(
-                    "font-prata font-normal",
-                    responsiveFontSizeArray(24, 32)
-                  )}
-                >
-                  *Additional charge:
-                </span>
+              {description && (
                 <div
-                  className={clsx(
-                    "whitespace-pre-wrap",
-                    responsiveFontSizeArray(14, 16)
-                  )}
+                  dangerouslySetInnerHTML={{
+                    __html: parseAirtableRichtext(description),
+                  }}
+                />
+              )}
+
+              {add_on_services && (
+                <div
                   dangerouslySetInnerHTML={{
                     __html: parseAirtableRichtext(add_on_services),
                   }}
                 />
-              </Flex>
-            )}
-          </Flex>
-        </Flex>
-
-        <span
-          className={clsx(
-            "text-[#D1A054] whitespace-nowrap font-prata text-right lg:text-left",
-            responsiveFontSizeArray(24, 40)
-          )}
-        >
-          ${displayPrice}
-        </span>
-      </Flex>
+              )}
+            </Flex>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

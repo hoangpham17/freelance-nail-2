@@ -5,6 +5,7 @@ import { useServiceCategories } from "@/hooks/useServiceCategories";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import clsx from "clsx";
 import { Wrapper } from "@/based/components/Wrapper";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 interface ServicesSubmenuProps {
   headerHeight: number;
@@ -22,12 +23,10 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   const { categories: serviceCategories } = useServiceCategories();
   const showCampaignBar = useCampaignStore((state) => state.showCampaignBar);
   const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight
+    (state) => state.campaignBarHeight,
   );
+  const [hoveredSlug, setHoveredSlug] = useState<string>("");
 
-  const [isHovered, setIsHovered] = useState<string>("");
-
-  // Calculate top position based on header height and campaign bar
   const topPosition = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
 
   const serviceNavItems = serviceCategories.map((category) => ({
@@ -36,53 +35,72 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
     slug: category.slug,
   }));
 
-  const checkIsActive = (slug: string) => {
-    const isServicesPage = window.location.pathname === PATHS.services;
-    const currentHash = window.location.hash.replace("#", "");
-    return isServicesPage && currentHash === slug;
-  };
-
   if (!isVisible || serviceNavItems.length === 0) return null;
 
   return (
     <div
       data-services-submenu="true"
-      className="fixed left-0 w-full bg-white/60 backdrop-blur-sm shadow-md border-t border-gray-200 z-50"
-      style={{ top: `${topPosition}px` }}
+      className="fixed left-0 w-full z-50 transition-all duration-200"
+      style={{
+        top: `${topPosition}px`,
+        background:
+          "linear-gradient(180deg, #FEFCFA 0%, #FEF8F5 50%, #FAF3EF 100%)",
+        boxShadow: "0 4px 24px rgba(107, 74, 47, 0.06)",
+        borderBottom: "1px solid rgba(212, 196, 181, 0.5)",
+      }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
+      {/* Decorative line */}
+      <div
+        className="h-px w-full opacity-80"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, #D4C4B5 20%, #B2866D 50%, #D4C4B5 80%, transparent 100%)",
+        }}
+      />
       <Wrapper>
-        <div>
-          <nav className="flex flex-wrap justify-center">
-            {serviceNavItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onMouseEnter={() => setIsHovered(item.slug)}
-                onMouseLeave={() => setIsHovered("")}
-                className={clsx(
-                  "px-4 py-4 capitalize transition-colors whitespace-nowrap cursor-pointer font-prata text-lg",
-                  checkIsActive(item.slug)
-                    ? "!text-black bg-white/80"
-                    : "text-[#8B4B20] hover:text-black hover:bg-white"
+        <nav
+          className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 py-2 md:py-3"
+          aria-label="Service categories"
+        >
+          {serviceNavItems.map((item, index) => {
+            const isHovered = hoveredSlug === item.slug;
+            const isFirst = index === 0;
+            return (
+              <React.Fragment key={item.path}>
+                {!isFirst && (
+                  <span
+                    className="hidden sm:block w-px h-4 bg-[#E8DED8] flex-shrink-0"
+                    aria-hidden
+                  />
                 )}
-                style={
-                  checkIsActive(item.slug) || isHovered === item.slug
-                    ? {
-                        border: "1px solid",
-                        borderImageSource:
-                          "linear-gradient(180deg, #FFFFFF 0%, #F6E7EE 100%)",
-                        borderImageSlice: 1,
-                      }
-                    : {}
-                }
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
+                <Link
+                  to={item.path}
+                  onMouseEnter={() => setHoveredSlug(item.slug)}
+                  onMouseLeave={() => setHoveredSlug("")}
+                  className={clsx(
+                    "relative px-5 py-2.5 rounded-lg font-playfairDisplay font-semibold capitalize whitespace-nowrap transition-all duration-300",
+                    "text-[#6B4A2F]",
+                    isHovered
+                      ? "text-[#6B4A2F] bg-white/70"
+                      : "hover:text-[#6B4A2F] hover:bg-white/50",
+                    ...responsiveFontSizeArray(15, 18),
+                  )}
+                  style={
+                    isHovered
+                      ? {
+                          boxShadow: "0 2px 12px rgba(107, 74, 47, 0.08)",
+                        }
+                      : undefined
+                  }
+                >
+                  {item.label}
+                </Link>
+              </React.Fragment>
+            );
+          })}
+        </nav>
       </Wrapper>
     </div>
   );

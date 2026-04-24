@@ -8,16 +8,20 @@ export const parseAirtableRichtext = (richtext?: string): string => {
   let html = richtext;
 
   // First, handle escaped characters (must be done first to preserve literal characters)
-  // Replace escaped markdown characters with placeholders
-  const escapeMap: Array<{ pattern: RegExp; placeholder: string }> = [
-    { pattern: /\\\*/g, placeholder: "___ESCAPED_ASTERISK___" },
-    { pattern: /\\_/g, placeholder: "___ESCAPED_UNDERSCORE___" },
-    { pattern: /\\~/g, placeholder: "___ESCAPED_TILDE___" },
-    { pattern: /\\`/g, placeholder: "___ESCAPED_BACKTICK___" },
-    { pattern: /\\\[/g, placeholder: "___ESCAPED_LEFT_BRACKET___" },
-    { pattern: /\\\]/g, placeholder: "___ESCAPED_RIGHT_BRACKET___" },
-    { pattern: /\\#/g, placeholder: "___ESCAPED_HASH___" },
-    { pattern: /\\>/g, placeholder: "___ESCAPED_GT___" },
+  // Use control-char placeholders (no _ or *) so they are not matched by bold/italic regexes
+  const escapeMap: Array<{
+    pattern: RegExp;
+    placeholder: string;
+    char: string;
+  }> = [
+    { pattern: /\\\*/g, placeholder: "\x01", char: "*" },
+    { pattern: /\\_/g, placeholder: "\x02", char: "_" },
+    { pattern: /\\~/g, placeholder: "\x03", char: "~" },
+    { pattern: /\\`/g, placeholder: "\x04", char: "`" },
+    { pattern: /\\\[/g, placeholder: "\x05", char: "[" },
+    { pattern: /\\\]/g, placeholder: "\x06", char: "]" },
+    { pattern: /\\#/g, placeholder: "\x07", char: "#" },
+    { pattern: /\\>/g, placeholder: "\x08", char: ">" },
   ];
 
   escapeMap.forEach(({ pattern, placeholder }) => {
@@ -38,11 +42,11 @@ export const parseAirtableRichtext = (richtext?: string): string => {
   // Checkboxes
   html = html.replace(
     /\[x\]\s*(.+)/g,
-    '<input type="checkbox" checked disabled> <span>$1</span>'
+    '<input type="checkbox" checked disabled> <span>$1</span>',
   );
   html = html.replace(
     /\[\s\]\s*(.+)/g,
-    '<input type="checkbox" disabled> <span>$1</span>'
+    '<input type="checkbox" disabled> <span>$1</span>',
   );
 
   // Process lists line by line
@@ -114,7 +118,7 @@ export const parseAirtableRichtext = (richtext?: string): string => {
   // Hyperlinks
   html = html.replace(
     /\[([^\]]+)\]\(([^)]+)\)/g,
-    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>',
   );
 
   // Inline code (must be before bold/italic to avoid conflicts)
@@ -124,46 +128,16 @@ export const parseAirtableRichtext = (richtext?: string): string => {
   html = html.replace(/~~([^~]+)~~/g, "<del>$1</del>");
 
   // Bold (both ** and __)
-  html = html.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-  html = html.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong style="font-weight: 600;">$1</strong>');
+  html = html.replace(/__([^_]+)__/g, '<strong style="font-weight: 600;">$1</strong>');
 
   // Italic (both * and _) - must be after bold to avoid conflicts
   html = html.replace(/\*([^*]+)\*/g, "<em>$1</em>");
   html = html.replace(/_([^_]+)_/g, "<em>$1</em>");
 
-  // Restore escaped characters
-  escapeMap.forEach(({ placeholder }) => {
-    const originalChar = placeholder
-      .replace(/___ESCAPED_|___/g, "")
-      .toLowerCase();
-    let restoredChar = "";
-    switch (originalChar) {
-      case "asterisk":
-        restoredChar = "*";
-        break;
-      case "underscore":
-        restoredChar = "_";
-        break;
-      case "tilde":
-        restoredChar = "~";
-        break;
-      case "backtick":
-        restoredChar = "`";
-        break;
-      case "left_bracket":
-        restoredChar = "[";
-        break;
-      case "right_bracket":
-        restoredChar = "]";
-        break;
-      case "hash":
-        restoredChar = "#";
-        break;
-      case "gt":
-        restoredChar = ">";
-        break;
-    }
-    html = html.replace(new RegExp(placeholder, "g"), restoredChar);
+  // Restore escaped characters (placeholders are control chars \x01-\x08, safe from bold/italic)
+  escapeMap.forEach(({ placeholder, char: restoredChar }) => {
+    html = html.split(placeholder).join(restoredChar);
   });
 
   // Wrap consecutive block-level elements and paragraphs
@@ -179,7 +153,7 @@ export const parseAirtableRichtext = (richtext?: string): string => {
     }
 
     // Otherwise wrap in paragraph
-    return `<p>${trimmed}</p>`;
+    return `<p class="whitespace-pre-wrap">${trimmed}</p>`;
   });
 
   html = paragraphProcessedLines.filter(Boolean).join("\n");

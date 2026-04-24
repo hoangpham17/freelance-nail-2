@@ -1,90 +1,21 @@
-import React, { useState } from "react";
-import { Flex } from "antd";
-import clsx from "clsx";
-import PhoneConfirmModal from "./components/PhoneConfirmModal";
-import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import React from "react";
+import GiftBoxButton from "./components/GiftBoxButton";
+import BookingButton from "./components/BookingButton";
+import PhoneButton from "./components/PhoneButton";
 
 const FixedButtons: React.FC = () => {
-  const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
   const phoneNumber = "(608) 720 1011";
 
-  const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsPhoneModalOpen(true);
-  };
-
-  const handleConfirmCall = () => {
-    window.location.href = `tel:${phoneNumber.replace(/\D/g, "")}`;
-    setIsPhoneModalOpen(false);
-  };
-
-  const handleCancelCall = () => {
-    setIsPhoneModalOpen(false);
-  };
-
   return (
-    <>
-      <Flex
-        className="fixed p-3 lg:p-0 bottom-0 lg:bottom-8 xl:bottom-16 right-0 lg:right-[1%] xl:right-[8%] lg:flex-col gap-2 w-full lg:w-auto z-[99] justify-center"
-        align="center"
-      >
-        <div
-          className="absolute top-0 left-0 w-full h-full bg-white/40 lg:hidden block"
-          style={{ backdropFilter: "blur(10px)" }}
-        ></div>
-        <a
-          className={clsx(
-            "z-[1] lg:px-7 lg:py-1 p-2 bg-gradient-to-b from-[#FFFFFF] to-[#F6E7EE] !text-[#D5AF34] rounded-2xl lg:rounded-[32px] text-center font-prata lg:rotate-[-2deg] border lg:border-4 border-[#A16C0C99] min-[375px]:text-[22px]",
-            responsiveFontSizeArray(20, 47)
-          )}
-          style={{
-            boxShadow: "0px 4px 16px 0px #D3C69C00",
-          }}
-          title="BOOKING"
-          href="https://booking.spacepos.net/?id=jzOR8l!BpuM="
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span
-            style={{
-              textShadow:
-                "0px 1px 0px #FFFFFF, 0px -1px 0px rgba(0, 0, 0, 0.25)",
-            }}
-          >
-            Booking now
-          </span>
-        </a>
-        <a
-          className={clsx(
-            "text-[#9E7B6A] z-[1] hover:text-[#9E7B6A]/80 cursor-pointer min-[375px]:text-[24px]",
-            responsiveFontSizeArray(20, 60)
-          )}
-          onClick={handlePhoneClick}
-          style={{
-            textShadow: `
-              -2px -2px 0 #FFFFFF,
-              2px -2px 0 #FFFFFF,
-              -2px 2px 0 #FFFFFF,
-              2px 2px 0 #FFFFFF,
-              0px -2px 0 #FFFFFF,
-              0px 2px 0 #FFFFFF,
-              -2px 0px 0 #FFFFFF,
-              2px 0px 0 #FFFFFF,
-              0px 4px 4px rgba(119, 30, 66, 0.3)
-            `,
-          }}
-        >
-          {phoneNumber}
-        </a>
-      </Flex>
-
-      <PhoneConfirmModal
-        open={isPhoneModalOpen}
-        phoneNumber={phoneNumber}
-        onConfirm={handleConfirmCall}
-        onCancel={handleCancelCall}
-      />
-    </>
+    <div className="fixed bottom-4 left-4 right-4 lg:bottom-12 lg:left-auto lg:right-12 z-[100] flex flex-col gap-3 lg:items-end pointer-events-none">
+      <div className="flex justify-end w-full pointer-events-auto">
+        <GiftBoxButton />
+      </div>
+      <div className="flex flex-row w-full gap-2 lg:gap-3 lg:w-auto lg:flex-col lg:items-end justify-center pointer-events-auto">
+        <BookingButton />
+        <PhoneButton phoneNumber={phoneNumber} />
+      </div>
+    </div>
   );
 };
 

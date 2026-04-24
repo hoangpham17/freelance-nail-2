@@ -13,7 +13,8 @@ export type AirtableImage = {
   };
 };
 
-export type GalleryRecord = {
+/** Dùng cho Home / gallery đơn giản: category 1 giá trị string */
+export type HomeGalleryRecord = {
   id?: string;
   image?: AirtableImage[];
   description?: string;
@@ -21,14 +22,31 @@ export type GalleryRecord = {
   category?: string;
   index?: number;
   order?: number;
-  // Legacy support
+  url?: string | { url: string }[];
+};
+
+export type HomeGalleryItem = {
+  id: string;
+  url: string;
+  category?: string;
+  keyword?: string;
+};
+
+/** Dùng cho Gallery page: Airtable trả về category là array, thực tế chỉ 1 item */
+export type GalleryRecord = {
+  id?: string;
+  image?: AirtableImage[];
+  description?: string;
+  keyword?: string;
+  category?: string[];
+  index?: number;
+  order?: number;
   url?: string | { url: string }[];
 };
 
 export type GalleryItem = {
   id: string;
   url: string;
-  description?: string;
-  category?: string;
+  category?: string[];
   keyword?: string;
 };

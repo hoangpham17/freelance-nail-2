@@ -1,8 +1,9 @@
-import React, { useMemo, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { GalleryItem } from "../../types";
 import GalleryItemComponent from "../GalleryItem";
+import GalleryListLoading from "../GalleryListLoading";
 import { Wrapper } from "@/based/components/Wrapper";
-import { Flex, Image, Skeleton } from "antd";
+import { Skeleton } from "antd";
 
 interface GalleryGridProps {
   items: GalleryItem[];
@@ -22,23 +23,6 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   isFetchingNextPage = false,
 }) => {
   const observerTarget = useRef<HTMLDivElement>(null);
-
-  const { firstThreeItems, remainingItems } = useMemo(() => {
-    // If there are less than 3 items, don't show "First 3 items" section
-    // Show all items in remainingItems instead
-    if (items.length < 3) {
-      return {
-        firstThreeItems: [],
-        remainingItems: items,
-      };
-    }
-    const firstThree = items.slice(0, 3);
-    const remaining = items.slice(3);
-    return {
-      firstThreeItems: firstThree,
-      remainingItems: remaining,
-    };
-  }, [items]);
 
   // Infinite scroll observer - trigger when 500px from bottom
   useEffect(() => {
@@ -73,28 +57,15 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
   }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (loading) {
-    return (
-      <Wrapper>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          {[...Array(6)].map((_, index) => (
-            <Skeleton.Image
-              key={index}
-              active
-              style={{ width: "100%", aspectRatio: "1/1" }}
-            />
-          ))}
-        </div>
-      </Wrapper>
-    );
+    return <GalleryListLoading />;
   }
 
   return (
     <div className="w-full">
-      <Wrapper>
-        {/* First 3 items - only show if there are at least 3 items */}
-        {firstThreeItems.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
-            {firstThreeItems.map((item, index) => (
+      <Wrapper className="py-8 lg:py-12">
+        {items.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {items.map((item, index) => (
               <GalleryItemComponent
                 key={item.id}
                 item={item}
@@ -102,38 +73,33 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
               />
             ))}
           </div>
-        )}
-
-        {/* Control Your Day Image */}
-        <Flex align="center" justify="center" className="w-full mb-8 lg:mb-12">
-          {/* Mobile Image */}
-          <Image
-            src="/assets/images/Gallery/control-your-day-mobile.png"
-            alt="Control Your Day"
-            className="block lg:hidden mx-auto"
-            style={{ height: "auto", maxWidth: "375px" }}
-            preview={false}
-          />
-          {/* Desktop Image */}
-          <Image
-            src="/assets/images/Gallery/control-your-day-desktop.png"
-            alt="Control Your Day"
-            className="hidden lg:block w-full"
-            style={{ height: "auto" }}
-            preview={false}
-          />
-        </Flex>
-
-        {/* Remaining items grid */}
-        {remainingItems.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-8">
-            {remainingItems.map((item, index) => (
-              <GalleryItemComponent
-                key={item.id}
-                item={item}
-                onClick={() => onItemClick(index + firstThreeItems.length)}
-              />
-            ))}
+        ) : (
+          <div
+            className="flex flex-col items-center justify-center text-center py-16 lg:py-24 px-4"
+            role="status"
+            aria-label="No gallery items"
+          >
+            <div
+              className="w-16 h-px mb-6"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, #D4C4B5, transparent)",
+              }}
+            />
+            <p
+              className="font-playfairDisplay font-medium text-[#6B4A2F]/90 max-w-md"
+              style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}
+            >
+              No images in this collection yet. We're curating more moments of
+              relaxation and beauty for you.
+            </p>
+            <div
+              className="w-16 h-px mt-6"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, #D4C4B5, transparent)",
+              }}
+            />
           </div>
         )}
 
@@ -142,14 +108,14 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
         {(hasNextPage || isFetchingNextPage) && (
           <div ref={observerTarget} className="w-full mb-4 md:mb-8">
             {isFetchingNextPage && (
-              <div className="flex justify-center items-center">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full">
+              <div className="flex justify-center items-center pt-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full">
                   {[...Array(3)].map((_, index) => (
                     <Skeleton.Image
                       key={`loading-${index}`}
                       active
-                      style={{ width: "100%", height: "100%" }}
-                      className="h-[420px] lg:h-[520px] rounded-xl lg:rounded-2xl overflow-hidden"
+                      className="!w-full !rounded-2xl"
+                      style={{ aspectRatio: "4/5", minHeight: "380px" }}
                     />
                   ))}
                 </div>

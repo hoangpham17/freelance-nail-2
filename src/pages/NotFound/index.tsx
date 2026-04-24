@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useScreen } from "@/hooks/useScreen";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
+import notFoundContent from "@/content/notFound.json";
 
 const NotFound: React.FC = () => {
   const { isDesktop } = useScreen();
@@ -24,11 +25,11 @@ const NotFound: React.FC = () => {
           <div className="mb-6 lg:mb-8">
             <h1
               className={clsx(
-                "font-prata text-[#9E7B6A] leading-none",
-                responsiveFontSizeArray(120, 200)
+                "font-sora text-[#9E7B6A] leading-none",
+                responsiveFontSizeArray(120, 200),
               )}
             >
-              404
+              {(notFoundContent as { code: string }).code}
             </h1>
           </div>
 
@@ -36,20 +37,19 @@ const NotFound: React.FC = () => {
           <div className="mb-8 lg:mb-12">
             <h2
               className={clsx(
-                "font-prata text-[#10182A] mb-4",
-                responsiveFontSizeArray(32, 60)
+                "font-sora text-[#10182A] mb-4",
+                responsiveFontSizeArray(32, 60),
               )}
             >
-              Page Not Found
+              {(notFoundContent as { title: string }).title}
             </h2>
             <p
               className={clsx(
                 "font-light text-[#494747] max-w-lg mx-auto",
-                responsiveFontSizeArray(16, 20)
+                responsiveFontSizeArray(16, 20),
               )}
             >
-              Oops! The page you're looking for doesn't exist. It might have
-              been moved, deleted, or the URL might be incorrect.
+              {(notFoundContent as { description: string }).description}
             </p>
           </div>
 
@@ -62,30 +62,36 @@ const NotFound: React.FC = () => {
             className="flex-wrap"
           >
             <Link to={PATHS.home}>
-              <ButtonStyle1 className="font-lexend">
+              <ButtonStyle1>
                 <Flex className="gap-4" align="center">
                   <span
                     className={clsx(
-                      "font-lexend font-light",
-                      responsiveFontSizeArray(16, 20)
+                      "font-light",
+                      responsiveFontSizeArray(16, 20),
                     )}
                   >
-                    Go to Homepage
+                    {
+                      (notFoundContent as { actions: { goHome: string } })
+                        .actions.goHome
+                    }
                   </span>
                 </Flex>
               </ButtonStyle1>
             </Link>
 
             <Link to={PATHS.services}>
-              <ButtonStyle1 className="font-lexend">
+              <ButtonStyle1>
                 <Flex className="gap-4" align="center">
                   <span
                     className={clsx(
-                      "font-lexend font-light",
-                      responsiveFontSizeArray(16, 20)
+                      "font-light",
+                      responsiveFontSizeArray(16, 20),
                     )}
                   >
-                    View Our Services
+                    {
+                      (notFoundContent as { actions: { viewServices: string } })
+                        .actions.viewServices
+                    }
                   </span>
                 </Flex>
               </ButtonStyle1>
@@ -97,10 +103,10 @@ const NotFound: React.FC = () => {
             <p
               className={clsx(
                 "font-light text-[#494747] mb-4",
-                responsiveFontSizeArray(14, 18)
+                responsiveFontSizeArray(14, 18),
               )}
             >
-              Or visit one of these pages:
+              {(notFoundContent as { linksIntro: string }).linksIntro}
             </p>
             <Flex
               vertical={!isDesktop}
@@ -110,31 +116,55 @@ const NotFound: React.FC = () => {
               className="flex-wrap"
             >
               <Link
+                to={PATHS.hostAParty}
+                className={clsx(
+                  "text-[#9E7B6A] hover:text-[#C19A6B] transition-colors underline",
+                  responsiveFontSizeArray(14, 16),
+                )}
+              >
+                {
+                  (notFoundContent as { links: { hostAParty: string } }).links
+                    .hostAParty
+                }
+              </Link>
+              <div className="w-1 h-1 bg-[#9E7B6A] rounded-full" />
+              <Link
                 to={PATHS.aboutUs}
                 className={clsx(
                   "text-[#9E7B6A] hover:text-[#C19A6B] transition-colors underline",
-                  responsiveFontSizeArray(14, 16)
+                  responsiveFontSizeArray(14, 16),
                 )}
               >
-                About Us
+                {
+                  (notFoundContent as { links: { aboutUs: string } }).links
+                    .aboutUs
+                }
               </Link>
+              <div className="w-1 h-1 bg-[#9E7B6A] rounded-full" />
               <Link
                 to={PATHS.gallery}
                 className={clsx(
                   "text-[#9E7B6A] hover:text-[#C19A6B] transition-colors underline",
-                  responsiveFontSizeArray(14, 16)
+                  responsiveFontSizeArray(14, 16),
                 )}
               >
-                Gallery
+                {
+                  (notFoundContent as { links: { gallery: string } }).links
+                    .gallery
+                }
               </Link>
+              <div className="w-1 h-1 bg-[#9E7B6A] rounded-full" />
               <Link
                 to={PATHS.contactUs}
                 className={clsx(
                   "text-[#9E7B6A] hover:text-[#C19A6B] transition-colors underline",
-                  responsiveFontSizeArray(14, 16)
+                  responsiveFontSizeArray(14, 16),
                 )}
               >
-                Contact Us
+                {
+                  (notFoundContent as { links: { contactUs: string } }).links
+                    .contactUs
+                }
               </Link>
             </Flex>
           </div>

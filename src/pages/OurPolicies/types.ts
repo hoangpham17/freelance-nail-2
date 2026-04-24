@@ -4,3 +4,5 @@ export type PolicyItem = {
   description: string;
   order?: number;
 };
+
+export type PolicyWithSectionId = PolicyItem & { sectionId: string };

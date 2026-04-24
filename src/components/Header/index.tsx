@@ -8,15 +8,15 @@ import Promotion from "./components/Promotion";
 import { PromotionData } from "./types";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "../../shared/utils/helper";
-import { ListSocial } from "./components/ListSocial";
-import { ButtonStyle1 } from "../../based/components/Button/Style1";
 import { BurgerMenu } from "./components/BurgerMenu";
 import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
-import { useScreen } from "@/hooks/useScreen";
 import ServicesSubmenu from "./components/ServicesSubmenu";
 import SvgIcon from "@/based/SvgIcon";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
+import DesktopNav from "./components/DesktopNav";
+import { NoiseBackground } from "@/components/NoiseBackground";
+import { ListSocial } from "./components/ListSocial";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -40,29 +40,36 @@ const Header: React.FC = () => {
 
   const isServicesPage = location.pathname === PATHS.services;
 
-  const { isDesktop } = useScreen();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [hasDismissedCampaignText, setHasDismissedCampaignText] =
     useState(false);
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isServicesHovered, setIsServicesHovered] = useState(false);
   const [isServicesExpanded, setIsServicesExpanded] = useState(false);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerMainRef = useRef<HTMLDivElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
 
   const setShowCampaignBar = useCampaignStore(
-    (state) => state.setShowCampaignBar
+    (state) => state.setShowCampaignBar,
   );
   const setHeaderHeightStore = useCampaignStore(
-    (state) => state.setHeaderHeight
+    (state) => state.setHeaderHeight,
+  );
+  const isShowPopupCampaign = useCampaignStore(
+    (state) => state.isShowPopupCampaign,
+  );
+  const setIsShowPopupCampaign = useCampaignStore(
+    (state) => state.setIsShowPopupCampaign,
+  );
+  const setHasPopupCampaign = useCampaignStore(
+    (state) => state.setHasPopupCampaign,
   );
 
   const { data: promotionData } = useAirtable<PromotionData>(
-    AIRTABLE_ENDPOINTS.promotion
+    AIRTABLE_ENDPOINTS.promotion,
   );
 
   // Filter and check active promotions by type
@@ -117,18 +124,28 @@ const Header: React.FC = () => {
 
     // Sort by order field (or index as fallback) within each type
     textPromos.sort(
-      (a, b) => (a.order ?? a.index ?? 0) - (b.order ?? b.index ?? 0)
+      (a, b) => (a.order ?? a.index ?? 0) - (b.order ?? b.index ?? 0),
     );
     imagePromos.sort(
-      (a, b) => (a.order ?? a.index ?? 0) - (b.order ?? b.index ?? 0)
+      (a, b) => (a.order ?? a.index ?? 0) - (b.order ?? b.index ?? 0),
     );
 
     return { textPromotions: textPromos, imagePromotions: imagePromos };
   }, [promotionData]);
 
+  // Check if there are any enabled popup campaigns
+  useEffect(() => {
+    const popupCampaign = imagePromotions.filter(
+      (promotion) => promotion.type === "Image",
+    );
+    if (popupCampaign?.some((promotion) => promotion.enabled)) {
+      setHasPopupCampaign(true);
+    }
+  }, [imagePromotions, setHasPopupCampaign]);
+
   const hasCampaignCopy = useMemo(
     () => textPromotions.length > 0,
-    [textPromotions]
+    [textPromotions],
   );
 
   const canShowCampaignText = hasCampaignCopy;
@@ -142,7 +159,7 @@ const Header: React.FC = () => {
   const hasPendingCampaign =
     (canShowCampaignText && !hasDismissedCampaignText) ||
     shouldQueuePopup ||
-    isPopupOpen;
+    isShowPopupCampaign;
 
   // Sync global store so other pages can know campaign bar visibility
   useEffect(() => {
@@ -151,38 +168,71 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const hasSeenPopup = sessionStorage.getItem(CAMPAIGN_POPUP_KEY) === "true";
     setHasDismissedCampaignText(
-      sessionStorage.getItem(CAMPAIGN_TEXT_KEY) === "true"
+      sessionStorage.getItem(CAMPAIGN_TEXT_KEY) === "true",
     );
-    setHasSeenCampaignPopup(
-      sessionStorage.getItem(CAMPAIGN_POPUP_KEY) === "true"
-    );
-  }, []);
+    setHasSeenCampaignPopup(hasSeenPopup);
+    // If popup was already seen (closed), set isShowPopupCampaign to false (show button)
+    // Only apply when load page first time
+    if (hasSeenPopup) {
+      setIsShowPopupCampaign(false);
+    }
+  }, [setIsShowPopupCampaign]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const handleScroll = () => {
-      setIsHeaderSolid(window.scrollY > 50);
-      setIsAtTop(window.scrollY === 0);
+
+    let ticking = false;
+
+    const updateScrollState = () => {
+      const scrollY = window.scrollY;
+
+      setIsHeaderSolid((prev) => {
+        const next = scrollY > 50;
+        return prev === next ? prev : next;
+      });
+
+      setIsAtTop((prev) => {
+        const next = scrollY === 0;
+        return prev === next ? prev : next;
+      });
+
+      ticking = false;
     };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateScrollState);
+      }
+    };
+
+    // Initialize state based on current scroll position
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Auto-open popup on first load if not seen before
   useEffect(() => {
     if (!shouldQueuePopup) {
-      setIsPopupOpen(false);
       return;
     }
-    const timer = window.setTimeout(() => setIsPopupOpen(true), 800);
+    // Auto-open popup after 800ms if not seen before
+    const timer = window.setTimeout(() => {
+      if (imagePromotions.length > 0) {
+        setIsShowPopupCampaign(true);
+      }
+    }, 800);
     return () => window.clearTimeout(timer);
-  }, [shouldQueuePopup]);
+  }, [shouldQueuePopup, imagePromotions.length, setIsShowPopupCampaign]);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
     const html = document.documentElement;
-    if (isMenuOpen || isPopupOpen) {
+    if (isMenuOpen || isShowPopupCampaign) {
       html.classList.add("freeze");
     } else {
       html.classList.remove("freeze");
@@ -190,7 +240,7 @@ const Header: React.FC = () => {
     return () => {
       html.classList.remove("freeze");
     };
-  }, [isMenuOpen, isPopupOpen]);
+  }, [isMenuOpen, isShowPopupCampaign]);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -282,179 +332,100 @@ const Header: React.FC = () => {
     }
   };
 
-  const handleClosePopup = () => {
-    setIsPopupOpen(false);
-    setHasSeenCampaignPopup(true);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem(CAMPAIGN_POPUP_KEY, "true");
-    }
-  };
-
   return (
     <header
       className={clsx(
-        "fixed top-0 left-0 w-full z-[98] shadow-[2px_6px_6px_0px_#0000000F]",
-        isAtTop ? "bg-white/60" : "bg-white"
+        "fixed top-0 left-0 w-full z-[98]",
+        isAtTop ? "lg:bg-transparent" : "lg:bg-[#805D3D]",
+        isMenuOpen
+          ? "bg-white"
+          : "bg-white/90 backdrop-blur-sm lg:backdrop-blur-none",
       )}
     >
       <Promotion
         textPromotions={textPromotions}
-        imagePromotions={imagePromotions}
         showCampaignBar={shouldShowCampaignBar}
         isCampaignDismissed={hasDismissedCampaignText}
-        isPopupOpen={isPopupOpen}
         onCloseCampaign={handleCloseCampaign}
-        onClosePopup={handleClosePopup}
       />
 
-      {/* Main Header */}
-      <Wrapper className="px-4 md:px-4 lg:px-8 overflow-hidden">
-        <Flex
-          ref={headerMainRef}
-          justify="space-between"
-          align="center"
-          gap={16}
-          className="h-[64px] xl:h-[100px] lg:h-[80px]"
-        >
-          <BurgerMenu toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} />
-          <Link
-            to={PATHS.home}
-            onClick={closeMenu}
-            className="flex-shrink-0 max-h-[32px] md:max-h-[45px] lg:max-h-[70px]"
-          >
-            {isDesktop ? (
-              <Image
-                src="/assets/images/logo/desktop.png"
-                alt="THE VEIRA NAIL LOUNGE & SPA"
-                className="max-h-[40px] xl:max-h-[70px]"
-                preview={false}
-              />
-            ) : (
-              <Image
-                src="/assets/images/logo/mobile.png"
-                alt="THE VEIRA NAIL LOUNGE & SPA"
-                className="max-h-[32px] md:max-h-[45px]"
-                preview={false}
-              />
-            )}
-          </Link>
+      <div ref={headerMainRef}>
+        {/* Desktop Header */}
+        <DesktopNav
+          isServicesHovered={isServicesHovered}
+          setIsServicesHovered={setIsServicesHovered}
+          hoverTimeoutRef={hoverTimeoutRef}
+          isServicesPage={isServicesPage}
+        />
 
-          <nav
-            className="hidden lg:flex items-center gap-6 xl:gap-8 flex-1 justify-center relative h-full"
-            aria-label="Main navigation"
-          >
-            <ul className="flex items-center gap-6 xl:gap-8 h-full list-none m-0 p-0">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                const isServices = item.path === PATHS.services;
+        {/* Services Dropdown (Desktop) */}
+        <ServicesSubmenu
+          headerHeight={headerHeight}
+          isVisible={isServicesHovered}
+          onMouseEnter={() => {
+            if (hoverTimeoutRef.current) {
+              clearTimeout(hoverTimeoutRef.current);
+              hoverTimeoutRef.current = null;
+            }
+            setIsServicesHovered(true);
+          }}
+          onMouseLeave={() => {
+            hoverTimeoutRef.current = setTimeout(() => {
+              setIsServicesHovered(false);
+            }, 150);
+          }}
+        />
 
-                return (
-                  <li
-                    key={item.path}
-                    className={clsx(
-                      "relative h-full flex items-center",
-                      isServices && "group"
-                    )}
-                    onMouseEnter={() => {
-                      if (isServicesPage) return;
-                      if (isServices) {
-                        if (hoverTimeoutRef.current) {
-                          clearTimeout(hoverTimeoutRef.current);
-                          hoverTimeoutRef.current = null;
-                        }
-                        setIsServicesHovered(true);
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      if (isServices) {
-                        // Delay hiding to allow mouse to move to submenu
-                        hoverTimeoutRef.current = setTimeout(() => {
-                          setIsServicesHovered(false);
-                        }, 150);
-                      }
-                    }}
-                  >
-                    <Link
-                      to={item.path}
-                      className={clsx(
-                        "uppercase transition-colors text-center h-full flex items-center",
-                        responsiveFontSizeArray(14, 16, { lg: 12 }),
-                        isActive
-                          ? "!text-[#9E7B6A]"
-                          : "text-[#0F172A] hover:text-[#9E7B6A]"
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                    {isServices && !isServicesPage && (
-                      <>
-                        <div
-                          className={
-                            "absolute top-full left-0 right-0 h-2 bg-transparent"
-                          }
-                          onMouseEnter={() => {
-                            if (hoverTimeoutRef.current) {
-                              clearTimeout(hoverTimeoutRef.current);
-                              hoverTimeoutRef.current = null;
-                            }
-                            setIsServicesHovered(true);
-                          }}
-                          onMouseLeave={() => {
-                            hoverTimeoutRef.current = setTimeout(() => {
-                              setIsServicesHovered(false);
-                            }, 150);
-                          }}
-                        />
-                        <ServicesSubmenu
-                          headerHeight={headerHeight}
-                          isVisible={isServicesHovered}
-                          onMouseEnter={() => {
-                            if (hoverTimeoutRef.current) {
-                              clearTimeout(hoverTimeoutRef.current);
-                              hoverTimeoutRef.current = null;
-                            }
-                            setIsServicesHovered(true);
-                          }}
-                          onMouseLeave={() => {
-                            hoverTimeoutRef.current = setTimeout(() => {
-                              setIsServicesHovered(false);
-                            }, 150);
-                          }}
-                        />
-                      </>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <div className="flex flex-col items-end gap-1 lg:flex-row lg:items-center lg:gap-4 flex-shrink-0">
-            {/* Phone Number - Mobile Only */}
-            <a
-              href="tel:608000000"
-              className="lg:hidden text-[#8B7355] text-sm font-medium"
+        {/* Mobile Header */}
+        <NoiseBackground className="lg:hidden w-full h-[64px] md:h-[80px] bg-[#805D3D] shadow-md border-b border-[#B2866D]">
+          <Wrapper className="px-4">
+            <Flex
+              justify="space-between"
+              align="center"
+              className="h-[64px] md:h-[80px]"
             >
-              (608) 000 000
-            </a>
-
-            <ListSocial />
-            <Link to={PATHS.contactUs} className="hidden lg:block">
-              <ButtonStyle1 className="font-lexend">CONTACT US</ButtonStyle1>
-            </Link>
-          </div>
-        </Flex>
-      </Wrapper>
+              <BurgerMenu toggleMenu={toggleMenu} />
+              <Link
+                to={PATHS.home}
+                onClick={closeMenu}
+                className="flex items-center justify-center"
+              >
+                <Image
+                  src="/assets/images/logo/desktop.png"
+                  alt="Logo"
+                  className="max-h-[32px] md:max-h-[45px] !w-auto"
+                  preview={false}
+                />
+              </Link>
+              <ListSocial />
+            </Flex>
+          </Wrapper>
+        </NoiseBackground>
+      </div>
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed inset-0 bg-white z-[98] transform transition-transform duration-300 ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={clsx(
+          "lg:hidden fixed inset-0 bg-[#805D3D] z-[98] transform transition-transform duration-300",
+          isMenuOpen ? "translate-x-0" : "translate-x-full",
+        )}
+        style={{ height: "100dvh" }}
       >
         <Flex vertical className="h-full">
           {/* Mobile Menu Header */}
-          <div className="flex items-center justify-end h-[56px]">
+          <div className="flex items-center justify-between h-[56px] px-4 border-b border-[#B2866D]">
+            <Link
+              to={PATHS.home}
+              onClick={closeMenu}
+              className="flex items-center justify-center"
+            >
+              <Image
+                src="/assets/images/logo/desktop.png"
+                alt="Logo"
+                className="max-h-[32px] !w-auto"
+                preview={false}
+              />
+            </Link>
             <button
               onClick={closeMenu}
               className="p-2 flex items-center justify-center"
@@ -465,13 +436,13 @@ const Header: React.FC = () => {
                 ariaLabel="Close menu"
                 width={24}
                 height={24}
-                className="size-[24px] shrink-0 text-[#0F172A]"
+                className="size-[24px] shrink-0 text-white"
               />
             </button>
           </div>
 
           {/* Mobile Menu Content */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto pb-20">
             <nav className="flex flex-col" aria-label="Mobile navigation">
               <ul className="flex flex-col list-none m-0 p-0">
                 {navItems.map((item) => {
@@ -484,7 +455,7 @@ const Header: React.FC = () => {
                         path: `${PATHS.services}#${category.slug}`,
                         label: category.title,
                         slug: category.slug,
-                      })
+                      }),
                     );
 
                     const checkIsActive = (slug: string) => {
@@ -499,11 +470,8 @@ const Header: React.FC = () => {
                         <button
                           onClick={toggleServicesExpanded}
                           className={clsx(
-                            "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5",
-                            isActive
-                              ? "text-[#9E7B6A] font-semibold"
-                              : "text-[#0F172A]",
-                            isServicesExpanded && "border-b border-[#D5B994]"
+                            "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5 text-white relative",
+                            isActive ? "bg-[#0000001F]" : "font-light",
                           )}
                           style={{
                             boxShadow: isServicesExpanded
@@ -511,22 +479,33 @@ const Header: React.FC = () => {
                               : "none",
                           }}
                         >
-                          <span>{item.label}</span>
-                          <Flex className="w-6 h-6 items-center justify-center rounded-full bg-[#F4F4F5]">
+                          <span className="flex items-center gap-2">
+                            {item.label}
+                            {isActive && (
+                              <SvgIcon
+                                src={"/assets/svgs/star.svg"}
+                                ariaLabel="Active"
+                                width={16}
+                                height={16}
+                                className="shrink-0 text-white"
+                              />
+                            )}
+                          </span>
+                          <Flex className="w-6 h-6 items-center justify-center">
                             <SvgIcon
                               src={"/assets/svgs/chevron-right.svg"}
                               ariaLabel="Toggle submenu"
-                              width={8}
-                              height={8}
+                              width={12}
+                              height={12}
                               className={clsx(
-                                "size-2 shrink-0 transition-transform duration-200 text-[#333333]",
-                                isServicesExpanded && "rotate-90"
+                                "shrink-0 transition-transform duration-200 text-white",
+                                isServicesExpanded && "rotate-90",
                               )}
                             />
                           </Flex>
                         </button>
                         {isServicesExpanded && serviceNavItems.length > 0 && (
-                          <ul className="px-8 mt-2 space-y-1 list-none">
+                          <ul className="px-8 space-y-1 list-none bg-[#0000001F]">
                             {serviceNavItems.map((subItem) => {
                               const isSubActive = checkIsActive(subItem.slug);
                               return (
@@ -535,13 +514,22 @@ const Header: React.FC = () => {
                                     to={subItem.path}
                                     onClick={closeMenu}
                                     className={clsx(
-                                      "block py-2 capitalize transition-colors font-light text-base",
+                                      "flex items-center justify-between py-2 px-4 capitalize transition-colors font-light text-base !text-white rounded-2xl",
                                       isSubActive
-                                        ? "border-b border-[#D5B994CC]"
-                                        : "text-[#8B4B20]"
+                                        ? "bg-[#FFFFFF14]"
+                                        : "font-light",
                                     )}
                                   >
-                                    {subItem.label}
+                                    <span>{subItem.label}</span>
+                                    {isSubActive && (
+                                      <SvgIcon
+                                        src={"/assets/svgs/star.svg"}
+                                        ariaLabel="Active"
+                                        width={16}
+                                        height={16}
+                                        className="shrink-0 text-white"
+                                      />
+                                    )}
                                   </Link>
                                 </li>
                               );
@@ -558,14 +546,21 @@ const Header: React.FC = () => {
                         to={item.path}
                         onClick={closeMenu}
                         className={clsx(
-                          "block py-3 font-lexend uppercase transition-colors px-5",
+                          "flex items-center justify-between py-3 uppercase transition-colors px-5 !text-white",
                           responsiveFontSizeArray(16, 18),
-                          isActive
-                            ? "text-[#9E7B6A] font-semibold"
-                            : "text-[#0F172A] hover:text-[#9E7B6A]"
+                          isActive ? "bg-[#0000001F]" : "font-light",
                         )}
                       >
-                        {item.label}
+                        <span>{item.label}</span>
+                        {isActive && (
+                          <SvgIcon
+                            src={"/assets/svgs/star.svg"}
+                            ariaLabel="Active"
+                            width={16}
+                            height={16}
+                            className="shrink-0 text-white"
+                          />
+                        )}
                       </Link>
                     </li>
                   );
@@ -575,7 +570,9 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Menu Footer */}
-          <div className="pt-20 bg-[#F7F7F7CC] border-t border-[#D5B994]"></div>
+          <div className="fixed bottom-0 left-0 right-0 bg-[#805D3D] border-t border-[#B2866D] flex justify-center py-10 z-10">
+            {/* <ListSocial /> */}
+          </div>
         </Flex>
       </div>
     </header>

@@ -1,0 +1,17 @@
+{
+  "hero": {
+    "title": "Our Policies"
+  },
+  "header": {
+    "accent": "Calm • Clean • Transparent",
+    "title": "A few things to know before your visit",
+    "description": "Simple, clear guidelines so you can relax and enjoy your time with us."
+  },
+  "footer": {
+    "thankYou": "Thank you for your understanding and support of our business.",
+    "contactPrompt": "If you have any questions or concerns, please don't hesitate to contact us."
+  },
+  "emptyState": {
+    "message": "No policies available at the moment."
+  }
+}

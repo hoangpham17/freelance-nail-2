@@ -2,41 +2,33 @@ import { useMemo } from "react";
 import { useAirtable } from "@/hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 import { HomeCommentRecord } from "../../types";
-import { Testimonial, GalleryImage } from "./types";
+
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  comment: string;
+  imageUrl?: string;
+  order: number;
+}
 
 interface UseTestimonialsResult {
-  galleryImages: GalleryImage[];
-  testimonials: Testimonial[];
+  testimonials: TestimonialItem[];
   loading: boolean;
 }
 
-export const useTestimonials = (): UseTestimonialsResult => {
+export const useTestimonials = (
+  tableId: string = AIRTABLE_ENDPOINTS.home_testimonial,
+): UseTestimonialsResult => {
   const { data: commentRecords, loading } = useAirtable<HomeCommentRecord>(
-    AIRTABLE_ENDPOINTS.home_comments
+    tableId,
   );
 
-  const { galleryImages, testimonials } = useMemo(() => {
+  const testimonials = useMemo(() => {
     if (!commentRecords || commentRecords.length === 0) {
-      return { galleryImages: [], testimonials: [] };
+      return [];
     }
 
-    const images: GalleryImage[] = [];
-    const testimonialData: Testimonial[] = [];
-
-    commentRecords
-      .filter((record) => {
-        // Filter out records without valid image URLs
-        if (Array.isArray(record.image) && record.image.length > 0) {
-          const firstImage = record.image[0];
-          return (
-            firstImage &&
-            (typeof firstImage === "string" ||
-              (typeof firstImage === "object" &&
-                firstImage.thumbnails?.full?.url))
-          );
-        }
-        return false;
-      })
+    return commentRecords
       .map((record) => {
         let imageUrl: string | undefined = undefined;
         if (Array.isArray(record.image) && record.image.length > 0) {
@@ -53,43 +45,19 @@ export const useTestimonials = (): UseTestimonialsResult => {
           }
         }
 
-        if (imageUrl) {
-          const id = record.id || `gallery-${Math.random()}`;
-          return {
-            id,
-            record,
-            imageUrl,
-          };
-        }
-        return null;
-      })
-      .filter((item): item is { id: string; record: HomeCommentRecord; imageUrl: string } => item !== null)
-      .sort((a, b) => (a.record.order ?? 0) - (b.record.order ?? 0))
-      .forEach(({ id, record, imageUrl }) => {
-        images.push({
-          id,
-          url: imageUrl,
-        });
-
-        testimonialData.push({
-          id,
+        return {
+          id: record.id || `testimonial-${Math.random()}`,
           name: record.guest_name || "Guest",
           comment: record.comment || "",
-          rating: 0,
-          reviewCount: 0,
-        });
-      });
-
-    return {
-      galleryImages: images,
-      testimonials: testimonialData,
-    };
+          imageUrl,
+          order: record.order ?? 0,
+        };
+      })
+      .sort((a, b) => a.order - b.order);
   }, [commentRecords]);
 
   return {
-    galleryImages,
     testimonials,
     loading,
   };
 };
-

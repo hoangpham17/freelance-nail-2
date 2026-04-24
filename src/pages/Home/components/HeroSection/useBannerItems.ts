@@ -8,7 +8,7 @@ export const useBannerItems = (): {
   loading: boolean;
 } => {
   const { data: bannerRecords, loading } = useAirtable<BannerRecord>(
-    AIRTABLE_ENDPOINTS.banner
+    AIRTABLE_ENDPOINTS.banner,
   );
 
   const bannerItems: BannerItem[] = useMemo(() => {
@@ -32,22 +32,17 @@ export const useBannerItems = (): {
           record.mobile[0]?.url
             ? record.mobile[0].url
             : undefined;
-        const tabletUrl =
-          Array.isArray(record.tablet) &&
-          record.tablet.length > 0 &&
-          record.tablet[0]?.url
-            ? record.tablet[0].url
-            : undefined;
 
         return {
           id: record.id,
           desktop: desktopUrl,
           mobile: mobileUrl,
-          tablet: tabletUrl,
-          note: record.note,
+          banner_title: record.banner_title,
+          is_signup: record.is_signup === true,
+          button_title: record.button_title,
         };
       })
-      .filter((item) => item.desktop || item.mobile || item.tablet);
+      .filter((item) => item.desktop || item.mobile);
   }, [bannerRecords]);
 
   return { bannerItems, loading };

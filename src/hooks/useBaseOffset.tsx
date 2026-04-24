@@ -3,7 +3,7 @@ import { useCampaignStore } from "../shared/store/campaignStore";
 
 export const useBaseOffset = () => {
   const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight
+    (state) => state.campaignBarHeight,
   );
   const headerHeight = useCampaignStore((state) => state.headerHeight);
 

@@ -1,0 +1,17 @@
+{
+  "banner": {
+    "title": "Gallery",
+    "subtitle": "The Veira Nail Lounge & Spa"
+  },
+  "categoryTabs": {
+    "searchPlaceholder": "Search...",
+    "ariaPrevTabs": "Previous tabs",
+    "ariaNextTabs": "Next tabs",
+    "ariaCloseSearch": "Close search",
+    "ariaSearch": "Search"
+  },
+  "error": {
+    "messagePrefix": "Error loading gallery: ",
+    "hint": "Check console for more details"
+  }
+}

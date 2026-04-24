@@ -4,6 +4,9 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/effect-coverflow";
 
 /* Custom Fonts */
 @font-face {
@@ -15,8 +18,33 @@
 }
 
 @font-face {
-  font-family: "Prata";
-  src: url("/assets/fonts/Prata-Regular.ttf") format("truetype");
+  font-family: "Sora";
+  src: url("/assets/fonts/Sora-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Corinthia Bold";
+  src: url("/assets/fonts/Corinthia-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Corinthia Regular";
+  src: url("/assets/fonts/Corinthia-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -27,22 +55,16 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply min-h-screen bg-white text-black font-lexend;
+  html {
+    scroll-behavior: smooth;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-serif;
+  body {
+    @apply min-h-screen bg-white text-black font-sora;
   }
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .freeze {
@@ -83,4 +105,183 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #b7907e !important;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes pulse-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ripple {
+  animation: pulse-ripple 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes organic-floating {
+  0% {
+    transform: translate(0, 0);
+  }
+  18% {
+    transform: translate(5px, -5px);
+  }
+  36% {
+    transform: translate(-2px, -8px);
+  }
+  54% {
+    transform: translate(-6px, -3px);
+  }
+  72%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes organic-floating-2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  18% {
+    transform: translate(-4px, 6px);
+  }
+  36% {
+    transform: translate(7px, 2px);
+  }
+  54% {
+    transform: translate(-3px, -5px);
+  }
+  72%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes organic-floating-3 {
+  0% {
+    transform: translate(0, 0);
+  }
+  18% {
+    transform: translate(8px, 4px);
+  }
+  36% {
+    transform: translate(-5px, -2px);
+  }
+  54% {
+    transform: translate(4px, 7px);
+  }
+  72%,
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.animate-organic-floating-1 {
+  animation: organic-floating 11s ease-in-out infinite;
+}
+.animate-organic-floating-2 {
+  animation: organic-floating-2 13s ease-in-out infinite;
+}
+.animate-organic-floating-3 {
+  animation: organic-floating-3 15s ease-in-out infinite;
+}
+
+@keyframes confetti-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--confetti-rotate, 0deg));
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-8px) rotate(var(--confetti-rotate, 0deg));
+    opacity: 1;
+  }
+}
+
+.animate-confetti-float {
+  animation: confetti-float 3s ease-in-out infinite;
+}
+
+/* Swiper Stacked Testimonial Styles */
+.testimonial-swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  overflow: visible !important;
+}
+
+.testimonial-swiper .swiper-slide {
+  transition: all 0.5s ease;
+  transform: scale(0.85);
+  opacity: 0.4;
+  z-index: 1;
+}
+
+.testimonial-swiper .swiper-slide-active {
+  transform: scale(1);
+  opacity: 1;
+  z-index: 10 !important;
+}
+
+/* Second level cards */
+.testimonial-swiper .swiper-slide-next,
+.testimonial-swiper .swiper-slide-prev {
+  transform: scale(0.92);
+  opacity: 0.7;
+  z-index: 5 !important;
+}
+
+/* Category Tabs - Ensure cloned items maintain styles */
+.category-tabs-swiper .swiper-slide-duplicate .tab-item {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid white !important;
+  border-radius: 16px !important;
+  box-shadow: 0px 5px 16px 0px #8b4b2026 !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: #8b4b20 !important;
+}
+
+/* Category Tabs - Swiper variable width support */
+.category-tabs-swiper .swiper-slide,
+.gallery-tabs-swiper .swiper-slide {
+  width: auto !important;
+}
+
+/* Ensure lists have proper styling */
+ul,
+ol {
+  list-style-position: outside;
+  padding-left: 1.5em;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  display: list-item;
+  margin-bottom: 0.5em;
 }

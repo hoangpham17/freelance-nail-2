@@ -11,6 +11,20 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "THE VEIRA NAIL LOUNGE & SPA",
+    alternateName: [
+      "The Veira",
+      "The Veira Nail",
+      "The Veira Spa",
+      "The Veira Nail Spa",
+      "THE VEIRA NAIL LOUNGE & SPA",
+      "veira nail",
+      "veira spa",
+      "veira nail spa",
+      "veira nail salon",
+      "veira spa salon",
+      "veira nail salon Madison WI",
+      "veira spa salon Madison WI",
+    ],
     image:
       typeof window !== "undefined"
         ? `${window.location.origin}/assets/images/logo/desktop.png`
@@ -24,7 +38,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
       streetAddress: "795 University Ave",
       addressLocality: "Madison",
       addressRegion: "WI",
-      postalCode: "53517",
+      postalCode: "53715",
       addressCountry: "US",
     },
     geo: {
@@ -70,7 +84,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
         streetAddress: "795 University Ave",
         addressLocality: "Madison",
         addressRegion: "WI",
-        postalCode: "53517",
+        postalCode: "53715",
         addressCountry: "US",
       },
       telephone: "+1-608-720-1011",

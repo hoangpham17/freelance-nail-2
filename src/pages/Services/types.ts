@@ -11,11 +11,11 @@ export type ServiceItem = {
   name?: string;
   description?: string;
   price?: string;
-  image?: string | AirtableAttachment[];
   category?: string | string[];
   add_on_services?: string;
   index?: number;
   order?: number;
+  is_expand?: boolean;
 };
 
 export type ServiceCategory = {
@@ -24,20 +24,20 @@ export type ServiceCategory = {
   title: string;
   slug: string;
   description: string;
-  titleBackgroundImage: string;
-  sectionBackgroundImage: string;
+  section_image: string;
   icon: string;
+  additional_charge: string;
   services: ServiceItem[];
 };
 
 export type ServiceCategoryRecord = {
   id?: string;
   name?: string;
-  title_background_image?: string | AirtableAttachment[];
-  section_background_image?: string | AirtableAttachment[];
+  section_image?: string | AirtableAttachment[];
   slug?: string;
   description?: string;
   index?: number;
   icon?: string | AirtableAttachment[];
   order?: number;
+  additional_charge?: string;
 };

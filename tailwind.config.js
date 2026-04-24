@@ -76,8 +76,19 @@ export default {
       fontFamily: {
         serif: ["Playfair Display", "serif"],
         sans: ["Inter", "sans-serif"],
-        lexend: ["Lexend", "sans-serif"],
-        prata: ["Prata", "serif"],
+        sora: ["Sora", "sans-serif"],
+        playfairDisplay: ["Playfair Display", "serif"],
+        corinthiaBold: ["Corinthia Bold", "serif"],
+        corinthiaRegular: ["Corinthia Regular", "serif"],
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 1s ease-out forwards",
       },
     },
   },

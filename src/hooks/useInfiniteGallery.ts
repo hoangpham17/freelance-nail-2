@@ -17,16 +17,12 @@ interface UseInfiniteGalleryResult<T> {
 
 /**
  * Builds Airtable filter formula for search query
- * Searches in description and keyword fields
+ * Searches in keyword field only (description excluded)
  * Uses FIND with LOWER for case-insensitive search that handles empty fields better
  */
 const buildSearchFormula = (searchQuery: string): string => {
   const escapedQuery = searchQuery.replace(/'/g, "''");
-
-  return `OR(
-    AND({description}, FIND(LOWER("${escapedQuery}"), LOWER({description})) > 0),
-    AND({keyword}, FIND(LOWER("${escapedQuery}"), LOWER({keyword})) > 0)
-  )`;
+  return `AND({keyword}, FIND(LOWER("${escapedQuery}"), LOWER({keyword})) > 0)`;
 };
 
 const combineFilters = (...filters: string[]): string => {

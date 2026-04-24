@@ -19,24 +19,25 @@ const listSocial = [
 export const ListSocial = () => {
   const { isDesktop } = useScreen();
 
-  const iconSize = useMemo(() => (isDesktop ? 24 : 14), [isDesktop]);
+  const iconSize = useMemo(() => (isDesktop ? 16 : 14), [isDesktop]);
 
   return (
     <Flex className="gap-[6px] lg:gap-2">
       {listSocial.map((item) => (
         <a
           key={item.name}
+          title={item.name}
           href={item.href}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-center hover:opacity-80 !text-[#9E7B6A]"
+          className="flex items-center justify-center bg-[#F6EFE9] w-6 h-6 rounded-full hover:bg-white"
         >
           <SvgIcon
             src={item.iconUrl}
             ariaLabel="text"
             width={iconSize}
             height={iconSize}
-            className="shrink-0"
+            className="shrink-0 text-[#A1744F]"
           />
         </a>
       ))}

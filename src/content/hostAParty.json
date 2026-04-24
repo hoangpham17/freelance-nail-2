@@ -1,0 +1,73 @@
+{
+  "hero": {
+    "titleLine1": "Make Your Next Party",
+    "titleLine2": "Unforgettable.",
+    "description": "Host your party at The Veira Nail Lounge &amp; Spa with beautiful space, a dedicated team, and effortless celebration.",
+    "ctaPlan": "Plan your party",
+    "ctaBrowse": "Browse services",
+    "heroImageAlt": "Party at our salon"
+  },
+  "occasions": {
+    "heading": "Let's get the party started",
+    "subtext": "From birthdays to corporate events — we'll help you plan.",
+    "items": [
+      { "label": "Birthday", "color": "#F8D7E0", "colorDark": "#E8A0B0" },
+      { "label": "Bridal shower", "color": "#D4E8F5", "colorDark": "#A0C8E0" },
+      {
+        "label": "Bachelorette parties",
+        "color": "#E8D8F0",
+        "colorDark": "#C8A8D8"
+      },
+      {
+        "label": "Corporate events",
+        "color": "#FFE8E0",
+        "colorDark": "#E8B8A8"
+      },
+      {
+        "label": "Special gatherings",
+        "color": "#E8F5E9",
+        "colorDark": "#A5D6A7"
+      }
+    ]
+  },
+  "formSection": {
+    "accent": "Get in touch",
+    "title": "Send your party inquiry",
+    "subtext": "We'll reply soon to confirm details."
+  },
+  "partyForm": {
+    "labels": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "preferredDate": "Preferred date",
+      "partySize": "Party size",
+      "message": "Message"
+    },
+    "placeholders": {
+      "name": "Your name",
+      "phone": "Your phone number",
+      "email": "Your email",
+      "message": "Please include the services for each individual"
+    },
+    "placeholdersParty": {
+      "partySize": "Number of guests"
+    },
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "phoneRequired": "Please enter your phone",
+      "phoneMinDigits": "Please enter at least 9 digits",
+      "phoneMaxDigits": "Please enter at most 12 digits",
+      "emailRequired": "Please enter your email",
+      "emailInvalid": "Please enter a valid email",
+      "dateRequired": "Please select a date",
+      "dateFuture": "Date must be in the future",
+      "partySizeRequired": "Please enter party size",
+      "partySizeMin": "Party size must be at least 1"
+    },
+    "buttons": {
+      "send": "Send inquiry",
+      "sending": "Sending..."
+    }
+  }
+}

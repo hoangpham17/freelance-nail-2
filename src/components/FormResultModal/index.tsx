@@ -1,68 +1,123 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Modal, Button } from "antd";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { CloseCircleOutlined } from "@ant-design/icons";
+import Lottie from "lottie-react";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import commonContent from "@/content/common.json";
+
+const SUBMIT_SUCCESS_LOTTIE_URL = "/assets/images/submit-success.json";
+/** Cao hơn mọi layout làm mờ trong app */
+const MODAL_Z_INDEX = 100001;
+const LOTTIE_OVERLAY_Z_INDEX = 100000;
 
 interface FormResultModalProps {
   open: boolean;
   isSuccess: boolean;
   onClose: () => void;
+  successMessage?: string;
+  errorMessage?: string;
 }
 
 const FormResultModal: React.FC<FormResultModalProps> = ({
   open,
   isSuccess,
   onClose,
+  successMessage = (commonContent as { formResultModal: { defaultSuccessMessage: string } }).formResultModal.defaultSuccessMessage,
+  errorMessage = (commonContent as { formResultModal: { defaultErrorMessage: string } }).formResultModal.defaultErrorMessage,
 }) => {
-  const successMessage =
-    "Thank you for contacting us regarding our\ncurrent products and prices";
-  const errorMessage =
-    "Sorry our system is experiencing some errors now,\nplease try again later.";
+  const [successLottieData, setSuccessLottieData] = useState<object | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (!open || !isSuccess) return;
+    fetch(SUBMIT_SUCCESS_LOTTIE_URL)
+      .then((res) => res.json())
+      .then(setSuccessLottieData)
+      .catch(() => {});
+  }, [open, isSuccess]);
 
   const message = isSuccess ? successMessage : errorMessage;
-  const Icon = isSuccess ? CheckCircleOutlined : CloseCircleOutlined;
-  const iconColor = isSuccess ? "#52c41a" : "#ff4d4f";
+  const showFullScreenLottie = open && isSuccess && successLottieData;
+
+  const lottieOverlay = showFullScreenLottie && (
+    <div
+      className="fixed inset-0 overflow-hidden pointer-events-none"
+      style={{ zIndex: LOTTIE_OVERLAY_Z_INDEX }}
+      aria-hidden
+    >
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[max(100%,177.78vh)] h-[max(100%,56.25vw)]"
+        style={{ maxWidth: "none", maxHeight: "none" }}
+      >
+        <Lottie
+          animationData={successLottieData}
+          loop={false}
+          className="w-full h-full"
+        />
+      </div>
+    </div>
+  );
 
   return (
-    <Modal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      centered
-      className="form-result-modal"
-      width="90%"
-      style={{ maxWidth: "500px" }}
-      closable={false}
-    >
-      <div className="flex flex-col items-center gap-6 py-4">
-        <Icon className={clsx("text-6xl")} style={{ color: iconColor }} />
+    <>
+      {/* Render Lottie vào body để nằm trên mọi layout làm mờ */}
+      {typeof document !== "undefined" &&
+        lottieOverlay &&
+        createPortal(lottieOverlay, document.body)}
+
+      <Modal
+        open={open}
+        onCancel={onClose}
+        footer={null}
+        centered
+        width="90%"
+        style={{
+          maxWidth: "440px",
+          zIndex: MODAL_Z_INDEX,
+        }}
+        closable={false}
+        mask={!isSuccess}
+        className="[&_.ant-modal-content]:rounded-2xl [&_.ant-modal-content]:overflow-hidden [&_.ant-modal-content]:border [&_.ant-modal-content]:border-[#EDE6E0] [&_.ant-modal-content]:shadow-[0_8px_32px_rgba(107,74,47,0.12)] [&_.ant-modal-body]:p-8"
+      >
+        <div className="flex flex-col items-center gap-6 py-2">
+          {!isSuccess && (
+            <CloseCircleOutlined
+              className="text-4xl lg:text-5xl"
+              style={{ color: "#A65D57" }}
+            />
+          )}
         <div className="text-center">
           <p
             className={clsx(
-              "text-[#10182A] whitespace-pre-line",
-              responsiveFontSizeArray(16, 18)
+              "text-[#5C4D42] font-light leading-relaxed whitespace-pre-line",
+              responsiveFontSizeArray(15, 17),
             )}
           >
             {message}
           </p>
         </div>
-
         <Button
           type="primary"
           size="large"
           onClick={onClose}
           className={clsx(
-            "px-8 py-2 h-auto rounded-xl !bg-[#8B7355] text-white border-none",
-            "font-semibold",
-            "hover:!bg-[#A67C52] transition-colors",
-            responsiveFontSizeArray(16, 18)
+            "min-w-[140px] rounded-[36px] text-white h-12 font-playfairDisplay font-semibold border-0",
+            "hover:opacity-90 transition-opacity",
+            responsiveFontSizeArray(16, 18),
           )}
+          style={{
+            background: "linear-gradient(135deg, #805D3D 0%, #6B4A2F 100%)",
+            boxShadow: "0px 4px 12px 0px #6B4A2F26",
+          }}
         >
-          OK
+          {(commonContent as { formResultModal: { okButton: string } }).formResultModal.okButton}
         </Button>
       </div>
     </Modal>
+    </>
   );
 };
 

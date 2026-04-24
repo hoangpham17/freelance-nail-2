@@ -5,12 +5,12 @@
 
 export const SEO_CONFIG = {
   siteName: "THE VEIRA NAIL LOUNGE & SPA",
-  siteUrl: process.env.VITE_SITE_URL || "https://theveiranailspa.com",
+  siteUrl: "https://theveiranailspa.com",
   defaultTitle: "THE VEIRA NAIL LOUNGE & SPA - Premium Nail Care Services",
   defaultDescription:
     "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.",
   defaultKeywords:
-    "nail salon, manicure, pedicure, nail art, Madison WI, spa services, nail enhancements",
+    "the veira, the veira nail, the veira spa, the veira nail spa, The Veira Nail Lounge & Spa, nail salon Madison WI, manicure, pedicure, nail art, spa Madison WI, nail enhancements, veira nail, veira spa, veira nail spa, veira nail salon, veira spa salon, veira nail salon Madison WI, veira spa salon Madison WI",
   defaultImage: "/assets/images/logo/desktop.png",
   twitterHandle: "@veiranail",
   business: {
@@ -21,7 +21,7 @@ export const SEO_CONFIG = {
       street: "795 University Ave",
       city: "Madison",
       state: "WI",
-      zip: "53517",
+      zip: "53715",
       country: "US",
     },
     coordinates: {

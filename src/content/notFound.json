@@ -1,0 +1,16 @@
+{
+  "code": "404",
+  "title": "Page Not Found",
+  "description": "Oops! The page you're looking for doesn't exist. It might have been moved, deleted, or the URL might be incorrect.",
+  "actions": {
+    "goHome": "Go to Homepage",
+    "viewServices": "View Our Services"
+  },
+  "linksIntro": "Or visit one of these pages:",
+  "links": {
+    "hostAParty": "Host a Party",
+    "aboutUs": "About Us",
+    "gallery": "Gallery",
+    "contactUs": "Contact Us"
+  }
+}

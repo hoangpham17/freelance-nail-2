@@ -1,3 +1,4 @@
+import { SEO_CONFIG } from "@/config/seo.config";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
@@ -12,9 +13,9 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({
-  title = "THE VEIRA NAIL LOUNGE & SPA - Premium Nail Care Services",
-  description = "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.",
-  keywords = "nail salon, manicure, pedicure, nail art, Madison WI, spa services, nail enhancements",
+  title = SEO_CONFIG.defaultTitle,
+  description = SEO_CONFIG.defaultDescription,
+  keywords = SEO_CONFIG.defaultKeywords,
   image = "/assets/images/logo/desktop.png",
   url = typeof window !== "undefined" ? window.location.href : "",
   type = "website",

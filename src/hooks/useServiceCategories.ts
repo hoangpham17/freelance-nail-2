@@ -18,14 +18,11 @@ export const useServiceCategories = (): {
   categories: ServiceCategory[];
   loading: boolean;
 } => {
-  const {
-    data: categoriesData,
-    loading: categoriesLoading,
-  } = useAirtable<ServiceCategoryRecord>(AIRTABLE_ENDPOINTS.list_services);
+  const { data: categoriesData, loading: categoriesLoading } =
+    useAirtable<ServiceCategoryRecord>(AIRTABLE_ENDPOINTS.list_services);
 
-  const { data: servicesData, loading: servicesLoading } = useAirtable<ServiceItem>(
-    AIRTABLE_ENDPOINTS.services
-  );
+  const { data: servicesData, loading: servicesLoading } =
+    useAirtable<ServiceItem>(AIRTABLE_ENDPOINTS.services);
 
   const serviceCategories: ServiceCategory[] = useMemo(() => {
     if (!categoriesData || categoriesData.length === 0) {
@@ -40,20 +37,19 @@ export const useServiceCategories = (): {
         title: category.name || "",
         slug: category.slug || "",
         description: category.description || "",
-        titleBackgroundImage: resolveImageUrl(category.title_background_image),
-        sectionBackgroundImage: resolveImageUrl(
-          category.section_background_image
-        ),
+        section_image: resolveImageUrl(category.section_image),
         icon: resolveImageUrl(category.icon),
+        additional_charge: category.additional_charge ?? "",
         services:
           servicesData
             ?.filter((service) =>
-              (service.category as string[])?.includes(category.slug || "")
+              (service.category as string[])?.includes(category.slug || ""),
             )
             ?.map((service) => ({
               ...service,
               price: service.price || "",
               addons: service.add_on_services || "",
+              is_expand: service.is_expand,
             }))
             .sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0)) || [],
       }));

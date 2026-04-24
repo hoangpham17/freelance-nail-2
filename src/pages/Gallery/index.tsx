@@ -1,85 +1,51 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { useInfiniteGallery } from "../../hooks/useInfiniteGallery";
-import { GalleryItem, GalleryRecord } from "./types";
+import React, { useState, useEffect } from "react";
+import clsx from "clsx";
+import { GalleryItem } from "./types";
 import CategoryTabs from "./components/CategoryTabs";
-import BannerSection from "./components/BannerSection";
 import GalleryGrid from "./components/GalleryGrid";
 import GalleryPopup from "./components/GalleryPopup";
-import LoadingPage from "../../components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import { useScreen } from "@/hooks/useScreen";
 import { useDebounce } from "@/hooks/useDebounce";
-
-const FILTERS = [
-  { id: "All", label: "All" },
-  { id: "nail_lounge", label: "Our Nail Lounge" },
-  { id: "nail_art", label: "Our Nail Art" },
-  { id: "face_relax", label: "Face Relax" },
-];
+import { useGalleryItems } from "./useGalleryItems";
+import { useGalleryCategories } from "./useGalleryCategories";
+import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import galleryContent from "@/content/gallery.json";
 
 const Gallery: React.FC = () => {
   const { isDesktop } = useScreen();
-  const { mainTopSpacing, campaignBarHeight } = useBaseOffset();
+  const { mainTopSpacing } = useBaseOffset();
+  const { filters, loading: categoriesLoading } = useGalleryCategories();
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupItems, setPopupItems] = useState<GalleryItem[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Sync activeFilter when categories load: if current value not in list, reset to "All"
+  useEffect(() => {
+    if (categoriesLoading || filters.length <= 1) return;
+    const ids = filters.map((f) => f.id);
+    if (!ids.includes(activeFilter)) {
+      setActiveFilter("All");
+    }
+  }, [filters, categoriesLoading, activeFilter]);
+
   // Debounce search query to avoid searching on every keystroke
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
-  // Use infinite scroll hook with category filter and search query
+  // Use gallery items hook with category filter and search query
   const {
-    data: galleryData,
+    galleryItems,
     loading,
     error,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useInfiniteGallery<GalleryRecord>(
-    activeFilter !== "All" ? activeFilter : undefined,
-    21,
-    debouncedSearchQuery.trim() || undefined
-  );
-
-  const galleryItems: GalleryItem[] = useMemo(() => {
-    if (!galleryData || galleryData.length === 0) {
-      return [];
-    }
-
-    const items = galleryData.map((record, index) => {
-      // Get image URL from new image field structure
-      let imageUrl = "";
-      if (
-        record.image &&
-        Array.isArray(record.image) &&
-        record.image.length > 0
-      ) {
-        // Use the first image's URL
-        imageUrl = record.image[0].url || "";
-      } else if (record.url) {
-        // Fallback to legacy url field for backward compatibility
-        imageUrl = Array.isArray(record.url)
-          ? record.url[0]?.url || ""
-          : record.url || "";
-      }
-
-      const item = {
-        id: record.id || `gallery-${index}`,
-        url: imageUrl,
-        description: record.description,
-        category: record.category?.toLowerCase(),
-      };
-
-      return item;
-    });
-
-    const itemsWithImages = items.filter((item) => item.url);
-
-    // Return only items with images
-    return itemsWithImages;
-  }, [galleryData]);
+  } = useGalleryItems({
+    activeFilter,
+    debouncedSearchQuery,
+  });
 
   // Search and category filtering are now done via API
   // No need for client-side filtering anymore
@@ -105,39 +71,74 @@ const Gallery: React.FC = () => {
       className="w-full relative"
       style={{ paddingTop: `${mainTopSpacing}px` }}
     >
-      {loading && (!galleryData || galleryData.length === 0) && <LoadingPage />}
-
       {error && (
         <div className="p-4 bg-red-100 text-red-800 rounded m-4">
-          <p>Error loading gallery: {error.message}</p>
-          <p className="text-sm mt-2">Check console for more details</p>
+          <p>
+            {(galleryContent as { error: { messagePrefix: string } }).error.messagePrefix}
+            {error.message}
+          </p>
+          <p className="text-sm mt-2">
+            {(galleryContent as { error: { hint: string } }).error.hint}
+          </p>
         </div>
       )}
 
-      <div
-        className="absolute lg:left-1/2 lg:-translate-x-1/2 h-[328px] lg:h-[657px] w-full"
-        style={{
-          backgroundImage: `url(/assets/images/Gallery/banner.png)`,
-          backgroundSize: "auto 100%",
-          backgroundPosition: isDesktop ? "center" : "80% center",
-          backgroundRepeat: "no-repeat",
-          top: campaignBarHeight,
-        }}
+      {/* Banner Section */}
+      <section className="relative w-full overflow-hidden px-4 md:px-6 lg:px-12 py-8 lg:py-12">
+        <div
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: `url(/assets/images/Gallery/banner.png)`,
+            backgroundSize: isDesktop ? "cover" : "cover",
+          }}
+        />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 h-full flex flex-col items-center justify-center gap-0">
+          <h1 className="relative">
+<span
+                className={clsx(
+                  "block font-playfairDisplay font-bold text-white leading-[0.92]",
+                  responsiveFontSizeArray(48, 96),
+                )}
+              >
+                {(galleryContent as { banner: { title: string } }).banner.title}
+              </span>
+          </h1>
+          {/* <div
+            className="mt-4 lg:mt-6 h-px w-24 mx-auto"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(255,255,255,0.9) 0%, transparent 100%)",
+            }}
+          />
+          <p
+            className={clsx(
+              "text-white/90 font-extralight uppercase tracking-[0.25em] mt-4 lg:mt-6",
+              responsiveFontSizeArray(10, 11),
+            )}
+            style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
+          >
+            The Veira Nail Lounge & Spa
+          </p> */}
+        </div>
+      </section>
+
+      <CategoryTabs
+        filters={filters}
+        activeFilter={activeFilter}
+        onChange={setActiveFilter}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
       />
 
-      <article>
-        <BannerSection />
-
-        <section aria-label="Gallery filters">
-          <CategoryTabs
-            filters={FILTERS}
-            activeFilter={activeFilter}
-            onChange={setActiveFilter}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-          />
-        </section>
-
+      <article
+        className="relative w-full"
+        style={{
+          background:
+            "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
+        }}
+      >
         <section aria-label="Gallery images">
           <GalleryGrid
             items={filteredItems}

@@ -2,10 +2,10 @@ export type BannerRecord = {
   id?: string;
   desktop?: { url: string }[];
   mobile?: { url: string }[];
-  tablet?: { url: string }[];
-  index?: number;
   order?: number;
-  note?: string;
+  banner_title?: string;
+  is_signup?: boolean;
+  button_title?: string;
 };
 
 export type GalleryRecord = {
@@ -21,25 +21,22 @@ export type GalleryRecord = {
           };
         };
       }>;
-  description?: string;
   index?: number;
   order?: number;
-  text_color?: string;
-  text_position?: "left" | "right";
 };
 
 export type BannerItem = {
   id?: string;
   desktop?: string;
   mobile?: string;
-  tablet?: string;
-  note?: string;
+  banner_title?: string;
+  button_title?: string;
+  is_signup?: boolean;
 };
 
 export type HomeGalleryItem = {
   id?: string;
   url?: string;
-  description?: string;
 };
 
 export type WhyChooseItem = {
@@ -63,4 +60,26 @@ export type HomeCommentRecord = {
           };
         };
       }>;
+};
+
+export type HomeTitleBlockRecord = {
+  block?: string;
+  title?: string;
+  sub_title?: string;
+  description?: string;
+  is_season_gallery?: boolean;
+};
+
+export type AboutUsItemRecord = {
+  id: string;
+  image?: any[];
+  note?: string;
+  order?: number;
+};
+
+export type AboutUsItem = {
+  id: string;
+  imageUrl?: string;
+  note?: string;
+  order: number;
 };

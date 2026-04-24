@@ -20,7 +20,7 @@ export const AIRTABLE_WRITE_ENDPOINTS = {
   guest_contact: "tbldJLGY3OaSVOYKk",
 } as const;
 
-/**
+/** 
  * Create a new record in Airtable
  * @param tableId - The table ID to create the record in
  * @param fields - The fields to set for the new record (can be string, number, or boolean)

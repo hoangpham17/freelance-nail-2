@@ -16,7 +16,7 @@ const Icon: React.FC<IconProps> = ({ url, handleCopy }) => {
         gap={8}
         onClick={() =>
           handleCopy(
-            `<SvgIcon src={"${url}"} ariaLabel="text" width={24} height={24} className="size-[24px] shrink-0" />`
+            `<SvgIcon src={"${url}"} ariaLabel="text" width={24} height={24} className="size-[24px] shrink-0" />`,
           )
         }
       >
@@ -64,6 +64,8 @@ export const ListIcon: React.FC<ListIconProps> = ({ handleCopy }) => {
     "assets/svgs/email.svg",
     "assets/svgs/group-user.svg",
     "assets/svgs/chat.svg",
+    "assets/svgs/promotion.svg",
+    "assets/svgs/star.svg",
   ];
 
   return (

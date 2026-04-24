@@ -37,15 +37,17 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
   }, [location.pathname]);
 
   // Get SEO data from route config
-  const seoTitle = route?.title || "THE VEIRA NAIL LOUNGE & SPA";
+  const seoTitle = route?.title || "The Veira Nail Lounge & Spa";
   const seoDescription =
     route?.description ||
-    "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.";
+    "The Veira nail salon and spa in Madison, WI. The Veira Nail Lounge & Spa offers manicures, pedicures, nail art, and spa treatments. Book The Veira nail or spa services today.";
 
   // Get keywords based on route
   const getKeywords = () => {
+    const base =
+      "the veira, the veira nail, the veira spa, the veira nail spa, The Veira Nail Lounge & Spa, veira nail, veira spa, veira nail spa, veira nail salon, veira spa salon, veira nail salon Madison WI, veira spa salon Madison WI";
     if (location.pathname === "/services") {
-      return "nail services, manicure, pedicure, nail enhancements, nail art, waxing, spa treatments, Madison WI nail salon, professional nail care, gel nails, dip powder, acrylic nails, nail extensions";
+      return `${base}, nail services, manicure, pedicure, nail enhancements, nail art, waxing, spa treatments, Madison WI nail salon, professional nail care, gel nails, dip powder, acrylic nails, nail extensions`;
     }
     return undefined;
   };
@@ -80,9 +82,7 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
         }
       />
       {/* Structured Data for home and services pages */}
-      {structuredDataType && (
-        <StructuredData type={structuredDataType} />
-      )}
+      {structuredDataType && <StructuredData type={structuredDataType} />}
       {/* Lazy loaded page content */}
       <Suspense fallback={<LoadingPage />}>{children}</Suspense>
     </>

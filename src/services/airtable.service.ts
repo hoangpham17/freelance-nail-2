@@ -10,19 +10,23 @@ const AIRTABLE_CONFIG = {
 };
 
 const base = new Airtable({ apiKey: AIRTABLE_CONFIG.apiKey }).base(
-  AIRTABLE_CONFIG.baseId
+  AIRTABLE_CONFIG.baseId,
 );
 
 export const AIRTABLE_ENDPOINTS = {
-  aboutUs: "about-us",
+  home_title_block: "tblWoMVwhlg3WXK9v",
+  home_aboutUs: "tblJ6EuS50OkbU91o",
+  home_testimonial: "tblZbWKvBilnZB6ge",
+  home_season_gallery: "tbloVi68PbIiBjGO8",
   services: "tblpfWm5eaqWkRNlf",
   list_services: "tblEjsDqCMgqQzDEN",
   banner: "tblBJE5SoZNzFEk4h",
   home_gallery: "tblh3ZJpTjB5NbFmJ",
   gallery: "tblSTkMoAhVrOXYS7",
+  gallery_categories: "tbl7exhFV3gAEKFlr",
   promotion: "tblFjrUsoWmeWV82J",
-  home_comments: "tblZbWKvBilnZB6ge",
   policies: "tblhhzm1SgbRiBJcc",
+  aboutUs: "tblCEzLPT5nMFLRi1",
 } as const;
 
 export interface AirtableQueryOptions {
@@ -34,7 +38,7 @@ export interface AirtableQueryOptions {
 
 export const fetchAirtableData = async <T = Record<string, unknown>>(
   tableId: string,
-  options?: AirtableQueryOptions
+  options?: AirtableQueryOptions,
 ): Promise<{ records: T[]; offset?: string }> => {
   const queryOptions: Record<string, unknown> = {};
 
@@ -91,7 +95,7 @@ export const fetchAirtableData = async <T = Record<string, unknown>>(
 
     if (!response.ok) {
       throw new Error(
-        `Airtable API error: ${response.status} ${response.statusText}`
+        `Airtable API error: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -101,7 +105,7 @@ export const fetchAirtableData = async <T = Record<string, unknown>>(
       (record: { id: string; fields: Record<string, unknown> }) => ({
         id: record.id,
         ...record.fields,
-      })
+      }),
     ) as T[];
 
     return {
@@ -149,7 +153,7 @@ export const fetchAirtableData = async <T = Record<string, unknown>>(
 
       if (!retryResponse.ok) {
         throw new Error(
-          `Airtable API error: ${retryResponse.status} ${retryResponse.statusText}`
+          `Airtable API error: ${retryResponse.status} ${retryResponse.statusText}`,
         );
       }
 
@@ -159,7 +163,7 @@ export const fetchAirtableData = async <T = Record<string, unknown>>(
         (record: { id: string; fields: Record<string, unknown> }) => ({
           id: record.id,
           ...record.fields,
-        })
+        }),
       ) as T[];
 
       return {
@@ -177,7 +181,7 @@ export const fetchAirtableData = async <T = Record<string, unknown>>(
 
 // Legacy function for backward compatibility - fetches all records
 export const fetchAllAirtableData = async <T = Record<string, unknown>>(
-  tableId: string
+  tableId: string,
 ): Promise<T[]> => {
   try {
     const records = await base(tableId).select().all();
@@ -188,16 +192,6 @@ export const fetchAllAirtableData = async <T = Record<string, unknown>>(
     })) as T[];
   } catch (error) {
     console.error("Error fetching data from Airtable:", error);
-    throw error;
-  }
-};
-
-export const fetchAboutUsData = async () => {
-  try {
-    const data = await fetchAllAirtableData(AIRTABLE_ENDPOINTS.aboutUs);
-    return data;
-  } catch (error) {
-    console.error("Error fetching About Us data:", error);
     throw error;
   }
 };

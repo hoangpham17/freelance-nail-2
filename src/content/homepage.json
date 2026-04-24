@@ -1,0 +1,12 @@
+{
+  "hero": {
+    "defaultBannerTitle": "`Your beauty`\nis our Inspiration\n"
+  },
+  "testimonialSection": {
+    "galleryButtonLabel": "GALLERY"
+  },
+  "galleryPopup": {
+    "closeAriaLabel": "Close popup",
+    "imageAlt": "Gallery"
+  }
+}

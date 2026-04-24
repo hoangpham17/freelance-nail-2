@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "titleContact": "Contact Us",
+    "titleSignup": "Sign Up"
+  },
+  "intro": {
+    "headingContact": "Send us a Short Message",
+    "headingSignup": "Sign up for promotions & campaigns",
+    "subtextContact": "We will respond to your inquiry within 24 hours.",
+    "subtextSignup": "Join our list to receive exclusive offers, salon updates, and event invitations."
+  },
+  "form": {
+    "labels": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "messageOptional": "Message (optional)"
+    },
+    "placeholders": {
+      "name": "Your name",
+      "phone": "Your phone number",
+      "email": "Your email",
+      "message": "Your message...",
+      "messageSignup": "Tell us your interests or leave blank..."
+    },
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "phoneRequired": "Please enter your phone",
+      "phoneMinDigits": "Phone number must have at least 9 digits",
+      "phoneMaxDigits": "Phone number must have at most 12 digits",
+      "emailRequired": "Please enter your email",
+      "emailInvalid": "Please enter a valid email"
+    },
+    "buttons": {
+      "send": "Send",
+      "signUp": "Sign up",
+      "sending": "Sending...",
+      "signingUp": "Signing up..."
+    },
+    "successMessageSignup": "You're signed up! We'll send you exclusive offers and updates."
+  },
+  "contactInfo": {
+    "introContact": "Have a question or ready to book? Use the form below or reach us directly by phone, email, or visit us at our address.",
+    "introSignup": "Sign up below to get exclusive promotions, campaign updates, and invites. You can also reach us by phone, email, or visit.",
+    "cards": [
+      {
+        "title": "Our Address",
+        "lines": ["795 University Ave", "Madison, WI 53715"]
+      },
+      {
+        "title": "Phone Number",
+        "lines": [
+          "Mobile: (608) 720 1011",
+          "Email: contact@theveiranailspa.com"
+        ]
+      },
+      {
+        "title": "Hours of Operation",
+        "lines": ["Monday - Friday: 9AM - 8PM", "Saturday - Sunday: 10AM - 6PM"]
+      }
+    ]
+  }
+}
