@@ -1,4 +1,4 @@
-# 📊 BÁO CÁO ĐÁNH GIÁ SEO - THE VEIRA NAIL LOUNGE & SPA
+# 📊 BÁO CÁO ĐÁNH GIÁ SEO - MADISON NAIL LOUNGE
 
 **Ngày đánh giá:** 2025-01-20  
 **Ngày cập nhật:** 2025-01-20 (Lần cuối)  
@@ -13,9 +13,9 @@
 
 1. **Title và Description đã được tối ưu**
 
-   - ✅ Title: "Nail Services & Spa Treatments - Manicure, Pedicure, Nail Enhancements"
+   - ✅ Title: "Nail Services & nail services - Manicure, Pedicure, Nail Enhancements"
    - ✅ Description: Mô tả chi tiết 160+ ký tự với keywords địa phương (Madison, WI) và call-to-action
-   - ✅ Bao gồm các từ khóa: manicures, pedicures, nail enhancements, waxing, spa treatments
+   - ✅ Bao gồm các từ khóa: manicures, pedicures, nail enhancements, waxing, nail services
 
 2. **Service Structured Data đã được thêm**
 
@@ -26,7 +26,7 @@
 3. **Keywords Meta Tag cho Services Page**
 
    - ✅ Đã thêm keywords chi tiết cho Services page
-   - ✅ Bao gồm: nail services, manicure, pedicure, nail enhancements, nail art, waxing, spa treatments, Madison WI nail salon, etc.
+   - ✅ Bao gồm: nail services, manicure, pedicure, nail enhancements, nail art, waxing, nail services, Madison WI nail salon, etc.
 
 4. **Dynamic Structured Data Support**
    - ✅ `RouteWrapper` đã hỗ trợ tự động chọn structured data type dựa trên route
@@ -55,11 +55,11 @@
 
 1. **Tất cả các trang đã có SEO descriptions tối ưu**
    - ✅ Services page: "Discover our comprehensive range of premium nail services..."
-   - ✅ Host A Party: "Host a memorable party at THE VEIRA NAIL LOUNGE & SPA..."
-   - ✅ Gallery: "Explore our stunning nail art gallery at THE VEIRA NAIL LOUNGE & SPA..."
-   - ✅ About Us: "Learn about THE VEIRA NAIL LOUNGE & SPA in Madison, WI..."
-   - ✅ Contact Us: "Contact THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Located at 795 University Ave..."
-   - ✅ Our Policies: "Review our salon policies and guidelines at THE VEIRA NAIL LOUNGE & SPA..."
+   - ✅ Host A Party: "Host a memorable party at MADISON NAIL LOUNGE..."
+   - ✅ Gallery: "Explore our stunning nail art gallery at MADISON NAIL LOUNGE..."
+   - ✅ About Us: "Learn about MADISON NAIL LOUNGE in Madison, WI..."
+   - ✅ Contact Us: "Contact MADISON NAIL LOUNGE in Madison, WI. Located at 795 University Ave..."
+   - ✅ Our Policies: "Review our salon policies and guidelines at MADISON NAIL LOUNGE..."
    - ✅ Tất cả descriptions đều 120-160 ký tự với keywords địa phương và call-to-action
 
 ### ✅ **Semantic HTML cho Content Pages - ĐÃ HOÀN THÀNH**
@@ -124,7 +124,7 @@
 // routes/index.tsx - Services page đã được cải thiện ✅
 {
   path: PATHS.services,
-  title: "Nail Services & Spa Treatments - Manicure, Pedicure, Nail Enhancements", // ✅ Đã tối ưu
+  title: "Nail Services & nail services - Manicure, Pedicure, Nail Enhancements", // ✅ Đã tối ưu
   description: "Discover our comprehensive range of premium nail services...", // ✅ Đã tối ưu
 }
 ```
@@ -133,11 +133,11 @@
 
 - ✅ **Tất cả các trang:** Đã có mô tả chi tiết 120-160 ký tự với keywords địa phương và call-to-action
   - ✅ Services page: "Discover our comprehensive range of premium nail services..."
-  - ✅ Host A Party: "Host a memorable party at THE VEIRA NAIL LOUNGE & SPA..."
-  - ✅ Gallery: "Explore our stunning nail art gallery at THE VEIRA NAIL LOUNGE & SPA..."
-  - ✅ About Us: "Learn about THE VEIRA NAIL LOUNGE & SPA in Madison, WI..."
-  - ✅ Contact Us: "Contact THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Located at 795 University Ave..."
-  - ✅ Our Policies: "Review our salon policies and guidelines at THE VEIRA NAIL LOUNGE & SPA..."
+  - ✅ Host A Party: "Host a memorable party at MADISON NAIL LOUNGE..."
+  - ✅ Gallery: "Explore our stunning nail art gallery at MADISON NAIL LOUNGE..."
+  - ✅ About Us: "Learn about MADISON NAIL LOUNGE in Madison, WI..."
+  - ✅ Contact Us: "Contact MADISON NAIL LOUNGE in Madison, WI. Located at 795 University Ave..."
+  - ✅ Our Policies: "Review our salon policies and guidelines at MADISON NAIL LOUNGE..."
 
 **Đã hoàn thành:**
 

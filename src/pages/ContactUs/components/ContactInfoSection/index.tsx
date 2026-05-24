@@ -96,7 +96,7 @@ export const ContactInfoSection: React.FC<ContactInfoSectionProps> = ({
               <div className="min-w-0">
                 <h3
                   className={clsx(
-                    "font-playfairDisplay font-bold text-[#6B4A2F] mb-2",
+                    "font-tangerine text-gold-gradient mb-2",
                     responsiveFontSizeArray(18, 20),
                   )}
                 >

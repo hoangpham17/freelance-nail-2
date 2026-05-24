@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://theveiranailspa.com/</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://madisonnaillounge.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://theveiranailspa.com/services</loc>
-    <lastmod>2025-01-20</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://madisonnaillounge.com/services</loc>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://theveiranailspa.com/host-a-party</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://madisonnaillounge.com/host-a-party</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://theveiranailspa.com/gallery</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://madisonnaillounge.com/gallery</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://theveiranailspa.com/about-us</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://madisonnaillounge.com/about-us</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://theveiranailspa.com/contact-us</loc>
-    <lastmod>2025-01-20</lastmod>
+    <loc>https://madisonnaillounge.com/contact-us</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://theveiranailspa.com/our-policies</loc>
-    <lastmod>2025-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://madisonnaillounge.com/our-policies</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
-

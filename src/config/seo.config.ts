@@ -3,20 +3,20 @@
  * Centralized SEO settings for the application
  */
 
+import { BRAND } from "./brand.config";
+
 export const SEO_CONFIG = {
-  siteName: "THE VEIRA NAIL LOUNGE & SPA",
-  siteUrl: "https://theveiranailspa.com",
-  defaultTitle: "THE VEIRA NAIL LOUNGE & SPA - Premium Nail Care Services",
-  defaultDescription:
-    "Experience luxury nail care services at THE VEIRA NAIL LOUNGE & SPA. Professional manicures, pedicures, nail enhancements, and spa treatments in Madison, WI.",
-  defaultKeywords:
-    "the veira, the veira nail, the veira spa, the veira nail spa, The Veira Nail Lounge & Spa, nail salon Madison WI, manicure, pedicure, nail art, spa Madison WI, nail enhancements, veira nail, veira spa, veira nail spa, veira nail salon, veira spa salon, veira nail salon Madison WI, veira spa salon Madison WI",
+  siteName: BRAND.nameUppercase,
+  siteUrl: BRAND.siteUrl,
+  defaultTitle: BRAND.defaultTitle,
+  defaultDescription: BRAND.defaultDescription,
+  defaultKeywords: BRAND.defaultKeywords,
   defaultImage: "/assets/images/logo/desktop.png",
-  twitterHandle: "@veiranail",
+  twitterHandle: BRAND.twitterHandle,
   business: {
-    name: "THE VEIRA NAIL LOUNGE & SPA",
-    phone: "+1-608-720-1011",
-    email: "contact@theveiranailspa.com",
+    name: BRAND.nameUppercase,
+    phone: BRAND.phone,
+    email: BRAND.email,
     address: {
       street: "795 University Ave",
       city: "Madison",
@@ -29,8 +29,8 @@ export const SEO_CONFIG = {
       longitude: -89.3986882,
     },
     hours: {
-      "Monday-Friday": "9:00am - 7:00pm",
-      Saturday: "9:00am - 4:00pm",
+      "Monday-Friday": "9:30am - 7:30pm",
+      Saturday: "9:30am - 5:00pm",
       Sunday: "11:00am - 4:00pm",
     },
     social: {

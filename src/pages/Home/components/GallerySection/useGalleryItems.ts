@@ -27,7 +27,7 @@ export const useGalleryItems = (): GalleryItem[] => {
         }
         return false;
       })
-      .map((record) => {
+      .map((record, index) => {
         let imageUrl: string | undefined = undefined;
         if (Array.isArray(record.image) && record.image.length > 0) {
           const firstUrl = record.image[0];
@@ -41,7 +41,7 @@ export const useGalleryItems = (): GalleryItem[] => {
         }
 
         return {
-          id: record.id || `gallery-${Math.random()}`,
+          id: record.id || `gallery-record-${index}`,
           url: imageUrl,
         };
       })

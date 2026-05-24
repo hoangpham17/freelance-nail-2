@@ -20,7 +20,7 @@ const OccasionsSection: React.FC = () => {
         <div className="max-w-2xl mx-auto text-center mb-6 lg:mb-10">
           <h2
             className={clsx(
-              "font-playfairDisplay font-bold text-[#6B4A2F] tracking-tight",
+              "font-tangerine text-gold-gradient tracking-tight",
               responsiveFontSizeArray(26, 36),
             )}
           >

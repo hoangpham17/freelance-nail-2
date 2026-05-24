@@ -40,7 +40,7 @@ const AboutUs: React.FC = () => {
           <h1 className="relative">
             <span
               className={clsx(
-                "block font-playfairDisplay font-bold text-white leading-[0.92]",
+                "block text-gold-gradient font-tangerine leading-[0.92]",
                 responsiveFontSizeArray(48, 96),
               )}
             >
@@ -61,7 +61,7 @@ const AboutUs: React.FC = () => {
             )}
             style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
           >
-            The Veira Nail Lounge & Spa
+            Madison Nail Lounge
           </p> */}
         </div>
       </section>

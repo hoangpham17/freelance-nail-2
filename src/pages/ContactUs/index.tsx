@@ -62,7 +62,7 @@ const ContactUs: React.FC = () => {
           <div className="max-w-5xl mx-auto">
             {/* <h3
               className={clsx(
-                "font-playfairDisplay font-bold text-[#6B4A2F] text-center mb-2",
+                "font-tangerine text-gold-gradient text-center mb-2",
                 responsiveFontSizeArray(20, 24),
               )}
             >

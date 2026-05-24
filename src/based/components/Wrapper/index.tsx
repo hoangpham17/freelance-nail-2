@@ -8,7 +8,7 @@ export const Wrapper = ({ children, className }: WrapperProps) => {
   return (
     <div
       className={clsx(
-        "max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 w-screen overflow-x-hidden",
+        "max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[120px] w-full overflow-x-hidden",
         className,
       )}
     >

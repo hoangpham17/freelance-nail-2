@@ -32,7 +32,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScrollToForm }) => {
           >
             <h1
               className={clsx(
-                "font-playfairDisplay font-bold text-[#6B4A2F] tracking-tight pt-0.5 pb-0.5",
+                "font-tangerine text-gold-gradient tracking-tight pt-0.5 pb-0.5",
                 "leading-[1.2]",
                 isDesktop
                   ? "text-[clamp(2.25rem,3.8vw,3.5rem)]"

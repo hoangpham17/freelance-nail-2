@@ -101,10 +101,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
 
   return (
     <section
-      className="sticky z-30 w-full transition-all duration-300 bg-white/95 backdrop-blur-sm"
+      className="sticky z-30 w-full transition-all duration-300 bg-black/95 backdrop-blur-sm border-b border-madison-border/40"
       style={{
         top: effectiveStickyTop,
-        boxShadow: "0px 5px 16px 0px #8B4B2026",
+        boxShadow: "0 4px 24px rgba(0, 0, 0, 0.35)",
       }}
     >
       <Wrapper>
@@ -147,10 +147,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                         align="center"
                         justify="center"
                         className={clsx(
-                          "tab-item px-4 h-[32px] lg:h-[50px] rounded-2xl border whitespace-nowrap font-playfairDisplay",
+                          "tab-item px-4 h-[32px] lg:h-[50px] rounded-2xl border whitespace-nowrap font-montserrat font-medium",
                           isActive
-                            ? "bg-white/80 text-[#6B4A2F] border-[#6B4A2F]"
-                            : "bg-white/30 text-[#8B4B20] group-hover:text-[#6B4A2F] border-white",
+                            ? "bg-madison-gold text-madison-gold-text border-madison-gold"
+                            : "bg-madison-surface text-madison-muted group-hover:text-madison-gold border-madison-border",
                           responsiveFontSizeArray(16, 20),
                         )}
                         style={{

@@ -1,0 +1,52 @@
+import { useId } from "react";
+import clsx from "clsx";
+
+export type SectionHeadingLineProps = {
+  className?: string;
+};
+
+/** Figma heading divider — line + diamond caps (210×7px, node 72:522) */
+export const SectionHeadingLine: React.FC<SectionHeadingLineProps> = ({
+  className,
+}) => {
+  const gradientId = `heading-line-gold-${useId().replace(/:/g, "")}`;
+
+  return (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={210}
+    height={7}
+    viewBox="0 0 216.928 6.9282"
+    fill="none"
+    aria-hidden
+    className={clsx("block shrink-0 w-[210px] max-w-full h-[7px]", className)}
+  >
+    <defs>
+      <linearGradient
+        id={gradientId}
+        x1="0"
+        y1="3.464"
+        x2="216.928"
+        y2="3.464"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#7F4200" />
+        <stop offset="0.01" stopColor="#854905" />
+        <stop offset="0.09" stopColor="#B37B28" />
+        <stop offset="0.15" stopColor="#D49F41" />
+        <stop offset="0.21" stopColor="#E8B551" />
+        <stop offset="0.24" stopColor="#F0BE57" />
+        <stop offset="0.5" stopColor="#FFE5A0" />
+        <stop offset="0.58" stopColor="#FDE199" />
+        <stop offset="0.71" stopColor="#F9D785" />
+        <stop offset="0.85" stopColor="#F3C666" />
+        <stop offset="1" stopColor="#EBB13F" />
+      </linearGradient>
+    </defs>
+    <path
+      fill={`url(#${gradientId})`}
+      d="M0 3.4641L3.4641 6.9282L6.9282 3.4641L3.4641 0L0 3.4641ZM216.928 3.4641L213.464 0L210 3.4641L213.464 6.9282L216.928 3.4641ZM3.4641 3.4641V4.0641H213.464V3.4641V2.8641H3.4641V3.4641Z"
+    />
+  </svg>
+  );
+};

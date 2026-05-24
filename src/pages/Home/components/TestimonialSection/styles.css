@@ -3,14 +3,12 @@
   padding-top: 10px !important;
 }
 
-.testimonial-swiper-v2 .swiper-slide-active .shadow-testimonial-card {
-  box-shadow: 0 5px 30px rgba(107, 74, 47, 0.25) !important;
+.testimonial-swiper-v2 .swiper-slide-active .shadow-testimonial-card,
+.testimonial-swiper-v2 .swiper-slide-active > div > div {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
 }
 
-
-/* Desktop: Coverflow effect styles */
 @media (min-width: 768px) {
-  /* Hide all slides by default */
   .testimonial-swiper-v2 .swiper-slide {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0 !important;
@@ -20,7 +18,6 @@
     z-index: 1;
   }
 
-  /* level 1: Active Slide */
   .testimonial-swiper-v2 .swiper-slide-active {
     opacity: 1 !important;
     visibility: visible !important;
@@ -28,7 +25,7 @@
     filter: blur(0) !important;
     z-index: 100 !important;
   }
-  /* level 2: Immediate Neighbors (1st left/right) */
+
   .testimonial-swiper-v2 .swiper-slide-next,
   .testimonial-swiper-v2 .swiper-slide-prev {
     opacity: 1 !important;
@@ -40,10 +37,10 @@
 
   .testimonial-swiper-v2 .swiper-slide-next .testimonial-overlay,
   .testimonial-swiper-v2 .swiper-slide-prev .testimonial-overlay {
-    opacity: 0.25 !important;
+    opacity: 0.35 !important;
+    background: #000 !important;
   }
 
-  /* level 3: Next Neighbors (2nd left/right) */
   .testimonial-swiper-v2 .swiper-slide-next + .swiper-slide,
   .testimonial-swiper-v2 .swiper-slide:has(+ .swiper-slide-prev) {
     opacity: 1 !important;
@@ -58,10 +55,10 @@
     .swiper-slide:has(+ .swiper-slide-prev)
     .testimonial-overlay {
     opacity: 0.55 !important;
+    background: #000 !important;
   }
 }
 
-/* Mobile: Normal slide display */
 @media (max-width: 767px) {
   .testimonial-swiper-v2 .swiper-slide {
     opacity: 1 !important;
@@ -72,14 +69,12 @@
   }
 }
 
-.testimonial-swiper-v2 .swiper-slide:not(.swiper-slide-active) {
-  & p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-    box-orient: vertical;
-  }
+.testimonial-swiper-v2 .swiper-slide:not(.swiper-slide-active) p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
 }

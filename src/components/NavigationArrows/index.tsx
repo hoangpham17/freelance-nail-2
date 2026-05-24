@@ -21,13 +21,15 @@ export const NavigationArrows: React.FC<NavigationArrowsProps> = ({
   nextButtonClassName,
 }) => {
   const baseButtonStyles =
-    "w-12 h-12 lg:w-[60px] lg:h-[60px] rounded-full border border-[#B2866D] flex items-center justify-center text-[#B2866D] hover:bg-[#B2866D] hover:text-white transition-all duration-300 pointer-events-auto";
+    "w-12 h-12 lg:w-[60px] lg:h-[60px] rounded-full border border-madison-gold flex items-center justify-center text-madison-gold bg-transparent hover:bg-madison-gold hover:text-madison-gold-text transition-all duration-300 pointer-events-auto";
 
   return (
     <Flex gap={16} className={clsx("mb-2", className)}>
       <button
+        type="button"
         onClick={onPrev}
         className={clsx(baseButtonStyles, buttonClassName, prevButtonClassName)}
+        aria-label="Previous"
       >
         <SvgIcon
           src="/assets/svgs/chevron-right.svg"
@@ -39,8 +41,10 @@ export const NavigationArrows: React.FC<NavigationArrowsProps> = ({
         />
       </button>
       <button
+        type="button"
         onClick={onNext}
         className={clsx(baseButtonStyles, buttonClassName, nextButtonClassName)}
+        aria-label="Next"
       >
         <SvgIcon
           src="/assets/svgs/chevron-right.svg"

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="7" viewBox="0 0 216.928 6.9282" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="heading-line-gold" x1="0" y1="3.464" x2="216.928" y2="3.464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7F4200"/>
+      <stop offset="0.01" stop-color="#854905"/>
+      <stop offset="0.09" stop-color="#B37B28"/>
+      <stop offset="0.15" stop-color="#D49F41"/>
+      <stop offset="0.21" stop-color="#E8B551"/>
+      <stop offset="0.24" stop-color="#F0BE57"/>
+      <stop offset="0.5" stop-color="#FFE5A0"/>
+      <stop offset="0.58" stop-color="#FDE199"/>
+      <stop offset="0.71" stop-color="#F9D785"/>
+      <stop offset="0.85" stop-color="#F3C666"/>
+      <stop offset="1" stop-color="#EBB13F"/>
+    </linearGradient>
+  </defs>
+  <path
+    fill="url(#heading-line-gold)"
+    d="M0 3.4641L3.4641 6.9282L6.9282 3.4641L3.4641 0L0 3.4641ZM216.928 3.4641L213.464 0L210 3.4641L213.464 6.9282L216.928 3.4641ZM3.4641 3.4641V4.0641H213.464V3.4641V2.8641H3.4641V3.4641Z"
+  />
+</svg>

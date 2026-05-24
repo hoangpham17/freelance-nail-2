@@ -135,10 +135,9 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
 
   const getBackgroundColor = () => {
     if (totalServices % 2 === 0) {
-      return index % 2 === 0 ? "bg-[#FEF5F1]" : "bg-white";
+      return index % 2 === 0 ? "bg-black" : "bg-madison-black-soft";
     }
-
-    return index % 2 !== 0 ? "bg-[#FEF5F1]" : "bg-white";
+    return index % 2 !== 0 ? "bg-black" : "bg-madison-black-soft";
   };
 
   return (
@@ -231,7 +230,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
             >
               <h2
                 className={clsx(
-                  "font-playfairDisplay font-bold text-[#6B4A2F] m-0",
+                  "text-gold-gradient font-tangerine m-0",
                   responsiveFontSizeArray(34, 64),
                 )}
               >
@@ -287,7 +286,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                     {idx > 0 && !isTwoColumnLayout && (
                       <div
                         className={clsx(
-                          "border-t border-[#6B4A2F] transition-all duration-700 ease-out",
+                          "border-t border-madison-gold/40 transition-all duration-700 ease-out",
                           isCardVisible ? "opacity-100" : "opacity-0",
                         )}
                         style={{
@@ -302,7 +301,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                         isCardVisible
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-8",
-                        isTwoColumnLayout && "border-b border-[#6B4A2F]",
+                        isTwoColumnLayout && "border-b border-madison-gold/40",
                       )}
                       style={{
                         transitionDelay: `${500 + idx * 100}ms`,
@@ -340,7 +339,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 >
                   <p
                     className={clsx(
-                      "font-playfairDisplay font-bold text-[#6B4A2F] m-0 mb-1",
+                      "text-gold-gradient font-tangerine m-0 mb-1",
                       responsiveFontSizeArray(16, 20),
                     )}
                   >

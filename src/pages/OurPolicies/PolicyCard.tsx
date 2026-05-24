@@ -36,7 +36,7 @@ export const PolicyCard: React.FC<Props> = ({ policy, index }) => {
             <div className="mt-1 flex items-start">
               <h2
                 className={clsx(
-                  "font-playfairDisplay font-bold text-[#2C2520] tracking-tight",
+                  "font-tangerine text-gold-gradient tracking-tight",
                   responsiveFontSizeArray(18, 22),
                 )}
               >

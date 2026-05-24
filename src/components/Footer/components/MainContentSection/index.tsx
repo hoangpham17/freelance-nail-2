@@ -1,130 +1,99 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Flex } from "antd";
 import { Wrapper } from "@/based/components/Wrapper";
-import { NoiseBackground } from "@/components/NoiseBackground";
-import { Background } from "./Background";
 import { directUrl, googlemapUrl } from "./data";
-import SvgIcon from "@/based/SvgIcon";
-import { useScreen } from "@/hooks/useScreen";
 
-const listSocial = [
-  {
-    name: "Instagram",
-    href: "https://www.instagram.com/madisonnaillounge/",
-    iconUrl: "/assets/svgs/instagram.svg",
-  },
-  {
-    name: "Facebook",
-    href: "https://www.facebook.com/madisonnailloungewi",
-    iconUrl: "/assets/svgs/fb.svg",
-  },
+const businessHours = [
+  { label: "Mon - Fri:", time: "9:30 AM - 7:30 PM" },
+  { label: "Saturday:", time: "9:30 AM - 5:00 PM" },
+  { label: "Sunday:", time: "11:00 AM - 4:00 PM" },
 ];
 
 const MainContentSection: React.FC = () => {
-  const { isDesktop } = useScreen();
-
-  const iconSize = useMemo(() => (isDesktop ? 16 : 14), [isDesktop]);
-
   return (
-    <NoiseBackground className="bg-[#805D3D] py-4 md:py-8 relative z-[1] overflow-hidden">
-     <Background />
+    <section className="py-10 md:py-16 lg:py-[60px]">
       <Wrapper>
-        <Flex className="flex-col md:flex-row justify-between flex-wrap gap-6 md:gap-8 lg:gap-[30px] relative z-[1]">
-          {/* Logo Column */}
-          <Flex className="mb-4 md:mb-0 justify-center" align="center">
-            <img
-              src="/assets/images/logo/desktop.png"
-              alt="The Veira Nail Lounge & Spa"
-              className="h-[50px] md:h-[60px] lg:h-[70px] 2xl:h-[80px] w-auto object-contain"
-            />
-          </Flex>
+        <Flex vertical align="center" className="mb-10 md:mb-12">
+          <img
+            src="/assets/images/logo/desktop.png"
+            alt="Madison Nail Lounge"
+            className="h-14 md:h-[76px] w-auto object-contain"
+          />
+        </Flex>
 
-          {/* Contact Column */}
-          <div>
-            <h4 className="text-[#E6D7CB] text-[12px] md:text-[13px] tracking-[0.15em] mb-4 md:mb-6 uppercase font-semibold">
-              CONTACT US
-            </h4>
-            <div className="flex flex-col gap-2 text-white text-[14px] md:text-base">
-              <a
-                href="tel:6087201011"
-                className="!text-white underline underline-offset-4 transition-opacity hover:opacity-80"
-              >
-                (608) 720 1011
-              </a>
-              <a
-                href="mailto:contact@theveiranailspa.com"
-                className="!text-white underline underline-offset-4 transition-opacity hover:opacity-80"
-              >
-                contact@theveiranailspa.com
-              </a>
-              <Flex className="gap-[6px] lg:gap-2 mt-4">
-                {listSocial.map((item) => (
-                  <a
-                    key={item.name}
-                    title={item.name}
-                    href={item.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center justify-center bg-white w-7 h-7 rounded-full hover:bg-[#F6EFE9] transition-colors"
-                  >
-                    <SvgIcon
-                      src={item.iconUrl}
-                      ariaLabel={item.name}
-                      width={iconSize}
-                      height={iconSize}
-                      className="shrink-0 text-[#8D6444]"
-                    />
-                  </a>
-                ))}
+        <div className="madison-footer-info grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+          <div className="flex flex-col gap-4">
+            <h4 className="madison-footer-info__heading">Keep in Touch</h4>
+            <div className="flex flex-col gap-2">
+              <Flex align="start" gap={8}>
+                <span className="madison-footer-info__label w-[18px] shrink-0">
+                  A:
+                </span>
+                <a
+                  href={directUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="madison-footer-info__value"
+                >
+                  795 University Ave, Madison, WI 53715
+                </a>
+              </Flex>
+              <Flex align="center" gap={8}>
+                <span className="madison-footer-info__label w-[18px] shrink-0">
+                  T:
+                </span>
+                <a href="tel:6087201011" className="madison-footer-info__value">
+                  (608) 720 1011
+                </a>
+              </Flex>
+              <Flex align="center" gap={8}>
+                <span className="madison-footer-info__label w-[18px] shrink-0">
+                  E:
+                </span>
+                <a
+                  href="mailto:contact@madisonnaillounge.com"
+                  className="madison-footer-info__email"
+                >
+                  contact@madisonnaillounge.com
+                </a>
               </Flex>
             </div>
           </div>
-<Flex className="flex-col xl:flex-row justify-between flex-wrap gap-6 md:gap-8 lg:gap-[30px] relative z-[1]">
-          {/* Location Column */}
-          <div className="w-full md:w-auto md:flex-shrink-0">
-            <h4 className="text-[#E6D7CB] text-[12px] md:text-[13px] font-semibold tracking-[0.15em] mb-4 md:mb-6 uppercase">
-              OUR LOCATION
-            </h4>
-            <div className="flex flex-col gap-2 text-[14px] md:text-base">
-              <a
-                href={directUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="transition-opacity hover:opacity-80 !text-white"
-              >
-                <Flex align="start" gap={8}>
-                  <i className="bi bi-geo-alt-fill text-[18px] opacity-90"></i>
-                  <span className="leading-relaxed max-w-[240px]">
-                    795 University Ave, Madison, WI 53715
+
+          <div className="flex flex-col gap-4">
+            <h4 className="madison-footer-info__heading">Business Hours</h4>
+            <div className="flex flex-col gap-2">
+              {businessHours.map((row) => (
+                <Flex key={row.label} gap={16} wrap="wrap" align="center">
+                  <span className="madison-footer-info__label min-w-[92px] shrink-0">
+                    {row.label}
                   </span>
+                  <span className="madison-footer-info__value">{row.time}</span>
                 </Flex>
-              </a>
+              ))}
             </div>
           </div>
 
-          {/* Map Column */}
-          <div className="w-full md:w-auto max-w-full md:max-w-none">
+          <div className="md:col-span-2 lg:col-span-1">
             <a
               href={googlemapUrl}
               target="_blank"
               rel="noreferrer"
               className="block transition-opacity hover:opacity-90"
             >
-              <div className="relative w-full h-[120px] md:h-[150px] rounded-[16px] md:rounded-[20px] overflow-hidden bg-[#E6CEC0] cursor-pointer">
+              <div className="relative w-full aspect-[1288/658] max-h-[220px] lg:max-h-[280px] rounded-xl overflow-hidden bg-madison-surface">
                 <img
                   src="/assets/images/Footer/map.jpg"
-                  alt="Map Location"
-                  className="w-full h-full opacity-90"
+                  alt="Madison Nail Lounge location"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </a>
           </div>
-        </Flex>
-</Flex>
+        </div>
       </Wrapper>
-    </NoiseBackground>
+    </section>
   );
 };
 
 export default MainContentSection;
-

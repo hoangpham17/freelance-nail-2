@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
 import "./index.css";
+import "./styles/madison-theme.css";
 
 // Create a client for React Query with default options
 const queryClient = new QueryClient({

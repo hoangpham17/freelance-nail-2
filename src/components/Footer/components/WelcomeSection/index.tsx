@@ -15,7 +15,7 @@ const WelcomeSection: React.FC = () => {
       <NoiseBackground className="w-[320px] h-[180px] md:w-[400px] md:h-[210px] lg:w-[573px] lg:h-[280px] max-w-[95%] rounded-t-full -bottom-px bg-[#805D3D] absolute z-[5] flex flex-col items-center justify-center pt-6 md:pt-8 lg:pt-10 text-white overflow-hidden">
         <h2
           className={clsx(
-            "font-playfairDisplay font-medium tracking-[0.1em] mb-3 md:mb-4 lg:mb-5 uppercase text-white",
+            "font-tangerine tracking-[0.1em] mb-3 md:mb-4 lg:mb-5 uppercase text-white",
             responsiveFontSizeArray(16, 32),
           )}
         >

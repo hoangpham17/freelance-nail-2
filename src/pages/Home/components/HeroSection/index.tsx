@@ -9,7 +9,6 @@ import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import { Skeleton } from "antd";
-import SvgIcon from "@/based/SvgIcon";
 import homepageContent from "@/content/homepage.json";
 
 const HeroSection: React.FC = () => {
@@ -100,12 +99,12 @@ const HeroSection: React.FC = () => {
       }));
 
       const styleInBackticks = clsx(
-        "leading-none",
-        responsiveFontSizeArray(36, 72),
+        "text-gold-gradient leading-none font-tangerine",
+        responsiveFontSizeArray(36, 60),
       );
       const styleOutBackticks = clsx(
-        "leading-none",
-        responsiveFontSizeArray(42, 96),
+        "text-madison-text font-montserrat font-medium leading-tight",
+        responsiveFontSizeArray(20, 36),
       );
 
       return (
@@ -120,8 +119,7 @@ const HeroSection: React.FC = () => {
               backgroundRepeat: "no-repeat",
             }}
           >
-            {/* Background Overlay */}
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 bg-black/60" />
 
             {/* Content Container */}
             <div className="relative z-10 w-full max-w-[1200px] px-4 text-center">
@@ -132,7 +130,7 @@ const HeroSection: React.FC = () => {
                     responsiveFontSizeArray(20, 36),
                   )}
                 >
-                  The Veira Nail Lounge & Spa
+                  Madison Nail Lounge
                 </span>
                 <div
                   className="h-px w-24 mx-auto"
@@ -141,12 +139,7 @@ const HeroSection: React.FC = () => {
                       "linear-gradient(90deg, rgba(255,255,255,0.9) 0%, transparent 100%)",
                   }}
                 /> */}
-                <h1
-                  className={clsx(
-                    "text-white flex flex-col font-medium font-playfairDisplay",
-                    responsiveFontSizeArray(40, 96),
-                  )}
-                >
+                <h1 className="flex flex-col items-center uppercase">
                   {titleSegments.map(
                     (seg, segIndex) =>
                       seg.text !== "" && (
@@ -171,20 +164,11 @@ const HeroSection: React.FC = () => {
                 <a
                   href={item.is_signup ? "/contact-us?signup" : "/contact-us"}
                   className={clsx(
-                    "group mt-4 lg:mt-8 bg-white text-[#805D3D] py-3 md:py-4 min-w-[160px] md:min-w-[234px] rounded-full shadow-lg transition-all duration-300 uppercase flex items-center justify-center px-6",
-                    responsiveFontSizeArray(14, 20),
+                    "home-btn-primary group mt-4 lg:mt-8 min-w-[160px] md:min-w-[200px]",
+                    responsiveFontSizeArray(14, 18),
                   )}
                 >
                   <span>{item.button_title}</span>
-                  <div className="max-w-0 opacity-0 group-hover:max-w-[40px] group-hover:opacity-100 group-hover:ml-3 transition-all duration-500 overflow-hidden flex items-center">
-                    <SvgIcon
-                      src={"/assets/svgs/arrow-right-circle.svg"}
-                      ariaLabel="text"
-                      width={24}
-                      height={24}
-                      className="size-[24px] shrink-0 text-[#805D3D]"
-                    />
-                  </div>
                 </a>
               </div>
             </div>
@@ -223,8 +207,10 @@ const HeroSection: React.FC = () => {
               key={idx}
               onClick={() => sliderRef.current?.slickGoTo(idx)}
               className={clsx(
-                "h-2 transition-all duration-500 rounded-full bg-white",
-                currentSlide === idx ? "w-10 opacity-100" : "w-2 opacity-40",
+                "h-3 transition-all duration-500 rounded-full",
+                currentSlide === idx
+                  ? "w-[18px] bg-[#f9be5c]"
+                  : "w-3 bg-white/40",
               )}
               aria-label={`Go to slide ${idx + 1}`}
             />

@@ -40,28 +40,18 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
   return (
     <div
       data-services-submenu="true"
-      className="fixed left-0 w-full z-50 transition-all duration-200"
+      className="fixed left-0 w-full z-50 transition-all duration-200 bg-madison-black-soft border-b border-madison-border"
       style={{
         top: `${topPosition}px`,
-        background:
-          "linear-gradient(180deg, #FEFCFA 0%, #FEF8F5 50%, #FAF3EF 100%)",
-        boxShadow: "0 4px 24px rgba(107, 74, 47, 0.06)",
-        borderBottom: "1px solid rgba(212, 196, 181, 0.5)",
+        boxShadow: "0 4px 24px rgba(0, 0, 0, 0.4)",
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {/* Decorative line */}
-      <div
-        className="h-px w-full opacity-80"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, #D4C4B5 20%, #B2866D 50%, #D4C4B5 80%, transparent 100%)",
-        }}
-      />
+      <div className="h-px w-full bg-madison-gold/25" aria-hidden />
       <Wrapper>
         <nav
-          className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 py-2 md:py-3"
+          className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 py-3 md:py-4"
           aria-label="Service categories"
         >
           {serviceNavItems.map((item, index) => {
@@ -71,7 +61,7 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
               <React.Fragment key={item.path}>
                 {!isFirst && (
                   <span
-                    className="hidden sm:block w-px h-4 bg-[#E8DED8] flex-shrink-0"
+                    className="hidden sm:block w-px h-4 bg-madison-border flex-shrink-0"
                     aria-hidden
                   />
                 )}
@@ -80,20 +70,12 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
                   onMouseEnter={() => setHoveredSlug(item.slug)}
                   onMouseLeave={() => setHoveredSlug("")}
                   className={clsx(
-                    "relative px-5 py-2.5 rounded-lg font-playfairDisplay font-semibold capitalize whitespace-nowrap transition-all duration-300",
-                    "text-[#6B4A2F]",
+                    "font-montserrat capitalize transition-colors px-3 py-1 rounded-lg",
+                    responsiveFontSizeArray(14, 16),
                     isHovered
-                      ? "text-[#6B4A2F] bg-white/70"
-                      : "hover:text-[#6B4A2F] hover:bg-white/50",
-                    ...responsiveFontSizeArray(15, 18),
+                      ? "text-madison-gold bg-madison-surface"
+                      : "text-madison-muted hover:text-madison-text",
                   )}
-                  style={
-                    isHovered
-                      ? {
-                          boxShadow: "0 2px 12px rgba(107, 74, 47, 0.08)",
-                        }
-                      : undefined
-                  }
                 >
                   {item.label}
                 </Link>

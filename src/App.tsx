@@ -15,7 +15,7 @@ function App() {
     <HelmetProvider>
       <ConfigProvider>
         <Router>
-          <div className="app min-h-screen flex flex-col">
+          <div className="app min-h-screen flex flex-col bg-black">
             <Header />
             <FixedButtons />
             <CampaignPopup />

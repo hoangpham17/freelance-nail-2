@@ -6,7 +6,7 @@ import Airtable from "airtable";
  */
 const AIRTABLE_CONFIG = {
   apiKey: import.meta.env.VITE_AIRTABLE_API_KEY || "",
-  baseId: "appUYBhhvXCbvE5GN",
+  baseId: "applRIFEJzYqRn1tA",
 };
 
 const base = new Airtable({ apiKey: AIRTABLE_CONFIG.apiKey }).base(

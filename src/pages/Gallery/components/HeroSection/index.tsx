@@ -1,6 +1,7 @@
 import React from "react";
 import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
+import { BRAND } from "@/config/brand.config";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
 export const HeroSection: React.FC = () => {
@@ -17,7 +18,7 @@ export const HeroSection: React.FC = () => {
           <h1 className="relative">
             <span
               className={clsx(
-                "block font-playfairDisplay font-bold text-[#6B4A2F] tracking-tight leading-[0.92]",
+                "block text-gold-gradient font-tangerine tracking-tight leading-[0.92]",
                 responsiveFontSizeArray(48, 96),
               )}
             >
@@ -36,7 +37,7 @@ export const HeroSection: React.FC = () => {
               responsiveFontSizeArray(10, 11),
             )}
           >
-            The Veira Nail Lounge & Spa
+            {BRAND.pageHeroSubtitle}
           </p>
         </div>
       </Wrapper>

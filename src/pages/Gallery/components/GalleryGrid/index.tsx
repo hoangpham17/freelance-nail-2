@@ -87,7 +87,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
               }}
             />
             <p
-              className="font-playfairDisplay font-medium text-[#6B4A2F]/90 max-w-md"
+              className="font-tangerine text-gold-gradient max-w-md"
               style={{ fontSize: "clamp(1rem, 2.5vw, 1.25rem)" }}
             >
               No images in this collection yet. We're curating more moments of

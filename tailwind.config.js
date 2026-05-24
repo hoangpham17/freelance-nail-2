@@ -2,11 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   safelist: [
-    // Pre-declare all font size classes from 8px to 200px
-    // This ensures Tailwind recognizes all dynamic classes
-    // (200px is the max clamp value in roundFontSize function)
+    {
+      pattern:
+        /^(bg|text|border)-(madison-(black|black-soft|surface|gold|gold-dark|gold-text|text|muted|border))$/,
+    },
     ...Array.from({ length: 193 }, (_, i) => {
-      const size = i + 8; // 8 to 200
+      const size = i + 8;
       return [
         `text-[${size}px]`,
         `sm:text-[${size}px]`,
@@ -20,42 +21,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Primary Colors - Gold/Elegant
+        madison: {
+          black: "#000000",
+          "black-soft": "#1a1a1a",
+          surface: "#252525",
+          gold: "#f9be5c",
+          "gold-dark": "#f1a953",
+          "gold-text": "#984121",
+          text: "#e5e7eb",
+          muted: "#d1d5db",
+          border: "#374151",
+        },
         primary: {
-          DEFAULT: "#D4AF37", // Main gold color
-          dark: "#A67C52",
-          light: "#E8D4B5",
-          hover: "#F4D03F", // Lighter gold for hover states
+          DEFAULT: "#f9be5c",
+          dark: "#984121",
+          light: "#f1a953",
+          hover: "#ffe5a0",
         },
-        // Secondary Colors - Brown/Earth tones
         secondary: {
-          DEFAULT: "#8B4513", // Saddle brown
-          dark: "#654321", // Darker brown
-          light: "#A0522D", // Sienna (hover state)
-          hover: "#A0522D",
+          DEFAULT: "#984121",
+          dark: "#7f4200",
+          light: "#f1a953",
+          hover: "#dba538",
         },
-        // Accent Colors - Cream/Beige
         accent: {
-          DEFAULT: "#F5F5DC", // Beige
-          cream: "#FAEBD7", // Antique white
-          light: "#FFF8F0", // Floral white
-          dark: "#E6E6D3",
+          DEFAULT: "#252525",
+          cream: "#1a1a1a",
+          light: "#374151",
+          dark: "#000000",
         },
-        // Pink Colors - For booking buttons
-        pink: {
-          DEFAULT: "#FFB6C1", // Light pink
-          dark: "#FFA0B4", // Darker pink (hover)
-          light: "#FFC0CB", // Lighter pink
-        },
-        // Text Colors
         text: {
-          primary: "#1F2937", // Dark gray for main text
-          secondary: "#4B5563", // Medium gray for secondary text
-          light: "#6B7280", // Light gray for muted text
-          white: "#FFFFFF",
-          gold: "#D4AF37",
+          primary: "#e5e7eb",
+          secondary: "#d1d5db",
+          light: "#9ca3af",
+          white: "#ffffff",
+          gold: "#f9be5c",
         },
-        // Keep existing neutral colors
         neutral: {
           white: "#FFFFFF",
           black: "#000000",
@@ -75,11 +76,22 @@ export default {
       },
       fontFamily: {
         serif: ["Playfair Display", "serif"],
-        sans: ["Inter", "sans-serif"],
+        sans: ["Montserrat", "Sora", "Inter", "sans-serif"],
         sora: ["Sora", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+        gilroy: ['"SVN-Gilroy"', "Montserrat", "sans-serif"],
         playfairDisplay: ["Playfair Display", "serif"],
-        corinthiaBold: ["Corinthia Bold", "serif"],
-        corinthiaRegular: ["Corinthia Regular", "serif"],
+        tangerine: ["SVN-Tangerine", "serif"],
+        corinthiaBold: ["SVN-Tangerine", "serif"],
+        corinthiaRegular: ["SVN-Tangerine", "serif"],
+        display: ["SVN-Tangerine", "serif"],
+        body: ["Montserrat", "Sora", "sans-serif"],
+      },
+      fontSize: {
+        "body-s": ["12px", { lineHeight: "16px" }],
+        "body-l": ["16px", { lineHeight: "24px" }],
+        "body-xl": ["18px", { lineHeight: "26px" }],
+        "heading-2": ["48px", { lineHeight: "60px" }],
       },
       keyframes: {
         fadeIn: {

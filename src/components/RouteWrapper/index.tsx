@@ -1,6 +1,8 @@
 import React, { Suspense, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { getRouteByPath } from "@/routes";
+import { BRAND } from "@/config/brand.config";
+import { SEO_CONFIG } from "@/config/seo.config";
 import SEO from "@/components/SEO";
 import StructuredData from "@/components/StructuredData";
 import LoadingPage from "@/components/LoadingPage";
@@ -36,25 +38,19 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
     }
   }, [location.pathname]);
 
-  // Get SEO data from route config
-  const seoTitle = route?.title || "The Veira Nail Lounge & Spa";
+  const seoTitle = route?.title || BRAND.name;
   const seoDescription =
-    route?.description ||
-    "The Veira nail salon and spa in Madison, WI. The Veira Nail Lounge & Spa offers manicures, pedicures, nail art, and spa treatments. Book The Veira nail or spa services today.";
+    route?.description || SEO_CONFIG.defaultDescription;
 
-  // Get keywords based on route
   const getKeywords = () => {
-    const base =
-      "the veira, the veira nail, the veira spa, the veira nail spa, The Veira Nail Lounge & Spa, veira nail, veira spa, veira nail spa, veira nail salon, veira spa salon, veira nail salon Madison WI, veira spa salon Madison WI";
     if (location.pathname === "/services") {
-      return `${base}, nail services, manicure, pedicure, nail enhancements, nail art, waxing, spa treatments, Madison WI nail salon, professional nail care, gel nails, dip powder, acrylic nails, nail extensions`;
+      return `${SEO_CONFIG.defaultKeywords}, nail services, manicure, pedicure, nail enhancements, nail art, Madison WI nail salon, professional nail care, gel nails, dip powder, acrylic nails, nail extensions`;
     }
     return undefined;
   };
 
   const keywords = getKeywords();
 
-  // Determine structured data type based on route
   const getStructuredDataType = () => {
     if (location.pathname === "/") {
       return "LocalBusiness";
@@ -69,8 +65,6 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
 
   return (
     <>
-      {/* SEO components are loaded immediately, not lazy */}
-      {/* This ensures meta tags are in initial HTML for search engines */}
       <SEO
         title={seoTitle}
         description={seoDescription}
@@ -81,9 +75,7 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({ children }) => {
             : ""
         }
       />
-      {/* Structured Data for home and services pages */}
       {structuredDataType && <StructuredData type={structuredDataType} />}
-      {/* Lazy loaded page content */}
       <Suspense fallback={<LoadingPage />}>{children}</Suspense>
     </>
   );

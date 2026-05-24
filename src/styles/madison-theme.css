@@ -1,0 +1,270 @@
+/* Madison Nail Lounge — design tokens (Figma Home_2) */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+:root {
+  --madison-black: #000000;
+  --madison-black-soft: #1a1a1a;
+  --madison-surface: #252525;
+  --madison-gold: #f9be5c;
+  --madison-gold-dark: #f1a953;
+  --madison-gold-text: #984121;
+  --madison-text: #e5e7eb;
+  --madison-text-muted: #d1d5db;
+  --madison-border: #374151;
+  --madison-gold-gradient: linear-gradient(
+    180deg,
+    #7f4200 0%,
+    #854905 1%,
+    #b37b28 9%,
+    #d49f41 15%,
+    #e8b551 21%,
+    #f0be57 24%,
+    #ffe5a0 50%,
+    #fde199 58%,
+    #f9d785 71%,
+    #f3c666 85%,
+    #ebb13f 100%
+  );
+  --madison-section-gradient: linear-gradient(
+    180deg,
+    #000000 0%,
+    #1a1a1a 69.5%
+  );
+  --madison-campaign-gradient: linear-gradient(
+    180deg,
+    #000000 0%,
+    #1a1a1a 69.5%
+  );
+}
+
+/* Display headings — SVN-Tangerine (Figma) */
+.text-gold-gradient {
+  font-family: "SVN-Tangerine", serif;
+  background: var(--madison-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/** Footer / body UI headings — SVN-Gilroy Body XL Bold (Figma) */
+.text-gold-gradient-sans {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 700;
+  background: var(--madison-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Footer info — Figma node 70:2629 */
+.madison-footer-info__heading {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+  text-transform: uppercase;
+  background: var(--madison-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.madison-footer-info__label {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
+  color: #f1a953;
+}
+
+.madison-footer-info__value,
+.madison-footer-info__value:link,
+.madison-footer-info__value:visited {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #e5e7eb !important;
+  text-decoration: none;
+}
+
+.madison-footer-info__value:hover {
+  color: #f9be5c !important;
+}
+
+.madison-footer-info__email,
+.madison-footer-info__email:link,
+.madison-footer-info__email:visited {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  font-style: italic;
+  color: #f1a953 !important;
+  text-decoration: none;
+}
+
+.madison-footer-info__email:hover {
+  opacity: 0.85;
+}
+
+.text-gold-gradient-name {
+  background: linear-gradient(
+    180deg,
+    #e7ba50 0%,
+    #ffd573 50%,
+    #dba538 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.madison-section-gradient {
+  background: var(--madison-section-gradient);
+}
+
+.madison-campaign-bar {
+  background: var(--madison-campaign-gradient);
+}
+
+.madison-heading-line {
+  width: 210px;
+  max-width: 100%;
+  height: 7px;
+  margin-left: auto;
+  margin-right: auto;
+  background: url("/assets/svgs/heading-line.svg") no-repeat center / contain;
+}
+
+.madison-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  background-color: var(--madison-gold);
+  padding: 12px 24px;
+  font-family: "Montserrat", "Sora", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--madison-gold-text);
+  transition: opacity 0.2s ease;
+}
+
+.madison-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.madison-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 24px;
+  border: 1px solid var(--madison-gold);
+  padding: 8px 24px;
+  font-family: "Montserrat", "Sora", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: var(--madison-gold);
+  transition: background-color 0.2s ease;
+}
+
+.madison-btn-outline:hover {
+  background-color: rgb(249 190 92 / 0.1);
+}
+
+.home-page {
+  background-color: var(--madison-black);
+  color: var(--madison-text);
+}
+
+.home-body {
+  background-color: var(--madison-black);
+}
+
+/* Legacy aliases used on Home */
+.home-section-gradient {
+  background: var(--madison-section-gradient);
+}
+
+.home-heading-line {
+  width: 210px;
+  max-width: 100%;
+  height: 7px;
+  margin-left: auto;
+  margin-right: auto;
+  background: url("/assets/svgs/heading-line.svg") no-repeat center / contain;
+}
+
+.home-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  background-color: #f9be5c;
+  padding: 14px 32px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #984121;
+  transition: opacity 0.2s ease;
+}
+
+.home-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.home-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 24px;
+  border: 1px solid #f9be5c;
+  padding: 8px 24px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #f9be5c;
+  transition: background-color 0.2s ease;
+}
+
+.home-btn-outline:hover {
+  background-color: rgb(249 190 92 / 0.1);
+}
+
+/* Home — service category tiles */
+.home-service-item {
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.home-service-item:hover,
+.home-service-item:focus-visible {
+  transform: translateY(-4px);
+}
+
+.home-service-item__icon {
+  background-color: #252525;
+  box-shadow: inset 0 0 0 2px transparent;
+  transition:
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.home-service-item:hover .home-service-item__icon,
+.home-service-item:focus-visible .home-service-item__icon {
+  background-color: #2f2f2f;
+  box-shadow: inset 0 0 0 2px var(--madison-gold);
+}
+
+.home-service-item:hover .home-service-item__label,
+.home-service-item:focus-visible .home-service-item__label {
+  color: var(--madison-gold);
+}

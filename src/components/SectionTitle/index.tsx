@@ -4,22 +4,21 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { parseAirtableRichtext } from "@/shared/utils/richtext";
 
 export type SectionTitleProps = {
-  /** Airtable richtext string (will be parsed) */
   html: string | undefined;
   className?: string;
-  /** [mobile, desktop] px — default [40, 72] */
   fontSize?: [number, number];
-  /** CSS line-height, e.g. "90%" | "1.1" — default "90%" */
   leading?: string;
+  variant?: "gold" | "light";
 };
 
-const DEFAULT_FONT_SIZE: [number, number] = [40, 72];
+const DEFAULT_FONT_SIZE: [number, number] = [36, 48];
 
 export const SectionTitle: React.FC<SectionTitleProps> = ({
   html,
   className,
   fontSize = DEFAULT_FONT_SIZE,
-  leading = "90%",
+  leading = "1.15",
+  variant = "gold",
 }) => {
   const [minSize, maxSize] = fontSize;
   const parsed = parseAirtableRichtext(html);
@@ -28,7 +27,10 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
   return (
     <div
       className={clsx(
-        "font-playfairDisplay [&_strong]:font-corinthiaBold text-[#6B4A2F] font-bold whitespace-break-spaces",
+        variant === "gold"
+          ? "text-gold-gradient font-tangerine font-normal [&_strong]:font-tangerine"
+          : "text-madison-text font-montserrat font-semibold",
+        "whitespace-break-spaces [&_p]:m-0",
         responsiveFontSizeArray(minSize, maxSize),
         className,
       )}

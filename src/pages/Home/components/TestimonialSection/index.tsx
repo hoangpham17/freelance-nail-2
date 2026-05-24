@@ -11,13 +11,11 @@ import { NavigationArrows } from "@/components/NavigationArrows";
 import { useHomeTitleBlock } from "../../useHomeTitleBlock";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 import "./styles.css";
-import { Background } from "./components/Background";
 
 const TestimonialSection: React.FC = () => {
   const { getBlockBySection } = useHomeTitleBlock();
   const block = getBlockBySection("testimonial");
 
-  // Determine which table to use based on is_season_gallery flag
   const tableId = block?.is_season_gallery
     ? AIRTABLE_ENDPOINTS.home_season_gallery
     : AIRTABLE_ENDPOINTS.home_testimonial;
@@ -27,7 +25,6 @@ const TestimonialSection: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
 
-  // Control autoplay based on popup state
   useEffect(() => {
     if (!swiperRef.current) return;
 
@@ -40,12 +37,10 @@ const TestimonialSection: React.FC = () => {
 
   if (loading || testimonials.length === 0) return null;
 
-  // Duplicate slides if needed for seamless 5-item loop effect
   const displayTestimonials =
     testimonials.length < 6 ? [...testimonials, ...testimonials] : testimonials;
 
   const handleItemClick = (index: number) => {
-    // Find the actual index in original testimonials array
     const actualIndex = index % testimonials.length;
     setSelectedIndex(actualIndex);
     setIsPopupOpen(true);
@@ -57,7 +52,6 @@ const TestimonialSection: React.FC = () => {
 
   const handleSlideChange = (swiper: SwiperType) => {
     if (!isPopupOpen) return;
-    // Get real index (accounting for loop)
     const realIndex = swiper.realIndex;
     if (realIndex !== undefined && realIndex < testimonials.length) {
       setSelectedIndex(realIndex);
@@ -66,23 +60,16 @@ const TestimonialSection: React.FC = () => {
 
   const handlePopupSlideChange = (newIndex: number) => {
     setSelectedIndex(newIndex);
-    // Sync Swiper to the new index when popup is open
     if (swiperRef.current && isPopupOpen) {
       swiperRef.current.slideToLoop(newIndex);
     }
   };
 
   return (
-    <div
-      className="relative"
-      style={{
-        background: `linear-gradient(180deg, rgba(255, 249, 240, 0) 18.83%, rgba(255, 249, 240, 0.72) 62.9%, #FDF4EF 100%)`,
-      }}
-    >
-      <Wrapper className="relative py-8 md:py-16">
+    <section className="home-section-gradient relative overflow-hidden">
+      <Wrapper className="relative py-10 md:py-16">
         <Header />
-        <Background />
-        <div className="relative group/slider md:mt-20 lg:max-w-[1200px] mx-auto min-[1700px]:max-w-[1920px]">
+        <div className="relative group/slider md:mt-12 lg:max-w-[1200px] mx-auto min-[1700px]:max-w-[1920px]">
           <Swiper
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             onSlideChange={handleSlideChange}
@@ -179,11 +166,10 @@ const TestimonialSection: React.FC = () => {
             })}
           </Swiper>
 
-          {/* Navigation Arrows */}
           <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-50 pointer-events-none">
             <NavigationArrows
               className="flex justify-between w-full mb-0"
-              buttonClassName="bg-white/70 backdrop-blur-md shadow-lg pointer-events-auto w-12 h-12 md:w-16 md:h-16"
+              buttonClassName="bg-[#252525]/80 backdrop-blur-md shadow-lg pointer-events-auto w-12 h-12 md:w-16 md:h-16 border-[#f9be5c] text-[#f9be5c] hover:bg-[#f9be5c] hover:text-[#984121]"
               prevButtonClassName="testimonial-prev"
               nextButtonClassName="testimonial-next"
             />
@@ -191,7 +177,6 @@ const TestimonialSection: React.FC = () => {
         </div>
       </Wrapper>
 
-      {/* Testimonial Popup */}
       <TestimonialPopup
         isOpen={isPopupOpen}
         items={testimonials}
@@ -199,7 +184,7 @@ const TestimonialSection: React.FC = () => {
         onClose={handleClosePopup}
         onSlideChange={handlePopupSlideChange}
       />
-    </div>
+    </section>
   );
 };
 

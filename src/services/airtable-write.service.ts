@@ -8,7 +8,7 @@ import { AnyObject } from "antd/es/_util/type";
  */
 const AIRTABLE_WRITE_CONFIG = {
   apiKey: import.meta.env.VITE_AIRTABLE_API_WRITE_KEY || "",
-  baseId: "appJtSKIhhVpKJgu5",
+  baseId: "app6t49qn0iRqg6bs",
 };
 
 const baseWrite = new Airtable({ apiKey: AIRTABLE_WRITE_CONFIG.apiKey }).base(

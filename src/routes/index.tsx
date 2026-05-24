@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { PATHS } from "./Routes";
+import { BRAND } from "@/config/brand.config";
 
 // Lazy load components for better performance
 const Home = lazy(() => import("../pages/Home"));
@@ -28,50 +29,49 @@ export const routes: RouteConfig[] = [
     element: Home,
     title: "Home",
     description:
-      "The Veira nail salon and spa in Madison, WI. The Veira Nail Lounge & Spa offers manicures, pedicures, nail art, and spa treatments. Book The Veira nail or spa services today.",
+      "Madison Nail Lounge in Madison, WI offers premium manicures, pedicures, nail art, and nail enhancements. Book your nail services today.",
   },
   {
     path: PATHS.services,
     element: Services,
-    title:
-      "Nail Services & Spa Treatments - Manicure, Pedicure, Nail Enhancements",
+    title: "Nail Services - Manicure, Pedicure, Nail Enhancements",
     description:
-      "Discover our comprehensive range of premium nail services at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Professional manicures, pedicures, nail enhancements, waxing, and spa treatments. Book your appointment today!",
+      `Discover premium nail services at ${BRAND.nameUppercase} in Madison, WI. Professional manicures, pedicures, nail enhancements, and nail art. Book your appointment today!`,
   },
   {
     path: PATHS.hostAParty,
     element: HostAParty,
     title: "Host A Party",
     description:
-      "Host a memorable party at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Perfect for birthdays, bridal parties, and group events. Book your private party experience today!",
+      `Host a memorable party at ${BRAND.nameUppercase} in Madison, WI. Perfect for birthdays, bridal parties, and group nail events. Book your private party experience today!`,
   },
   {
     path: PATHS.gallery,
     element: Gallery,
     title: "Gallery",
     description:
-      "Explore our stunning nail art gallery at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. View our latest manicure, pedicure, and nail enhancement designs. Get inspired for your next appointment!",
+      `Explore our nail art gallery at ${BRAND.nameUppercase} in Madison, WI. View manicure, pedicure, and nail enhancement designs. Get inspired for your next appointment!`,
   },
   {
     path: PATHS.aboutUs,
     element: AboutUs,
     title: "About Us",
     description:
-      "Learn about THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Discover our story, expert team, and commitment to providing premium nail care and spa services. Experience luxury beauty treatments.",
+      `Learn about ${BRAND.nameUppercase} in Madison, WI. Discover our story, expert team, and commitment to premium nail care services.`,
   },
   {
     path: PATHS.contactUs,
     element: ContactUs,
     title: "Contact",
     description:
-      "Contact THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Located at 795 University Ave. Call us at (608) 720-1011 or send us a message. We're here to help with all your nail care needs!",
+      `Contact ${BRAND.nameUppercase} in Madison, WI. Located at 795 University Ave. Call us at (608) 720-1011 or send us a message. We're here to help with all your nail care needs!`,
   },
   {
     path: PATHS.ourPolicies,
     element: OurPolicies,
     title: "Our Policies",
     description:
-      "Review our salon policies and guidelines at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Learn about our cancellation policy, appointment booking, and service terms. We value your understanding.",
+      `Review our salon policies and guidelines at ${BRAND.nameUppercase} in Madison, WI. Learn about our cancellation policy, appointment booking, and service terms.`,
   },
   {
     path: PATHS.styleguide,
@@ -82,9 +82,9 @@ export const routes: RouteConfig[] = [
   {
     path: PATHS.notFound,
     element: NotFound,
-    title: "404 - Page Not Found | THE VEIRA NAIL LOUNGE & SPA",
+    title: `404 - Page Not Found | ${BRAND.nameUppercase}`,
     description:
-      "The page you're looking for doesn't exist. Return to THE VEIRA NAIL LOUNGE & SPA homepage or explore our services in Madison, WI.",
+      `The page you're looking for doesn't exist. Return to ${BRAND.nameUppercase} homepage or explore our nail services in Madison, WI.`,
   },
 ];
 

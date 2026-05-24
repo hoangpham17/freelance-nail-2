@@ -52,7 +52,7 @@ const MobileSlide: React.FC<MobileSlideProps> = ({ items, isLoading = false }) =
         <SwiperSlide key={index}>
           <Flex vertical className="w-full gap-6">
             {/* Image */}
-            <div className="w-full h-[220px] rounded-2xl shadow-sm overflow-hidden group/img bg-[#F5F5F5]">
+            <div className="w-full h-[220px] rounded-xl overflow-hidden group/img bg-[#252525]">
               {item.imageUrl ? (
                 <div
                   className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover/img:scale-105"
@@ -72,7 +72,7 @@ const MobileSlide: React.FC<MobileSlideProps> = ({ items, isLoading = false }) =
                   __html: parseAirtableRichtext(item.note),
                 }}
                 className={clsx(
-                  "text-[#8A6A4F] font-extralight text-center",
+                  "text-[#d1d5db] font-light text-center",
                   responsiveFontSizeArray(14, 18),
                 )}
               />
@@ -88,7 +88,7 @@ const MobileSlide: React.FC<MobileSlideProps> = ({ items, isLoading = false }) =
           onPrev={() => swiperRef.current?.slidePrev()}
           onNext={() => swiperRef.current?.slideNext()}
           className="flex justify-between w-full mb-0"
-          buttonClassName="bg-white/70 backdrop-blur-md shadow-lg pointer-events-auto w-12 h-12 md:w-16 md:h-16"
+          buttonClassName="bg-[#252525]/80 backdrop-blur-md shadow-lg pointer-events-auto w-12 h-12 border-[#f9be5c] text-[#f9be5c] hover:bg-[#f9be5c] hover:text-[#984121]"
         />
       </div>
     </div>

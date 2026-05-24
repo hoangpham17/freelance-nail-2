@@ -61,7 +61,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       >
         <h3
           className={clsx(
-            "font-playfairDisplay font-bold text-[#6B4A2F] m-0 flex-1 pr-4",
+            "font-tangerine text-gold-gradient m-0 flex-1 pr-4",
             responsiveFontSizeArray(18, 24),
           )}
         >

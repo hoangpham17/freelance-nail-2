@@ -31,15 +31,15 @@ const Home: React.FC = () => {
   };
 
   return (
-    <main className="home-page">
+    <main className="home-page bg-black">
       <HeroSection />
       <ServiceSection />
       <AboutUs />
-      <TestimonialSection />
       <GallerySection
         onItemClick={openGalleryPopup}
         onGalleryItemsChange={setGalleryItems}
       />
+      <TestimonialSection />
       <GalleryPopup
         isOpen={isGalleryPopupOpen}
         items={galleryItems}

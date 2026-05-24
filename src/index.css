@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,700;1,600&family=Josefin+Sans:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
@@ -35,16 +34,11 @@
 }
 
 @font-face {
-  font-family: "Corinthia Bold";
-  src: url("/assets/fonts/Corinthia-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Corinthia Regular";
-  src: url("/assets/fonts/Corinthia-Regular.ttf") format("truetype");
+  font-family: "SVN-Tangerine";
+  src:
+    url("/assets/fonts/SVN-Tangerine.woff2") format("woff2"),
+    url("/assets/fonts/SVN-Tangerine.otf") format("opentype"),
+    url("/assets/fonts/SVN-Tangerine.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -59,7 +53,12 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply min-h-screen bg-white text-black font-sora;
+    min-height: 100vh;
+    background-color: var(--madison-black);
+    color: var(--madison-text);
+    font-family: "Montserrat", "Sora", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -92,19 +91,17 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #c3c3c3 !important;
+  background: #1a1a1a !important;
   border-radius: 5px !important;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #9e7b6a !important;
+  background: #f9be5c !important;
   border-radius: 5px !important;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #b7907e !important;
+  background: #f1a953 !important;
 }
 
 @keyframes floating {

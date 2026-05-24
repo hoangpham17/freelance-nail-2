@@ -35,7 +35,7 @@ const FormSection: React.FC<FormSectionProps> = ({ sectionRef }) => {
             </p>
             <h2
               className={clsx(
-                "font-playfairDisplay font-bold text-[#6B4A2F] text-center mb-3",
+                "font-tangerine text-gold-gradient text-center mb-3",
                 responsiveFontSizeArray(24, 28),
               )}
             >

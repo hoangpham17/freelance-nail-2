@@ -1,12 +1,12 @@
 {
-  "short_name": "Veira Nail Spa",
-  "name": "THE VEIRA NAIL LOUNGE & SPA",
-  "description": "Premium nail care services at THE VEIRA NAIL LOUNGE & SPA in Madison, WI. Professional manicures, pedicures, nail enhancements, and spa treatments.",
+  "short_name": "Madison Nail",
+  "name": "MADISON NAIL LOUNGE",
+  "description": "Premium nail care services at Madison Nail Lounge in Madison, WI. Professional manicures, pedicures, nail art, and nail enhancements.",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "assets/images/logo/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
     },
     {
       "src": "assets/images/logo/mobile.png",
@@ -25,7 +25,7 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "theme_color": "#9E7B6A",
-  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "categories": ["beauty", "health", "lifestyle"]
 }

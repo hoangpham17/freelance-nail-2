@@ -40,7 +40,7 @@ const OurPolicies: React.FC = () => {
                 <p className="text-xs tracking-[0.2em] uppercase font-medium text-[#8B6B4A]">
                   {(ourPoliciesContent as { header: { accent: string } }).header.accent}
                 </p>
-                <h2 className="mt-4 font-playfairDisplay font-bold text-[#2C2520] text-2xl sm:text-3xl lg:text-[2rem] tracking-tight">
+                <h2 className="mt-4 font-tangerine text-gold-gradient text-2xl sm:text-3xl lg:text-[2rem] tracking-tight">
                   {(ourPoliciesContent as { header: { title: string } }).header.title}
                 </h2>
                 <div

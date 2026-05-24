@@ -15,7 +15,6 @@ import ServicesSubmenu from "./components/ServicesSubmenu";
 import SvgIcon from "@/based/SvgIcon";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
 import DesktopNav from "./components/DesktopNav";
-import { NoiseBackground } from "@/components/NoiseBackground";
 import { ListSocial } from "./components/ListSocial";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
@@ -42,7 +41,6 @@ const Header: React.FC = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
-  const [isAtTop, setIsAtTop] = useState(true);
   const [hasDismissedCampaignText, setHasDismissedCampaignText] =
     useState(false);
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
@@ -193,11 +191,6 @@ const Header: React.FC = () => {
         return prev === next ? prev : next;
       });
 
-      setIsAtTop((prev) => {
-        const next = scrollY === 0;
-        return prev === next ? prev : next;
-      });
-
       ticking = false;
     };
 
@@ -333,15 +326,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header
-      className={clsx(
-        "fixed top-0 left-0 w-full z-[98]",
-        isAtTop ? "lg:bg-transparent" : "lg:bg-[#805D3D]",
-        isMenuOpen
-          ? "bg-white"
-          : "bg-white/90 backdrop-blur-sm lg:backdrop-blur-none",
-      )}
-    >
+    <header className="fixed top-0 left-0 w-full z-[98] bg-black">
       <Promotion
         textPromotions={textPromotions}
         showCampaignBar={shouldShowCampaignBar}
@@ -377,12 +362,12 @@ const Header: React.FC = () => {
         />
 
         {/* Mobile Header */}
-        <NoiseBackground className="lg:hidden w-full h-[64px] md:h-[80px] bg-[#805D3D] shadow-md border-b border-[#B2866D]">
+        <div className="lg:hidden w-full h-[64px] border-b border-madison-border/40 bg-black">
           <Wrapper className="px-4">
             <Flex
               justify="space-between"
               align="center"
-              className="h-[64px] md:h-[80px]"
+              className="h-[64px]"
             >
               <BurgerMenu toggleMenu={toggleMenu} />
               <Link
@@ -400,20 +385,20 @@ const Header: React.FC = () => {
               <ListSocial />
             </Flex>
           </Wrapper>
-        </NoiseBackground>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <div
         className={clsx(
-          "lg:hidden fixed inset-0 bg-[#805D3D] z-[98] transform transition-transform duration-300",
+          "lg:hidden fixed inset-0 bg-black z-[98] transform transition-transform duration-300",
           isMenuOpen ? "translate-x-0" : "translate-x-full",
         )}
         style={{ height: "100dvh" }}
       >
         <Flex vertical className="h-full">
           {/* Mobile Menu Header */}
-          <div className="flex items-center justify-between h-[56px] px-4 border-b border-[#B2866D]">
+          <div className="flex items-center justify-between h-[56px] px-4 border-b border-madison-border">
             <Link
               to={PATHS.home}
               onClick={closeMenu}
@@ -470,8 +455,8 @@ const Header: React.FC = () => {
                         <button
                           onClick={toggleServicesExpanded}
                           className={clsx(
-                            "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5 text-white relative",
-                            isActive ? "bg-[#0000001F]" : "font-light",
+                            "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5 relative font-montserrat",
+                            isActive ? "bg-madison-surface text-madison-gold" : "font-medium text-madison-muted",
                           )}
                           style={{
                             boxShadow: isServicesExpanded
@@ -505,7 +490,7 @@ const Header: React.FC = () => {
                           </Flex>
                         </button>
                         {isServicesExpanded && serviceNavItems.length > 0 && (
-                          <ul className="px-8 space-y-1 list-none bg-[#0000001F]">
+                          <ul className="px-8 space-y-1 list-none bg-madison-surface/80">
                             {serviceNavItems.map((subItem) => {
                               const isSubActive = checkIsActive(subItem.slug);
                               return (
@@ -514,10 +499,10 @@ const Header: React.FC = () => {
                                     to={subItem.path}
                                     onClick={closeMenu}
                                     className={clsx(
-                                      "flex items-center justify-between py-2 px-4 capitalize transition-colors font-light text-base !text-white rounded-2xl",
+                                      "flex items-center justify-between py-2 px-4 capitalize transition-colors text-base rounded-2xl text-madison-muted font-montserrat",
                                       isSubActive
-                                        ? "bg-[#FFFFFF14]"
-                                        : "font-light",
+                                        ? "bg-madison-surface text-madison-gold"
+                                        : "",
                                     )}
                                   >
                                     <span>{subItem.label}</span>
@@ -546,9 +531,9 @@ const Header: React.FC = () => {
                         to={item.path}
                         onClick={closeMenu}
                         className={clsx(
-                          "flex items-center justify-between py-3 uppercase transition-colors px-5 !text-white",
+                          "flex items-center justify-between py-3 uppercase transition-colors px-5 font-montserrat text-madison-muted",
                           responsiveFontSizeArray(16, 18),
-                          isActive ? "bg-[#0000001F]" : "font-light",
+                          isActive ? "bg-madison-surface text-madison-gold" : "font-medium",
                         )}
                       >
                         <span>{item.label}</span>
@@ -570,7 +555,15 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Menu Footer */}
-          <div className="fixed bottom-0 left-0 right-0 bg-[#805D3D] border-t border-[#B2866D] flex justify-center py-10 z-10">
+          <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-madison-border flex flex-col items-center gap-4 py-8 z-10 px-6">
+            <a
+              href="https://booking.spacepos.net/?id=jzOR8l!BpuM="
+              target="_blank"
+              rel="noreferrer"
+              className="madison-btn-primary w-full max-w-xs"
+            >
+              Booking Now
+            </a>
             {/* <ListSocial /> */}
           </div>
         </Flex>

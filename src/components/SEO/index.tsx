@@ -19,7 +19,7 @@ const SEO: React.FC<SEOProps> = ({
   image = "/assets/images/logo/desktop.png",
   url = typeof window !== "undefined" ? window.location.href : "",
   type = "website",
-  siteName = "THE VEIRA NAIL LOUNGE & SPA",
+  siteName = SEO_CONFIG.siteName,
 }) => {
   const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 

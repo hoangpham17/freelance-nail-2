@@ -21,26 +21,18 @@ const PhoneButton: React.FC<PhoneButtonProps> = ({ phoneNumber }) => {
     setIsPhoneModalOpen(false);
   };
 
-  const handleCancelCall = () => {
-    setIsPhoneModalOpen(false);
-  };
-
   return (
     <>
       <a
         onClick={handlePhoneClick}
         className={clsx(
-          "bg-[#FFF9F4] text-[#6B4A2F] font-bold py-2 lg:py-3 rounded-full shadow-lg transition-all duration-300 hover:bg-[#F9F0E8] hover:scale-105 active:scale-95 border-2 border-[#E3D6CB] text-center cursor-pointer",
-          "flex items-center justify-center gap-1 lg:gap-2",
-          "flex-1 lg:flex-none h-[50px] lg:h-auto lg:min-w-[180px] px-1 lg:px-4",
-          responsiveFontSizeArray(13, 20),
+          "madison-btn-outline !rounded-full font-montserrat font-semibold shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer",
+          "flex items-center justify-center gap-2 bg-madison-surface/90 backdrop-blur-sm",
+          "flex-1 lg:flex-none h-[50px] lg:h-auto lg:min-w-[180px] px-3 lg:px-4",
+          responsiveFontSizeArray(13, 16),
         )}
-        style={{
-          boxShadow:
-            "0px 4px 16px 0px #BA876BC2, 0px 4px 16px 0px #FFFFFF29 inset",
-        }}
       >
-        <PhoneOutlined className="shrink-0 text-[16px] lg:text-[20px]" />
+        <PhoneOutlined className="shrink-0 text-[16px] lg:text-[18px]" />
         <span className="whitespace-nowrap">{phoneNumber}</span>
       </a>
 
@@ -48,7 +40,7 @@ const PhoneButton: React.FC<PhoneButtonProps> = ({ phoneNumber }) => {
         open={isPhoneModalOpen}
         phoneNumber={phoneNumber}
         onConfirm={handleConfirmCall}
-        onCancel={handleCancelCall}
+        onCancel={() => setIsPhoneModalOpen(false)}
       />
     </>
   );

@@ -1,29 +1,23 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { BRAND } from "@/config/brand.config";
+import { SEO_CONFIG } from "@/config/seo.config";
 
 interface StructuredDataProps {
   type?: "LocalBusiness" | "Organization" | "Service";
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
 }
 
 const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
   const defaultLocalBusiness = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "THE VEIRA NAIL LOUNGE & SPA",
+    "@type": "NailSalon",
+    name: BRAND.nameUppercase,
     alternateName: [
-      "The Veira",
-      "The Veira Nail",
-      "The Veira Spa",
-      "The Veira Nail Spa",
-      "THE VEIRA NAIL LOUNGE & SPA",
-      "veira nail",
-      "veira spa",
-      "veira nail spa",
-      "veira nail salon",
-      "veira spa salon",
-      "veira nail salon Madison WI",
-      "veira spa salon Madison WI",
+      BRAND.name,
+      "Madison Nail Lounge Madison WI",
+      "Madison nail salon",
+      "Madison WI nail lounge",
     ],
     image:
       typeof window !== "undefined"
@@ -31,33 +25,33 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
         : "",
     "@id": typeof window !== "undefined" ? window.location.origin : "",
     url: typeof window !== "undefined" ? window.location.origin : "",
-    telephone: "+1-608-720-1011",
+    telephone: SEO_CONFIG.business.phone,
     priceRange: "$$",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "795 University Ave",
-      addressLocality: "Madison",
-      addressRegion: "WI",
-      postalCode: "53715",
-      addressCountry: "US",
+      streetAddress: SEO_CONFIG.business.address.street,
+      addressLocality: SEO_CONFIG.business.address.city,
+      addressRegion: SEO_CONFIG.business.address.state,
+      postalCode: SEO_CONFIG.business.address.zip,
+      addressCountry: SEO_CONFIG.business.address.country,
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 43.0730802,
-      longitude: -89.3986882,
+      latitude: SEO_CONFIG.business.coordinates.latitude,
+      longitude: SEO_CONFIG.business.coordinates.longitude,
     },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "19:00",
+        opens: "09:30",
+        closes: "19:30",
       },
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: "Saturday",
-        opens: "09:00",
-        closes: "16:00",
+        opens: "09:30",
+        closes: "17:00",
       },
       {
         "@type": "OpeningHoursSpecification",
@@ -67,8 +61,8 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
       },
     ],
     sameAs: [
-      "https://www.facebook.com/madisonnailloungewi",
-      "https://www.instagram.com/madisonnaillounge/",
+      SEO_CONFIG.business.social.facebook,
+      SEO_CONFIG.business.social.instagram,
     ],
   };
 
@@ -77,17 +71,17 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
     "@type": "Service",
     serviceType: "Nail Care Services",
     provider: {
-      "@type": "LocalBusiness",
-      name: "THE VEIRA NAIL LOUNGE & SPA",
+      "@type": "NailSalon",
+      name: BRAND.nameUppercase,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "795 University Ave",
-        addressLocality: "Madison",
-        addressRegion: "WI",
-        postalCode: "53715",
-        addressCountry: "US",
+        streetAddress: SEO_CONFIG.business.address.street,
+        addressLocality: SEO_CONFIG.business.address.city,
+        addressRegion: SEO_CONFIG.business.address.state,
+        postalCode: SEO_CONFIG.business.address.zip,
+        addressCountry: SEO_CONFIG.business.address.country,
       },
-      telephone: "+1-608-720-1011",
+      telephone: SEO_CONFIG.business.phone,
     },
     areaServed: {
       "@type": "City",
@@ -115,11 +109,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({ type, data }) => {
         },
         {
           "@type": "OfferCatalog",
-          name: "Additional Services",
-        },
-        {
-          "@type": "OfferCatalog",
-          name: "Waxing Services",
+          name: "Nail Art",
         },
         {
           "@type": "OfferCatalog",

@@ -9,21 +9,19 @@ export interface GalleryItemProps {
 
 const GalleryItem: React.FC<GalleryItemProps> = ({ url, onClick }) => {
   return (
-    <div className="px-4 group cursor-pointer" onClick={onClick}>
-      <div className="relative border-2 border-[#B2866D] rounded-t-[300px] rounded-b-[32px] transition-all duration-500 p-1.5 md:p-3">
-        <div
-          className="relative overflow-hidden rounded-t-[300px] rounded-b-[32px]"
-          style={{ aspectRatio: "408 / 633" }}
-        >
-          {url ? (
-            <div
-              className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-              style={{ backgroundImage: `url(${url})` }}
-            />
-          ) : (
-            <Skeleton.Image active className="!w-full !h-full" />
-          )}
-        </div>
+    <div className="cursor-pointer px-2 md:px-3 group" onClick={onClick}>
+      <div
+        className="relative overflow-hidden rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
+        style={{ aspectRatio: "3 / 4" }}
+      >
+        {url ? (
+          <div
+            className="size-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+            style={{ backgroundImage: `url(${url})` }}
+          />
+        ) : (
+          <Skeleton.Image active className="!w-full !h-full" />
+        )}
       </div>
     </div>
   );
