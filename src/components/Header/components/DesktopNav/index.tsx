@@ -39,7 +39,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
       className={
         isHeaderTransparent
           ? "hidden lg:block w-full border-b border-primary bg-transparent transition-colors duration-300"
-          : "hidden lg:block w-full border-b border-madison-border/40 bg-black/95 transition-colors duration-300"
+          : "hidden lg:block w-full border-b border-primary bg-black/95 transition-colors duration-300"
       }
     >
       <Wrapper className="max-w-[1440px]">

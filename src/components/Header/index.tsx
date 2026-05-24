@@ -383,7 +383,7 @@ const Header: React.FC = () => {
             "lg:hidden w-full h-[64px] border-b transition-colors duration-300",
             isHeaderTransparent
               ? "border-primary bg-transparent"
-              : "border-madison-border/40 bg-black",
+              : "border-primary bg-black",
           )}
         >
           <Wrapper className="px-4">
