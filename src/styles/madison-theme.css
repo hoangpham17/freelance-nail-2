@@ -181,6 +181,27 @@
   background-color: rgb(249 190 92 / 0.1);
 }
 
+/* Header nav — active item (override Ant Design link defaults) */
+.app header nav a[aria-current="page"] {
+  color: var(--madison-gold) !important;
+}
+
+/* Ant Design controls — primary gold hover (override default blue) */
+.app .ant-btn-link:not(:disabled):hover,
+.app .ant-btn-text:not(:disabled):hover {
+  color: var(--madison-gold) !important;
+}
+
+.app .ant-btn-default:not(:disabled):hover {
+  color: var(--madison-gold) !important;
+  border-color: var(--madison-gold) !important;
+}
+
+.app .ant-typography a:hover,
+.app a.ant-typography:hover {
+  color: var(--madison-gold) !important;
+}
+
 .home-page {
   background-color: var(--madison-black);
   color: var(--madison-text);

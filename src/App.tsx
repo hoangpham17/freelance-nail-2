@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ConfigProvider } from "antd";
+import { antdTheme } from "@/config/antd-theme";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FixedButtons from "./components/FixedButtons";
@@ -13,7 +14,7 @@ import "./App.css";
 function App() {
   return (
     <HelmetProvider>
-      <ConfigProvider>
+      <ConfigProvider theme={antdTheme}>
         <Router>
           <div className="app min-h-screen flex flex-col bg-black">
             <Header />

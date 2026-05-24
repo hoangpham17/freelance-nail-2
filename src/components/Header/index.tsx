@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Flex, Image } from "antd";
+import {
+  getMobileNavLinkClassName,
+  isNavItemActive,
+} from "@/shared/utils/nav";
+import { Flex } from "antd";
 import { PATHS } from "../../routes/Routes";
 import { useAirtable } from "../../hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "../../services/airtable.service";
@@ -37,10 +41,12 @@ const navItems: NavItem[] = [
 const Header: React.FC = () => {
   const location = useLocation();
 
+  const isHomePage = location.pathname === PATHS.home;
   const isServicesPage = location.pathname === PATHS.services;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
+  const isHeaderTransparent = isHomePage && !isHeaderSolid;
   const [hasDismissedCampaignText, setHasDismissedCampaignText] =
     useState(false);
   const [hasSeenCampaignPopup, setHasSeenCampaignPopup] = useState(false);
@@ -179,6 +185,11 @@ const Header: React.FC = () => {
   }, [setIsShowPopupCampaign]);
 
   useEffect(() => {
+    if (!isHomePage) {
+      setIsHeaderSolid(true);
+      return;
+    }
+
     if (typeof window === "undefined") return;
 
     let ticking = false;
@@ -201,12 +212,11 @@ const Header: React.FC = () => {
       }
     };
 
-    // Initialize state based on current scroll position
     handleScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
   // Auto-open popup on first load if not seen before
   useEffect(() => {
@@ -326,7 +336,12 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-[98] bg-black">
+    <header
+      className={clsx(
+        "fixed top-0 left-0 w-full z-[98] transition-colors duration-300",
+        isHeaderTransparent ? "bg-black/60" : "bg-black",
+      )}
+    >
       <Promotion
         textPromotions={textPromotions}
         showCampaignBar={shouldShowCampaignBar}
@@ -341,6 +356,7 @@ const Header: React.FC = () => {
           setIsServicesHovered={setIsServicesHovered}
           hoverTimeoutRef={hoverTimeoutRef}
           isServicesPage={isServicesPage}
+          isHeaderTransparent={isHeaderTransparent}
         />
 
         {/* Services Dropdown (Desktop) */}
@@ -362,7 +378,14 @@ const Header: React.FC = () => {
         />
 
         {/* Mobile Header */}
-        <div className="lg:hidden w-full h-[64px] border-b border-madison-border/40 bg-black">
+        <div
+          className={clsx(
+            "lg:hidden w-full h-[64px] border-b transition-colors duration-300",
+            isHeaderTransparent
+              ? "border-primary bg-transparent"
+              : "border-madison-border/40 bg-black",
+          )}
+        >
           <Wrapper className="px-4">
             <Flex
               justify="space-between"
@@ -373,13 +396,12 @@ const Header: React.FC = () => {
               <Link
                 to={PATHS.home}
                 onClick={closeMenu}
-                className="flex items-center justify-center"
+                className="flex h-full flex-1 items-center justify-center"
               >
-                <Image
+                <img
                   src="/assets/images/logo/desktop.png"
-                  alt="Logo"
-                  className="max-h-[32px] md:max-h-[45px] !w-auto"
-                  preview={false}
+                  alt="Madison Nail Lounge"
+                  className="h-8 w-auto max-h-8 object-contain md:h-[45px] md:max-h-[45px]"
                 />
               </Link>
               <ListSocial />
@@ -402,13 +424,12 @@ const Header: React.FC = () => {
             <Link
               to={PATHS.home}
               onClick={closeMenu}
-              className="flex items-center justify-center"
+              className="flex h-full items-center"
             >
-              <Image
+              <img
                 src="/assets/images/logo/desktop.png"
-                alt="Logo"
-                className="max-h-[32px] !w-auto"
-                preview={false}
+                alt="Madison Nail Lounge"
+                className="h-8 w-auto max-h-8 object-contain"
               />
             </Link>
             <button
@@ -431,7 +452,10 @@ const Header: React.FC = () => {
             <nav className="flex flex-col" aria-label="Mobile navigation">
               <ul className="flex flex-col list-none m-0 p-0">
                 {navItems.map((item) => {
-                  const isActive = location.pathname === item.path;
+                  const isActive = isNavItemActive(
+                    location.pathname,
+                    item.path,
+                  );
                   const isServices = item.path === PATHS.services;
 
                   if (isServices) {
@@ -456,7 +480,9 @@ const Header: React.FC = () => {
                           onClick={toggleServicesExpanded}
                           className={clsx(
                             "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5 relative font-montserrat",
-                            isActive ? "bg-madison-surface text-madison-gold" : "font-medium text-madison-muted",
+                            isActive
+                              ? "bg-madison-surface !text-madison-gold font-semibold"
+                              : "font-medium text-madison-muted hover:!text-madison-gold",
                           )}
                           style={{
                             boxShadow: isServicesExpanded
@@ -499,9 +525,9 @@ const Header: React.FC = () => {
                                     to={subItem.path}
                                     onClick={closeMenu}
                                     className={clsx(
-                                      "flex items-center justify-between py-2 px-4 capitalize transition-colors text-base rounded-2xl text-madison-muted font-montserrat",
+                                      "flex items-center justify-between py-2 px-4 capitalize transition-colors text-base rounded-2xl text-madison-muted font-montserrat hover:text-madison-gold",
                                       isSubActive
-                                        ? "bg-madison-surface text-madison-gold"
+                                        ? "bg-madison-surface !text-madison-gold font-semibold"
                                         : "",
                                     )}
                                   >
@@ -530,14 +556,14 @@ const Header: React.FC = () => {
                       <Link
                         to={item.path}
                         onClick={closeMenu}
+                        aria-current={isActive ? "page" : undefined}
                         className={clsx(
-                          "flex items-center justify-between py-3 uppercase transition-colors px-5 font-montserrat text-madison-muted",
+                          getMobileNavLinkClassName(isActive),
                           responsiveFontSizeArray(16, 18),
-                          isActive ? "bg-madison-surface text-madison-gold" : "font-medium",
                         )}
                       >
                         <span>{item.label}</span>
-                        {isActive && (
+                        {isActive ? (
                           <SvgIcon
                             src={"/assets/svgs/star.svg"}
                             ariaLabel="Active"
@@ -545,7 +571,7 @@ const Header: React.FC = () => {
                             height={16}
                             className="shrink-0 text-white"
                           />
-                        )}
+                        ) : null}
                       </Link>
                     </li>
                   );

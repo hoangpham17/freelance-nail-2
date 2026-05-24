@@ -74,7 +74,7 @@ const ServicesSubmenu: React.FC<ServicesSubmenuProps> = ({
                     responsiveFontSizeArray(14, 16),
                     isHovered
                       ? "text-madison-gold bg-madison-surface"
-                      : "text-madison-muted hover:text-madison-text",
+                      : "text-madison-muted hover:text-madison-gold",
                   )}
                 >
                   {item.label}

@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Slider, { Settings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,7 +7,6 @@ import { useBannerItems } from "./useBannerItems";
 import LoadingPage from "@/components/LoadingPage";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { useCampaignStore } from "@/shared/store/campaignStore";
 import { Skeleton } from "antd";
 import homepageContent from "@/content/homepage.json";
 
@@ -16,21 +15,10 @@ const HeroSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
-  const headerHeight = useCampaignStore((state) => state.headerHeight);
-  const campaignBarHeight = useCampaignStore(
-    (state) => state.campaignBarHeight,
-  );
-
   const { bannerItems, loading: isLoadingBanners } = useBannerItems();
 
-  const sectionHeight = useMemo(() => {
-    const totalHeaderHeight = headerHeight + campaignBarHeight;
-    return `calc(100dvh - ${totalHeaderHeight}px)`;
-  }, [headerHeight, campaignBarHeight]);
-
-  const bannerHeight = useMemo(() => {
-    return sectionHeight;
-  }, [sectionHeight]);
+  const sectionHeight = "100dvh";
+  const bannerHeight = sectionHeight;
 
   const handleBeforeChange = (_current: number, next: number) => {
     setCurrentSlide(next);
@@ -180,11 +168,8 @@ const HeroSection: React.FC = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden transition-all duration-300 hero-section"
-      style={{
-        height: sectionHeight,
-        marginTop: `${headerHeight}px`,
-      }}
+      className="relative w-full overflow-hidden hero-section"
+      style={{ height: sectionHeight }}
     >
       {isLoadingBanners && <LoadingPage />}
       <div className="w-full h-full [&_.slick-list]:h-full [&_.slick-track]:h-full [&_.slick-slide]:h-full [&_.slick-slide>div]:h-full">

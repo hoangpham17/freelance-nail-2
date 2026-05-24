@@ -1,11 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Flex, Image } from "antd";
+import { Flex } from "antd";
 import { PATHS } from "@/routes/Routes";
-import clsx from "clsx";
+import {
+  getDesktopNavLinkClassName,
+  isNavItemActive,
+} from "@/shared/utils/nav";
 import { Wrapper } from "@/based/components/Wrapper";
 
 const DESKTOP_NAV = [
+  { path: PATHS.home, label: "Home" },
   { path: PATHS.services, label: "Our Services" },
   { path: PATHS.hostAParty, label: "Host a Party" },
   { path: PATHS.gallery, label: "Gallery" },
@@ -19,29 +23,39 @@ interface DesktopNavProps {
   setIsServicesHovered: (value: boolean) => void;
   hoverTimeoutRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
   isServicesPage: boolean;
+  isHeaderTransparent?: boolean;
 }
 
 const DesktopNav: React.FC<DesktopNavProps> = ({
   setIsServicesHovered,
   hoverTimeoutRef,
   isServicesPage,
+  isHeaderTransparent = false,
 }) => {
   const location = useLocation();
 
   return (
-    <div className="hidden lg:block w-full bg-black/95 border-b border-madison-border/40">
+    <div
+      className={
+        isHeaderTransparent
+          ? "hidden lg:block w-full border-b border-primary bg-transparent transition-colors duration-300"
+          : "hidden lg:block w-full border-b border-madison-border/40 bg-black/95 transition-colors duration-300"
+      }
+    >
       <Wrapper className="max-w-[1440px]">
         <Flex
           align="center"
           justify="space-between"
           className="h-[70px] gap-6 xl:gap-10"
         >
-          <Link to={PATHS.home} className="shrink-0">
-            <Image
+          <Link
+            to={PATHS.home}
+            className="flex h-full shrink-0 items-center self-stretch"
+          >
+            <img
               src="/assets/images/logo/desktop.png"
               alt="Madison Nail Lounge"
-              className="max-h-[50px] !w-auto"
-              preview={false}
+              className="h-[50px] w-auto max-h-[50px] object-contain"
             />
           </Link>
 
@@ -50,7 +64,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
             aria-label="Main navigation"
           >
             {DESKTOP_NAV.map((item) => {
-              const isActive = location.pathname === item.path;
+              const isActive = isNavItemActive(location.pathname, item.path);
               const isServices = item.path === PATHS.services;
 
               return (
@@ -74,12 +88,8 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
                 >
                   <Link
                     to={item.path}
-                    className={clsx(
-                      "font-montserrat text-base font-medium uppercase tracking-wide transition-colors whitespace-nowrap",
-                      isActive
-                        ? "text-madison-gold"
-                        : "text-madison-muted hover:text-madison-text",
-                    )}
+                    aria-current={isActive ? "page" : undefined}
+                    className={getDesktopNavLinkClassName(isActive)}
                   >
                     {item.label}
                   </Link>
