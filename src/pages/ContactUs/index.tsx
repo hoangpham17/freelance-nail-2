@@ -3,19 +3,15 @@ import { useSearchParams } from "react-router-dom";
 import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
-import { useScreen } from "@/hooks/useScreen";
 import { PageHeroSection } from "@/components/PageHeroSection";
 import ContactForm from "./components/ContactForm";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import SvgIcon from "@/based/SvgIcon";
-import { DecorItem } from "@/components/DecorItem";
 import contactUsContent from "@/content/contactUs.json";
 
 const ContactUs: React.FC = () => {
   const [searchParams] = useSearchParams();
   const isSignup = searchParams.get("signup") !== null;
   const { mainTopSpacing } = useBaseOffset();
-  const { isDesktop } = useScreen();
 
   return (
     <main
@@ -36,29 +32,8 @@ const ContactUs: React.FC = () => {
         }
         flower={1}
       />
-      <section className="relative w-full py-8 lg:py-12 overflow-hidden">
-        <SvgIcon
-          src="/assets/images/HomePage/shape-1.svg"
-          ariaLabel=""
-          width={isDesktop ? 260 : 160}
-          height={isDesktop ? 170 : 100}
-          className="absolute z-0 pointer-events-none text-[#E8D6C9] opacity-50 -right-[8%] lg:-right-[4%] top-8"
-        />
-        <DecorItem
-          isMovingWhenScroll
-          width={isDesktop ? 120 : 75}
-          height={isDesktop ? 130 : 82}
-          className="z-0 bottom-20 right-10"
-        >
-          <SvgIcon
-            src="/assets/images/HomePage/flower-3.svg"
-            ariaLabel=""
-            width={isDesktop ? 200 : 130}
-            height={isDesktop ? 200 : 130}
-            className="shrink-0 text-[#805D3D35] opacity-60"
-          />
-        </DecorItem>
-        <Wrapper className="relative z-10">
+      <section className="relative w-full py-8 lg:py-12">
+        <Wrapper>
           <div className="max-w-5xl mx-auto">
             {/* <h3
               className={clsx(

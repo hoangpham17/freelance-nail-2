@@ -10,7 +10,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "layout:check": "node scripts/layout-check.mjs",
     "gallery:check": "node scripts/gallery-slide-check.mjs",
-    "host-party:check": "node scripts/host-a-party-layout-check.mjs"
+    "host-party:check": "node scripts/host-a-party-layout-check.mjs",
+    "about-us:check": "node scripts/about-us-layout-check.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",

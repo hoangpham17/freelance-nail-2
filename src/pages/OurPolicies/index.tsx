@@ -4,7 +4,6 @@ import { withSectionIds } from "@/pages/OurPolicies/utils";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import LoadingPage from "@/components/LoadingPage";
 import { PageHeroSection } from "@/components/PageHeroSection";
-import { ContentBackground } from "./components/ContentBackground";
 import { PolicyFooter } from "./components/PolicyFooter";
 import { EmptyState } from "./components/EmptyState";
 import { PolicyCard } from "./PolicyCard";
@@ -31,9 +30,7 @@ const OurPolicies: React.FC = () => {
 
       <PageHeroSection title={(ourPoliciesContent as { hero: { title: string } }).hero.title} flower={3} />
 
-      <div className="relative overflow-hidden md:overflow-visible">
-        <ContentBackground />
-        <div className="relative z-10 max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 py-10 lg:py-16">
+      <div className="relative max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12 py-10 lg:py-16">
           {policiesWithId.length > 0 ? (
             <>
               <header className="max-w-3xl mx-auto text-center mb-10 lg:mb-14">
@@ -73,7 +70,6 @@ const OurPolicies: React.FC = () => {
           ) : (
             !loading && <EmptyState />
           )}
-        </div>
       </div>
     </main>
   );

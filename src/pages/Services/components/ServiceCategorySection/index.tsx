@@ -8,7 +8,6 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { parseAirtableRichtext } from "@/shared/utils/richtext";
 import { useScreen } from "@/hooks/useScreen";
 import { useCampaignStore } from "@/shared/store/campaignStore";
-import { SectionBackground } from "./SectionBackground";
 import servicesContent from "@/content/services.json";
 import { getServiceCategoryTabsHeight } from "../../constants";
 
@@ -155,7 +154,6 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
         scrollMarginTop: `${offset}px`,
       }}
     >
-      <SectionBackground sectionIndex={index} />
       <Wrapper
         className={clsx("relative z-10 py-8 lg:py-16 !overflow-visible")}
       >
