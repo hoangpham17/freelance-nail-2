@@ -1,0 +1,311 @@
+/* Host A Party — spacing scale + layout */
+
+.host-party-page {
+  --host-party-shell-max: 72rem; /* 1152px — max-w-6xl */
+  /* Page edge + rhythm between sections (not stacked padding) */
+  --host-party-edge-y: 2.5rem;
+  --host-party-between: 1.75rem;
+  /* Internal content gaps */
+  --host-party-gap-xl: 2.5rem;
+  --host-party-gap-lg: 2rem;
+  --host-party-gap-md: 1.5rem;
+  --host-party-gap-sm: 1rem;
+  --host-party-grid-gap: 2rem;
+  background-color: #000;
+}
+
+@media (min-width: 768px) {
+  .host-party-page {
+    --host-party-edge-y: 3.5rem;
+    --host-party-between: 2.25rem;
+    --host-party-gap-xl: 3rem;
+    --host-party-gap-lg: 2.5rem;
+    --host-party-gap-md: 2rem;
+    --host-party-gap-sm: 1.25rem;
+    --host-party-grid-gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .host-party-page {
+    --host-party-edge-y: 4rem;
+    --host-party-between: 2.75rem;
+    --host-party-gap-xl: 3.5rem;
+    --host-party-grid-gap: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .host-party-page {
+    --host-party-between: 3rem;
+    --host-party-grid-gap: 3.5rem;
+  }
+}
+
+/* Section stack — one gap token between blocks */
+.host-party-section,
+.host-party-hero {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.host-party-hero {
+  padding-top: var(--host-party-edge-y);
+}
+
+.host-party-occasions.host-party-section {
+  margin-top: var(--host-party-between);
+}
+
+.host-party-form.host-party-section {
+  margin-top: var(--host-party-between);
+  padding-bottom: var(--host-party-edge-y);
+}
+
+.host-party-shell {
+  max-width: var(--host-party-shell-max);
+}
+
+.host-party-divider {
+  height: 1px;
+  margin-bottom: var(--host-party-gap-lg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(249 190 92 / 0.35) 50%,
+    transparent
+  );
+}
+
+/* Hero */
+.host-party-hero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--host-party-gap-lg);
+}
+
+.host-party-hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--host-party-gap-md);
+}
+
+.host-party-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--host-party-gap-sm);
+}
+
+@media (min-width: 1024px) {
+  .host-party-hero__actions {
+    justify-content: flex-start;
+  }
+}
+
+.host-party-hero__media {
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+@media (max-width: 1023px) {
+  .host-party-hero__media {
+    clip-path: none;
+    height: min(52vw, 360px);
+    position: relative;
+    width: 100%;
+  }
+
+  .host-party-hero__media-wrap--mobile {
+    margin-inline: -1rem;
+  }
+
+  @media (min-width: 640px) {
+    .host-party-hero__media-wrap--mobile {
+      margin-inline: 0;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+  }
+}
+
+.host-party-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.host-party-hero__scrim {
+  background: linear-gradient(
+    90deg,
+    #000 0%,
+    rgb(0 0 0 / 0.92) 28%,
+    rgb(0 0 0 / 0.45) 55%,
+    transparent 100%
+  );
+}
+
+@media (max-width: 1023px) {
+  .host-party-hero__scrim {
+    background: linear-gradient(
+      180deg,
+      transparent 30%,
+      rgb(0 0 0 / 0.75) 70%,
+      #000 100%
+    );
+  }
+}
+
+/* Occasions */
+.host-party-occasions__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--host-party-gap-sm);
+  max-width: 36rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.host-party-occasions-showcase {
+  margin-top: var(--host-party-gap-lg);
+  max-width: var(--host-party-shell-max);
+  margin-inline: auto;
+  border-radius: 1rem;
+  border: 1px solid rgb(249 190 92 / 0.1);
+  background: radial-gradient(
+    ellipse 120% 80% at 50% 0%,
+    rgb(249 190 92 / 0.07) 0%,
+    transparent 55%
+  );
+}
+
+.host-party-occasions-menu__rule {
+  display: block;
+  height: 1px;
+  margin-inline: 1.25rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(55 65 81 / 0.55) 50%,
+    transparent
+  );
+}
+
+.host-party-occasions-menu__diamond {
+  display: block;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    135deg,
+    var(--madison-gold-dark),
+    var(--madison-gold)
+  );
+  opacity: 0.75;
+}
+
+.host-party-occasions-menu__item {
+  transition: transform 0.35s ease;
+}
+
+.host-party-occasions-menu__item:hover {
+  transform: translateY(-2px);
+}
+
+.host-party-occasions-menu__cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--host-party-gap-md) var(--host-party-gap-sm);
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .host-party-occasions-menu__cell {
+    padding: var(--host-party-gap-sm) 0.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .host-party-occasions-menu__cell {
+    padding: var(--host-party-gap-md) 1rem;
+  }
+}
+
+/* Form */
+.host-party-form__grid {
+  display: grid;
+  gap: var(--host-party-grid-gap);
+  align-items: start;
+  max-width: var(--host-party-shell-max);
+  margin-inline: auto;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .host-party-form__grid {
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .host-party-form__grid {
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+  }
+}
+
+.host-party-form__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--host-party-gap-sm);
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .host-party-form__intro {
+    text-align: left;
+    padding-top: 0.25rem;
+  }
+}
+
+.host-party-form__panel {
+  position: relative;
+  border-radius: 1.25rem;
+  background: rgb(18 18 18 / 0.9);
+  border: 1px solid rgb(55 65 81 / 0.45);
+  padding: var(--host-party-gap-md);
+}
+
+@media (min-width: 768px) {
+  .host-party-form__panel {
+    padding: var(--host-party-gap-lg);
+  }
+}
+
+.host-party-form__panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--host-party-gap-md);
+  right: var(--host-party-gap-md);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--madison-gold) 20%,
+    var(--madison-gold-dark) 80%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .host-party-occasions-menu__item,
+  .host-party-occasions-menu__accent {
+    transition: none;
+  }
+
+  .host-party-occasions-menu__item:hover {
+    transform: none;
+  }
+}

@@ -10,6 +10,7 @@ import { useCampaignStore } from "@/shared/store/campaignStore";
 import LoadingPage from "../../components/LoadingPage";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import servicesContent from "@/content/services.json";
+import { getServiceCategoryTabsHeight } from "./constants";
 
 const Services: React.FC = () => {
   const { isDesktop } = useScreen();
@@ -35,9 +36,8 @@ const Services: React.FC = () => {
     setTimeout(() => {
       const element = document.getElementById(hash);
       if (element) {
-        const categoryTabsHeight = isDesktop ? 56 : 32;
-        // Offset = header (+ campaign bar) + category tabs height + padding so section lands below sticky
-        const scrollOffset = effectiveStickyTop + categoryTabsHeight + 20;
+        const scrollOffset =
+          effectiveStickyTop + getServiceCategoryTabsHeight(isDesktop) + 20;
 
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition =

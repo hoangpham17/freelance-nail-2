@@ -11,6 +11,7 @@ import { Flex, Skeleton } from "antd";
 import { useScreen } from "@/hooks/useScreen";
 import { Wrapper } from "@/based/components/Wrapper";
 import SvgIcon from "@/based/SvgIcon";
+import { getServiceCategoryTabsHeight } from "../../constants";
 
 interface CategoryTabsProps {
   categories: ServiceCategory[];
@@ -39,6 +40,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
   const stickyTop = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
   const minHeaderHeight = isDesktop ? 80 : 72;
   const effectiveStickyTop = stickyTop > 0 ? stickyTop : minHeaderHeight;
+  const categoryTabsHeight = getServiceCategoryTabsHeight(isDesktop);
 
   useEffect(() => {
     if (categories.length && !activeCategorySlug) {
@@ -68,14 +70,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       (cat) => cat.slug === activeCategorySlug,
     );
 
-    if (activeIndex !== -1 && swiperRef.current) {
+    if (activeIndex !== -1) {
       setTimeout(() => {
-        const swiper = swiperRef.current;
-        if (!swiper) return;
-
-        // Always use slideTo with speed for smooth animation
-        // With variable width, slideTo works better than slideToLoop
-        swiper.slideTo(activeIndex, 400);
+        swiperRef.current?.slideTo(activeIndex, 400);
       }, 100);
     }
   }, [activeCategorySlug, categories]);
@@ -85,16 +82,11 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
 
     let observer: IntersectionObserver | null = null;
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-    const categoryTabsHeight = isDesktop ? 56 : 32;
     const offset = effectiveStickyTop + categoryTabsHeight + 20;
-
-    const bottomMargin = isDesktop ? "-50%" : "-50%";
-    const minIntersectionRatio = 0.1;
 
     const observerOptions = {
       root: null,
-      rootMargin: `-${offset}px 0px ${bottomMargin} 0px`,
+      rootMargin: `-${offset}px 0px -50% 0px`,
       threshold: [0, 0.05, 0.1, 0.5, 1],
     };
 
@@ -102,22 +94,19 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       if (isUpdatingHashRef.current) return;
 
       const visibleEntries = entries.filter(
-        (entry) => entry.intersectionRatio > minIntersectionRatio,
+        (entry) => entry.intersectionRatio > 0.1,
       );
 
       if (visibleEntries.length === 0) return;
 
       visibleEntries.sort((a, b) => {
-        // First sort by intersection ratio
         if (Math.abs(a.intersectionRatio - b.intersectionRatio) > 0.1) {
           return b.intersectionRatio - a.intersectionRatio;
         }
-        // Then by position (top to bottom)
         return a.boundingClientRect.top - b.boundingClientRect.top;
       });
 
-      const mostVisible = visibleEntries[0];
-      const sectionId = mostVisible.target.id;
+      const sectionId = visibleEntries[0].target.id;
 
       if (sectionId && categories.some((cat) => cat.slug === sectionId)) {
         const decodedSectionId = decodeURIComponent(sectionId);
@@ -149,24 +138,18 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       }
 
       observer = new IntersectionObserver(observerCallback, observerOptions);
-      sections.forEach((section) => {
-        observer?.observe(section);
-      });
+      sections.forEach((section) => observer?.observe(section));
     };
 
     timeoutId = setTimeout(setupObserver, 200);
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      if (timeoutId) clearTimeout(timeoutId);
       if (observer) {
-        const sections = categories
+        categories
           .map((cat) => document.getElementById(cat.slug))
-          .filter((el) => el !== null) as HTMLElement[];
-        sections.forEach((section) => {
-          observer?.unobserve(section);
-        });
+          .filter(Boolean)
+          .forEach((section) => observer?.unobserve(section as HTMLElement));
       }
     };
   }, [
@@ -174,7 +157,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     location.pathname,
     location.hash,
     effectiveStickyTop,
-    isDesktop,
+    categoryTabsHeight,
   ]);
 
   const handleTabClick = (categorySlug: string) => {
@@ -186,20 +169,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
     const activeIndex = categories.findIndex(
       (cat) => cat.slug === categorySlug,
     );
-    if (activeIndex !== -1 && swiperRef.current) {
-      const swiper = swiperRef.current;
-      // Always use slideTo with speed for smooth animation
-      // With variable width, slideTo works better than slideToLoop
-      swiper.slideTo(activeIndex, 400);
+    if (activeIndex !== -1) {
+      swiperRef.current?.slideTo(activeIndex, 400);
     }
 
     const element = document.getElementById(categorySlug);
     if (element) {
-      const categoryTabsHeight = isDesktop ? 56 : 32;
-      const minHeaderHeight = isDesktop ? 80 : 72;
-      const effectiveStickyTop = stickyTop > 0 ? stickyTop : minHeaderHeight;
       const offset = effectiveStickyTop + categoryTabsHeight + 20;
-
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
 
@@ -239,7 +215,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                   size="large"
                   style={{
                     width: "120px",
-                    height: isDesktop ? "56px" : "32px",
+                    height: isDesktop ? 56 : 32,
                     borderRadius: "16px",
                   }}
                 />
@@ -265,12 +241,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
             modules={[FreeMode]}
             slidesPerView="auto"
             spaceBetween={0}
-            freeMode={{
-              enabled: true,
-              sticky: false,
-            }}
+            freeMode={{ enabled: true, sticky: false }}
             speed={400}
-            resistance={true}
+            resistance
             resistanceRatio={0}
             className="category-tabs-swiper pr-[120px] md:pr-[140px]"
           >
@@ -306,45 +279,40 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
               );
             })}
           </Swiper>
-          {/* Gradient overlay for fade effect */}
-          <div className="absolute top-0 right-0 bottom-0 w-[120px] md:w-[140px] pointer-events-none z-10 bg-gradient-to-l from-white/95 to-transparent" />
+
+          <div
+            className="pointer-events-none absolute top-0 right-0 bottom-0 w-[120px] md:w-[140px] z-10 bg-gradient-to-l from-black via-black/90 to-transparent"
+            aria-hidden
+          />
           <div className="absolute top-1/2 -translate-y-1/2 right-0 flex items-center ml-1 flex-shrink-0 z-20">
             <button
               type="button"
-              aria-label="Previous"
-              className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-bl-3xl rounded-tl-3xl rounded-br-2xl rounded-tr-2xl"
+              aria-label="Previous category"
+              className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-bl-3xl rounded-tl-3xl rounded-br-2xl rounded-tr-2xl bg-madison-surface border border-madison-border text-madison-gold hover:bg-madison-surface/80 transition-colors"
+              style={{ boxShadow: "0px 4px 12px 0px rgba(0, 0, 0, 0.35)" }}
               onClick={() => scrollTabs("prev")}
-              style={{
-                boxShadow: "0px 4px 12px 0px #6B4A2F26",
-                background:
-                  "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
-              }}
             >
               <SvgIcon
-                src={"/assets/svgs/chevron-right.svg"}
-                ariaLabel="text"
+                src="/assets/svgs/chevron-right.svg"
+                ariaLabel=""
                 width={14}
                 height={14}
-                className="size-[14px] shrink-0 rotate-180 text-[#6B4A2F] hover:text-[#D5B994]"
+                className="size-[14px] shrink-0 rotate-180"
               />
             </button>
             <button
               type="button"
-              aria-label="Next"
-              className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-br-3xl rounded-tr-3xl rounded-bl-2xl rounded-tl-2xl"
+              aria-label="Next category"
+              className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-br-3xl rounded-tr-3xl rounded-bl-2xl rounded-tl-2xl bg-madison-surface border border-madison-border text-madison-gold hover:bg-madison-surface/80 transition-colors"
+              style={{ boxShadow: "0px 4px 12px 0px rgba(0, 0, 0, 0.35)" }}
               onClick={() => scrollTabs("next")}
-              style={{
-                boxShadow: "0px 4px 12px 0px #6B4A2F26",
-                background:
-                  "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
-              }}
             >
               <SvgIcon
-                src={"/assets/svgs/chevron-right.svg"}
-                ariaLabel="text"
+                src="/assets/svgs/chevron-right.svg"
+                ariaLabel=""
                 width={14}
                 height={14}
-                className="size-[14px] shrink-0 text-[#6B4A2F] hover:text-[#D5B994]"
+                className="size-[14px] shrink-0"
               />
             </button>
           </div>

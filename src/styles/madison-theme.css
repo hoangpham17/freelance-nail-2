@@ -270,6 +270,9 @@
 .home-service-item {
   --home-service-l-color: rgb(249 190 92 / 50%);
   --home-service-leg: 48%;
+  /* Angled caps at the open ends of each L (splash direction) */
+  --home-service-cap-long: 12px;
+  --home-service-cap-short: 6px;
   text-decoration: none;
   transition: transform 0.25s ease;
 }
@@ -302,6 +305,15 @@
   border-top: 2px solid var(--home-service-l-color);
   border-right: 2px solid var(--home-service-l-color);
   border-radius: 0 0.75rem 0 0;
+  /* TL = end of top leg; BR = end of right leg — diagonal caps flare outward */
+  clip-path: polygon(
+    var(--home-service-cap-long) 0,
+    0 var(--home-service-cap-short),
+    0 100%,
+    calc(100% - var(--home-service-cap-short)) 100%,
+    100% calc(100% - var(--home-service-cap-long)),
+    100% 0
+  );
 }
 
 .home-service-item__border--bl {
@@ -312,6 +324,15 @@
   border-bottom: 2px solid var(--home-service-l-color);
   border-left: 2px solid var(--home-service-l-color);
   border-radius: 0 0 0 0.75rem;
+  /* TL = end of left leg; BR = end of bottom leg */
+  clip-path: polygon(
+    var(--home-service-cap-short) 0,
+    100% 0,
+    100% calc(100% - var(--home-service-cap-short)),
+    calc(100% - var(--home-service-cap-long)) 100%,
+    0 100%,
+    0 var(--home-service-cap-long)
+  );
 }
 
 .home-service-item:hover .home-service-item__border,
@@ -379,4 +400,52 @@
 .home-service-item:hover .home-service-item__label,
 .home-service-item:focus-visible .home-service-item__label {
   color: var(--madison-gold);
+}
+
+/* Services page — readable body copy on dark backgrounds */
+.services-richtext {
+  color: var(--madison-text-muted);
+}
+
+.services-richtext p,
+.services-richtext li,
+.services-richtext span,
+.services-richtext em,
+.services-richtext blockquote {
+  color: var(--madison-text-muted) !important;
+}
+
+.services-richtext strong {
+  color: var(--madison-text);
+  font-weight: 600;
+}
+
+.services-richtext a {
+  color: var(--madison-gold);
+}
+
+.services-richtext a:hover {
+  color: var(--madison-gold-dark);
+}
+
+/* Forms on dark surfaces — Ant Design pickers */
+.app .ant-picker {
+  background-color: var(--madison-black-soft);
+}
+
+.app .ant-picker-dropdown .ant-picker-panel-container {
+  background: var(--madison-surface);
+  border: 1px solid var(--madison-border);
+}
+
+.app .ant-picker-dropdown .ant-picker-header,
+.app .ant-picker-dropdown .ant-picker-content th,
+.app .ant-picker-dropdown .ant-picker-cell {
+  color: var(--madison-text);
+}
+
+.app .ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected
+  .ant-picker-cell-inner {
+  background: var(--madison-gold);
+  color: var(--madison-gold-text);
 }

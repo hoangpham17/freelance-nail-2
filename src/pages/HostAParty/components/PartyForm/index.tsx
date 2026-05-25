@@ -123,16 +123,17 @@ const PartyForm: React.FC = () => {
   };
 
   const labelClass = clsx(
-    "text-[#6B4A2F] font-playfairDisplay font-medium",
+    "text-madison-gold font-sans font-medium",
     responsiveFontSizeArray(14, 15),
   );
   const inputClass = clsx(
-    "pl-11 pr-4 py-3 rounded-2xl !border !border-[#EDE6E0] h-12 lg:h-14",
-    "bg-white text-[#5C4D42] placeholder:text-[#8A6A4F]/60",
-    "focus:!border-[#B2866D] focus:!shadow-[0_0_0_1px_#B2866D] hover:!border-[#E8DED8]",
+    "pl-11 pr-4 py-3 rounded-lg !border !border-madison-border/80 h-11 lg:h-12",
+    "bg-madison-black-soft text-madison-text placeholder:text-madison-muted/50",
+    "focus:!border-madison-gold focus:!shadow-[0_0_0_1px_var(--madison-gold)] hover:!border-madison-gold/40",
     "transition-colors outline-none",
     responsiveFontSizeArray(14, 16),
   );
+  const iconClass = "shrink-0 text-madison-gold-dark";
 
   return (
     <>
@@ -161,7 +162,7 @@ const PartyForm: React.FC = () => {
                 ariaLabel="user"
                 width={20}
                 height={20}
-                className="shrink-0 text-[#8A6A4F]"
+                className={iconClass}
               />
             </div>
             <Input
@@ -192,7 +193,7 @@ const PartyForm: React.FC = () => {
                   ariaLabel="phone"
                   width={20}
                   height={20}
-                  className="shrink-0 text-[#8A6A4F]"
+                  className={iconClass}
                 />
               </div>
               <Input
@@ -211,18 +212,18 @@ const PartyForm: React.FC = () => {
 
               <div
                 className={clsx(
-                  "absolute inset-0 flex items-center pl-11 pr-4 border rounded-2xl border-[#EDE6E0]",
-                  "rounded-2xl h-12 lg:h-14",
+                  "absolute inset-0 flex items-center pl-11 pr-4 border rounded-lg border-madison-border/80",
+                  "h-11 lg:h-12 bg-black/40",
                   "cursor-text select-none",
                   isPhoneEditing && "opacity-0 pointer-events-none",
                 )}
               >
                 <span
                   className={clsx(
-                    "text-[#5C4D42]",
+                    "text-madison-text",
                     !phoneValue ||
                       getPhoneDigits(String(phoneValue)).length === 0
-                      ? "text-[#8A6A4F]/60"
+                      ? "text-madison-muted/50"
                       : "",
                   )}
                 >
@@ -248,7 +249,7 @@ const PartyForm: React.FC = () => {
                   ariaLabel="email"
                   width={20}
                   height={20}
-                  className="shrink-0 text-[#8A6A4F]"
+                  className={iconClass}
                 />
               </div>
               <Input
@@ -290,7 +291,7 @@ const PartyForm: React.FC = () => {
                   ariaLabel="calendar"
                   width={20}
                   height={20}
-                  className="shrink-0 text-[#8A6A4F]"
+                  className={iconClass}
                 />
               </div>
 
@@ -303,9 +304,11 @@ const PartyForm: React.FC = () => {
                   form.setFieldValue("date", value || null);
                 }}
                 className={clsx(
-                  "w-full !pl-11 !pr-4 !py-3 rounded-2xl !border !border-[#EDE6E0] !h-12 lg:!h-14",
-                  "hover:!border-[#E8DED8] focus-within:!border-[#B2866D] focus-within:!shadow-[0_0_0_1px_#B2866D]",
-                  "[&_.ant-picker-input>input]:text-[#5C4D42] [&_.ant-picker-input>input]:placeholder:text-[#8A6A4F]/60",
+                  "w-full !pl-11 !pr-4 !py-3 rounded-lg !border !border-madison-border/80 !h-11 lg:!h-12",
+                  "!bg-madison-black-soft hover:!border-madison-gold/40",
+                  "focus-within:!border-madison-gold focus-within:!shadow-[0_0_0_1px_var(--madison-gold)]",
+                  "[&_.ant-picker-input>input]:text-madison-text [&_.ant-picker-input>input]:placeholder:text-madison-muted/50",
+                  "[&_.ant-picker-suffix]:text-madison-gold-dark",
                   responsiveFontSizeArray(14, 16),
                 )}
                 suffixIcon={null}
@@ -330,7 +333,7 @@ const PartyForm: React.FC = () => {
                   ariaLabel="party size"
                   width={20}
                   height={20}
-                  className="shrink-0 text-[#8A6A4F]"
+                  className={iconClass}
                 />
               </div>
               <Input
@@ -354,7 +357,7 @@ const PartyForm: React.FC = () => {
                 ariaLabel="message"
                 width={20}
                 height={20}
-                className="shrink-0 text-[#8A6A4F]"
+                className={iconClass}
               />
             </div>
             <TextArea
@@ -375,14 +378,11 @@ const PartyForm: React.FC = () => {
             loading={isSubmitting}
             disabled={isSubmitting}
             className={clsx(
-              "w-full rounded-2xl text-white h-12 lg:h-14 font-playfairDisplay font-semibold",
-              "hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed border-0",
+              "madison-btn-primary !w-full !h-11 lg:!h-12 !rounded-lg",
+              "!text-madison-gold-text !font-semibold !uppercase",
+              "hover:!opacity-90 disabled:!opacity-50 disabled:!cursor-not-allowed !border-0",
               responsiveFontSizeArray(16, 18),
             )}
-            style={{
-              background: "linear-gradient(135deg, #805D3D 0%, #B2866D 100%)",
-              boxShadow: "0px 4px 12px 0px #6B4A2F26",
-            }}
           >
             {isSubmitting ? pf.buttons.sending : pf.buttons.send}
           </Button>

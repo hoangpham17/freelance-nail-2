@@ -10,6 +10,7 @@ import { useScreen } from "@/hooks/useScreen";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import { SectionBackground } from "./SectionBackground";
 import servicesContent from "@/content/services.json";
+import { getServiceCategoryTabsHeight } from "../../constants";
 
 interface ServiceCategorySectionProps {
   category: ServiceCategory;
@@ -48,7 +49,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
   }, [categoryImage]);
 
   const stickyTop = headerHeight + (showCampaignBar ? campaignBarHeight : 0);
-  const categoryTabsHeight = isDesktop ? 56 : 32;
+  const categoryTabsHeight = getServiceCategoryTabsHeight(isDesktop);
   const minHeaderHeight = isDesktop ? 80 : 72;
   const effectiveStickyTop = stickyTop > 0 ? stickyTop : minHeaderHeight;
   const offset = effectiveStickyTop + categoryTabsHeight + 20;
@@ -247,7 +248,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
             {category.description && (
               <div
                 className={clsx(
-                  "font-extralight text-[#4A3A2F] transition-all duration-1000 ease-out delay-400",
+                  "services-richtext font-light text-madison-muted transition-all duration-1000 ease-out delay-400",
                   !categoryImage && "md:max-w-[50%]",
                   isVisible
                     ? "opacity-100 translate-y-0"
@@ -347,7 +348,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                   </p>
                   <div
                     className={clsx(
-                      "font-extralight text-[#4A3A2F]",
+                      "services-richtext font-light text-madison-muted",
                       responsiveFontSizeArray(14, 16),
                     )}
                     dangerouslySetInnerHTML={{

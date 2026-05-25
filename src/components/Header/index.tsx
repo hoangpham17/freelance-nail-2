@@ -16,10 +16,15 @@ import { BurgerMenu } from "./components/BurgerMenu";
 import { Wrapper } from "@/based/components/Wrapper";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import ServicesSubmenu from "./components/ServicesSubmenu";
+import MobileServicesSubmenu from "./components/MobileServicesSubmenu";
 import SvgIcon from "@/based/SvgIcon";
 import { useServiceCategories } from "@/hooks/useServiceCategories";
 import DesktopNav from "./components/DesktopNav";
 import { ListSocial } from "./components/ListSocial";
+import {
+  buildServiceNavItems,
+  isServiceCategoryActive,
+} from "./utils/serviceNav";
 
 const CAMPAIGN_TEXT_KEY = "has-show-campaign-text";
 const CAMPAIGN_POPUP_KEY = "has-show-campaign-popup";
@@ -42,8 +47,6 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   const isHomePage = location.pathname === PATHS.home;
-  const isServicesPage = location.pathname === PATHS.services;
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderSolid, setIsHeaderSolid] = useState(false);
   const isHeaderTransparent = isHomePage && !isHeaderSolid;
@@ -355,7 +358,6 @@ const Header: React.FC = () => {
           isServicesHovered={isServicesHovered}
           setIsServicesHovered={setIsServicesHovered}
           hoverTimeoutRef={hoverTimeoutRef}
-          isServicesPage={isServicesPage}
           isHeaderTransparent={isHeaderTransparent}
         />
 
@@ -459,42 +461,27 @@ const Header: React.FC = () => {
                   const isServices = item.path === PATHS.services;
 
                   if (isServices) {
-                    const serviceNavItems = serviceCategories.map(
-                      (category) => ({
-                        path: `${PATHS.services}#${category.slug}`,
-                        label: category.title,
-                        slug: category.slug,
-                      }),
-                    );
-
-                    const checkIsActive = (slug: string) => {
-                      const isServicesPage =
-                        location.pathname === PATHS.services;
-                      const currentHash = location.hash.replace("#", "");
-                      return isServicesPage && currentHash === slug;
-                    };
+                    const serviceNavItems =
+                      buildServiceNavItems(serviceCategories);
 
                     return (
                       <li key={item.path} className="w-full">
                         <button
+                          type="button"
                           onClick={toggleServicesExpanded}
+                          aria-expanded={isServicesExpanded}
                           className={clsx(
                             "w-full flex items-center justify-between py-3 uppercase transition-colors text-base px-5 relative font-montserrat",
-                            isActive
+                            isActive || isServicesExpanded
                               ? "bg-madison-surface !text-madison-gold font-semibold"
                               : "font-medium text-madison-muted hover:!text-madison-gold",
                           )}
-                          style={{
-                            boxShadow: isServicesExpanded
-                              ? "0px 4px 6px 0px #0000000F"
-                              : "none",
-                          }}
                         >
                           <span className="flex items-center gap-2">
                             {item.label}
                             {isActive && (
                               <SvgIcon
-                                src={"/assets/svgs/star.svg"}
+                                src="/assets/svgs/star.svg"
                                 ariaLabel="Active"
                                 width={16}
                                 height={16}
@@ -504,49 +491,29 @@ const Header: React.FC = () => {
                           </span>
                           <Flex className="w-6 h-6 items-center justify-center">
                             <SvgIcon
-                              src={"/assets/svgs/chevron-right.svg"}
+                              src="/assets/svgs/chevron-right.svg"
                               ariaLabel="Toggle submenu"
                               width={12}
                               height={12}
                               className={clsx(
-                                "shrink-0 transition-transform duration-200 text-white",
-                                isServicesExpanded && "rotate-90",
+                                "shrink-0 rotate-90 transition-transform duration-200 text-white",
+                                isServicesExpanded && "rotate-[270deg]",
                               )}
                             />
                           </Flex>
                         </button>
-                        {isServicesExpanded && serviceNavItems.length > 0 && (
-                          <ul className="px-8 space-y-1 list-none bg-madison-surface/80">
-                            {serviceNavItems.map((subItem) => {
-                              const isSubActive = checkIsActive(subItem.slug);
-                              return (
-                                <li key={subItem.path}>
-                                  <Link
-                                    to={subItem.path}
-                                    onClick={closeMenu}
-                                    className={clsx(
-                                      "flex items-center justify-between py-2 px-4 capitalize transition-colors text-base rounded-2xl text-madison-muted font-montserrat hover:text-madison-gold",
-                                      isSubActive
-                                        ? "bg-madison-surface !text-madison-gold font-semibold"
-                                        : "",
-                                    )}
-                                  >
-                                    <span>{subItem.label}</span>
-                                    {isSubActive && (
-                                      <SvgIcon
-                                        src={"/assets/svgs/star.svg"}
-                                        ariaLabel="Active"
-                                        width={16}
-                                        height={16}
-                                        className="shrink-0 text-white"
-                                      />
-                                    )}
-                                  </Link>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        )}
+                        <MobileServicesSubmenu
+                          items={serviceNavItems}
+                          isExpanded={isServicesExpanded}
+                          isSubActive={(slug) =>
+                            isServiceCategoryActive(
+                              location.pathname,
+                              location.hash,
+                              slug,
+                            )
+                          }
+                          onNavigate={closeMenu}
+                        />
                       </li>
                     );
                   }

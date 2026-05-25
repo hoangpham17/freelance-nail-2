@@ -1,16 +1,18 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Flex } from "antd";
+import clsx from "clsx";
 import { PATHS } from "@/routes/Routes";
 import {
   getDesktopNavLinkClassName,
   isNavItemActive,
 } from "@/shared/utils/nav";
 import { Wrapper } from "@/based/components/Wrapper";
+import SvgIcon from "@/based/SvgIcon";
 
 const DESKTOP_NAV = [
   { path: PATHS.home, label: "Home" },
-  { path: PATHS.services, label: "Our Services" },
+  { path: PATHS.services, label: "Services" },
   { path: PATHS.hostAParty, label: "Host a Party" },
   { path: PATHS.gallery, label: "Gallery" },
   { path: PATHS.aboutUs, label: "About Us" },
@@ -22,14 +24,13 @@ interface DesktopNavProps {
   isServicesHovered: boolean;
   setIsServicesHovered: (value: boolean) => void;
   hoverTimeoutRef: React.MutableRefObject<ReturnType<typeof setTimeout> | null>;
-  isServicesPage: boolean;
   isHeaderTransparent?: boolean;
 }
 
 const DesktopNav: React.FC<DesktopNavProps> = ({
+  isServicesHovered,
   setIsServicesHovered,
   hoverTimeoutRef,
-  isServicesPage,
   isHeaderTransparent = false,
 }) => {
   const location = useLocation();
@@ -72,7 +73,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
                   key={item.path}
                   className="relative"
                   onMouseEnter={() => {
-                    if (!isServices || isServicesPage) return;
+                    if (!isServices) return;
                     if (hoverTimeoutRef.current) {
                       clearTimeout(hoverTimeoutRef.current);
                       hoverTimeoutRef.current = null;
@@ -89,9 +90,27 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
                   <Link
                     to={item.path}
                     aria-current={isActive ? "page" : undefined}
+                    aria-haspopup={isServices ? "true" : undefined}
+                    aria-expanded={isServices ? isServicesHovered : undefined}
                     className={getDesktopNavLinkClassName(isActive)}
                   >
-                    {item.label}
+                    <span className="inline-flex items-center gap-1.5">
+                      {item.label}
+                      {isServices ? (
+                        <span aria-hidden="true" className="inline-flex">
+                          <SvgIcon
+                            src="/assets/svgs/chevron-right.svg"
+                            ariaLabel="Submenu"
+                            width={10}
+                            height={10}
+                            className={clsx(
+                              "size-[10px] shrink-0 rotate-90 transition-transform duration-200 text-current",
+                              isServicesHovered && "rotate-[270deg]",
+                            )}
+                          />
+                        </span>
+                      ) : null}
+                    </span>
                   </Link>
                 </div>
               );

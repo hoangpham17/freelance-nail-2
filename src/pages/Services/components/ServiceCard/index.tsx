@@ -46,7 +46,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       id={id}
       className={clsx(
         "w-full transition-all duration-300 rounded-lg overflow-hidden my-1.5 lg:my-2",
-        isExpanded && !isToggleDisabled && "bg-[#805D3D1A]",
+        isExpanded && !isToggleDisabled && "bg-madison-surface/40",
       )}
     >
       {/* Header - Always visible */}
@@ -70,10 +70,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
         <Flex align="center" gap={8} className="flex-shrink-0 relative">
           {displayPrice && (
-            <div className="px-3 py-1 lg:px-4 lg:py-1.5 rounded-lg bg-[#805D3D1A]">
+            <div className="px-3 py-1 lg:px-4 lg:py-1.5 rounded-lg bg-madison-surface/60 border border-madison-border/50">
               <span
                 className={clsx(
-                  "text-[#6B4A2F] whitespace-nowrap",
+                  "text-madison-gold font-medium whitespace-nowrap",
                   responsiveFontSizeArray(16, 18),
                 )}
               >
@@ -97,7 +97,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
                 ariaLabel={isExpanded ? "Collapse" : "Expand"}
                 width={isDesktop ? 14 : 10}
                 height={isDesktop ? 14 : 10}
-                className="text-[#6B4A2F] rotate-[-90deg]"
+                className="text-madison-gold rotate-[-90deg]"
               />
             </div>
           )}
@@ -117,7 +117,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
               vertical
               gap={12}
               className={clsx(
-                "px-4 lg:px-6 pb-4 lg:pb-6 pt-2 text-[#4A3A2F] font-light",
+                "services-richtext px-4 lg:px-6 pb-4 lg:pb-6 pt-2 text-madison-muted font-light",
                 responsiveFontSizeArray(14, 16),
               )}
             >
