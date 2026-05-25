@@ -16,21 +16,31 @@ const ServiceItem = ({ category }: { category: ServiceCategory }) => {
       to={to}
       className="home-service-item group flex flex-1 min-w-[120px] max-w-[200px] flex-col items-center justify-between gap-4 focus-visible:outline-none"
     >
-      <div className="home-service-item__icon flex size-[120px] items-center justify-center rounded-xl p-6 md:size-[140px] md:p-8">
-        <div
-          className="h-14 w-full shrink-0 transition-transform duration-300 group-hover:scale-105 md:h-16"
-          style={{
-            backgroundColor: "#f9be5c",
-            maskImage: `url(${iconUrl})`,
-            WebkitMaskImage: `url(${iconUrl})`,
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            maskPosition: "center",
-            WebkitMaskPosition: "center",
-            maskSize: "contain",
-            WebkitMaskSize: "contain",
-          }}
+      <div className="home-service-item__icon-wrap size-[120px] md:size-[140px]">
+        <span
+          className="home-service-item__border home-service-item__border--tr"
+          aria-hidden
         />
+        <span
+          className="home-service-item__border home-service-item__border--bl"
+          aria-hidden
+        />
+        <div className="home-service-item__icon flex size-full items-center justify-center p-6 md:p-8">
+          <div
+            className="h-14 w-full shrink-0 transition-transform duration-300 group-hover:scale-105 md:h-16"
+            style={{
+              backgroundColor: "#f9be5c",
+              maskImage: `url(${iconUrl})`,
+              WebkitMaskImage: `url(${iconUrl})`,
+              maskRepeat: "no-repeat",
+              WebkitMaskRepeat: "no-repeat",
+              maskPosition: "center",
+              WebkitMaskPosition: "center",
+              maskSize: "contain",
+              WebkitMaskSize: "contain",
+            }}
+          />
+        </div>
       </div>
       <span
         className={clsx(
