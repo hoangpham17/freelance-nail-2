@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
+import { PageDecoLines } from "@/components/PageDecoLines";
 import HeroSection from "./components/HeroSection";
 import OccasionsSection from "./components/OccasionsSection";
 import FormSection from "./components/FormSection";
@@ -25,8 +26,11 @@ const HostAParty: React.FC = () => {
       aria-label="Host a party"
     >
       <HeroSection onScrollToForm={scrollToForm} />
-      <OccasionsSection />
-      <FormSection sectionRef={formSectionRef} />
+      <div className="host-party-content relative">
+        <PageDecoLines variant="host-party" intensity="strong" />
+        <OccasionsSection />
+        <FormSection sectionRef={formSectionRef} />
+      </div>
     </main>
   );
 };

@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test:page-deco": "node scripts/page-deco-check.mjs",
+    "test:host-party-deco": "npm run test:page-deco"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",

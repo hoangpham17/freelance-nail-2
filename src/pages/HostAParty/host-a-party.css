@@ -66,6 +66,19 @@
   max-width: var(--host-party-shell-max);
 }
 
+/* Content below hero — gradient + decorative lines (Contact Us style) */
+.host-party-content {
+  position: relative;
+  isolation: isolate;
+  background: var(--madison-section-gradient);
+}
+
+.host-party-content .host-party-section {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
 .host-party-divider {
   height: 1px;
   margin-bottom: var(--host-party-gap-lg);
