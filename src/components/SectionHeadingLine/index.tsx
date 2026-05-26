@@ -5,40 +5,57 @@ export type SectionHeadingLineProps = {
   className?: string;
 };
 
+/** Soft gold fade — gradual, creamy highlights */
 const HORIZONTAL_GOLD = [
   { offset: "0%", color: "#7F4200", opacity: 0 },
-  { offset: "8%", color: "#B37B28", opacity: 0.45 },
-  { offset: "22%", color: "#E8B551", opacity: 0.85 },
-  { offset: "50%", color: "#FFE5A0", opacity: 1 },
-  { offset: "78%", color: "#E8B551", opacity: 0.85 },
-  { offset: "92%", color: "#B37B28", opacity: 0.45 },
+  { offset: "5%", color: "#854905", opacity: 0.2 },
+  { offset: "18%", color: "#B37B28", opacity: 0.55 },
+  { offset: "35%", color: "#E8B551", opacity: 0.82 },
+  { offset: "50%", color: "#FFF4D4", opacity: 1 },
+  { offset: "65%", color: "#E8B551", opacity: 0.82 },
+  { offset: "82%", color: "#B37B28", opacity: 0.55 },
+  { offset: "95%", color: "#854905", opacity: 0.2 },
   { offset: "100%", color: "#7F4200", opacity: 0 },
 ] as const;
 
-const SPARKLE_POINTS: ReadonlyArray<{ cx: number; cy: number; r: number; o: number }> =
-  [
-    { cx: 58, cy: 7.2, r: 0.32, o: 0.55 },
-    { cx: 108, cy: 8.8, r: 0.26, o: 0.4 },
-    { cx: 212, cy: 8.8, r: 0.26, o: 0.4 },
-    { cx: 262, cy: 7.2, r: 0.32, o: 0.55 },
-  ];
+const AURA_GOLD = [
+  { offset: "0%", color: "#F0BE57", opacity: 0 },
+  { offset: "25%", color: "#FFE5A0", opacity: 0.12 },
+  { offset: "50%", color: "#FFF9EB", opacity: 0.22 },
+  { offset: "75%", color: "#FFE5A0", opacity: 0.12 },
+  { offset: "100%", color: "#F0BE57", opacity: 0 },
+] as const;
 
-/** 4-point star path centered at origin */
+/** Tapered lens — one filled shape, thin tips / soft belly at center */
+const SOFT_LINE =
+  "M 24 11 C 78 11, 118 10.55, 156 10.32 C 158.5 10.28, 161.5 10.28, 164 10.32 C 202 10.55, 242 11, 296 11 C 242 11.58, 202 11.68, 164 11.68 C 161.5 11.68, 158.5 11.68, 156 11.68 C 118 11.58, 78 11.55, 24 11 Z";
+
+const SPARKLES = [
+  { cx: 68, cy: 10.85, r: 0.55, o: 0.45 },
+  { cx: 112, cy: 10.7, r: 0.45, o: 0.32 },
+  { cx: 208, cy: 10.7, r: 0.45, o: 0.32 },
+  { cx: 252, cy: 10.85, r: 0.55, o: 0.45 },
+] as const;
+
 const starPath = (size: number) =>
-  `M 0 ${-size} L ${size * 0.28} ${-size * 0.28} L ${size} 0 L ${size * 0.28} ${size * 0.28} L 0 ${size} L ${-size * 0.28} ${size * 0.28} L ${-size} 0 L ${-size * 0.28} ${-size * 0.28} Z`;
+  `M 0 ${-size} L ${size * 0.26} ${-size * 0.26} L ${size} 0 L ${size * 0.26} ${size * 0.26} L 0 ${size} L ${-size * 0.26} ${size * 0.26} L ${-size} 0 L ${-size * 0.26} ${-size * 0.26} Z`;
+
+const diamondPath = (w: number, h: number) =>
+  `M 0 ${-h} L ${w} 0 L 0 ${h} L ${-w} 0 Z`;
 
 /**
- * Golden Weave — interlacing calligraphic ribbons, rosette knot, starlit accents.
- * Ornamental divider for Madison section headings on dark backgrounds.
+ * Golden Veil — soft tapered line, gentle aura, jewel center.
+ * Single filled path (no twin strokes) for crisp rendering.
  */
 export const SectionHeadingLine: React.FC<SectionHeadingLineProps> = ({
   className,
 }) => {
   const uid = useId().replace(/:/g, "");
   const goldId = `shl-gold-${uid}`;
+  const auraId = `shl-aura-${uid}`;
   const mistId = `shl-mist-${uid}`;
   const coreId = `shl-core-${uid}`;
-  const bloomId = `shl-bloom-${uid}`;
+  const jewelId = `shl-jewel-${uid}`;
   const stroke = `url(#${goldId})`;
 
   return (
@@ -49,7 +66,11 @@ export const SectionHeadingLine: React.FC<SectionHeadingLineProps> = ({
       viewBox="0 0 320 22"
       fill="none"
       aria-hidden
-      className={clsx("block shrink-0 w-[320px] max-w-full h-[22px]", className)}
+      shapeRendering="geometricPrecision"
+      className={clsx(
+        "block shrink-0 w-[320px] max-w-full h-[22px]",
+        className,
+      )}
     >
       <defs>
         <linearGradient
@@ -70,16 +91,34 @@ export const SectionHeadingLine: React.FC<SectionHeadingLineProps> = ({
           ))}
         </linearGradient>
 
+        <linearGradient
+          id={auraId}
+          x1="0"
+          y1="11"
+          x2="320"
+          y2="11"
+          gradientUnits="userSpaceOnUse"
+        >
+          {AURA_GOLD.map((s) => (
+            <stop
+              key={s.offset}
+              offset={s.offset}
+              stopColor={s.color}
+              stopOpacity={s.opacity}
+            />
+          ))}
+        </linearGradient>
+
         <radialGradient
           id={mistId}
           cx="0"
           cy="0"
           r="1"
           gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(160 11) scale(20 8)"
+          gradientTransform="translate(160 11) scale(32 8)"
         >
-          <stop offset="0%" stopColor="#FFF9EB" stopOpacity={0.5} />
-          <stop offset="50%" stopColor="#FFE5A0" stopOpacity={0.15} />
+          <stop offset="0%" stopColor="#FFFDF8" stopOpacity={0.5} />
+          <stop offset="45%" stopColor="#FFE5A0" stopOpacity={0.14} />
           <stop offset="100%" stopColor="#F0BE57" stopOpacity={0} />
         </radialGradient>
 
@@ -89,130 +128,106 @@ export const SectionHeadingLine: React.FC<SectionHeadingLineProps> = ({
           cy="0"
           r="1"
           gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(160 11) scale(2.5 2.5)"
+          gradientTransform="translate(160 11) scale(2.8 2.8)"
         >
           <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="60%" stopColor="#FFF0C0" />
+          <stop offset="50%" stopColor="#FFF8E8" />
           <stop offset="100%" stopColor="#F9BE5C" stopOpacity={0} />
         </radialGradient>
 
-        <filter
-          id={bloomId}
-          x="-45%"
-          y="-180%"
-          width="190%"
-          height="460%"
-          colorInterpolationFilters="sRGB"
+        <linearGradient
+          id={jewelId}
+          x1="160"
+          y1="7"
+          x2="160"
+          y2="15"
+          gradientUnits="userSpaceOnUse"
         >
-          <feGaussianBlur stdDeviation="1.05" result="b" />
-          <feMerge>
-            <feMergeNode in="b" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
+          <stop offset="0%" stopColor="#FFF9EB" />
+          <stop offset="100%" stopColor="#E8B551" />
+        </linearGradient>
       </defs>
 
-      <g filter={`url(#${bloomId})`}>
-        <ellipse cx={160} cy={11} rx={20} ry={7} fill={`url(#${mistId})`} />
+      {/* Wide soft aura */}
+      <ellipse
+        cx={160}
+        cy={11}
+        rx={30}
+        ry={7}
+        fill={`url(#${mistId})`}
+      />
+      <rect
+        x={28}
+        y={9.25}
+        width={264}
+        height={3.5}
+        rx={1.75}
+        fill={`url(#${auraId})`}
+      />
 
-        {/* Ghost strands — depth & softness */}
-        <path
-          d="M 14 11 C 52 5.5, 108 7, 160 11 C 212 15, 268 5.5, 306 11"
-          stroke={stroke}
-          strokeWidth={1.15}
-          strokeLinecap="round"
-          opacity={0.12}
-        />
-        <path
-          d="M 14 11 C 52 16.5, 108 15, 160 11 C 212 7, 268 16.5, 306 11"
-          stroke={stroke}
-          strokeWidth={1.15}
-          strokeLinecap="round"
-          opacity={0.12}
-        />
+      {/* Main line — tapered lens, single path */}
+      <path d={SOFT_LINE} fill={stroke} />
 
-        {/* Interlacing ribbons */}
-        <path
-          d="M 14 11 C 52 5.8, 108 7.4, 160 11 C 212 14.6, 268 5.8, 306 11"
-          stroke={stroke}
-          strokeWidth={0.62}
-          strokeLinecap="round"
-          fill="none"
-        />
-        <path
-          d="M 14 11 C 52 16.2, 108 14.6, 160 11 C 212 7.4, 268 16.2, 306 11"
-          stroke={stroke}
-          strokeWidth={0.62}
-          strokeLinecap="round"
-          fill="none"
-        />
-
-        {/* Center knot loop */}
-        <path
-          d="M 148 11 C 152 7.2, 158 7.2, 160 11 C 162 14.8, 168 14.8, 172 11"
-          stroke={stroke}
-          strokeWidth={0.48}
-          strokeLinecap="round"
-          fill="none"
-          opacity={0.75}
-        />
-
-        {/* Rosette — four calligraphic petals */}
-        <g stroke={stroke} strokeWidth={0.4} strokeLinecap="round" fill="none" opacity={0.7}>
-          <path d="M 160 11 C 158.5 9.2, 157 8.5, 156 9.5" />
-          <path d="M 160 11 C 161.5 9.2, 163 8.5, 164 9.5" />
-          <path d="M 160 11 C 158.5 12.8, 157 13.5, 156 12.5" />
-          <path d="M 160 11 C 161.5 12.8, 163 13.5, 164 12.5" />
-        </g>
-
-        {/* End hooks — calligraphic terminals */}
-        <path
-          d="M 14 11 C 9 10.2, 5 11, 7 11.8 C 8.5 12.4, 11 11.6, 14 11"
-          stroke={stroke}
-          strokeWidth={0.45}
-          strokeLinecap="round"
-          fill="none"
-          opacity={0.8}
-        />
-        <path
-          d="M 306 11 C 311 10.2, 315 11, 313 11.8 C 311.5 12.4, 309 11.6, 306 11"
-          stroke={stroke}
-          strokeWidth={0.45}
-          strokeLinecap="round"
-          fill="none"
-          opacity={0.8}
-        />
-
-        {/* Center star & ring */}
+      {/* Dew sparks */}
+      {SPARKLES.map((p) => (
         <circle
-          cx={160}
-          cy={11}
-          r={2.1}
-          stroke={stroke}
-          strokeWidth={0.35}
-          fill="none"
-          opacity={0.55}
-        />
-        <circle cx={160} cy={11} r={0.85} fill={`url(#${coreId})`} />
-        <path
-          d={starPath(1.15)}
+          key={p.cx}
+          cx={p.cx}
+          cy={p.cy}
+          r={p.r}
           fill={stroke}
-          transform="translate(160 11)"
-          opacity={0.9}
+          opacity={p.o}
         />
+      ))}
 
-        {/* Dew sparks along the weave */}
-        {SPARKLE_POINTS.map((p) => (
-          <circle
-            key={`${p.cx}-${p.cy}`}
-            cx={p.cx}
-            cy={p.cy}
-            r={p.r}
-            fill={stroke}
-            opacity={p.o}
-          />
-        ))}
-      </g>
+      {/* End gems */}
+      <path
+        d={diamondPath(0.9, 1.25)}
+        fill={stroke}
+        transform="translate(34 11)"
+        opacity={0.55}
+      />
+      <path
+        d={diamondPath(0.9, 1.25)}
+        fill={stroke}
+        transform="translate(286 11)"
+        opacity={0.55}
+      />
+
+      {/* Center ornament */}
+      <circle
+        cx={160}
+        cy={11}
+        r={2.6}
+        fill={stroke}
+        opacity={0.18}
+      />
+      <circle
+        cx={160}
+        cy={11}
+        r={1.6}
+        fill={stroke}
+        opacity={0.28}
+      />
+      <circle cx={160} cy={11} r={1.05} fill={`url(#${coreId})`} />
+      <path
+        d={starPath(1.1)}
+        fill={stroke}
+        transform="translate(160 11)"
+        opacity={0.88}
+      />
+      <path
+        d={diamondPath(0.45, 0.65)}
+        fill={`url(#${jewelId})`}
+        transform="translate(160 8.6)"
+        opacity={0.75}
+      />
+      <path
+        d={diamondPath(0.45, 0.65)}
+        fill={`url(#${jewelId})`}
+        transform="translate(160 13.4)"
+        opacity={0.75}
+      />
     </svg>
   );
 };
