@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { PhoneOutlined } from "@ant-design/icons";
+import SvgIcon from "@/based/SvgIcon";
 import PhoneConfirmModal from "../PhoneConfirmModal";
-import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import {
+  FIXED_ACTION_BTN_LAYOUT,
+  FIXED_ACTION_ICON_SIZE,
+} from "../../fixedButtonClasses";
 
 interface PhoneButtonProps {
   phoneNumber: string;
@@ -26,13 +29,17 @@ const PhoneButton: React.FC<PhoneButtonProps> = ({ phoneNumber }) => {
       <a
         onClick={handlePhoneClick}
         className={clsx(
-          "madison-btn-outline !rounded-full font-montserrat font-semibold shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer",
-          "flex items-center justify-center gap-2 bg-madison-surface/90 backdrop-blur-sm",
-          "flex-1 lg:flex-none h-[50px] lg:h-auto lg:min-w-[180px] px-3 lg:px-4",
-          responsiveFontSizeArray(13, 16),
+          "madison-btn-outline cursor-pointer bg-madison-surface/90 backdrop-blur-sm",
+          FIXED_ACTION_BTN_LAYOUT,
         )}
       >
-        <PhoneOutlined className="shrink-0 text-[16px] lg:text-[18px]" />
+        <SvgIcon
+          src="/assets/svgs/phone.svg"
+          ariaLabel="Phone"
+          width={FIXED_ACTION_ICON_SIZE}
+          height={FIXED_ACTION_ICON_SIZE}
+          className="shrink-0"
+        />
         <span className="whitespace-nowrap">{phoneNumber}</span>
       </a>
 

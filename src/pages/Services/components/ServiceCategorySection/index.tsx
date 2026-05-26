@@ -181,7 +181,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
               <div
                 ref={imageContainerRef}
                 className={clsx(
-                  "relative w-full border  p-4 rounded-full transition-all duration-1000 ease-out delay-200",
+                  "relative w-full border p-4 rounded-xl transition-all duration-1000 ease-out delay-200",
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8",
@@ -194,7 +194,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 }}
               >
                 <div
-                  className="rounded-full overflow-hidden w-full h-full relative bg-[#EDE6E0]"
+                  className="rounded-xl overflow-hidden w-full h-full relative bg-[#EDE6E0]"
                   style={{
                     height: isDesktop ? `${maxImageHeight - 32}px` : "368px",
                   }}
