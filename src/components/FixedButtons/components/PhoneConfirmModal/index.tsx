@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button } from "antd";
-import { PhoneOutlined } from "@ant-design/icons";
+import { CloseOutlined, PhoneOutlined } from "@ant-design/icons";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 
@@ -25,7 +25,8 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
       centered
       width="90%"
       style={{ maxWidth: "420px" }}
-      closable={false}
+      closable
+      closeIcon={<CloseOutlined className="text-[18px]" />}
       className={clsx(
         "phone-confirm-modal",
         // Modal shell
@@ -36,20 +37,19 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
         "[&_.ant-modal-content]:bg-madison-black-soft",
         "[&_.ant-modal-content]:shadow-[0_20px_70px_rgba(0,0,0,0.55)]",
         "[&_.ant-modal-body]:p-8",
+        // Close button (top-right corner)
+        "[&_.ant-modal-close]:top-3 [&_.ant-modal-close]:right-3",
+        "[&_.ant-modal-close]:w-10 [&_.ant-modal-close]:h-10",
+        "[&_.ant-modal-close]:rounded-full [&_.ant-modal-close]:grid [&_.ant-modal-close]:place-items-center",
+        "[&_.ant-modal-close]:text-madison-text-muted/70",
+        "[&_.ant-modal-close:hover]:text-madison-text",
+        "[&_.ant-modal-close:hover]:bg-white/5",
+        "[&_.ant-modal-close]:transition-colors",
       )}
     >
-      <div className="relative flex flex-col items-center gap-6">
-        <button
-          type="button"
-          onClick={onCancel}
-          aria-label="Close"
-          className="absolute right-4 top-4 w-9 h-9 rounded-full grid place-items-center text-madison-text-muted/70 hover:text-madison-text hover:bg-white/5 transition-colors"
-        >
-          <span className="text-xl leading-none">×</span>
-        </button>
-
-        <div className="text-center">
-          <div className="mx-auto mb-4 w-14 h-14 rounded-2xl grid place-items-center border border-madison-border/70 bg-black/30">
+      <div>
+        <div className="flex flex-col items-center text-center gap-2">
+          <div className="mx-auto mb-3 w-14 h-14 rounded-2xl grid place-items-center border border-madison-border/70 bg-black/30">
             <PhoneOutlined className="text-3xl text-madison-gold-dark" />
           </div>
           <h3
@@ -62,7 +62,7 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
           </h3>
           <p
             className={clsx(
-              "mt-2 font-light text-madison-text-muted",
+              "font-light text-madison-text-muted",
               responsiveFontSizeArray(13, 15),
             )}
           >
@@ -70,7 +70,7 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
           </p>
           <p
             className={clsx(
-              "mt-3 font-semibold tracking-wide text-madison-gold-dark",
+              "mt-2 font-semibold tracking-wide text-madison-gold-dark tabular-nums",
               responsiveFontSizeArray(20, 28),
             )}
           >
@@ -78,14 +78,14 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
           </p>
         </div>
 
-        <div className="flex flex-row gap-3 w-full">
+        <div className="mt-7 grid grid-cols-2 gap-3 w-full">
           <Button
             type="primary"
             size="large"
             icon={<PhoneOutlined />}
             onClick={onConfirm}
             className={clsx(
-              "flex-1 madison-btn-primary !h-12 !rounded-xl",
+              "w-full madison-btn-primary !h-12 !rounded-xl",
               "!text-madison-gold-text !font-semibold !uppercase",
               "hover:!opacity-90",
             )}
@@ -96,7 +96,7 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
             size="large"
             onClick={onCancel}
             className={clsx(
-              "flex-1 !h-12 !rounded-xl !bg-transparent",
+              "w-full !h-12 !rounded-xl !bg-transparent",
               "!border !border-madison-gold-dark/80",
               "!text-madison-text !font-semibold",
               "hover:!border-madison-gold hover:!text-madison-gold",

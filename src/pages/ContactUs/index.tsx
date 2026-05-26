@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
-import { PageHeroSection } from "@/components/PageHeroSection";
 import ContactForm from "./components/ContactForm";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import contactUsContent from "@/content/contactUs.json";
@@ -22,16 +21,7 @@ const ContactUs: React.FC = () => {
         paddingTop: `${mainTopSpacing}px`,
       }}
     >
-      {!isSignup && (
-        <PageHeroSection
-          title={
-            (contactUsContent as { hero: { titleContact: string } }).hero
-              .titleContact
-          }
-          flower={1}
-        />
-      )}
-      <section className="relative w-full py-10 lg:py-14">
+      <section className="relative w-full py-12 lg:py-16">
         <Wrapper>
           <div className="max-w-6xl mx-auto">
             {isSignup ? (
