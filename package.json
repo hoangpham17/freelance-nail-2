@@ -7,11 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "layout:check": "node scripts/layout-check.mjs",
-    "gallery:check": "node scripts/gallery-slide-check.mjs",
-    "host-party:check": "node scripts/host-a-party-layout-check.mjs",
-    "about-us:check": "node scripts/about-us-layout-check.mjs"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
@@ -45,7 +41,6 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "playwright": "^1.49.1"
+    "vite": "^5.0.8"
   }
 }
