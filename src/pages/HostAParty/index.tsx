@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import { PageDecoLines } from "@/components/PageDecoLines";
+import { HostPartyEntryLottie } from "@/components/SubmitSuccessLottie";
 import HeroSection from "./components/HeroSection";
 import OccasionsSection from "./components/OccasionsSection";
 import FormSection from "./components/FormSection";
@@ -25,6 +26,7 @@ const HostAParty: React.FC = () => {
       style={{ paddingTop: `${mainTopSpacing}px` }}
       aria-label="Host a party"
     >
+      <HostPartyEntryLottie />
       <HeroSection onScrollToForm={scrollToForm} />
       <div className="host-party-content relative">
         <PageDecoLines variant="host-party" intensity="strong" />

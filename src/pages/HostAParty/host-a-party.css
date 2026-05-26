@@ -1,5 +1,10 @@
 /* Host A Party — spacing scale + layout */
 
+.submit-success-lottie canvas,
+.submit-success-lottie svg {
+  background: transparent !important;
+}
+
 .host-party-page {
   --host-party-shell-max: 72rem; /* 1152px — max-w-6xl */
   /* Page edge + rhythm between sections (not stacked padding) */

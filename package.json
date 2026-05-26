@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test:page-deco": "node scripts/page-deco-check.mjs",
+    "test:submit-success-lottie": "node scripts/submit-success-lottie-check.mjs",
     "test:host-party-deco": "npm run test:page-deco"
   },
   "dependencies": {
