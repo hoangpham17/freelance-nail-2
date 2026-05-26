@@ -53,9 +53,7 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
       className={clsx(
         "text-gold-gradient font-tangerine font-normal [&_strong]:font-tangerine [&_p]:m-0",
         responsiveFontSizeArray(typo.title[0], typo.title[1]),
-        isDualLine
-          ? "leading-[1.15] [&_p+p]:mt-0"
-          : "leading-[1.15]",
+        isDualLine ? "leading-[1.15] [&_p+p]:mt-0" : "leading-[1.15]",
         !subtitle &&
           isDualLine &&
           variant === "about" && [
@@ -91,7 +89,9 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
         <div
           className={clsx(
             "flex flex-col gap-0",
-            align === "center" ? "items-center text-center" : "items-start text-left",
+            align === "center"
+              ? "items-center text-center"
+              : "items-start text-left",
           )}
         >
           {titleEl}
@@ -107,7 +107,9 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
               )}
             >
               {titleEl}
-              {showUnderline && align === "center" ? <SectionHeadingLine /> : null}
+              {showUnderline && align === "center" ? (
+                <SectionHeadingLine />
+              ) : null}
             </div>
           ) : null}
           {subtitleEl}
@@ -119,12 +121,16 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
     <div
       className={clsx(
         "flex flex-col gap-4 md:gap-6",
-        align === "center" ? "items-center text-center" : "items-start text-left",
+        align === "center"
+          ? "items-center text-center"
+          : "items-start text-left",
         className,
       )}
     >
       {headingBlock}
-      {isDualLine && showUnderline && align === "center" ? <SectionHeadingLine /> : null}
+      {isDualLine && showUnderline && align === "center" ? (
+        <SectionHeadingLine />
+      ) : null}
 
       {description ? (
         <div
