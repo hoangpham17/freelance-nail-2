@@ -86,7 +86,7 @@ const PhoneConfirmModal: React.FC<PhoneConfirmModalProps> = ({
             onClick={onConfirm}
             className={clsx(
               "w-full madison-btn-primary !h-12 !rounded-xl",
-              "!text-madison-gold-text !font-semibold !uppercase",
+              "!text-black !font-semibold !uppercase",
               "hover:!opacity-90",
             )}
           >

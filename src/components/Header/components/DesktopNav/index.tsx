@@ -42,11 +42,11 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
           : "hidden lg:block w-full border-b border-primary bg-black/95 transition-colors duration-300"
       }
     >
-      <Wrapper className="max-w-[1440px]">
+      <Wrapper className="max-w-[1440px] 2xl:max-w-[1680px]">
         <Flex
           align="center"
           justify="space-between"
-          className="h-[70px] gap-6 xl:gap-10"
+          className="h-[70px] xl:h-[88px] gap-6 xl:gap-10 2xl:gap-14"
         >
           <Link
             to={PATHS.home}
@@ -55,12 +55,12 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
             <img
               src="/assets/images/logo/desktop.png"
               alt="Madison Nail Lounge"
-              className="h-[50px] w-auto max-h-[50px] object-contain"
+              className="h-[50px] w-auto max-h-[50px] xl:h-[64px] xl:max-h-[64px] object-contain"
             />
           </Link>
 
           <nav
-            className="flex flex-1 items-center justify-center gap-6 xl:gap-10"
+            className="flex flex-1 items-center justify-center gap-6 xl:gap-10 xl:gap-14"
             aria-label="Main navigation"
           >
             {DESKTOP_NAV.map((item) => {
@@ -100,10 +100,10 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
                           <SvgIcon
                             src="/assets/svgs/chevron-right.svg"
                             ariaLabel="Submenu"
-                            width={10}
-                            height={10}
+                            width={12}
+                            height={12}
                             className={clsx(
-                              "size-[10px] shrink-0 rotate-90 transition-transform duration-200 text-current",
+                              "size-[10px] xl:size-3 shrink-0 rotate-90 transition-transform duration-200 text-current",
                               isServicesHovered && "rotate-[270deg]",
                             )}
                           />

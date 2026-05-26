@@ -18,7 +18,7 @@ export function isNavItemActive(pathname: string, itemPath: string): boolean {
 /** Desktop / inline header nav link */
 export function getDesktopNavLinkClassName(isActive: boolean): string {
   return clsx(
-    "font-montserrat text-base font-medium uppercase tracking-wide transition-colors whitespace-nowrap",
+    "font-montserrat text-base 2xl:text-xl font-medium uppercase tracking-wide 2xl:tracking-wider transition-colors whitespace-nowrap",
     isActive
       ? "!text-madison-gold"
       : "text-madison-muted hover:!text-madison-gold",

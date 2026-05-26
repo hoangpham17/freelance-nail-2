@@ -147,12 +147,18 @@
   font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
-  color: var(--madison-gold-text);
+  color: #000000;
   transition: opacity 0.2s ease;
 }
 
 .madison-btn-primary:hover {
   opacity: 0.9;
+  color: #000000;
+}
+
+.app .ant-btn.madison-btn-primary,
+.app .ant-btn.madison-btn-primary:not(:disabled):hover {
+  color: #000000 !important;
 }
 
 .madison-btn-outline {
@@ -229,12 +235,13 @@
   padding: 14px 32px;
   font-weight: 600;
   text-transform: uppercase;
-  color: #984121;
+  color: #000000;
   transition: opacity 0.2s ease;
 }
 
 .home-btn-primary:hover {
   opacity: 0.9;
+  color: #000000;
 }
 
 .home-btn-outline {

@@ -1,6 +1,7 @@
 import { Flex } from "antd";
 import SvgIcon from "../../../../based/SvgIcon";
 import { useScreen } from "../../../../hooks/useScreen";
+import { BREAKPOINTS } from "@/shared/utils/helper";
 import { useMemo } from "react";
 
 const listSocial = [
@@ -17,8 +18,11 @@ const listSocial = [
 ];
 
 export const ListSocial = () => {
-  const { isDesktop } = useScreen();
-  const iconSize = useMemo(() => (isDesktop ? 18 : 16), [isDesktop]);
+  const { isDesktop, width } = useScreen();
+  const iconSize = useMemo(() => {
+    if (width >= BREAKPOINTS["2xl"]) return 22;
+    return isDesktop ? 18 : 16;
+  }, [isDesktop, width]);
 
   return (
     <Flex className="gap-2">

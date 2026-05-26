@@ -379,7 +379,7 @@ const PartyForm: React.FC = () => {
             disabled={isSubmitting}
             className={clsx(
               "madison-btn-primary !w-full !h-11 lg:!h-12 !rounded-lg",
-              "!text-madison-gold-text !font-semibold !uppercase",
+              "!text-black !font-semibold !uppercase",
               "hover:!opacity-90 disabled:!opacity-50 disabled:!cursor-not-allowed !border-0",
               responsiveFontSizeArray(16, 18),
             )}

@@ -48,7 +48,7 @@ const DECO_PATHS: Record<PageDecoLinesVariant, DecoPath[]> = {
   "about-us": [
     {
       d: "M0 62 Q28 48, 48 58 T88 52 T110 44",
-      strokeWidth: 0.9,
+      strokeWidth: 0.6,
       opacity: 0.72,
     },
     {
@@ -60,11 +60,6 @@ const DECO_PATHS: Record<PageDecoLinesVariant, DecoPath[]> = {
       d: "M14 12 Q38 26, 58 14 T98 8 T106 18",
       strokeWidth: 0.7,
       opacity: 0.48,
-    },
-    {
-      d: "M4 88 Q32 76, 52 90 T86 84 T104 94",
-      strokeWidth: 0.85,
-      opacity: 0.62,
     },
     {
       d: "M72 68 Q88 56, 100 72 T94 92",
