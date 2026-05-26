@@ -24,7 +24,10 @@ const AboutUs: React.FC = () => {
     items[2]?.note ?? block?.description ?? block?.sub_title;
 
   return (
-    <section className="bg-black py-10 md:py-16">
+    <section
+      className="home-section-gradient relative overflow-hidden py-10 md:py-16"
+      data-home-grad="about"
+    >
       <Wrapper>
         <div className="lg:hidden">
           <HomeSectionHeading

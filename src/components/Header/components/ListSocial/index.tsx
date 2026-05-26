@@ -33,14 +33,14 @@ export const ListSocial = () => {
           href={item.href}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-center text-madison-gold hover:text-madison-gold-dark transition-colors"
+          className="flex items-center justify-center text-white transition-all duration-300 hover:scale-110 hover:text-madison-gold"
         >
           <SvgIcon
             src={item.iconUrl}
             ariaLabel={item.name}
             width={iconSize}
             height={iconSize}
-            className="shrink-0"
+            className="shrink-0 text-current"
           />
         </a>
       ))}

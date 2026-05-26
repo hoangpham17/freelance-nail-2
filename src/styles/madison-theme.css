@@ -240,13 +240,69 @@
 .home-page {
   background-color: var(--madison-black);
   color: var(--madison-text);
+  /* Chained section backgrounds — end of section N === start of section N+1 */
+  --home-grad-hero-end: #000000;
+  --home-grad-service-end: #1a1a1a;
+  --home-grad-about-end: #252525;
+  --home-grad-gallery-end: #1a1a1a;
+  --home-grad-testimonial-end: #000000;
 }
 
 .home-body {
   background-color: var(--madison-black);
 }
 
-/* Legacy aliases used on Home */
+/* Fade hero into first content section */
+.home-page .hero-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(28vh, 200px);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--home-grad-hero-end) 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Per-section gradients (start color = previous section end color) */
+.home-section-gradient[data-home-grad="service"] {
+  background: linear-gradient(
+    180deg,
+    var(--home-grad-hero-end) 0%,
+    var(--home-grad-service-end) 100%
+  );
+}
+
+.home-section-gradient[data-home-grad="about"] {
+  background: linear-gradient(
+    180deg,
+    var(--home-grad-service-end) 0%,
+    var(--home-grad-about-end) 100%
+  );
+}
+
+.home-section-gradient[data-home-grad="gallery"] {
+  background: linear-gradient(
+    180deg,
+    var(--home-grad-about-end) 0%,
+    var(--home-grad-gallery-end) 100%
+  );
+}
+
+.home-section-gradient[data-home-grad="testimonial"] {
+  background: linear-gradient(
+    180deg,
+    var(--home-grad-gallery-end) 0%,
+    var(--home-grad-testimonial-end) 100%
+  );
+}
+
+/* Fallback for sections without data-home-grad */
 .home-section-gradient {
   background: var(--madison-section-gradient);
 }

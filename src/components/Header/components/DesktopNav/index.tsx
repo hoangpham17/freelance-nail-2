@@ -17,6 +17,7 @@ const DESKTOP_NAV = [
   { path: PATHS.hostAParty, label: "Host a Party" },
   { path: PATHS.gallery, label: "Gallery" },
   { path: PATHS.aboutUs, label: "About Us" },
+  { path: PATHS.ourPolicies, label: "Our Policies" },
 ] as const;
 
 interface DesktopNavProps {

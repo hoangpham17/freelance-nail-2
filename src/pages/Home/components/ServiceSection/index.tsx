@@ -9,7 +9,10 @@ const ServiceSection: React.FC = () => {
   const block = getBlockBySection("services");
 
   return (
-    <section className="home-section-gradient relative overflow-hidden">
+    <section
+      className="home-section-gradient relative overflow-hidden"
+      data-home-grad="service"
+    >
       <Wrapper className="relative z-[1] py-10 md:py-16">
         <HomeSectionHeading
           titleHtml={block?.title}

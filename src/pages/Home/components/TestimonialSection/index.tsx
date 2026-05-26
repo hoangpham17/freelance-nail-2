@@ -66,7 +66,10 @@ const TestimonialSection: React.FC = () => {
   };
 
   return (
-    <section className="home-section-gradient relative overflow-hidden">
+    <section
+      className="home-section-gradient relative overflow-hidden"
+      data-home-grad="testimonial"
+    >
       <Wrapper className="relative py-10 md:py-16">
         <Header />
         <div className="relative group/slider md:mt-12 lg:max-w-[1200px] mx-auto min-[1700px]:max-w-[1920px]">

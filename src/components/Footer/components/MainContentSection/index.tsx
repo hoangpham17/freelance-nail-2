@@ -24,7 +24,23 @@ const MainContentSection: React.FC = () => {
         </Flex>
 
         <div className="madison-footer-info grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          <FooterLocationColumn />
+
           <div className="flex flex-col gap-4">
+            <h4 className="madison-footer-info__heading">Business Hours</h4>
+            <div className="flex flex-col gap-2">
+              {businessHours.map((row) => (
+                <Flex key={row.label} gap={16} wrap="wrap" align="center">
+                  <span className="madison-footer-info__label min-w-[92px] shrink-0">
+                    {row.label}
+                  </span>
+                  <span className="madison-footer-info__value">{row.time}</span>
+                </Flex>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 md:col-span-2 lg:col-span-1">
             <h4 className="madison-footer-info__heading">Keep in Touch</h4>
             <div className="flex flex-col gap-2">
               <Flex align="center" gap={8}>
@@ -55,35 +71,18 @@ const MainContentSection: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                   title={item.name}
-                  className="text-madison-gold transition-colors hover:text-madison-gold-dark"
+                  className="inline-flex text-white transition-all duration-300 hover:scale-110 hover:text-madison-gold"
                 >
                   <SvgIcon
                     src={item.iconUrl}
                     ariaLabel={item.name}
                     width={24}
                     height={24}
+                    className="text-current"
                   />
                 </a>
               ))}
             </div>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <h4 className="madison-footer-info__heading">Business Hours</h4>
-            <div className="flex flex-col gap-2">
-              {businessHours.map((row) => (
-                <Flex key={row.label} gap={16} wrap="wrap" align="center">
-                  <span className="madison-footer-info__label min-w-[92px] shrink-0">
-                    {row.label}
-                  </span>
-                  <span className="madison-footer-info__value">{row.time}</span>
-                </Flex>
-              ))}
-            </div>
-          </div>
-
-          <div className="md:col-span-2 lg:col-span-1">
-            <FooterLocationColumn />
           </div>
         </div>
       </Wrapper>

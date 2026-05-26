@@ -95,7 +95,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
 
   if (galleryItems.length === 0) {
     return (
-      <section className="home-section-gradient relative overflow-hidden py-10 md:py-16 lg:py-[60px]">
+      <section
+        className="home-section-gradient relative overflow-hidden py-10 md:py-16 lg:py-[60px]"
+        data-home-grad="gallery"
+      >
         <Wrapper className="relative z-[2] lg:!px-[120px]">
           <Header />
           <div className="mt-8">
@@ -111,6 +114,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
   return (
     <section
       className="home-section-gradient relative overflow-hidden py-10 md:py-16 lg:py-[60px]"
+      data-home-grad="gallery"
       data-gallery-section
     >
       <Wrapper className="relative z-[2] lg:!px-[120px]">
