@@ -19,7 +19,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   const { isMobile } = useScreen();
   return (
     <div className="px-2 md:px-2 py-4">
-      <div className="bg-black rounded-[24px] md:rounded-[40px] p-4 md:p-6 flex flex-col-reverse md:flex-row gap-4 md:gap-6 w-full max-w-[1080px] mx-auto h-auto md:h-[400px] min-[1700px]:h-[540px] transition-[all] duration-500 shadow-[0_4px_24px_rgba(0,0,0,0.12)] relative overflow-hidden border border-madison-border/30">
+      <div className="testimonial-card bg-black rounded-[24px] md:rounded-[40px] p-4 md:p-6 flex flex-col-reverse md:flex-row gap-4 md:gap-6 w-full max-w-[1080px] mx-auto h-auto md:h-[400px] min-[1700px]:h-[540px] transition-[border-color,box-shadow] duration-500 shadow-[0_4px_24px_rgba(0,0,0,0.12)] relative overflow-hidden border border-madison-border/30">
         <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-500 pointer-events-none z-20 testimonial-overlay" />
 
         <div className="bg-madison-surface rounded-[24px] md:rounded-[32px] p-6 md:py-10 md:px-8 w-full md:w-[55%] flex flex-col relative justify-between min-h-[200px]">
