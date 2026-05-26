@@ -111,6 +111,40 @@
   opacity: 0.85;
 }
 
+.madison-footer-info__direction,
+.madison-footer-info__direction:link,
+.madison-footer-info__direction:visited {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #e5e7eb !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.madison-footer-info__direction:hover {
+  color: #f9be5c !important;
+}
+
+.madison-footer-info__address,
+.madison-footer-info__address:link,
+.madison-footer-info__address:visited {
+  font-family: "SVN-Gilroy", "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  color: #e5e7eb !important;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.madison-footer-info__address:hover {
+  color: #f9be5c !important;
+}
+
 .text-gold-gradient-name {
   background: linear-gradient(180deg, #e7ba50 0%, #ffd573 50%, #dba538 100%);
   -webkit-background-clip: text;

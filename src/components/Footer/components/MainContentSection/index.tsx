@@ -1,7 +1,9 @@
 import React from "react";
 import { Flex } from "antd";
 import { Wrapper } from "@/based/components/Wrapper";
-import { directUrl, googlemapUrl } from "./data";
+import SvgIcon from "@/based/SvgIcon";
+import { footerSocialLinks } from "../../footerSocial";
+import FooterLocationColumn from "./FooterLocationColumn";
 
 const businessHours = [
   { label: "Mon - Fri:", time: "9:30 AM - 7:30 PM" },
@@ -17,27 +19,14 @@ const MainContentSection: React.FC = () => {
           <img
             src="/assets/images/logo/desktop.png"
             alt="Madison Nail Lounge"
-            className="h-14 md:h-[76px] w-auto object-contain"
+            className="h-14 w-auto object-contain md:h-[76px]"
           />
         </Flex>
 
-        <div className="madison-footer-info grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+        <div className="madison-footer-info grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           <div className="flex flex-col gap-4">
             <h4 className="madison-footer-info__heading">Keep in Touch</h4>
             <div className="flex flex-col gap-2">
-              <Flex align="start" gap={8}>
-                <span className="madison-footer-info__label w-[18px] shrink-0">
-                  A:
-                </span>
-                <a
-                  href={directUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="madison-footer-info__value"
-                >
-                  795 University Ave, Madison, WI 53715
-                </a>
-              </Flex>
               <Flex align="center" gap={8}>
                 <span className="madison-footer-info__label w-[18px] shrink-0">
                   T:
@@ -58,6 +47,25 @@ const MainContentSection: React.FC = () => {
                 </a>
               </Flex>
             </div>
+            <div className="flex items-center gap-6 pt-1">
+              {footerSocialLinks.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={item.name}
+                  className="text-madison-gold transition-colors hover:text-madison-gold-dark"
+                >
+                  <SvgIcon
+                    src={item.iconUrl}
+                    ariaLabel={item.name}
+                    width={24}
+                    height={24}
+                  />
+                </a>
+              ))}
+            </div>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -75,20 +83,7 @@ const MainContentSection: React.FC = () => {
           </div>
 
           <div className="md:col-span-2 lg:col-span-1">
-            <a
-              href={googlemapUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="block transition-opacity hover:opacity-90"
-            >
-              <div className="relative w-full aspect-[1288/658] max-h-[220px] lg:max-h-[280px] rounded-xl overflow-hidden bg-madison-surface">
-                <img
-                  src="/assets/images/Footer/map.jpg"
-                  alt="Madison Nail Lounge location"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </a>
+            <FooterLocationColumn />
           </div>
         </div>
       </Wrapper>
