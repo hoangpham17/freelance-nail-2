@@ -1,7 +1,11 @@
 import { useId } from "react";
 import clsx from "clsx";
 
-export type PageDecoLinesVariant = "contact" | "host-party" | "about-us";
+export type PageDecoLinesVariant =
+  | "contact"
+  | "host-party"
+  | "about-us"
+  | "our-policies";
 
 export type PageDecoLinesProps = {
   className?: string;
@@ -67,6 +71,21 @@ const DECO_PATHS: Record<PageDecoLinesVariant, DecoPath[]> = {
       opacity: 0.45,
     },
   ],
+  "our-policies": [
+    { d: "M4 16 C20 8, 36 22, 52 12 S80 6, 102 16", strokeWidth: 0.9 },
+    {
+      d: "M0 38 C16 28, 34 44, 52 32 S80 24, 106 36",
+      strokeWidth: 0.75,
+      opacity: 0.58,
+    },
+    { d: "M10 56 C26 48, 42 66, 60 56 S86 50, 100 62", strokeWidth: 0.85 },
+    { d: "M46 76 C62 68, 78 84, 96 72", strokeWidth: 0.7, opacity: 0.5 },
+    {
+      d: "M68 24 C82 36, 94 20, 108 32",
+      strokeWidth: 0.65,
+      opacity: 0.52,
+    },
+  ],
 };
 
 const GRADIENT_AXIS: Record<
@@ -76,6 +95,7 @@ const GRADIENT_AXIS: Record<
   contact: { x1: "0%", y1: "0%", x2: "100%", y2: "100%" },
   "host-party": { x1: "100%", y1: "0%", x2: "0%", y2: "100%" },
   "about-us": { x1: "0%", y1: "100%", x2: "100%", y2: "0%" },
+  "our-policies": { x1: "100%", y1: "20%", x2: "0%", y2: "80%" },
 };
 
 /** Crop anchor — narrow viewports clip inward without stretching curves */
@@ -83,6 +103,7 @@ const PRESERVE_ASPECT: Record<PageDecoLinesVariant, string> = {
   contact: "xMidYMid slice",
   "host-party": "xMidYMid slice",
   "about-us": "xMidYMin slice",
+  "our-policies": "xMidYMid slice",
 };
 
 /** Full-bleed decorative wavy gold lines (uniform scale + edge crop). */

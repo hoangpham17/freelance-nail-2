@@ -9,7 +9,7 @@ export const EmptyState: React.FC = () => {
     <div className="text-center py-20">
       <p
         className={clsx(
-          "text-[#8A6A4F] font-extralight",
+          "text-madison-text-muted font-extralight",
           responsiveFontSizeArray(16, 18),
         )}
       >

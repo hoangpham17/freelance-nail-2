@@ -8,15 +8,12 @@ export const PolicyFooter: React.FC = () => {
   return (
     <footer className="text-center pt-6 lg:pt-10">
       <div
-        className="inline-block h-px w-16 mb-6"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, #B2866D 50%, transparent 100%)",
-        }}
+        className="inline-block h-px w-16 mb-6 bg-gradient-to-r from-transparent via-madison-gold/60 to-transparent"
+        aria-hidden
       />
       <p
         className={clsx(
-          "font-extralight text-[#8A6A4F] italic",
+          "font-extralight text-madison-gold-dark italic",
           responsiveFontSizeArray(13, 15),
         )}
       >
