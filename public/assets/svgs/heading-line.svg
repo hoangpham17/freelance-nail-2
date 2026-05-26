@@ -1,21 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="210" height="7" viewBox="0 0 216.928 6.9282" fill="none" aria-hidden="true">
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="22" viewBox="0 0 320 22" fill="none" shape-rendering="geometricPrecision" aria-hidden="true">
   <defs>
-    <linearGradient id="heading-line-gold" x1="0" y1="3.464" x2="216.928" y2="3.464" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#7F4200"/>
-      <stop offset="0.01" stop-color="#854905"/>
-      <stop offset="0.09" stop-color="#B37B28"/>
-      <stop offset="0.15" stop-color="#D49F41"/>
-      <stop offset="0.21" stop-color="#E8B551"/>
-      <stop offset="0.24" stop-color="#F0BE57"/>
-      <stop offset="0.5" stop-color="#FFE5A0"/>
-      <stop offset="0.58" stop-color="#FDE199"/>
-      <stop offset="0.71" stop-color="#F9D785"/>
-      <stop offset="0.85" stop-color="#F3C666"/>
-      <stop offset="1" stop-color="#EBB13F"/>
+    <linearGradient id="heading-line-gold" x1="0" y1="11" x2="320" y2="11" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#7F4200" stop-opacity="0"/>
+      <stop offset="5%" stop-color="#854905" stop-opacity="0.2"/>
+      <stop offset="18%" stop-color="#B37B28" stop-opacity="0.55"/>
+      <stop offset="35%" stop-color="#E8B551" stop-opacity="0.82"/>
+      <stop offset="50%" stop-color="#FFF4D4"/>
+      <stop offset="65%" stop-color="#E8B551" stop-opacity="0.82"/>
+      <stop offset="82%" stop-color="#B37B28" stop-opacity="0.55"/>
+      <stop offset="95%" stop-color="#854905" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#7F4200" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="heading-line-aura" x1="0" y1="11" x2="320" y2="11" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F0BE57" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#FFE5A0" stop-opacity="0.12"/>
+      <stop offset="50%" stop-color="#FFF9EB" stop-opacity="0.22"/>
+      <stop offset="75%" stop-color="#FFE5A0" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#F0BE57" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="heading-line-mist" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(160 11) scale(32 8)">
+      <stop offset="0%" stop-color="#FFFDF8" stop-opacity="0.5"/>
+      <stop offset="45%" stop-color="#FFE5A0" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#F0BE57" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="heading-line-core" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(160 11) scale(2.8 2.8)">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FFF8E8"/>
+      <stop offset="100%" stop-color="#F9BE5C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="heading-line-jewel" x1="160" y1="7" x2="160" y2="15" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFF9EB"/>
+      <stop offset="100%" stop-color="#E8B551"/>
     </linearGradient>
   </defs>
-  <path
-    fill="url(#heading-line-gold)"
-    d="M0 3.4641L3.4641 6.9282L6.9282 3.4641L3.4641 0L0 3.4641ZM216.928 3.4641L213.464 0L210 3.4641L213.464 6.9282L216.928 3.4641ZM3.4641 3.4641V4.0641H213.464V3.4641V2.8641H3.4641V3.4641Z"
-  />
+  <ellipse cx="160" cy="11" rx="30" ry="7" fill="url(#heading-line-mist)"/>
+  <rect x="28" y="9.25" width="264" height="3.5" rx="1.75" fill="url(#heading-line-aura)"/>
+  <path d="M 24 11 C 78 11, 118 10.55, 156 10.32 C 158.5 10.28, 161.5 10.28, 164 10.32 C 202 10.55, 242 11, 296 11 C 242 11.58, 202 11.68, 164 11.68 C 161.5 11.68, 158.5 11.68, 156 11.68 C 118 11.58, 78 11.55, 24 11 Z" fill="url(#heading-line-gold)"/>
+  <circle cx="68" cy="10.85" r="0.55" fill="url(#heading-line-gold)" opacity="0.45"/>
+  <circle cx="112" cy="10.7" r="0.45" fill="url(#heading-line-gold)" opacity="0.32"/>
+  <circle cx="208" cy="10.7" r="0.45" fill="url(#heading-line-gold)" opacity="0.32"/>
+  <circle cx="252" cy="10.85" r="0.55" fill="url(#heading-line-gold)" opacity="0.45"/>
+  <path d="M 0 -1.25 L 0.9 0 L 0 1.25 L -0.9 0 Z" fill="url(#heading-line-gold)" transform="translate(34 11)" opacity="0.55"/>
+  <path d="M 0 -1.25 L 0.9 0 L 0 1.25 L -0.9 0 Z" fill="url(#heading-line-gold)" transform="translate(286 11)" opacity="0.55"/>
+  <circle cx="160" cy="11" r="2.6" fill="url(#heading-line-gold)" opacity="0.18"/>
+  <circle cx="160" cy="11" r="1.6" fill="url(#heading-line-gold)" opacity="0.28"/>
+  <circle cx="160" cy="11" r="1.05" fill="url(#heading-line-core)"/>
+  <path d="M 0 -1.1 L 0.29 -0.29 L 1.1 0 L 0.29 0.29 L 0 1.1 L -0.29 0.29 L -1.1 0 L -0.29 -0.29 Z" fill="url(#heading-line-gold)" transform="translate(160 11)" opacity="0.88"/>
+  <path d="M 0 -0.65 L 0.45 0 L 0 0.65 L -0.45 0 Z" fill="url(#heading-line-jewel)" transform="translate(160 8.6)" opacity="0.75"/>
+  <path d="M 0 -0.65 L 0.45 0 L 0 0.65 L -0.45 0 Z" fill="url(#heading-line-jewel)" transform="translate(160 13.4)" opacity="0.75"/>
 </svg>

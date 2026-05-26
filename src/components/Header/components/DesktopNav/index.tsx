@@ -9,6 +9,7 @@ import {
 } from "@/shared/utils/nav";
 import { Wrapper } from "@/based/components/Wrapper";
 import SvgIcon from "@/based/SvgIcon";
+import { ListSocial } from "../ListSocial";
 
 const DESKTOP_NAV = [
   { path: PATHS.home, label: "Home" },
@@ -17,8 +18,6 @@ const DESKTOP_NAV = [
   { path: PATHS.gallery, label: "Gallery" },
   { path: PATHS.aboutUs, label: "About Us" },
 ] as const;
-
-const BOOKING_URL = "https://booking.spacepos.net/?id=jzOR8l!BpuM=";
 
 interface DesktopNavProps {
   isServicesHovered: boolean;
@@ -118,14 +117,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
           </nav>
 
           <Flex align="center" className="shrink-0">
-            <a
-              href={BOOKING_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="madison-btn-primary !rounded-[24px] !py-3 !px-6 !text-base"
-            >
-              Booking Now
-            </a>
+            <ListSocial />
           </Flex>
         </Flex>
       </Wrapper>

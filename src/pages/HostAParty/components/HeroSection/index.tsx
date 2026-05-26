@@ -26,11 +26,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScrollToForm }) => {
 
   return (
     <section
-      className="host-party-hero relative w-full overflow-hidden bg-black"
+      className="host-party-hero relative w-full bg-black"
       aria-label="Host a party introduction"
     >
       <div
-        className="host-party-hero__media-wrap hidden lg:block absolute inset-y-0 right-0 w-[62%] pointer-events-none"
+        className="host-party-hero__media-wrap host-party-hero__media-wrap--desktop hidden lg:block absolute inset-y-0 right-0 w-[62%] pointer-events-none overflow-hidden"
         aria-hidden
       >
         <div className="host-party-hero__media absolute inset-0">
@@ -39,7 +39,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScrollToForm }) => {
         </div>
       </div>
 
-      <Wrapper className="relative z-10 !py-0">
+      <Wrapper className="host-party-hero__wrapper relative z-10 !py-0">
         <div className="host-party-shell host-party-hero__inner">
           <div className="host-party-hero__media-wrap host-party-hero__media-wrap--mobile lg:hidden">
             <div className="host-party-hero__media relative w-full">
@@ -48,29 +48,31 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScrollToForm }) => {
             </div>
           </div>
 
-          <div className="host-party-hero__copy max-w-lg mx-auto lg:mx-0 lg:max-w-[28rem] text-center lg:text-left">
-            <h1 className="font-tangerine leading-[1.02]">
-              <span
-                className={clsx(
-                  "block text-gold-gradient",
-                  responsiveFontSizeArray(38, 52),
-                )}
-              >
-                {hero.titleLine1}
-              </span>
-              <span
-                className={clsx(
-                  "block text-gold-gradient mt-1",
-                  responsiveFontSizeArray(42, 76),
-                )}
-              >
-                {hero.titleLine2}
-              </span>
-            </h1>
-            <SectionHeadingLine className="mx-auto lg:mx-0" />
+          <div className="host-party-hero__copy text-center lg:text-left">
+            <div className="host-party-hero__heading">
+              <h1 className="host-party-hero__title font-tangerine">
+                <span
+                  className={clsx(
+                    "host-party-hero__title-line host-party-hero__title-line--lead block whitespace-nowrap text-gold-gradient",
+                    responsiveFontSizeArray(28, 46, { sm: 32, md: 36, lg: 40, xl: 44 }),
+                  )}
+                >
+                  {hero.titleLine1}
+                </span>
+                <span
+                  className={clsx(
+                    "host-party-hero__title-line host-party-hero__title-line--accent block text-gold-gradient",
+                    responsiveFontSizeArray(42, 72, { lg: 68, xl: 72, "2xl": 76 }),
+                  )}
+                >
+                  {hero.titleLine2}
+                </span>
+              </h1>
+              <SectionHeadingLine className="host-party-hero__divider mx-auto lg:mx-0" />
+            </div>
             <p
               className={clsx(
-                "font-light leading-[1.65] text-madison-muted",
+                "host-party-hero__description font-light leading-[1.65] text-madison-muted",
                 responsiveFontSizeArray(14, 16),
               )}
             >

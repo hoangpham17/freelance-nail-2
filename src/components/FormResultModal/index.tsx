@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import React from "react";
 import { Modal, Button } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import Lottie from "lottie-react";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
+import { SubmitSuccessLottieOverlay } from "@/components/SubmitSuccessLottie";
 import commonContent from "@/content/common.json";
 
-const SUBMIT_SUCCESS_LOTTIE_URL = "/assets/images/submit-success.json";
-/** Cao hơn mọi layout làm mờ trong app */
-const MODAL_Z_INDEX = 100001;
-const LOTTIE_OVERLAY_Z_INDEX = 100000;
+const MODAL_Z_INDEX = 100002;
+const LOTTIE_OVERLAY_Z_INDEX = 100001;
+const MODAL_MASK_STYLE: React.CSSProperties = {
+  backgroundColor: "rgba(0, 0, 0, 0.72)",
+};
 
 interface FormResultModalProps {
   open: boolean;
@@ -24,49 +24,20 @@ const FormResultModal: React.FC<FormResultModalProps> = ({
   open,
   isSuccess,
   onClose,
-  successMessage = (commonContent as { formResultModal: { defaultSuccessMessage: string } }).formResultModal.defaultSuccessMessage,
-  errorMessage = (commonContent as { formResultModal: { defaultErrorMessage: string } }).formResultModal.defaultErrorMessage,
+  successMessage = (commonContent as { formResultModal: { defaultSuccessMessage: string } })
+    .formResultModal.defaultSuccessMessage,
+  errorMessage = (commonContent as { formResultModal: { defaultErrorMessage: string } })
+    .formResultModal.defaultErrorMessage,
 }) => {
-  const [successLottieData, setSuccessLottieData] = useState<object | null>(
-    null,
-  );
-
-  useEffect(() => {
-    if (!open || !isSuccess) return;
-    fetch(SUBMIT_SUCCESS_LOTTIE_URL)
-      .then((res) => res.json())
-      .then(setSuccessLottieData)
-      .catch(() => {});
-  }, [open, isSuccess]);
-
   const message = isSuccess ? successMessage : errorMessage;
-  const showFullScreenLottie = open && isSuccess && successLottieData;
-
-  const lottieOverlay = showFullScreenLottie && (
-    <div
-      className="fixed inset-0 overflow-hidden pointer-events-none"
-      style={{ zIndex: LOTTIE_OVERLAY_Z_INDEX }}
-      aria-hidden
-    >
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[max(100%,177.78vh)] h-[max(100%,56.25vw)]"
-        style={{ maxWidth: "none", maxHeight: "none" }}
-      >
-        <Lottie
-          animationData={successLottieData}
-          loop={false}
-          className="w-full h-full"
-        />
-      </div>
-    </div>
-  );
+  const title = isSuccess ? "Thank you!" : "Something went wrong";
 
   return (
     <>
-      {/* Render Lottie vào body để nằm trên mọi layout làm mờ */}
-      {typeof document !== "undefined" &&
-        lottieOverlay &&
-        createPortal(lottieOverlay, document.body)}
+      <SubmitSuccessLottieOverlay
+        active={open && isSuccess}
+        zIndex={LOTTIE_OVERLAY_Z_INDEX}
+      />
 
       <Modal
         open={open}
@@ -79,44 +50,66 @@ const FormResultModal: React.FC<FormResultModalProps> = ({
           zIndex: MODAL_Z_INDEX,
         }}
         closable={false}
-        mask={!isSuccess}
-        className="[&_.ant-modal-content]:rounded-2xl [&_.ant-modal-content]:overflow-hidden [&_.ant-modal-content]:border [&_.ant-modal-content]:border-[#EDE6E0] [&_.ant-modal-content]:shadow-[0_8px_32px_rgba(107,74,47,0.12)] [&_.ant-modal-body]:p-8"
+        mask
+        maskClosable={false}
+        maskStyle={MODAL_MASK_STYLE}
+        styles={{ mask: MODAL_MASK_STYLE }}
+        className={clsx(
+          "form-result-modal",
+          "[&_.ant-modal-mask]:!bg-black/70",
+          "[&_.ant-modal-content]:rounded-2xl",
+          "[&_.ant-modal-content]:overflow-hidden",
+          "[&_.ant-modal-content]:border",
+          "[&_.ant-modal-content]:border-madison-border/70",
+          "[&_.ant-modal-content]:bg-madison-black-soft",
+          "[&_.ant-modal-content]:shadow-[0_20px_70px_rgba(0,0,0,0.55)]",
+          "[&_.ant-modal-body]:px-8",
+          "[&_.ant-modal-body]:py-10",
+        )}
       >
-        <div className="flex flex-col items-center gap-6 py-2">
+        <div className="flex flex-col items-center gap-7 text-center">
           {!isSuccess && (
-            <CloseCircleOutlined
-              className="text-4xl lg:text-5xl"
-              style={{ color: "#A65D57" }}
-            />
+            <div
+              className="grid h-14 w-14 place-items-center rounded-2xl border border-madison-border/70 bg-black/30"
+              aria-hidden
+            >
+              <CloseCircleOutlined className="text-3xl text-[#c97a72]" />
+            </div>
           )}
-        <div className="text-center">
+
+          <h3
+            className={clsx(
+              "m-0 font-semibold tracking-wide text-madison-text",
+              responsiveFontSizeArray(18, 22),
+            )}
+          >
+            {title}
+          </h3>
+
           <p
             className={clsx(
-              "text-[#5C4D42] font-light leading-relaxed whitespace-pre-line",
+              "max-w-[22rem] font-light leading-relaxed whitespace-pre-line text-madison-text-muted",
               responsiveFontSizeArray(15, 17),
             )}
           >
             {message}
           </p>
+
+          <Button
+            type="primary"
+            size="large"
+            onClick={onClose}
+            className={clsx(
+              "madison-btn-primary !min-w-[140px] !h-12 !rounded-[36px]",
+              "!border-0 !font-semibold !uppercase",
+              "hover:!opacity-90",
+              responsiveFontSizeArray(16, 18),
+            )}
+          >
+            {(commonContent as { formResultModal: { okButton: string } }).formResultModal.okButton}
+          </Button>
         </div>
-        <Button
-          type="primary"
-          size="large"
-          onClick={onClose}
-          className={clsx(
-            "min-w-[140px] rounded-[36px] text-white h-12 font-playfairDisplay font-semibold border-0",
-            "hover:opacity-90 transition-opacity",
-            responsiveFontSizeArray(16, 18),
-          )}
-          style={{
-            background: "linear-gradient(135deg, #805D3D 0%, #6B4A2F 100%)",
-            boxShadow: "0px 4px 12px 0px #6B4A2F26",
-          }}
-        >
-          {(commonContent as { formResultModal: { okButton: string } }).formResultModal.okButton}
-        </Button>
-      </div>
-    </Modal>
+      </Modal>
     </>
   );
 };

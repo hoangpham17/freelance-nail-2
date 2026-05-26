@@ -18,7 +18,7 @@ const OccasionsSection: React.FC = () => {
 
   return (
     <HostPartySection
-      className="host-party-occasions bg-black"
+      className="host-party-occasions"
       aria-label="Party occasions"
     >
       <div className="host-party-divider" aria-hidden />

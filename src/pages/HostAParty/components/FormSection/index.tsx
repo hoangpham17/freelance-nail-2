@@ -21,7 +21,7 @@ const FormSection: React.FC<FormSectionProps> = ({ sectionRef }) => {
     <HostPartySection
       ref={sectionRef as React.RefObject<HTMLElement>}
       id="party-inquiry"
-      className="host-party-form madison-section-gradient"
+      className="host-party-form"
       aria-label="Party inquiry form"
     >
       <div className="host-party-divider" aria-hidden />
