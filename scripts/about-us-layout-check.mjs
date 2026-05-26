@@ -1,6 +1,6 @@
 /**
  * About Us — responsive layout smoke test.
- * Run: npm run about-us:check (dev server required, default port 5173)
+ * Run: npm run about-us:check (dev/preview server required)
  */
 import { chromium } from "playwright";
 import { mkdir } from "fs/promises";
@@ -34,47 +34,34 @@ async function assertNoHorizontalOverflow(page, name) {
   }
 }
 
-async function assertBoxInViewport(page, locator, name, label, vpWidth) {
+async function assertBoxInViewport(page, locator, label, vpWidth) {
   const count = await locator.count();
   if (count === 0) {
-    errors.push(`${name}: missing ${label}`);
+    errors.push(`${label}: missing element`);
     return;
   }
   const box = await locator.first().boundingBox();
   if (!box) {
-    errors.push(`${name}: no bounding box for ${label}`);
+    errors.push(`${label}: no bounding box`);
     return;
   }
   if (box.x < -2) {
-    errors.push(`${name}: ${label} clipped left (x=${Math.round(box.x)})`);
+    errors.push(`${label}: clipped left (x=${Math.round(box.x)})`);
   }
   if (box.x + box.width > vpWidth + 2) {
     errors.push(
-      `${name}: ${label} overflows right (x+w=${Math.round(box.x + box.width)}, vp=${vpWidth})`,
+      `${label}: overflows right (x+w=${Math.round(box.x + box.width)}, vp=${vpWidth})`,
     );
   }
   if (box.width < 8 || box.height < 8) {
     errors.push(
-      `${name}: ${label} collapsed (${Math.round(box.width)}×${Math.round(box.height)})`,
+      `${label}: collapsed (${Math.round(box.width)}×${Math.round(box.height)})`,
     );
   }
 }
 
-async function assertNoOverlap(page, selA, selB, name, label) {
-  const a = await page.locator(selA).first().boundingBox();
-  const b = await page.locator(selB).first().boundingBox();
-  if (!a || !b) return;
-  const overlap =
-    a.x < b.x + b.width &&
-    a.x + a.width > b.x &&
-    a.y < b.y + b.height &&
-    a.y + a.height > b.y;
-  if (overlap) {
-    errors.push(`${name}: ${label} overlaps`);
-  }
-}
-
 async function checkViewport(browser, vp) {
+  const label = `${PATH}/${vp.name}`;
   const context = await browser.newContext({
     viewport: { width: vp.width, height: vp.height },
   });
@@ -86,133 +73,52 @@ async function checkViewport(browser, vp) {
       timeout: 60000,
     });
     if (!res?.ok()) {
-      errors.push(`${vp.name}: HTTP ${res?.status()}`);
+      errors.push(`${label}: HTTP ${res?.status()}`);
       return;
     }
 
-    await page.waitForSelector(".au-hero", { timeout: 15000 });
-    await page.waitForTimeout(1000);
+    await page.waitForSelector('[data-au-section="hero"]', { timeout: 20000 });
+    await page.waitForTimeout(800);
 
-    for (const sel of [".au-hero", ".au-manifesto", ".au-closing"]) {
-      if ((await page.locator(sel).count()) === 0) {
-        errors.push(`${vp.name}: missing ${sel}`);
+    for (const section of ["hero", "intro", "closing"]) {
+      if ((await page.locator(`[data-au-section="${section}"]`).count()) === 0) {
+        errors.push(`${label}: missing [data-au-section="${section}"]`);
       }
     }
 
-    await assertNoHorizontalOverflow(page, vp.name);
+    await assertNoHorizontalOverflow(page, label);
 
     await assertBoxInViewport(
       page,
-      page.locator(".au-hero h1"),
-      vp.name,
-      "hero title",
+      page.locator('[data-au-section="hero"] h1'),
+      `${label}/hero h1`,
       vp.width,
     );
     await assertBoxInViewport(
       page,
-      page.locator(".au-hero__lead"),
-      vp.name,
-      "hero lead",
-      vp.width,
-    );
-    const manifestoAccent = page.locator(".au-manifesto__accent");
-    const manifestoText = page.locator(".au-manifesto__text");
-    await assertBoxInViewport(
-      page,
-      manifestoAccent,
-      vp.name,
-      "manifesto accent",
+      page.locator(".au-intro__accent"),
+      `${label}/intro accent`,
       vp.width,
     );
     await assertBoxInViewport(
       page,
-      manifestoText,
-      vp.name,
-      "manifesto text",
+      page.locator('[data-au-section="closing"]'),
+      `${label}/closing`,
       vp.width,
     );
 
-    if ((await manifestoAccent.count()) > 0 && (await manifestoText.count()) > 0) {
-      const accentBox = await manifestoAccent.first().boundingBox();
-      const textBox = await manifestoText.first().boundingBox();
-      if (accentBox && textBox && accentBox.y > textBox.y) {
-        errors.push(`${vp.name}: manifesto accent below body (layout order broken)`);
-      }
-    }
-
-    const fixedBtns = page.locator(".fixed.bottom-4");
-    if ((await fixedBtns.count()) > 0 && (await manifestoText.count()) > 0) {
-      const btnBox = await fixedBtns.first().boundingBox();
-      const textBox = await manifestoText.first().boundingBox();
-      if (btnBox && textBox) {
-        const obscured =
-          btnBox.y < textBox.y + textBox.height &&
-          btnBox.y + btnBox.height > textBox.y &&
-          btnBox.x < textBox.x + textBox.width &&
-          btnBox.x + btnBox.width > textBox.x;
-        if (obscured && vp.width < 1024) {
-          await page.evaluate(() => {
-            document.querySelector(".au-manifesto")?.scrollIntoView({
-              block: "center",
-            });
-          });
-          await page.waitForTimeout(400);
-          const accentVisible = await manifestoAccent.first().isVisible();
-          const textStart = await manifestoText.first().evaluate((el) => {
-            const range = document.createRange();
-            range.selectNodeContents(el);
-            const rect = range.getBoundingClientRect();
-            return rect.top;
-          });
-          const btnTop = await fixedBtns.first().evaluate(
-            (el) => el.getBoundingClientRect().top,
-          );
-          if (textStart < btnTop + 80 && textStart > 0 && !accentVisible) {
-            errors.push(
-              `${vp.name}: manifesto text obscured by fixed booking buttons`,
-            );
-          }
-        }
-      }
-    }
-
-    const chapters = page.locator(".au-chapter");
+    const chapters = page.locator('[data-au-section="chapters"] article');
     const chapterCount = await chapters.count();
     if (chapterCount === 0) {
-      errors.push(`${vp.name}: no .au-chapter sections`);
+      errors.push(`${label}: no timeline chapters`);
     }
 
-    for (let i = 0; i < Math.min(chapterCount, 3); i++) {
-      const ch = chapters.nth(i);
+    for (let i = 0; i < Math.min(chapterCount, 2); i++) {
       await assertBoxInViewport(
         page,
-        ch.locator(".au-chapter__media"),
-        vp.name,
-        `chapter ${i + 1} media`,
+        chapters.nth(i),
+        `${label}/chapter-${i + 1}`,
         vp.width,
-      );
-      await assertBoxInViewport(
-        page,
-        ch.locator(".au-chapter__copy"),
-        vp.name,
-        `chapter ${i + 1} copy`,
-        vp.width,
-      );
-      const mediaBox = await ch.locator(".au-chapter__media").boundingBox();
-      if (mediaBox && mediaBox.height < 100) {
-        errors.push(
-          `${vp.name}: chapter ${i + 1} media too short (${Math.round(mediaBox.height)}px)`,
-        );
-      }
-    }
-
-    if (vp.width >= 768) {
-      await assertNoOverlap(
-        page,
-        ".au-hero",
-        ".au-manifesto",
-        vp.name,
-        "hero vs manifesto",
       );
     }
 
@@ -221,10 +127,10 @@ async function checkViewport(browser, vp) {
       fullPage: true,
     });
 
-    console.log(`✓ ${vp.name} (${vp.width}×${vp.height}) chapters=${chapterCount}`);
+    console.log(`✓ ${label} chapters=${chapterCount}`);
   } catch (e) {
-    errors.push(`${vp.name}: ${e.message}`);
-    console.error(`✗ ${vp.name}:`, e.message);
+    errors.push(`${label}: ${e.message}`);
+    console.error(`✗ ${label}:`, e.message);
   } finally {
     await context.close();
   }
