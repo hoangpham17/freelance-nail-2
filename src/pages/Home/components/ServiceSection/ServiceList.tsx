@@ -1,7 +1,6 @@
 import { useServiceCategories } from "@/hooks/useServiceCategories";
 import { PATHS } from "@/routes/Routes";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { Flex } from "antd";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { Wrapper } from "@/based/components/Wrapper";
@@ -14,9 +13,13 @@ const ServiceItem = ({ category }: { category: ServiceCategory }) => {
   return (
     <Link
       to={to}
-      className="home-service-item group flex flex-1 min-w-[120px] max-w-[200px] flex-col items-center justify-between gap-4 focus-visible:outline-none"
+      className={clsx(
+        "home-service-item group flex min-w-0 flex-col items-center justify-between gap-3 md:gap-4 focus-visible:outline-none",
+        "w-[calc((100%-2*1rem)/3)] sm:w-[calc((100%-3*1.5rem)/4)] lg:w-[calc((100%-5*2.5rem)/6)]",
+        "max-w-[200px]",
+      )}
     >
-      <div className="home-service-item__icon-wrap size-[120px] md:size-[140px]">
+      <div className="home-service-item__icon-wrap size-[100px] sm:size-[110px] md:size-[120px] lg:size-[140px]">
         <span
           className="home-service-item__border home-service-item__border--tr"
           aria-hidden
@@ -57,17 +60,19 @@ const ServiceItem = ({ category }: { category: ServiceCategory }) => {
 export const ServiceList = () => {
   const { categories: serviceCategories } = useServiceCategories();
 
+  if (serviceCategories.length === 0) return null;
+
   return (
     <div className="relative z-[1] pb-10 md:pb-16">
       <Wrapper>
-        <Flex
-          className="flex-wrap justify-center gap-6 md:gap-10 lg:gap-12 pt-2"
-          align="flex-start"
+        <div
+          className="flex flex-wrap justify-center items-start gap-4 sm:gap-6 lg:gap-10 pt-2 w-full max-w-[1200px] mx-auto"
+          role="list"
         >
           {serviceCategories.map((category) => (
             <ServiceItem key={category.id} category={category} />
           ))}
-        </Flex>
+        </div>
       </Wrapper>
     </div>
   );
