@@ -5,12 +5,29 @@
   --au-timeline-max: 68rem;
   --au-pad: clamp(1rem, 4vw, 2.5rem);
   --au-y: clamp(2.5rem, 6vw, 4.5rem);
+  --au-divider-gap: clamp(2rem, 5vw, 3.25rem);
   --au-gold: #f9be5c;
   --au-gold-dark: #f1a953;
   --au-fixed: 6.75rem;
-  background: #000000;
+  background-color: #000000;
   color: #f5f0eb;
   overflow-x: hidden;
+}
+
+/* Content below hero — section gradient + decorative lines */
+.au-content {
+  position: relative;
+  isolation: isolate;
+  background: var(--madison-section-gradient);
+}
+
+.au-content .au-intro,
+.au-content .au-divider,
+.au-content .au-timeline,
+.au-content .au-closing {
+  position: relative;
+  z-index: 2;
+  background: transparent;
 }
 
 /* —— Hero (concept 1) —— */
@@ -18,7 +35,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: stretch;
   min-height: clamp(22rem, 72dvh, 40rem);
   overflow: hidden;
   background: #0c0a09;
@@ -40,18 +58,29 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgb(12 10 9 / 0.35) 0%,
-    rgb(12 10 9 / 0.92) 100%
+    rgb(12 10 9 / 0.5) 0%,
+    rgb(12 10 9 / 0.65) 50%,
+    rgb(12 10 9 / 0.5) 100%
   );
 }
 
 .au-hero__content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: min(100%, var(--au-max));
   margin-inline: auto;
-  padding: var(--au-y) var(--au-pad) calc(var(--au-y) + var(--au-fixed));
+  padding: var(--au-y) var(--au-pad);
   text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .au-hero {
+    padding-bottom: var(--au-fixed);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -60,13 +89,15 @@
   }
 
   .au-hero__content {
+    align-items: flex-start;
     text-align: left;
-    padding-bottom: var(--au-y);
   }
 }
 
 .au-hero__eyebrow {
   display: inline-block;
+  width: fit-content;
+  max-width: 100%;
   margin-bottom: 0.75rem;
   padding: 0.35rem 0.9rem;
   border: 1px solid rgb(249 190 92 / 0.35);
@@ -76,6 +107,7 @@
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--au-gold);
+  flex-shrink: 0;
 }
 
 .au-hero__subtitle {
@@ -100,10 +132,10 @@
   }
 }
 
-/* —— Intro: A sanctuary of beauty (concept 3, black bg) —— */
+/* —— Intro: A sanctuary of beauty —— */
 .au-intro {
-  padding: var(--au-y) 0;
-  background: #000000;
+  padding-top: var(--au-y);
+  padding-bottom: 0;
   color: #f5f0eb;
 }
 
@@ -133,11 +165,25 @@
   color: rgb(245 240 235 / 0.8);
 }
 
-/* —— Timeline chapters (concept 3, black bg) —— */
+/* Symmetric rhythm above & below SectionHeadingLine */
+.au-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding-block: var(--au-divider-gap);
+  padding-inline: var(--au-pad);
+  box-sizing: border-box;
+}
+
+.au-divider svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* —— Timeline chapters —— */
 .au-timeline {
-  padding: var(--au-y) var(--au-pad);
-  padding-bottom: calc(var(--au-y) + var(--au-fixed));
-  background: #000000;
+  padding: 0 var(--au-pad) calc(var(--au-y) + var(--au-fixed));
 }
 
 @media (min-width: 1024px) {
@@ -263,8 +309,7 @@
   padding: var(--au-y) var(--au-pad);
   padding-bottom: calc(var(--au-y) + var(--au-fixed));
   text-align: center;
-  background: #000000;
-  border-top: 1px solid rgb(249 190 92 / 0.15);
+  border-top: 1px solid rgb(249 190 92 / 0.12);
 }
 
 @media (min-width: 1024px) {

@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import LoadingPage from "@/components/LoadingPage";
+import { PageDecoLines } from "@/components/PageDecoLines";
 import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 import { SectionTitle } from "@/components/SectionTitle";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
@@ -102,43 +103,53 @@ const AboutUs: React.FC = () => {
         </div>
       </header>
 
-      <section className="au-intro" data-au-section="intro">
-        <div className="au-intro__inner">
-          <p className="au-intro__accent">{intro.accent}</p>
-          <p
-            className={clsx(
-              "au-intro__text",
-              responsiveFontSizeArray(14, 17),
-            )}
-          >
-            {intro.description}
-          </p>
-        </div>
-      </section>
+      <div className="au-content relative">
+        <PageDecoLines variant="about-us" intensity="strong" />
 
-      {sections.length > 0 && (
-        <section className="au-timeline" data-au-section="chapters">
-          <div className="au-timeline__track">
-            <div className="au-timeline__line" aria-hidden />
-            {sections.map((section, index) => (
-              <Milestone
-                key={section.id}
-                section={section}
-                index={index}
-              />
-            ))}
+        <section className="au-intro" data-au-section="intro">
+          <div className="au-intro__inner">
+            <p className="au-intro__accent">{intro.accent}</p>
+            <p
+              className={clsx(
+                "au-intro__text",
+                responsiveFontSizeArray(14, 17),
+              )}
+            >
+              {intro.description}
+            </p>
           </div>
         </section>
-      )}
 
-      <footer className="au-closing" data-au-section="closing">
-        <div className="au-closing__inner">
-          <p className="au-closing__quote">{closing.quote}</p>
-          <Link to={PATHS.contactUs} className="au-closing__cta">
-            Get in touch
-          </Link>
-        </div>
-      </footer>
+        {sections.length > 0 && (
+          <div className="au-divider" aria-hidden>
+            <SectionHeadingLine className="mx-auto" />
+          </div>
+        )}
+
+        {sections.length > 0 && (
+          <section className="au-timeline" data-au-section="chapters">
+            <div className="au-timeline__track">
+              <div className="au-timeline__line" aria-hidden />
+              {sections.map((section, index) => (
+                <Milestone
+                  key={section.id}
+                  section={section}
+                  index={index}
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        <footer className="au-closing" data-au-section="closing">
+          <div className="au-closing__inner">
+            <p className="au-closing__quote">{closing.quote}</p>
+            <Link to={PATHS.contactUs} className="au-closing__cta">
+              Get in touch
+            </Link>
+          </div>
+        </footer>
+      </div>
     </main>
   );
 };
