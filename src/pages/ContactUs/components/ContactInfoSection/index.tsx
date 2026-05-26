@@ -72,7 +72,7 @@ export const ContactInfoSection: React.FC<ContactInfoSectionProps> = ({
       <Wrapper>
         <p
           className={clsx(
-            "text-[#8A6A4F] font-extralight text-center max-w-xl mx-auto mb-10 lg:mb-14",
+            "text-madison-text-muted font-light text-center max-w-2xl mx-auto mb-10 lg:mb-14 leading-relaxed",
             responsiveFontSizeArray(14, 16),
           )}
         >
@@ -82,13 +82,13 @@ export const ContactInfoSection: React.FC<ContactInfoSectionProps> = ({
           {cards.map((card) => (
             <div
               key={card.title}
-              className="flex gap-4 p-5 lg:p-6 bg-white rounded-2xl shadow-sm border border-[#EDE6E0]"
+              className="flex gap-4 p-5 lg:p-6 bg-madison-black-soft rounded-2xl border border-madison-border/70 shadow-[0_10px_36px_rgba(0,0,0,0.35)]"
             >
               <div
                 className="flex-shrink-0 w-12 h-12 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center text-white"
                 style={{
                   background:
-                    "linear-gradient(135deg, #805D3D 0%, #6B4A2F 100%)",
+                    "linear-gradient(135deg, var(--madison-gold-dark) 0%, #7f4200 100%)",
                 }}
               >
                 {(card as { icon: React.ReactNode }).icon}
@@ -104,7 +104,7 @@ export const ContactInfoSection: React.FC<ContactInfoSectionProps> = ({
                 </h3>
                 <div
                   className={clsx(
-                    "font-light text-[#5C4D42] leading-relaxed space-y-0.5",
+                    "font-light text-madison-text-muted leading-relaxed space-y-0.5",
                     responsiveFontSizeArray(14, 15),
                   )}
                 >

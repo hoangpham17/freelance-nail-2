@@ -135,16 +135,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
   };
 
   const labelClass = clsx(
-    "text-[#6B4A2F] font-playfairDisplay font-medium",
+    "text-madison-gold font-sans font-medium",
     responsiveFontSizeArray(14, 15),
   );
   const inputClass = clsx(
-    "pl-11 pr-4 py-3 rounded-2xl !border !border-[#EDE6E0] h-12 lg:h-14",
-    "bg-white text-[#5C4D42] placeholder:text-[#8A6A4F]/60",
-    "focus:!border-[#B2866D] focus:!shadow-[0_0_0_1px_#B2866D] hover:!border-[#E8DED8]",
+    "pl-11 pr-4 py-3 rounded-lg !border !border-madison-border/80 h-11 lg:h-12",
+    "bg-madison-black-soft text-madison-text placeholder:text-madison-muted/50",
+    "focus:!border-madison-gold focus:!shadow-[0_0_0_1px_var(--madison-gold)] hover:!border-madison-gold/40",
     "transition-colors outline-none",
     responsiveFontSizeArray(14, 16),
   );
+  const iconClass = "shrink-0 text-madison-gold-dark";
 
   return (
     <Form
@@ -172,7 +173,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
               ariaLabel="user"
               width={20}
               height={20}
-              className="shrink-0 text-[#8A6A4F]"
+              className={iconClass}
             />
           </div>
           <Input
@@ -203,7 +204,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
                 ariaLabel="phone"
                 width={20}
                 height={20}
-                className="shrink-0 text-[#8A6A4F]"
+                className={iconClass}
               />
             </div>
             <Input
@@ -223,17 +224,18 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
 
             <div
               className={clsx(
-                "absolute inset-0 flex items-center pl-11 pr-4 border rounded-2xl border-[#EDE6E0]",
-                "rounded-2xl h-12 lg:h-14",
+                "absolute inset-0 flex items-center pl-11 pr-4 border rounded-lg border-madison-border/80",
+                "h-11 lg:h-12 bg-black/40",
                 "cursor-text select-none",
                 isPhoneEditing && "opacity-0 pointer-events-none",
               )}
             >
               <span
                 className={clsx(
-                  "text-[#5C4D42]",
-                  !phoneValue || getPhoneDigits(String(phoneValue)).length === 0
-                    ? "text-[#8A6A4F]/60"
+                  "text-madison-text",
+                  !phoneValue ||
+                    getPhoneDigits(String(phoneValue)).length === 0
+                    ? "text-madison-muted/50"
                     : "",
                 )}
               >
@@ -259,7 +261,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
                 ariaLabel="email"
                 width={20}
                 height={20}
-                className="shrink-0 text-[#8A6A4F]"
+                className={iconClass}
               />
             </div>
             <Input
@@ -286,7 +288,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
               ariaLabel="message"
               width={20}
               height={20}
-              className="shrink-0 text-[#8A6A4F]"
+              className={iconClass}
             />
           </div>
           <TextArea
@@ -299,21 +301,18 @@ const ContactForm: React.FC<ContactFormProps> = ({ isSignup = false }) => {
         </div>
       </Form.Item>
 
-      <Form.Item className="mb-0 mt-2">
+      <Form.Item className="!mb-0 !mt-2">
         <Button
           type="primary"
           htmlType="submit"
           loading={isSubmitting}
           disabled={isSubmitting}
           className={clsx(
-            "w-full rounded-2xl text-white h-12 lg:h-14 font-playfairDisplay font-semibold",
-            "hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed border-0",
+            "madison-btn-primary !w-full !h-11 lg:!h-12 !rounded-lg",
+            "!text-madison-gold-text !font-semibold !uppercase",
+            "hover:!opacity-90 disabled:!opacity-50 disabled:!cursor-not-allowed !border-0",
             responsiveFontSizeArray(16, 18),
           )}
-          style={{
-            background: "linear-gradient(135deg, #805D3D 0%, #B2866D 100%)",
-            boxShadow: "0px 4px 12px 0px #6B4A2F26",
-          }}
         >
           {isSubmitting
             ? isSignup
