@@ -68,7 +68,7 @@ export const ContactInfoSection: React.FC<ContactInfoSectionProps> = ({
   const contactInfo = (contactUsContent as { contactInfo: { introContact: string; introSignup: string; cards: Array<{ title: string; lines: string[] }> } }).contactInfo;
   const cards = contactInfo.cards.map((card, i) => ({ ...card, icon: CARD_ICONS[i] }));
   return (
-    <section className="relative w-full pt-10 pb-12 lg:pt-14 lg:pb-16">
+    <section className="relative z-[2] w-full pt-10 pb-12 lg:pt-14 lg:pb-16">
       <Wrapper>
         <p
           className={clsx(
