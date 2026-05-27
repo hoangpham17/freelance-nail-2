@@ -261,7 +261,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                       className={clsx(
                         "tab-item px-4 h-[32px] lg:h-[50px] rounded-2xl border whitespace-nowrap font-playfairDisplay",
                         isActive
-                          ? "bg-madison-gold text-madison-gold-text border-madison-gold"
+                          ? "bg-madison-gold text-black border-madison-gold"
                           : "bg-madison-surface text-madison-muted group-hover:text-madison-gold border-madison-border",
                         responsiveFontSizeArray(16, 20),
                       )}

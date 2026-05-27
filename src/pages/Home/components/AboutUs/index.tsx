@@ -28,7 +28,7 @@ const AboutUs: React.FC = () => {
       className="home-section-gradient relative overflow-hidden py-10 md:py-16"
       data-home-grad="about"
     >
-      <Wrapper>
+      <Wrapper className="home-about-wrap">
         <div className="lg:hidden">
           <HomeSectionHeading
             variant="about"
@@ -54,7 +54,7 @@ const AboutUs: React.FC = () => {
         </div>
 
         <Flex
-          className="hidden lg:flex items-center gap-10 xl:gap-[60px]"
+          className="home-about-desktop hidden lg:flex w-full max-w-[1320px] mx-auto items-center justify-center gap-10 xl:gap-[60px]"
           align="center"
         >
           <AboutUsImageCollage

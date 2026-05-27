@@ -83,7 +83,7 @@ const MobileSlide: React.FC<MobileSlideProps> = ({ items, isLoading = false }) =
       </Swiper>
 
       {/* Navigation Arrows */}
-      <div className="absolute top-1/2 -left-6 -right-6 -translate-y-2/3 z-50 pointer-events-none">
+      <div className="absolute top-1/2 left-0 right-0 -translate-y-2/3 z-50 pointer-events-none px-0 sm:px-1">
         <NavigationArrows
           onPrev={() => swiperRef.current?.slidePrev()}
           onNext={() => swiperRef.current?.slideNext()}

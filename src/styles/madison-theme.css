@@ -242,9 +242,9 @@
   color: var(--madison-text);
   /* Chained section backgrounds — end of section N === start of section N+1 */
   --home-grad-hero-end: #000000;
-  --home-grad-service-end: #1a1a1a;
-  --home-grad-about-end: #252525;
-  --home-grad-gallery-end: #1a1a1a;
+  --home-grad-service-end: #161412;
+  --home-grad-about-end: #2c2824;
+  --home-grad-gallery-end: #121110;
   --home-grad-testimonial-end: #000000;
 }
 
@@ -269,39 +269,45 @@
   z-index: 20;
 }
 
-/* Per-section gradients (start color = previous section end color) */
+/* Per-section gradients — chained at seams, distinct mid-tones per block */
 .home-section-gradient[data-home-grad="service"] {
-  background: linear-gradient(
+  background-color: var(--home-grad-service-end);
+  background-image: linear-gradient(
     180deg,
     var(--home-grad-hero-end) 0%,
-    var(--home-grad-service-end) 78%,
+    #10100e 38%,
     var(--home-grad-service-end) 100%
   );
 }
 
 .home-section-gradient[data-home-grad="about"] {
-  background: linear-gradient(
+  background-color: var(--home-grad-about-end);
+  background-image: linear-gradient(
     180deg,
     var(--home-grad-service-end) 0%,
-    var(--home-grad-service-end) 22%,
+    #262220 42%,
     var(--home-grad-about-end) 100%
   );
+  box-shadow: inset 0 1px 0 rgb(249 190 92 / 0.07);
 }
 
 .home-section-gradient[data-home-grad="gallery"] {
-  background: linear-gradient(
+  background-color: var(--home-grad-gallery-end);
+  background-image: linear-gradient(
     180deg,
     var(--home-grad-about-end) 0%,
-    var(--home-grad-about-end) 22%,
+    #1a1816 45%,
     var(--home-grad-gallery-end) 100%
   );
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 .home-section-gradient[data-home-grad="testimonial"] {
-  background: linear-gradient(
+  background-color: var(--home-grad-testimonial-end);
+  background-image: linear-gradient(
     180deg,
     var(--home-grad-gallery-end) 0%,
-    var(--home-grad-gallery-end) 22%,
+    #080808 55%,
     var(--home-grad-testimonial-end) 100%
   );
 }
@@ -309,6 +315,26 @@
 /* Fallback for sections without data-home-grad */
 .home-section-gradient {
   background: var(--madison-section-gradient);
+}
+
+/* Home — About Us: symmetric side padding (mobile / tablet / desktop) */
+.home-about-wrap {
+  padding-left: clamp(1.25rem, 5vw, 7.5rem) !important;
+  padding-right: clamp(1.25rem, 5vw, 7.5rem) !important;
+}
+
+@media (min-width: 1024px) {
+  .home-about-wrap {
+    padding-left: clamp(4rem, 6.25vw, 7.5rem) !important;
+    padding-right: clamp(4rem, 6.25vw, 7.5rem) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .home-about-wrap {
+    padding-left: 7.5rem !important;
+    padding-right: 7.5rem !important;
+  }
 }
 
 .home-heading-line {

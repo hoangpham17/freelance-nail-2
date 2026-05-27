@@ -17,7 +17,7 @@ const AboutUsImageCollage: React.FC<AboutUsImageCollageProps> = ({
 }) => {
   return (
     <div
-      className="relative shrink-0 origin-left scale-[0.82] lg:scale-90 xl:scale-100"
+      className="relative shrink-0 mx-auto lg:mx-0 scale-[0.82] lg:scale-90 xl:scale-100"
       style={{ width: COLLAGE_WIDTH, height: COLLAGE_HEIGHT }}
     >
       {/* Decorative outline — behind photos (Figma 70:201) */}
