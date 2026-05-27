@@ -72,7 +72,7 @@ const DECO_PATHS: Record<PageDecoLinesVariant, DecoPath[]> = {
     },
   ],
   "our-policies": [
-    { d: "M4 16 C20 8, 36 22, 52 12 S80 6, 102 16", strokeWidth: 0.9 },
+    { d: "M0 16 C16 8, 32 22, 45 12 S76 6, 98 16", strokeWidth: 0.9 },
     {
       d: "M0 38 C16 28, 34 44, 52 32 S80 24, 106 36",
       strokeWidth: 0.75,
@@ -103,7 +103,7 @@ const PRESERVE_ASPECT: Record<PageDecoLinesVariant, string> = {
   contact: "xMidYMid slice",
   "host-party": "xMidYMid slice",
   "about-us": "xMidYMin slice",
-  "our-policies": "xMidYMid slice",
+  "our-policies": "xMinYMid slice",
 };
 
 /** Full-bleed decorative wavy gold lines (uniform scale + edge crop). */

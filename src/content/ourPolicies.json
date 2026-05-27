@@ -1,10 +1,8 @@
 {
-  "hero": {
-    "title": "Our Policies"
-  },
-  "header": {
+  "intro": {
     "accent": "Calm • Clean • Transparent",
-    "title": "A few things to know before your visit",
+    "title": "Our Policies",
+    "subtitle": "A few things to know before your visit",
     "description": "Simple, clear guidelines so you can relax and enjoy your time with us."
   },
   "footer": {
