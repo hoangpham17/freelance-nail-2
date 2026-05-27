@@ -72,6 +72,7 @@ const AboutUs: React.FC = () => {
         <div className="au-hero__bg" aria-hidden>
           <img src={ABOUT_US_HERO_IMAGE} alt="" />
           <div className="au-hero__veil" />
+          <div className="au-hero__scrim" />
         </div>
         <div className="au-hero__content">
           <span className="au-hero__eyebrow">{hero.eyebrow}</span>
@@ -86,14 +87,6 @@ const AboutUs: React.FC = () => {
             </span>
           </h1>
           <SectionHeadingLine className="mx-auto lg:mx-0 mt-4" />
-          <p
-            className={clsx(
-              "au-hero__subtitle",
-              responsiveFontSizeArray(10, 11),
-            )}
-          >
-            {hero.subtitle}
-          </p>
           <p className={clsx("au-hero__lead", responsiveFontSizeArray(16, 20))}>
             {hero.lead}
           </p>

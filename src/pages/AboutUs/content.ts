@@ -4,7 +4,6 @@ export type AboutUsStaticContent = {
   hero: {
     eyebrow: string;
     title: string;
-    subtitle: string;
     lead: string;
   };
   intro: {
