@@ -31,11 +31,8 @@ async function checkViewport(name, width, height) {
   }
 
   const hasOverlay = await page.locator(".submit-success-lottie").count();
-  if (name === "desktop" && hasOverlay === 0) {
-    failures.push(`${name}: expected entry Lottie on desktop`);
-  }
-  if (name === "mobile" && hasOverlay > 0) {
-    failures.push(`${name}: entry Lottie should not cover mobile viewport`);
+  if (hasOverlay === 0) {
+    failures.push(`${name}: expected entry Lottie overlay on page load`);
   }
 
   await page.close();

@@ -7,6 +7,7 @@ import {
   type ComponentType,
 } from "react";
 import { createPortal } from "react-dom";
+import clsx from "clsx";
 
 export const SUBMIT_SUCCESS_LOTTIE_URL = "/assets/images/submit-success.json";
 
@@ -24,10 +25,18 @@ let lottieModule: LazyExoticComponent<LottieComponent> | null = null;
 function getLottie() {
   if (!lottieModule) {
     lottieModule = lazy(() =>
-      import("lottie-react").then((mod) => ({ default: mod.default as LottieComponent })),
+      import("lottie-react").then((mod) => ({
+        default: mod.default as LottieComponent,
+      })),
     );
   }
   return lottieModule;
+}
+
+/** Preload JSON + lottie-react (e.g. on host-a-party mount). */
+export function preloadSubmitSuccessLottie(): void {
+  void loadSubmitSuccessLottie();
+  void import("lottie-react");
 }
 
 function loadSubmitSuccessLottie(): Promise<object | null> {
@@ -59,27 +68,10 @@ function usePrefersReducedMotion(): boolean {
   return reduced;
 }
 
-function useMinViewportWidth(minWidth: number, enabled: boolean): boolean {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    if (!enabled || typeof window === "undefined") return;
-    const mq = window.matchMedia(`(min-width: ${minWidth}px)`);
-    const update = () => setMatches(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, [enabled, minWidth]);
-
-  return matches;
-}
-
 export type SubmitSuccessLottieOverlayProps = {
   active: boolean;
   zIndex?: number;
   onComplete?: () => void;
-  /** Hide on small screens (entry burst — avoids covering mobile UI) */
-  desktopOnly?: boolean;
 };
 
 /** Full-screen confetti burst — transparent blend, no black letterbox */
@@ -87,16 +79,13 @@ export function SubmitSuccessLottieOverlay({
   active,
   zIndex = 100000,
   onComplete,
-  desktopOnly = false,
 }: SubmitSuccessLottieOverlayProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const isDesktop = useMinViewportWidth(1024, desktopOnly);
   const [animationData, setAnimationData] = useState<object | null>(
     cachedAnimation,
   );
 
-  const shouldShow =
-    active && !prefersReducedMotion && (!desktopOnly || isDesktop);
+  const shouldShow = active && !prefersReducedMotion;
 
   useEffect(() => {
     if (!shouldShow) return;
@@ -124,14 +113,20 @@ export function SubmitSuccessLottieOverlay({
       aria-hidden
     >
       <div
-        className="absolute left-1/2 top-1/2 h-[max(100%,56.25vw)] w-[max(100%,177.78vh)] -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
+        className={clsx(
+          "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+          /* Portrait mobile artboard (609×812) — fill viewport on small screens */
+          "h-[100dvh] w-[100vw] max-lg:mix-blend-normal",
+          /* Desktop — overscan + screen blend for letterbox-free burst */
+          "lg:h-[max(100%,56.25vw)] lg:w-[max(100%,177.78vh)] lg:mix-blend-screen",
+        )}
         style={{ maxWidth: "none", maxHeight: "none" }}
       >
         <Suspense fallback={null}>
           <Lottie
             animationData={animationData}
             loop={false}
-            className="h-full w-full [&_canvas]:!bg-transparent"
+            className="h-full w-full [&_canvas]:!bg-transparent [&_svg]:!bg-transparent"
             onComplete={onComplete}
           />
         </Suspense>
@@ -147,15 +142,18 @@ export type HostPartyEntryLottieProps = {
   zIndex?: number;
 };
 
-/** Plays submit-success.json once on host-a-party load (desktop, nail-ver2-style). */
-export function HostPartyEntryLottie({ zIndex = 50 }: HostPartyEntryLottieProps) {
+/** Plays submit-success.json once on host-a-party load. */
+export function HostPartyEntryLottie({ zIndex = 99 }: HostPartyEntryLottieProps) {
   const [active, setActive] = useState(true);
+
+  useEffect(() => {
+    preloadSubmitSuccessLottie();
+  }, []);
 
   return (
     <SubmitSuccessLottieOverlay
       active={active}
       zIndex={zIndex}
-      desktopOnly
       onComplete={() => setActive(false)}
     />
   );
