@@ -126,7 +126,10 @@ const AboutUs: React.FC = () => {
           <section className="au-timeline" data-au-section="chapters">
             <div className="au-timeline__track" ref={trackRef}>
               <div className="au-timeline__line" ref={lineRef} aria-hidden>
-                <span className="au-timeline__glow" ref={glowRef} aria-hidden />
+                <span className="au-timeline__glow" ref={glowRef} aria-hidden>
+                  <span className="au-timeline__glow-beam" aria-hidden />
+                  <span className="au-timeline__glow-diamond" aria-hidden />
+                </span>
               </div>
               {sections.map((section, index) => (
                 <Milestone key={section.id} section={section} index={index} />
