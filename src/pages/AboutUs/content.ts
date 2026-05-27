@@ -18,4 +18,4 @@ export type AboutUsStaticContent = {
 
 export const aboutUsContent = aboutUsJson as AboutUsStaticContent;
 
-export const ABOUT_US_HERO_IMAGE = "/assets/images/AboutUs/banner.png";
+export const ABOUT_US_HERO_IMAGE = "/assets/images/AboutUs/banner.jpg";

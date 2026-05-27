@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import LoadingPage from "@/components/LoadingPage";
 import { PageDecoLines } from "@/components/PageDecoLines";
+import { OrnamentalDivider } from "@/components/OrnamentalDivider";
 import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 import { SectionTitle } from "@/components/SectionTitle";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
@@ -93,7 +94,7 @@ const AboutUs: React.FC = () => {
           >
             {hero.subtitle}
           </p>
-          <p className={clsx("au-hero__lead", responsiveFontSizeArray(14, 17))}>
+          <p className={clsx("au-hero__lead", responsiveFontSizeArray(16, 20))}>
             {hero.lead}
           </p>
         </div>
@@ -114,13 +115,12 @@ const AboutUs: React.FC = () => {
               {intro.description}
             </p>
           </div>
+          {sections.length > 0 && (
+            <div className="au-divider" aria-hidden>
+              <OrnamentalDivider className="mx-auto" />
+            </div>
+          )}
         </section>
-
-        {sections.length > 0 && (
-          <div className="au-divider" aria-hidden>
-            <SectionHeadingLine className="mx-auto" />
-          </div>
-        )}
 
         {sections.length > 0 && (
           <section className="au-timeline" data-au-section="chapters">

@@ -56,12 +56,7 @@
 .au-hero__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgb(12 10 9 / 0.5) 0%,
-    rgb(12 10 9 / 0.65) 50%,
-    rgb(12 10 9 / 0.5) 100%
-  );
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .au-hero__content {
@@ -119,11 +114,12 @@
 }
 
 .au-hero__lead {
-  max-width: 32rem;
-  margin: 1rem auto 0;
-  font-weight: 300;
-  line-height: 1.7;
-  color: rgb(255 255 255 / 0.82);
+  max-width: 36rem;
+  margin: 1.25rem auto 0;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 0.95);
+  text-shadow: 0 1px 24px rgb(0 0 0 / 0.45);
 }
 
 @media (min-width: 1024px) {
@@ -165,7 +161,7 @@
   color: rgb(245 240 235 / 0.8);
 }
 
-/* Symmetric rhythm above & below SectionHeadingLine */
+/* Ornamental divider — once below intro ("A sanctuary of beauty") */
 .au-divider {
   display: flex;
   justify-content: center;
@@ -174,6 +170,7 @@
   padding-block: var(--au-divider-gap);
   padding-inline: var(--au-pad);
   box-sizing: border-box;
+  color: rgb(249 190 92 / 0.68);
 }
 
 .au-divider svg {
