@@ -26,7 +26,7 @@ export const OrnamentalDivider: React.FC<OrnamentalDividerProps> = ({
       aria-hidden
       shapeRendering="geometricPrecision"
       className={clsx(
-        "block shrink-0 w-[320px] max-w-full h-[22px]",
+        "block shrink-0 w-[240px] sm:w-[320px] max-w-full h-[22px]",
         className,
       )}
     >

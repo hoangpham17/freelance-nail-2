@@ -449,8 +449,8 @@ const Header: React.FC = () => {
             </button>
           </div>
 
-          {/* Mobile Menu Content */}
-          <div className="flex-1 overflow-y-auto pb-20">
+          {/* Mobile Menu Content — scroll stops above bottom rail */}
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain">
             <nav className="flex flex-col" aria-label="Mobile navigation">
               <ul className="flex flex-col list-none m-0 p-0">
                 {navItems.map((item) => {
@@ -547,18 +547,15 @@ const Header: React.FC = () => {
             </nav>
           </div>
 
-          {/* Mobile Menu Footer */}
-          <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-madison-border flex flex-col items-center gap-4 py-8 z-10 px-6">
-            <a
-              href="https://booking.spacepos.net/?id=jzOR8l!BpuM="
-              target="_blank"
-              rel="noreferrer"
-              className="madison-btn-primary w-full max-w-xs"
-            >
-              Booking Now
-            </a>
-            {/* <ListSocial /> */}
-          </div>
+          {/* Bottom rail — fixed height, border on top; global fixed CTAs overlay this zone */}
+          <div
+            className="shrink-0 border-t border-madison-border bg-black"
+            style={{
+              height:
+                "calc(44px + 1.75rem + env(safe-area-inset-bottom, 0px))",
+            }}
+            aria-hidden
+          />
         </Flex>
       </div>
     </header>

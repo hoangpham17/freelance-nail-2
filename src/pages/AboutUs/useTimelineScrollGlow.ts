@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 
-const TIMELINE_MD_PX = 768;
-
 export function useTimelineScrollGlow(enabled: boolean) {
   const trackRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -12,12 +10,6 @@ export function useTimelineScrollGlow(enabled: boolean) {
     const line = lineRef.current;
     const glow = glowRef.current;
     if (!track || !line || !glow) return;
-
-    if (window.innerWidth < TIMELINE_MD_PX) {
-      glow.style.removeProperty("top");
-      line.classList.remove("au-timeline__line--active");
-      return;
-    }
 
     const rect = track.getBoundingClientRect();
     const height = rect.height;

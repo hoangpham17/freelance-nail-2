@@ -237,114 +237,116 @@
   margin-inline: auto;
 }
 
-/* Timeline spine — tablet & desktop only */
+/* Timeline spine — mobile uses left rail; tablet+ centers it */
 .au-timeline__line {
-  display: none;
+  display: block;
+  position: absolute;
+  left: 0.6rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  overflow: visible;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(249 190 92 / 0.08) 6%,
+    rgb(249 190 92 / 0.42) 22%,
+    rgb(249 190 92 / 0.55) 50%,
+    rgb(249 190 92 / 0.42) 78%,
+    rgb(249 190 92 / 0.08) 94%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 12px 1px rgb(249 190 92 / 0.12),
+    0 0 28px 2px rgb(249 190 92 / 0.06);
+  opacity: 0.88;
+}
+
+.au-timeline__line::before,
+.au-timeline__line::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgb(249 190 92 / 0.35);
+  background: rgb(12 10 9 / 0.6);
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 0 0 10px rgb(249 190 92 / 0.15);
+}
+
+.au-timeline__line::before {
+  top: 0;
+}
+
+.au-timeline__line::after {
+  bottom: 0;
+}
+
+/* Scroll-driven highlight — beam + hollow diamond (top set via JS) */
+.au-timeline__glow {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 0;
+  height: clamp(2.75rem, 6.5vh, 4rem);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  will-change: top;
+}
+
+.au-timeline__glow-beam {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(249 190 92 / 0.12) 12%,
+    rgb(249 190 92 / 0.55) 38%,
+    rgb(255 236 200 / 0.95) 50%,
+    rgb(249 190 92 / 0.55) 62%,
+    rgb(249 190 92 / 0.12) 88%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 5px 0 rgb(249 190 92 / 0.7),
+    0 0 16px 2px rgb(249 190 92 / 0.45),
+    0 0 32px 5px rgb(249 190 92 / 0.2);
+}
+
+.au-timeline__glow-diamond {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgb(249 190 92 / 0.42);
+  background: transparent;
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow:
+    0 0 4px rgb(249 190 92 / 0.28),
+    0 0 10px rgb(249 190 92 / 0.12);
+}
+
+.au-timeline__line--active .au-timeline__glow {
+  opacity: 1;
 }
 
 @media (min-width: 768px) {
   .au-timeline__line {
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 1px;
     transform: translateX(-50%);
-    overflow: visible;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgb(249 190 92 / 0.08) 6%,
-      rgb(249 190 92 / 0.42) 22%,
-      rgb(249 190 92 / 0.55) 50%,
-      rgb(249 190 92 / 0.42) 78%,
-      rgb(249 190 92 / 0.08) 94%,
-      transparent 100%
-    );
-    box-shadow:
-      0 0 12px 1px rgb(249 190 92 / 0.12),
-      0 0 28px 2px rgb(249 190 92 / 0.06);
-    opacity: 0.88;
-  }
-
-  /* Scroll-driven highlight — beam + hollow diamond (top set via JS) */
-  .au-timeline__glow {
-    position: absolute;
     left: 50%;
-    top: 0;
-    width: 0;
-    height: clamp(2.75rem, 6.5vh, 4rem);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    will-change: top;
   }
 
-  .au-timeline__glow-beam {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    transform: translateX(-50%);
-    border-radius: 999px;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgb(249 190 92 / 0.12) 12%,
-      rgb(249 190 92 / 0.55) 38%,
-      rgb(255 236 200 / 0.95) 50%,
-      rgb(249 190 92 / 0.55) 62%,
-      rgb(249 190 92 / 0.12) 88%,
-      transparent 100%
-    );
-    box-shadow:
-      0 0 5px 0 rgb(249 190 92 / 0.7),
-      0 0 16px 2px rgb(249 190 92 / 0.45),
-      0 0 32px 5px rgb(249 190 92 / 0.2);
-  }
-
-  .au-timeline__glow-diamond {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 5px;
-    height: 5px;
-    border: 1px solid rgb(249 190 92 / 0.42);
-    background: transparent;
-    transform: translate(-50%, -50%) rotate(45deg);
-    box-shadow:
-      0 0 4px rgb(249 190 92 / 0.28),
-      0 0 10px rgb(249 190 92 / 0.12);
-  }
-
-  .au-timeline__line--active .au-timeline__glow {
-    opacity: 1;
-  }
-
-  .au-timeline__line::before,
-  .au-timeline__line::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    border: 1px solid rgb(249 190 92 / 0.35);
-    background: rgb(12 10 9 / 0.6);
-    transform: translateX(-50%) rotate(45deg);
-    box-shadow: 0 0 10px rgb(249 190 92 / 0.15);
-  }
-
-  .au-timeline__line::before {
-    top: 0;
-  }
-
-  .au-timeline__line::after {
-    bottom: 0;
-  }
+  /* (base timeline glow/markers now apply on mobile too) */
 }
 
 .au-milestone {
