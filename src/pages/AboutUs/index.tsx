@@ -33,14 +33,11 @@ const Milestone: React.FC<{
         ) : null}
       </div>
       <div className="au-milestone__copy min-w-0">
+        <span className="au-milestone__glow" aria-hidden />
         <p className="au-milestone__index">
           {String(index + 1).padStart(2, "0")}
         </p>
-        <SectionTitle
-          html={section.title}
-          fontSize={[24, 36]}
-          leading="1.15"
-        />
+        <SectionTitle html={section.title} fontSize={[24, 36]} leading="1.15" />
         <p
           className={clsx(
             "au-milestone__body",
@@ -92,12 +89,7 @@ const AboutUs: React.FC = () => {
           >
             {hero.subtitle}
           </p>
-          <p
-            className={clsx(
-              "au-hero__lead",
-              responsiveFontSizeArray(14, 17),
-            )}
-          >
+          <p className={clsx("au-hero__lead", responsiveFontSizeArray(14, 17))}>
             {hero.lead}
           </p>
         </div>
@@ -131,11 +123,7 @@ const AboutUs: React.FC = () => {
             <div className="au-timeline__track">
               <div className="au-timeline__line" aria-hidden />
               {sections.map((section, index) => (
-                <Milestone
-                  key={section.id}
-                  section={section}
-                  index={index}
-                />
+                <Milestone key={section.id} section={section} index={index} />
               ))}
             </div>
           </section>
