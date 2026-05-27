@@ -47,7 +47,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
         <Flex
           align="center"
           justify="space-between"
-          className="h-[70px] xl:h-[88px] gap-6 xl:gap-10 2xl:gap-14"
+          className="h-[70px] xl:h-[88px] gap-4 xl:gap-7 2xl:gap-9"
         >
           <Link
             to={PATHS.home}
@@ -61,7 +61,7 @@ const DesktopNav: React.FC<DesktopNavProps> = ({
           </Link>
 
           <nav
-            className="flex flex-1 items-center justify-center gap-6 xl:gap-10 xl:gap-14"
+            className="flex flex-1 items-center justify-center gap-4 xl:gap-7 2xl:gap-9"
             aria-label="Main navigation"
           >
             {DESKTOP_NAV.map((item) => {

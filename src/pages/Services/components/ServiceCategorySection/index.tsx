@@ -10,6 +10,7 @@ import { useScreen } from "@/hooks/useScreen";
 import { useCampaignStore } from "@/shared/store/campaignStore";
 import servicesContent from "@/content/services.json";
 import { getServiceCategoryTabsHeight } from "../../constants";
+import { ServiceSectionDecoLines } from "../ServiceSectionDecoLines";
 
 interface ServiceCategorySectionProps {
   category: ServiceCategory;
@@ -20,7 +21,7 @@ interface ServiceCategorySectionProps {
 
 const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
   category,
-  index, // eslint-disable-line @typescript-eslint/no-unused-vars
+  index,
   imagePosition,
   totalServices,
 }) => {
@@ -154,6 +155,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
         scrollMarginTop: `${offset}px`,
       }}
     >
+      <ServiceSectionDecoLines sectionIndex={index} />
       <Wrapper
         className={clsx("relative z-10 py-8 lg:py-16 !overflow-visible")}
       >
