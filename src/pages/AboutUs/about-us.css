@@ -212,6 +212,7 @@
     bottom: 0;
     width: 1px;
     transform: translateX(-50%);
+    overflow: visible;
     background: linear-gradient(
       180deg,
       transparent 0%,
@@ -226,6 +227,37 @@
       0 0 12px 1px rgb(249 190 92 / 0.12),
       0 0 28px 2px rgb(249 190 92 / 0.06);
     opacity: 0.88;
+  }
+
+  /* Scroll-driven highlight — soft segment inside the spine (top set via JS) */
+  .au-timeline__glow {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: clamp(2rem, 5.5vh, 3.25rem);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgb(249 190 92 / 0.25) 18%,
+      rgb(255 232 190 / 0.92) 50%,
+      rgb(249 190 92 / 0.25) 82%,
+      transparent 100%
+    );
+    box-shadow:
+      0 0 4px 0 rgb(249 190 92 / 0.65),
+      0 0 14px 2px rgb(249 190 92 / 0.4),
+      0 0 28px 4px rgb(249 190 92 / 0.18);
+    transition: opacity 0.35s ease;
+    will-change: top;
+  }
+
+  .au-timeline__line--active .au-timeline__glow {
+    opacity: 1;
   }
 
   .au-timeline__line::before,
@@ -372,6 +404,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .au-timeline__glow {
+    display: none;
+  }
+
   .au-milestone__dot {
     animation: none;
   }

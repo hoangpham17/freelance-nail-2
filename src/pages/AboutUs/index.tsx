@@ -9,6 +9,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { PATHS } from "@/routes/Routes";
 import { useAboutUs } from "./useAboutUs";
+import { useTimelineScrollGlow } from "./useTimelineScrollGlow";
 import type { AboutUsSection } from "./types";
 import { aboutUsContent, ABOUT_US_HERO_IMAGE } from "./content";
 import "./about-us.css";
@@ -55,6 +56,9 @@ const AboutUs: React.FC = () => {
   const { mainTopSpacing } = useBaseOffset();
   const { hero, intro, closing } = aboutUsContent;
   const { data: sections, loading } = useAboutUs();
+  const { trackRef, lineRef, glowRef } = useTimelineScrollGlow(
+    sections.length > 0,
+  );
 
   return (
     <main
@@ -120,8 +124,10 @@ const AboutUs: React.FC = () => {
 
         {sections.length > 0 && (
           <section className="au-timeline" data-au-section="chapters">
-            <div className="au-timeline__track">
-              <div className="au-timeline__line" aria-hidden />
+            <div className="au-timeline__track" ref={trackRef}>
+              <div className="au-timeline__line" ref={lineRef} aria-hidden>
+                <span className="au-timeline__glow" ref={glowRef} aria-hidden />
+              </div>
               {sections.map((section, index) => (
                 <Milestone key={section.id} section={section} index={index} />
               ))}
