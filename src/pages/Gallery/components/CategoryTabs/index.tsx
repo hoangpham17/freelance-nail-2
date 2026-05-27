@@ -170,7 +170,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
             {/* Fade edge + Nút Prev/Next — chỉ hiện khi tổng width tab > width container */}
             {showArrows && (
               <>
-                <div className="absolute top-0 right-0 bottom-0 w-[100px] md:w-[120px] lg:w-[140px] pointer-events-none z-10 bg-gradient-to-l from-white/95 to-transparent" />
+                <div className="absolute top-0 right-0 bottom-0 w-[100px] md:w-[120px] lg:w-[140px] pointer-events-none z-10 bg-gradient-to-l from-black/95 to-transparent" />
                 <div className="absolute top-1/2 -translate-y-1/2 right-0 flex items-center flex-shrink-0 z-20">
                   <button
                     type="button"
@@ -181,12 +181,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                         }
                       ).categoryTabs.ariaPrevTabs
                     }
-                    className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-bl-3xl rounded-tl-3xl rounded-br-2xl rounded-tr-2xl transition-colors"
+                    className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-bl-3xl rounded-tl-3xl rounded-br-2xl rounded-tr-2xl transition-colors bg-madison-surface border border-madison-border/60 hover:border-madison-gold/40"
                     onClick={() => scrollTabs("prev")}
                     style={{
-                      boxShadow: "0px 4px 12px 0px #6B4A2F26",
-                      background:
-                        "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
+                      boxShadow: "0px 4px 12px 0px rgba(0, 0, 0, 0.35)",
                     }}
                   >
                     <SvgIcon
@@ -194,7 +192,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                       ariaLabel=""
                       width={14}
                       height={14}
-                      className="shrink-0 rotate-180 text-[#6B4A2F] hover:text-[#D5B994]"
+                      className="shrink-0 rotate-180 text-madison-muted hover:text-madison-gold"
                     />
                   </button>
                   <button
@@ -206,12 +204,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                         }
                       ).categoryTabs.ariaNextTabs
                     }
-                    className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-br-3xl rounded-tr-3xl rounded-bl-2xl rounded-tl-2xl transition-colors"
+                    className="w-8 h-8 md:w-[55px] md:h-[50px] flex items-center justify-center rounded-br-3xl rounded-tr-3xl rounded-bl-2xl rounded-tl-2xl transition-colors bg-madison-surface border border-madison-border/60 hover:border-madison-gold/40"
                     onClick={() => scrollTabs("next")}
                     style={{
-                      boxShadow: "0px 4px 12px 0px #6B4A2F26",
-                      background:
-                        "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
+                      boxShadow: "0px 4px 12px 0px rgba(0, 0, 0, 0.35)",
                     }}
                   >
                     <SvgIcon
@@ -219,7 +215,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                       ariaLabel=""
                       width={14}
                       height={14}
-                      className="shrink-0 text-[#6B4A2F] hover:text-[#D5B994]"
+                      className="shrink-0 text-madison-muted hover:text-madison-gold"
                     />
                   </button>
                 </div>
@@ -230,7 +226,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
           {/* Search */}
           <div className="flex-shrink-0 z-20 flex items-center gap-1">
             {isSearchOpen ? (
-              <div className="flex items-center rounded-2xl border border-[#E8DED8] bg-white/90 pl-2.5 pr-1.5 py-1 gap-1 lg:pl-3 lg:pr-2 lg:py-1.5 shadow-[0px_2px_8px_0px_#8B4B2015]">
+              <div className="flex items-center rounded-2xl border border-madison-border/70 bg-madison-surface pl-2.5 pr-1.5 py-1 gap-1 lg:pl-3 lg:pr-2 lg:py-1.5 shadow-[0px_4px_12px_0px_rgba(0,0,0,0.35)]">
                 <input
                   ref={searchInputRef}
                   type="text"
@@ -243,7 +239,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                       }
                     ).categoryTabs.searchPlaceholder
                   }
-                  className="w-[120px] lg:w-[180px] h-7 min-h-0 py-0 lg:h-auto lg:py-0 bg-transparent text-[#5C4D42] placeholder-[#8A6A4F]/60 outline-none border-none text-sm font-light leading-tight"
+                  className="w-[120px] lg:w-[180px] h-7 min-h-0 py-0 lg:h-auto lg:py-0 bg-transparent text-madison-text placeholder:text-madison-muted/50 outline-none border-none text-sm font-light leading-tight"
                 />
                 <button
                   type="button"
@@ -255,7 +251,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                       }
                     ).categoryTabs.ariaCloseSearch
                   }
-                  className="w-7 h-7 lg:w-8 lg:h-8 rounded-full flex items-center justify-center text-[#6B4A2F] hover:bg-[#E8DED8]/50 transition-colors shrink-0"
+                  className="w-7 h-7 lg:w-8 lg:h-8 rounded-full flex items-center justify-center text-madison-muted hover:text-madison-gold hover:bg-madison-border/30 transition-colors shrink-0"
                 >
                   <span className="text-base lg:text-lg leading-none">×</span>
                 </button>
@@ -268,11 +264,9 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                   (galleryContent as { categoryTabs: { ariaSearch: string } })
                     .categoryTabs.ariaSearch
                 }
-                className="w-8 h-8 lg:w-[50px] lg:h-[50px] flex items-center justify-center rounded-2xl lg:rounded-bl-2xl lg:rounded-tr-2xl transition-colors"
+                className="w-8 h-8 lg:w-[50px] lg:h-[50px] flex items-center justify-center rounded-2xl lg:rounded-bl-2xl lg:rounded-tr-2xl transition-colors bg-madison-surface border border-madison-border/60 hover:border-madison-gold/40"
                 style={{
-                  boxShadow: "0px 4px 12px 0px #6B4A2F26",
-                  background:
-                    "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
+                  boxShadow: "0px 4px 12px 0px rgba(0, 0, 0, 0.35)",
                 }}
               >
                 <SvgIcon
@@ -280,7 +274,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                   ariaLabel="Search"
                   width={isDesktop ? 20 : 18}
                   height={isDesktop ? 20 : 18}
-                  className="shrink-0 text-[#6B4A2F] hover:text-[#D5B994]"
+                  className="shrink-0 text-madison-muted hover:text-madison-gold"
                 />
               </button>
             )}

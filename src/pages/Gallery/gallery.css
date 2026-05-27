@@ -1,0 +1,23 @@
+/* Gallery — dark section gradient + fade into site footer (black) */
+
+.gallery-body {
+  position: relative;
+  isolation: isolate;
+  color: var(--madison-text);
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0,
+      transparent max(0%, calc(100% - 22rem)),
+      rgb(0 0 0 / 0.4) max(0%, calc(100% - 14rem)),
+      rgb(0 0 0 / 0.78) max(0%, calc(100% - 7rem)),
+      var(--madison-black) 100%
+    ),
+    var(--madison-section-gradient);
+}
+
+.gallery-body__grid {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}

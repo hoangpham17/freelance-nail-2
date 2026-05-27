@@ -5,7 +5,8 @@ export type PageDecoLinesVariant =
   | "contact"
   | "host-party"
   | "about-us"
-  | "our-policies";
+  | "our-policies"
+  | "gallery";
 
 export type PageDecoLinesProps = {
   className?: string;
@@ -86,6 +87,26 @@ const DECO_PATHS: Record<PageDecoLinesVariant, DecoPath[]> = {
       opacity: 0.52,
     },
   ],
+  gallery: [
+    { d: "M-4 14 C18 4, 36 20, 52 10 S82 2, 104 14", strokeWidth: 1 },
+    {
+      d: "M108 22 C90 36, 68 18, 50 32 S24 38, 6 26",
+      strokeWidth: 0.9,
+      opacity: 0.65,
+    },
+    { d: "M8 48 C28 62, 48 44, 68 58 S92 52, 106 60", strokeWidth: 0.95 },
+    {
+      d: "M72 38 C88 50, 100 34, 110 46",
+      strokeWidth: 0.75,
+      opacity: 0.55,
+    },
+    { d: "M4 78 C22 66, 42 88, 62 74 S88 64, 102 76", strokeWidth: 0.88 },
+    {
+      d: "M54 86 C70 76, 86 92, 100 80",
+      strokeWidth: 0.7,
+      opacity: 0.48,
+    },
+  ],
 };
 
 const GRADIENT_AXIS: Record<
@@ -96,6 +117,7 @@ const GRADIENT_AXIS: Record<
   "host-party": { x1: "100%", y1: "0%", x2: "0%", y2: "100%" },
   "about-us": { x1: "0%", y1: "100%", x2: "100%", y2: "0%" },
   "our-policies": { x1: "100%", y1: "20%", x2: "0%", y2: "80%" },
+  gallery: { x1: "0%", y1: "30%", x2: "100%", y2: "70%" },
 };
 
 /** Crop anchor — narrow viewports clip inward without stretching curves */
@@ -104,6 +126,7 @@ const PRESERVE_ASPECT: Record<PageDecoLinesVariant, string> = {
   "host-party": "xMidYMid slice",
   "about-us": "xMidYMin slice",
   "our-policies": "xMinYMid slice",
+  gallery: "xMidYMid slice",
 };
 
 /** Full-bleed decorative wavy gold lines (uniform scale + edge crop). */

@@ -11,6 +11,8 @@ import { useGalleryItems } from "./useGalleryItems";
 import { useGalleryCategories } from "./useGalleryCategories";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import galleryContent from "@/content/gallery.json";
+import { PageDecoLines } from "@/components/PageDecoLines";
+import "./gallery.css";
 
 const Gallery: React.FC = () => {
   const { isDesktop } = useScreen();
@@ -68,7 +70,7 @@ const Gallery: React.FC = () => {
 
   return (
     <main
-      className="w-full relative"
+      className="gallery-page relative w-full min-h-screen bg-black text-madison-text"
       style={{ paddingTop: `${mainTopSpacing}px` }}
     >
       {error && (
@@ -124,22 +126,21 @@ const Gallery: React.FC = () => {
         </div>
       </section>
 
-      <CategoryTabs
-        filters={filters}
-        activeFilter={activeFilter}
-        onChange={setActiveFilter}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-      />
+      <div className="gallery-body relative w-full">
+        <PageDecoLines variant="gallery" intensity="strong" />
 
-      <article
-        className="relative w-full"
-        style={{
-          background:
-            "linear-gradient(180deg, #FEFCFA 0%, #FAF3EF 50%, #F5EDE8 100%)",
-        }}
-      >
-        <section aria-label="Gallery images">
+        <CategoryTabs
+          filters={filters}
+          activeFilter={activeFilter}
+          onChange={setActiveFilter}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+
+        <section
+          className="gallery-body__grid"
+          aria-label="Gallery images"
+        >
           <GalleryGrid
             items={filteredItems}
             loading={loading}
@@ -149,7 +150,7 @@ const Gallery: React.FC = () => {
             isFetchingNextPage={isFetchingNextPage}
           />
         </section>
-      </article>
+      </div>
 
       <GalleryPopup
         isOpen={isPopupOpen && popupItems.length > 0}

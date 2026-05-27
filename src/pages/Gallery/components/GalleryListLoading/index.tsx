@@ -16,7 +16,7 @@ const GalleryListLoading: React.FC = () => {
             style={{
               aspectRatio: "4/5",
               background:
-                "linear-gradient(90deg, #F0E8E2 0%, #E8DED8 50%, #F0E8E2 100%)",
+                "linear-gradient(90deg, #252525 0%, #333333 50%, #252525 100%)",
               backgroundSize: "200% 100%",
             }}
           />

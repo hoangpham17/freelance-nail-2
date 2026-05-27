@@ -83,7 +83,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
               className="w-16 h-px mb-6"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent, #D4C4B5, transparent)",
+                  "linear-gradient(90deg, transparent, rgba(249, 190, 92, 0.45), transparent)",
               }}
             />
             <p
@@ -97,7 +97,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
               className="w-16 h-px mt-6"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent, #D4C4B5, transparent)",
+                  "linear-gradient(90deg, transparent, rgba(249, 190, 92, 0.45), transparent)",
               }}
             />
           </div>
