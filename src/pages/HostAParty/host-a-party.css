@@ -262,10 +262,10 @@
   max-width: var(--host-party-shell-max);
   margin-inline: auto;
   border-radius: 1rem;
-  border: 1px solid rgb(249 190 92 / 0.1);
+  border: 1px solid rgb(249 190 92 / 0.2);
   background: radial-gradient(
     ellipse 120% 80% at 50% 0%,
-    rgb(249 190 92 / 0.07) 0%,
+    rgb(249 190 92 / 0.1) 0%,
     transparent 55%
   );
 }

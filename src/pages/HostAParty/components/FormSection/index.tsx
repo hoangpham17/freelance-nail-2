@@ -1,7 +1,6 @@
 import React from "react";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 import PartyForm from "../PartyForm";
 import hostAPartyContent from "@/content/hostAParty.json";
 import HostPartySection from "../HostPartySection";
@@ -44,7 +43,6 @@ const FormSection: React.FC<FormSectionProps> = ({ sectionRef }) => {
           >
             {formSection.title}
           </h2>
-          <SectionHeadingLine className="mx-auto lg:mx-0" />
           <p
             className={clsx(
               "font-light leading-relaxed text-madison-muted",

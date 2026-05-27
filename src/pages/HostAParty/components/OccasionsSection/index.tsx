@@ -1,7 +1,6 @@
 import React from "react";
 import clsx from "clsx";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
-import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 import hostAPartyContent from "@/content/hostAParty.json";
 import HostPartySection from "../HostPartySection";
 
@@ -21,8 +20,6 @@ const OccasionsSection: React.FC = () => {
       className="host-party-occasions"
       aria-label="Party occasions"
     >
-      <div className="host-party-divider" aria-hidden />
-
       <header className="host-party-occasions__header">
         <h2
           className={clsx(
@@ -32,7 +29,6 @@ const OccasionsSection: React.FC = () => {
         >
           {occasions.heading}
         </h2>
-        <SectionHeadingLine className="mx-auto" />
         <p
           className={clsx(
             "font-light leading-relaxed text-madison-muted",
