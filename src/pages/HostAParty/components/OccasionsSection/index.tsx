@@ -69,13 +69,6 @@ const OccasionsSection: React.FC = () => {
                 )}
                 <div className="host-party-occasions-menu__cell">
                   <span
-                    className="host-party-occasions-menu__accent mb-3 block h-px w-9 transition-[width] duration-500 ease-out group-hover:w-14"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${occasion.colorDark} 35%, ${occasion.color} 65%, transparent)`,
-                    }}
-                    aria-hidden
-                  />
-                  <span
                     className={clsx(
                       "font-playfairDisplay font-medium text-madison-text leading-snug tracking-tight",
                       "transition-colors duration-300 group-hover:text-madison-gold",

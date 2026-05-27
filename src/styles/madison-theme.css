@@ -274,6 +274,7 @@
   background: linear-gradient(
     180deg,
     var(--home-grad-hero-end) 0%,
+    var(--home-grad-service-end) 78%,
     var(--home-grad-service-end) 100%
   );
 }
@@ -282,6 +283,7 @@
   background: linear-gradient(
     180deg,
     var(--home-grad-service-end) 0%,
+    var(--home-grad-service-end) 22%,
     var(--home-grad-about-end) 100%
   );
 }
@@ -290,6 +292,7 @@
   background: linear-gradient(
     180deg,
     var(--home-grad-about-end) 0%,
+    var(--home-grad-about-end) 22%,
     var(--home-grad-gallery-end) 100%
   );
 }
@@ -298,6 +301,7 @@
   background: linear-gradient(
     180deg,
     var(--home-grad-gallery-end) 0%,
+    var(--home-grad-gallery-end) 22%,
     var(--home-grad-testimonial-end) 100%
   );
 }
