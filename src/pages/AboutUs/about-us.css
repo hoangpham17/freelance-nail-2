@@ -225,6 +225,12 @@
   padding: 0 var(--au-pad) calc(var(--au-y) + var(--au-fixed));
 }
 
+@media (max-width: 767px) {
+  .au-timeline {
+    padding-bottom: var(--au-y);
+  }
+}
+
 @media (min-width: 1024px) {
   .au-timeline {
     padding-bottom: var(--au-y);
@@ -561,6 +567,12 @@
   padding: var(--au-y) var(--au-pad);
   padding-bottom: calc(var(--au-y) + var(--au-fixed));
   text-align: center;
+}
+
+@media (max-width: 767px) {
+  .au-closing {
+    padding-bottom: calc(var(--au-y) + 1.75rem);
+  }
 }
 
 @media (min-width: 1024px) {

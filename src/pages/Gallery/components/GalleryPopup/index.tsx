@@ -64,7 +64,7 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] lg:w-[60%] max-h-[90vh] z-[102]">
         {/* Close Button */}
         <button
-          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 w-8 h-8 lg:w-10 lg:h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center"
+          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 w-8 h-8 lg:w-10 lg:h-10 bg-madison-black-soft/80 backdrop-blur-md border border-madison-gold rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center shadow-[0_10px_26px_rgba(0,0,0,0.45)]"
           onClick={onClose}
           aria-label="Close popup"
         >
@@ -73,7 +73,7 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
             ariaLabel="text"
             width={24}
             height={24}
-            className="size-[24px] shrink-0"
+            className="size-[24px] shrink-0 text-madison-gold"
           />
         </button>
         {/* Slider Wrapper */}
@@ -113,10 +113,10 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
           </Swiper>
 
           {/* Navigation Arrows */}
-          <div className="absolute top-1/2 -left-8 -right-8 -translate-y-1/2 z-10 pointer-events-none">
+          <div className="absolute top-1/2 -left-4 -right-4 md:-left-6 md:-right-6 -translate-y-1/2 z-10 pointer-events-none">
             <NavigationArrows
-              className="flex justify-between w-full mb-0 px-4"
-              buttonClassName="bg-white/90 backdrop-blur-md shadow-lg pointer-events-auto"
+              className="flex justify-between w-full mb-0 px-2 md:px-4"
+              buttonClassName="bg-black/40 backdrop-blur-md shadow-[0_10px_26px_rgba(0,0,0,0.45)]"
               onPrev={() => swiperRef.current?.slidePrev()}
               onNext={() => swiperRef.current?.slideNext()}
             />
