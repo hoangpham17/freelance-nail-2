@@ -193,6 +193,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                     <GalleryItem
                       id={item.id}
                       url={item.url}
+                      isVideo={item.isVideo}
                       onClick={() => onItemClick?.(index)}
                       className="w-full"
                     />

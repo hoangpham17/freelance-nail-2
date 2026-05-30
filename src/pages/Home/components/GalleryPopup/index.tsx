@@ -1,9 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { Skeleton } from "antd";
 import { HomeGalleryItem } from "../../types";
+import GalleryMedia from "../GallerySection/components/GalleryMedia";
+import GalleryPopupVideo from "./components/GalleryPopupVideo";
 import SvgIcon from "@/based/SvgIcon";
 import { NavigationArrows } from "@/components/NavigationArrows";
 import homepageContent from "@/content/homepage.json";
@@ -22,6 +24,7 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
   onClose,
 }) => {
   const swiperRef = useRef<SwiperType | null>(null);
+  const [activeSlideIndex, setActiveSlideIndex] = useState(selectedIndex);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -34,6 +37,12 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
     return () => window.removeEventListener("keydown", handleKey);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (isOpen) {
+      setActiveSlideIndex(selectedIndex);
+    }
+  }, [selectedIndex, isOpen]);
+
   // Update Swiper when selectedIndex changes
   useEffect(() => {
     if (swiperRef.current && isOpen) {
@@ -42,6 +51,10 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
   }, [selectedIndex, isOpen]);
 
   if (!isOpen) return null;
+
+  const galleryImageAlt = (
+    homepageContent as { galleryPopup: { imageAlt: string } }
+  ).galleryPopup.imageAlt;
 
   return (
     <div className="fixed top-0 left-0 w-full h-full z-[101]">
@@ -54,7 +67,7 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] lg:w-[60%] max-h-[95vh] z-[102]">
         {/* Close Button */}
         <button
-          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 w-8 h-8 lg:w-10 lg:h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center"
+          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 z-[2] flex size-8 lg:size-10 cursor-pointer items-center justify-center rounded-full border border-madison-gold bg-madison-black-soft/80 shadow-[0_10px_26px_rgba(0,0,0,0.45)] backdrop-blur-md transition-all duration-300 hover:scale-110 active:scale-95"
           onClick={onClose}
           aria-label={
             (homepageContent as { galleryPopup: { closeAriaLabel: string } })
@@ -66,13 +79,17 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
             ariaLabel="text"
             width={24}
             height={24}
-            className="size-[24px] shrink-0"
+            className="size-[24px] shrink-0 text-madison-gold"
           />
         </button>
         {/* Slider Wrapper */}
         <div className="relative">
           <Swiper
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+              setActiveSlideIndex(swiper.realIndex);
+            }}
+            onSlideChange={(swiper) => setActiveSlideIndex(swiper.realIndex)}
             modules={[Navigation]}
             slidesPerView={1}
             initialSlide={selectedIndex}
@@ -80,19 +97,25 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
             className="gallery-popup-swiper"
           >
             {items.map((item, index) => (
-              <SwiperSlide key={item.id || index} className="px-2">
+              <SwiperSlide
+                key={item.id || index}
+                className="!flex items-center justify-center px-2"
+              >
                 {item.url ? (
-                  <img
-                    src={item.url}
-                    alt={
-                      (
-                        homepageContent as {
-                          galleryPopup: { imageAlt: string };
-                        }
-                      ).galleryPopup.imageAlt
-                    }
-                    className="block mx-auto max-h-[75vh] w-auto rounded-lg"
-                  />
+                  item.isVideo ? (
+                    <GalleryPopupVideo
+                      url={item.url}
+                      alt={galleryImageAlt}
+                      isActive={activeSlideIndex === index}
+                    />
+                  ) : (
+                    <GalleryMedia
+                      url={item.url}
+                      alt={galleryImageAlt}
+                      fit="contain"
+                      className="block mx-auto max-h-[75vh] w-auto rounded-lg"
+                    />
+                  )
                 ) : (
                   <div className="flex items-center justify-center min-h-[400px]">
                     <Skeleton.Image

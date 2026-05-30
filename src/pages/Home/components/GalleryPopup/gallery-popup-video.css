@@ -1,0 +1,14 @@
+@keyframes gallery-video-pause-fade {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+.gallery-popup-video__pause-icon {
+  animation: gallery-video-pause-fade 0.55s ease-out forwards;
+}

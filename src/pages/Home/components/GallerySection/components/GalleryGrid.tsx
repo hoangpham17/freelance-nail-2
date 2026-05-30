@@ -1,6 +1,8 @@
 import React from "react";
 import clsx from "clsx";
 import { GalleryItem as GalleryItemType } from "../types";
+import GalleryMedia from "./GalleryMedia";
+import GalleryVideoBadge from "./GalleryVideoBadge";
 
 interface GalleryGridProps {
   items: GalleryItemType[];
@@ -27,11 +29,12 @@ const GridCell: React.FC<{
         className,
       )}
     >
-      <img
-        src={item.url}
-        alt=""
-        className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
+      <GalleryMedia
+        url={item.url}
+        isVideo={item.isVideo}
+        className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
       />
+      {item.isVideo ? <GalleryVideoBadge /> : null}
     </button>
   );
 };

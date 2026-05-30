@@ -15,6 +15,8 @@ export type GalleryRecord = {
     | Array<{
         id?: string;
         url?: string;
+        filename?: string;
+        type?: string;
         thumbnails?: {
           full?: {
             url: string;
@@ -37,6 +39,7 @@ export type BannerItem = {
 export type HomeGalleryItem = {
   id?: string;
   url?: string;
+  isVideo?: boolean;
 };
 
 export type WhyChooseItem = {

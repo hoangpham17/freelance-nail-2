@@ -1,12 +1,12 @@
 export type AirtableImage = {
   id: string;
   url: string;
-  width: number;
-  height: number;
-  filename: string;
-  size: number;
-  type: string;
-  thumbnails: {
+  width?: number;
+  height?: number;
+  filename?: string;
+  size?: number;
+  type?: string;
+  thumbnails?: {
     small: { url: string; width: number; height: number };
     large: { url: string; width: number; height: number };
     full: { url: string; width: number; height: number };
@@ -47,6 +47,7 @@ export type GalleryRecord = {
 export type GalleryItem = {
   id: string;
   url: string;
+  isVideo?: boolean;
   category?: string[];
   keyword?: string;
 };
