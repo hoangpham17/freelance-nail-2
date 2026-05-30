@@ -162,6 +162,11 @@ async function auditHome(page, vp) {
     fail(label, galleryAudit.reason);
   }
 
+  const serviceAudit = await auditServiceGrid(page, vp.width);
+  if (!serviceAudit.ok) {
+    fail(label, serviceAudit.reason);
+  }
+
   const consoleErrors = [];
   page.on("console", (msg) => {
     if (msg.type() === "error") consoleErrors.push(msg.text());
@@ -172,7 +177,128 @@ async function auditHome(page, vp) {
     fullPage: true,
   });
 
-  return { galleryAudit, consoleErrors };
+  return { galleryAudit, serviceAudit, consoleErrors };
+}
+
+async function auditServiceGrid(page, viewportWidth) {
+  const list = page.locator("[data-home-service-list]");
+  if ((await list.count()) === 0) {
+    return { ok: false, reason: "missing [data-home-service-list]" };
+  }
+
+  await list.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(400);
+
+  return page.evaluate((vw) => {
+    const listEl = document.querySelector("[data-home-service-list]");
+    const itemEls = [...document.querySelectorAll(".home-service-item")];
+    if (!listEl || itemEls.length === 0) {
+      return { ok: false, reason: "no service items rendered" };
+    }
+
+    const expectedCols = vw >= 1024 ? 5 : vw >= 768 ? 3 : 2;
+
+    const rects = itemEls.map((el) => {
+      const r = el.getBoundingClientRect();
+      return {
+        top: Math.round(r.top),
+        left: r.left,
+        width: r.width,
+        height: r.height,
+      };
+    });
+    rects.sort((a, b) => a.top - b.top || a.left - b.left);
+
+    const rows = [];
+    for (const item of rects) {
+      const row = rows.find((r) => Math.abs(r[0].top - item.top) <= 8);
+      if (row) row.push(item);
+      else rows.push([item]);
+    }
+    rows.forEach((r) => r.sort((a, b) => a.left - b.left));
+
+    const expectedFirstRow = Math.min(itemEls.length, expectedCols);
+    const firstRowCols = rows[0]?.length ?? 0;
+    if (firstRowCols !== expectedFirstRow) {
+      return {
+        ok: false,
+        reason: `service grid first row has ${firstRowCols} cols, expected ${expectedFirstRow} at ${vw}px`,
+      };
+    }
+
+    const clippedLabels = itemEls.filter((item) => {
+      const label = item.querySelector(".home-service-item__label");
+      return label && label.scrollHeight > label.clientHeight + 2;
+    }).length;
+    if (clippedLabels > 0) {
+      return {
+        ok: false,
+        reason: `${clippedLabels} service label(s) clipped (scrollHeight > clientHeight)`,
+      };
+    }
+
+    const notSquare = itemEls.filter((item) => {
+      const wrap = item.querySelector(".home-service-item__icon-wrap");
+      if (!wrap) return true;
+      const r = wrap.getBoundingClientRect();
+      return Math.abs(r.width - r.height) > 4;
+    }).length;
+    if (notSquare > 0) {
+      return { ok: false, reason: `${notSquare} service tile(s) not square` };
+    }
+
+    const lastRow = rows[rows.length - 1];
+    if (lastRow && lastRow.length < expectedCols && rows.length > 1) {
+      const listRect = listEl.getBoundingClientRect();
+      const rowLeft = lastRow[0].left;
+      const rowRight = lastRow[lastRow.length - 1].left + lastRow[lastRow.length - 1].width;
+      const rowCenter = (rowLeft + rowRight) / 2;
+      const listCenter = listRect.left + listRect.width / 2;
+      if (Math.abs(rowCenter - listCenter) > 28) {
+        return {
+          ok: false,
+          reason: `service last row not centered (offset ${Math.round(Math.abs(rowCenter - listCenter))}px)`,
+        };
+      }
+    }
+
+    const listStyle = getComputedStyle(listEl);
+    const gap = parseFloat(listStyle.gap || listStyle.rowGap || "0");
+    const itemWidth = rects[0]?.width ?? 0;
+    const expectedWidth =
+      (listEl.clientWidth - (expectedCols - 1) * gap) / expectedCols;
+    const itemMaxWidth = parseFloat(getComputedStyle(itemEls[0]).maxWidth);
+    const cappedTile =
+      vw < 1024 && Number.isFinite(itemMaxWidth) && itemMaxWidth > 0;
+
+    if (cappedTile) {
+      if (itemWidth > expectedWidth + 6) {
+        return {
+          ok: false,
+          reason: `service tile too wide (${Math.round(itemWidth)}px > ${Math.round(expectedWidth)}px)`,
+        };
+      }
+      if (itemWidth > itemMaxWidth + 4) {
+        return {
+          ok: false,
+          reason: `service tile exceeds max-width (${Math.round(itemWidth)}px > ${Math.round(itemMaxWidth)}px)`,
+        };
+      }
+    } else if (Math.abs(itemWidth - expectedWidth) > 6) {
+      return {
+        ok: false,
+        reason: `service item width ${Math.round(itemWidth)}px != expected ${Math.round(expectedWidth)}px`,
+      };
+    }
+
+    return {
+      ok: true,
+      items: itemEls.length,
+      expectedCols,
+      firstRowCols,
+      rows: rows.length,
+    };
+  }, viewportWidth);
 }
 
 function isBlackish(rgb) {
@@ -195,6 +321,9 @@ async function main() {
       const result = await auditHome(page, vp);
       if (result?.galleryAudit?.ok) {
         console.log(`  gallery OK`, result.galleryAudit);
+      }
+      if (result?.serviceAudit?.ok) {
+        console.log(`  services OK`, result.serviceAudit);
       }
     } catch (err) {
       fail(vp.name, err.message);
