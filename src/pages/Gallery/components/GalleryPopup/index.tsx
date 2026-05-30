@@ -7,7 +7,7 @@ import { GalleryItem } from "../../types";
 import GalleryMedia from "@/pages/Home/components/GallerySection/components/GalleryMedia";
 import GalleryPopupVideo from "@/pages/Home/components/GalleryPopup/components/GalleryPopupVideo";
 import SvgIcon from "@/based/SvgIcon";
-import { NavigationArrows } from "@/components/NavigationArrows";
+import GalleryNavButton from "@/pages/Home/components/GallerySection/components/GalleryNavButton";
 import galleryContent from "@/content/gallery.json";
 
 interface GalleryPopupProps {
@@ -130,14 +130,20 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
             ))}
           </Swiper>
 
-          <div className="absolute top-1/2 -left-4 -right-4 md:-left-6 md:-right-6 -translate-y-1/2 z-10 pointer-events-none">
-            <NavigationArrows
-              className="flex justify-between w-full mb-0 px-2 md:px-4"
-              buttonClassName="bg-black/40 backdrop-blur-md shadow-[0_10px_26px_rgba(0,0,0,0.45)]"
-              onPrev={() => swiperRef.current?.slidePrev()}
-              onNext={() => swiperRef.current?.slideNext()}
-            />
-          </div>
+          {items.length > 1 ? (
+            <div className="absolute top-1/2 left-0 right-0 z-10 flex -translate-y-1/2 items-center justify-between pointer-events-none px-4 md:px-6">
+              <GalleryNavButton
+                direction="prev"
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="pointer-events-auto"
+              />
+              <GalleryNavButton
+                direction="next"
+                onClick={() => swiperRef.current?.slideNext()}
+                className="pointer-events-auto"
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
-import { PageDecoLines } from "@/components/PageDecoLines";
+import { HostPartyDecoLines } from "@/pages/HostAParty/components/HostPartyDecoLines";
 import { HostPartyEntryLottie } from "@/components/SubmitSuccessLottie";
-import HeroSection from "./components/HeroSection";
-import OccasionsSection from "./components/OccasionsSection";
-import FormSection from "./components/FormSection";
+import HeroSection from "@/pages/HostAParty/components/HeroSection";
+import OccasionsSection from "@/pages/HostAParty/components/OccasionsSection";
+import FormSection from "@/pages/HostAParty/components/FormSection";
 import "./host-a-party.css";
 
 const HostAParty: React.FC = () => {
@@ -29,7 +29,7 @@ const HostAParty: React.FC = () => {
       <HostPartyEntryLottie />
       <HeroSection onScrollToForm={scrollToForm} />
       <div className="host-party-content relative">
-        <PageDecoLines variant="host-party" intensity="strong" />
+        <HostPartyDecoLines />
         <OccasionsSection />
         <FormSection sectionRef={formSectionRef} />
       </div>

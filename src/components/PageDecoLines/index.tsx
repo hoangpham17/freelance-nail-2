@@ -3,7 +3,6 @@ import clsx from "clsx";
 
 export type PageDecoLinesVariant =
   | "contact"
-  | "host-party"
   | "about-us"
   | "our-policies"
   | "gallery";
@@ -35,20 +34,6 @@ const DECO_PATHS: Record<PageDecoLinesVariant, DecoPath[]> = {
     { d: "M58 32 C72 44, 84 24, 96 36 S108 48, 98 58", strokeWidth: 0.9 },
     { d: "M4 78 C20 66, 34 88, 52 74 S78 64, 90 76", strokeWidth: 0.9 },
     { d: "M54 70 C68 62, 82 78, 90 66", strokeWidth: 0.75 },
-  ],
-  "host-party": [
-    {
-      d: "M92 10 C78 22, 64 12, 50 24 S28 34, 10 42",
-      strokeWidth: 0.8,
-      opacity: 0.7,
-    },
-    {
-      d: "M8 38 C18 30, 22 48, 14 58 S6 76, 16 88",
-      strokeWidth: 0.85,
-      opacity: 0.6,
-    },
-
-    { d: "M18 72 C36 64, 52 86, 72 76 S92 70, 98 82", strokeWidth: 0.9 },
   ],
   "about-us": [
     {
@@ -114,7 +99,6 @@ const GRADIENT_AXIS: Record<
   { x1: string; y1: string; x2: string; y2: string }
 > = {
   contact: { x1: "0%", y1: "0%", x2: "100%", y2: "100%" },
-  "host-party": { x1: "100%", y1: "0%", x2: "0%", y2: "100%" },
   "about-us": { x1: "0%", y1: "100%", x2: "100%", y2: "0%" },
   "our-policies": { x1: "100%", y1: "20%", x2: "0%", y2: "80%" },
   gallery: { x1: "0%", y1: "30%", x2: "100%", y2: "70%" },
@@ -123,7 +107,6 @@ const GRADIENT_AXIS: Record<
 /** Crop anchor — narrow viewports clip inward without stretching curves */
 const PRESERVE_ASPECT: Record<PageDecoLinesVariant, string> = {
   contact: "xMidYMid slice",
-  "host-party": "xMidYMid slice",
   "about-us": "xMidYMin slice",
   "our-policies": "xMinYMid slice",
   gallery: "xMidYMid slice",
