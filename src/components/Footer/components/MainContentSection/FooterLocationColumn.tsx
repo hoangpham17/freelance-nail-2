@@ -18,29 +18,33 @@ const FooterLocationColumn: React.FC = () => {
         {salonAddress}
       </a>
 
-      <a
-        href={directUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="madison-footer-info__direction shrink-0 font-montserrat text-base leading-relaxed text-[#e5e7eb] uppercase underline underline-offset-4 hover:text-madison-gold md:text-lg"
-      >
-        Show Direction
-      </a>
+      <div className="relative mt-1 w-[88%] max-w-[420px] shrink-0">
+        <a
+          href={googlemapUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="block overflow-hidden rounded-xl bg-madison-surface transition-opacity hover:opacity-90"
+        >
+          <div className="relative aspect-[1288/658] max-h-[180px] w-full lg:max-h-[220px]">
+            <img
+              src="/assets/images/Footer/map.jpg"
+              alt="Madison Nail Lounge location"
+              className="size-full object-cover"
+            />
+          </div>
+        </a>
 
-      <a
-        href={googlemapUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-1 block w-full shrink-0 transition-opacity hover:opacity-90"
-      >
-        <div className="relative aspect-[1288/658] w-full max-h-[220px] overflow-hidden rounded-xl bg-madison-surface lg:max-h-[280px]">
-          <img
-            src="/assets/images/Footer/map.jpg"
-            alt="Madison Nail Lounge location"
-            className="size-full object-cover"
-          />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-xl bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 pb-3 pt-10">
+          <a
+            href={directUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="madison-footer-info__direction pointer-events-auto font-montserrat text-base leading-relaxed text-[#e5e7eb] uppercase underline underline-offset-4 hover:text-madison-gold md:text-lg"
+          >
+            Show Direction
+          </a>
         </div>
-      </a>
+      </div>
     </div>
   );
 };
