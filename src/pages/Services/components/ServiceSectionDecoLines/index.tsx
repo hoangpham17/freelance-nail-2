@@ -21,7 +21,7 @@ type DecoPreset = {
 
 const DECO_VIEWBOX = "0 0 110 100";
 /** Gradient peak + path multiplier — keep lines subtle on /services */
-const PEAK_OPACITY = 0.24;
+const PEAK_OPACITY = 0.2;
 const PATH_OPACITY_SCALE = 0.88;
 
 /** Each layer is a separate positioned SVG so curves spread across the section */

@@ -408,6 +408,9 @@
   position: relative;
   flex-shrink: 0;
   border-radius: 0.75rem;
+  --home-service-border-span: 0deg;
+  --home-service-spark-head: calc(var(--home-service-border-span) + 3deg);
+  transition: box-shadow 0.35s ease;
 }
 
 /* Default: two L-brackets (top+right, bottom+left), gaps at TL & BR */
@@ -462,25 +465,16 @@
   opacity: 0;
 }
 
-/* Hover: gold arc sweeps the full perimeter at 100% */
-.home-service-item__icon-wrap::before {
+/* Hover: gold ring draws full perimeter; ::after = bright head at the leading edge */
+.home-service-item__icon-wrap::before,
+.home-service-item__icon-wrap::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;
   border-radius: inherit;
   padding: 2px;
   opacity: 0;
   pointer-events: none;
-  --home-service-border-span: 0deg;
-  background: conic-gradient(
-    from 0deg,
-    var(--madison-gold) 0deg,
-    #fde199 calc(var(--home-service-border-span) * 0.4),
-    var(--madison-gold) var(--home-service-border-span),
-    transparent var(--home-service-border-span),
-    transparent 360deg
-  );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -491,10 +485,83 @@
   mask-composite: exclude;
 }
 
+.home-service-item__icon-wrap::before {
+  z-index: 2;
+  background: conic-gradient(
+    from 0deg,
+    var(--madison-gold) 0deg,
+    var(--madison-gold) calc(var(--home-service-border-span) - 20deg),
+    #fde199 calc(var(--home-service-border-span) - 8deg),
+    var(--madison-gold) var(--home-service-border-span),
+    transparent calc(var(--home-service-border-span) + 1deg),
+    transparent 360deg
+  );
+}
+
+/* Flare sits slightly ahead of the ring edge — hover sweep only */
+.home-service-item__icon-wrap::after {
+  z-index: 3;
+  opacity: 0;
+  background: conic-gradient(
+    from 0deg,
+    transparent calc(var(--home-service-spark-head) - 14deg),
+    rgb(249 190 92 / 0.55) calc(var(--home-service-spark-head) - 7deg),
+    rgb(255 236 170 / 0.9) calc(var(--home-service-spark-head) - 3deg),
+    rgb(255 252 245 / 1) calc(var(--home-service-spark-head) - 0.6deg),
+    #ffffff calc(var(--home-service-spark-head) - 0.15deg),
+    #fffef8 var(--home-service-spark-head),
+    #fff4c8 calc(var(--home-service-spark-head) + 3deg),
+    rgb(249 190 92 / 0.45) calc(var(--home-service-spark-head) + 7deg),
+    transparent calc(var(--home-service-spark-head) + 11deg),
+    transparent 360deg
+  );
+  filter:
+    drop-shadow(0 0 1.5px #fff)
+    drop-shadow(0 0 5px rgb(255 253 245 / 1))
+    drop-shadow(0 0 11px rgb(255 244 200 / 1))
+    drop-shadow(0 0 18px rgb(249 190 92 / 1))
+    drop-shadow(0 0 28px rgb(249 190 92 / 0.72))
+    drop-shadow(0 0 40px rgb(249 190 92 / 0.38));
+  mix-blend-mode: screen;
+}
+
+.home-service-item:not(:hover):not(:focus-visible) .home-service-item__icon-wrap::after {
+  animation: none;
+  opacity: 0;
+}
+
+/* One timeline on the wrap — border + spark share --home-service-border-span */
+.home-service-item:hover .home-service-item__icon-wrap,
+.home-service-item:focus-visible .home-service-item__icon-wrap {
+  animation: home-service-border-run 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  box-shadow:
+    0 0 0 1px rgb(249 190 92 / 0.08),
+    0 0 20px rgb(249 190 92 / 0.12),
+    0 0 36px rgb(249 190 92 / 0.06);
+}
+
 .home-service-item:hover .home-service-item__icon-wrap::before,
 .home-service-item:focus-visible .home-service-item__icon-wrap::before {
   opacity: 1;
-  animation: home-service-border-run 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.home-service-item:hover .home-service-item__icon-wrap::after,
+.home-service-item:focus-visible .home-service-item__icon-wrap::after {
+  animation: home-service-spark-fade 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-service-item:hover .home-service-item__icon-wrap,
+  .home-service-item:focus-visible .home-service-item__icon-wrap {
+    animation: none;
+    --home-service-border-span: 360deg;
+  }
+
+  .home-service-item:hover .home-service-item__icon-wrap::after,
+  .home-service-item:focus-visible .home-service-item__icon-wrap::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 @keyframes home-service-border-run {
@@ -503,6 +570,19 @@
   }
   to {
     --home-service-border-span: 360deg;
+  }
+}
+
+@keyframes home-service-spark-fade {
+  0%,
+  86% {
+    opacity: 1;
+  }
+  94% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
