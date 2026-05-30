@@ -24,7 +24,17 @@ const LoadingPage: React.FC<LoadingPageProps> = ({
       role="status"
       aria-label="Loading"
     >
-      <span className="loader" aria-hidden="true" />
+      <div className="loader" aria-hidden="true">
+        <span className="loader__aura" />
+        <span className="loader__swirl" />
+        <span className="loader__ring" />
+        <span className="loader__beads">
+          <span className="loader__bead" />
+          <span className="loader__bead" />
+          <span className="loader__bead" />
+        </span>
+        <span className="loader__pearl" />
+      </div>
     </div>
   );
 };
