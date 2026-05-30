@@ -109,7 +109,8 @@ const GallerySection: React.FC<GallerySectionProps> = ({
     );
   }
 
-  const paginationCount = isXl ? mosaicSlides.length : 0;
+  const paginationCount = isXl ? mosaicSlides.length : galleryItems.length;
+  const showPagination = paginationCount > 1;
 
   return (
     <section
@@ -127,17 +128,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
           isXl ? "px-4 lg:px-[120px]" : "px-0",
         )}
       >
-        <div className="flex items-center gap-4">
-          <GalleryNavButton
-            direction="prev"
-            onClick={goPrev}
-            disabled={!canNavigate}
-            className="hidden xl:flex"
-          />
-
+        <div className="relative">
           <div
             className={clsx(
-              "flex-1 min-w-0",
+              "relative min-w-0",
               isXl ? "overflow-hidden" : "overflow-visible",
             )}
           >
@@ -206,36 +200,53 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                 ))}
               </Swiper>
             )}
-          </div>
 
-          <GalleryNavButton
-            direction="next"
-            onClick={goNext}
-            disabled={!canNavigate}
-            className="hidden xl:flex"
-          />
-        </div>
-
-        {paginationCount > 1 ? (
-          <div className="mt-6 lg:mt-8 flex justify-center items-center gap-3">
-            {Array.from({ length: paginationCount }, (_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => goToSlide(idx)}
+            {canNavigate ? (
+              <div
                 className={clsx(
-                  "h-3 transition-all duration-500 rounded-full",
-                  currentSlide === idx
-                    ? "w-[18px] bg-[#f9be5c]"
-                    : "w-3 bg-white/40 hover:bg-white/60",
+                  "absolute top-1/2 left-0 right-0 z-10 flex -translate-y-1/2 items-center justify-between pointer-events-none",
+                  isXl ? "px-1 md:px-2" : "px-4 md:px-6",
                 )}
-                aria-label={`Go to gallery slide ${idx + 1}`}
-                aria-current={currentSlide === idx ? "true" : undefined}
-                data-gallery-dot={idx}
-              />
-            ))}
+                data-gallery-arrows
+              >
+                <GalleryNavButton
+                  direction="prev"
+                  onClick={goPrev}
+                  className="pointer-events-auto"
+                />
+                <GalleryNavButton
+                  direction="next"
+                  onClick={goNext}
+                  className="pointer-events-auto"
+                />
+              </div>
+            ) : null}
           </div>
-        ) : null}
+
+          {showPagination ? (
+            <div
+              className="mt-6 lg:mt-8 flex items-center justify-center gap-2 md:gap-3 flex-wrap px-4"
+              data-gallery-pagination
+            >
+              {Array.from({ length: paginationCount }, (_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => goToSlide(idx)}
+                  className={clsx(
+                    "h-2.5 md:h-3 transition-all duration-500 rounded-full shrink-0",
+                    currentSlide === idx
+                      ? "w-[14px] md:w-[18px] bg-[#f9be5c]"
+                      : "w-2.5 md:w-3 bg-white/40 hover:bg-white/60",
+                  )}
+                  aria-label={`Go to gallery slide ${idx + 1}`}
+                  aria-current={currentSlide === idx ? "true" : undefined}
+                  data-gallery-dot={idx}
+                />
+              ))}
+            </div>
+          ) : null}
+        </div>
       </div>
     </section>
   );

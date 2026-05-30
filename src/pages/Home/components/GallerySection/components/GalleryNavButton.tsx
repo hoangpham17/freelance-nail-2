@@ -19,8 +19,10 @@ const GalleryNavButton: React.FC<GalleryNavButtonProps> = ({
     disabled={disabled}
     aria-label={direction === "prev" ? "Gallery previous" : "Gallery next"}
     className={clsx(
-      "flex items-center justify-center size-[42px] rounded-full border border-madison-gold/70 text-madison-gold transition-colors shrink-0",
-      "hover:bg-madison-gold/10 disabled:opacity-35 disabled:pointer-events-none disabled:hover:bg-transparent",
+      "flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border border-[#f9be5c] text-[#f9be5c] shrink-0",
+      "bg-[#252525]/80 backdrop-blur-md shadow-lg transition-all duration-300",
+      "hover:bg-[#f9be5c] hover:text-[#984121]",
+      "disabled:opacity-35 disabled:pointer-events-none disabled:hover:bg-[#252525]/80 disabled:hover:text-[#f9be5c]",
       className,
     )}
   >
