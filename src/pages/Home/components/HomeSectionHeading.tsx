@@ -4,18 +4,30 @@ import { parseAirtableRichtext } from "@/shared/utils/richtext";
 import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 
-export type HomeHeadingVariant = "default" | "about" | "gallery";
+export type HomeHeadingVariant =
+  | "default"
+  | "service"
+  | "about"
+  | "gallery"
+  | "testimonial";
 
 const HEADING_TYPO: Record<
   HomeHeadingVariant,
-  { title: [number, number]; subtitle: [number, number] }
+  {
+    title: [number, number];
+    subtitle: [number, number];
+    description?: [number, number];
+  }
 > = {
-  /** Services, testimonials — single line ~48px */
   default: { title: [36, 48], subtitle: [32, 60] },
-  /** Figma About — 40px + 64px */
-  about: { title: [32, 40], subtitle: [36, 64] },
-  /** Figma Gallery — 40px + 60px */
-  gallery: { title: [32, 40], subtitle: [36, 60] },
+  /** Services — same single-line title scale as testimonial */
+  service: { title: [42, 99], subtitle: [32, 60], description: [14, 24] },
+  /** About — nail-ver2 SectionTitle [40, 72] dual-line */
+  about: { title: [36, 48], subtitle: [44, 72] },
+  /** Gallery — line 2 matches About */
+  gallery: { title: [40, 60], subtitle: [44, 72] },
+  /** Testimonial — nail-ver2 clamp(2.6rem, 5vw, 6.2rem) */
+  testimonial: { title: [42, 99], subtitle: [32, 60] },
 };
 
 export type HomeSectionHeadingProps = {
@@ -52,19 +64,23 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
     <div
       className={clsx(
         "text-gold-gradient font-tangerine font-normal [&_strong]:font-tangerine [&_p]:m-0",
-        responsiveFontSizeArray(typo.title[0], typo.title[1]),
+        (variant === "service" || variant === "testimonial") &&
+          "home-section-feature-title",
+        variant !== "service" &&
+          variant !== "testimonial" &&
+          responsiveFontSizeArray(typo.title[0], typo.title[1]),
         isDualLine ? "leading-[1.15] [&_p+p]:mt-0" : "leading-[1.15]",
         !subtitle &&
           isDualLine &&
           variant === "about" && [
-            "[&>p:first-child]:!text-[32px] md:[&>p:first-child]:!text-[40px]",
-            "[&>p:last-child]:!text-[36px] md:[&>p:last-child]:!text-[64px]",
+            "[&>p:first-child]:!text-[36px] md:[&>p:first-child]:!text-[48px]",
+            "[&>p:last-child]:!text-[44px] md:[&>p:last-child]:!text-[72px]",
           ],
         !subtitle &&
           isDualLine &&
           variant === "gallery" && [
-            "[&>p:first-child]:!text-[32px] md:[&>p:first-child]:!text-[40px]",
-            "[&>p:last-child]:!text-[36px] md:[&>p:last-child]:!text-[60px]",
+            "[&>p:first-child]:!text-[40px] md:[&>p:first-child]:!text-[60px]",
+            "[&>p:last-child]:!text-[44px] md:[&>p:last-child]:!text-[72px]",
           ],
         titleClassName,
       )}
@@ -136,7 +152,9 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
         <div
           className={clsx(
             "max-w-[993px] font-light text-[#d1d5db] [&_p]:m-0",
-            responsiveFontSizeArray(14, 16),
+            variant === "service"
+              ? "home-service-section__description"
+              : responsiveFontSizeArray(...(typo.description ?? [14, 16])),
           )}
           dangerouslySetInnerHTML={{ __html: description }}
         />

@@ -15,6 +15,7 @@ const ServiceSection: React.FC = () => {
     >
       <Wrapper className="relative z-[1] py-10 md:py-16">
         <HomeSectionHeading
+          variant="service"
           titleHtml={block?.title}
           descriptionHtml={block?.description ?? block?.sub_title}
         />

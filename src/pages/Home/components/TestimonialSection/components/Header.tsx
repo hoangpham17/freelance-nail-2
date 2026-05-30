@@ -8,6 +8,7 @@ const Header: React.FC = () => {
 
   return (
     <HomeSectionHeading
+      variant="testimonial"
       titleHtml={block?.title}
       className="mb-8 md:mb-12"
     />

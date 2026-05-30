@@ -337,6 +337,44 @@
   }
 }
 
+/* Home — single-line section titles (Services, Testimonial) */
+.home-section-feature-title,
+.home-service-section__title {
+  font-size: clamp(2.625rem, 5vw, 6.1875rem);
+  line-height: 0.86;
+  font-weight: 400;
+}
+
+.home-section-feature-title p,
+.home-section-feature-title span,
+.home-section-feature-title strong,
+.home-section-feature-title *,
+.home-service-section__title p,
+.home-service-section__title span,
+.home-service-section__title strong,
+.home-service-section__title * {
+  font-size: 1em !important;
+  line-height: inherit !important;
+}
+
+.home-service-section__description {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .home-service-section__description {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+}
+
+.home-service-section__description p,
+.home-service-section__description * {
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
 .home-heading-line {
   width: 320px;
   max-width: 100%;
@@ -470,7 +508,7 @@
 
   .home-service-item__label {
     min-height: calc(2 * 1.12em + 0.12em);
-    font-size: clamp(1rem, 3.6vw, 1.25rem);
+    font-size: clamp(1.25rem, 3.6vw, 1.5rem);
     line-height: 1.12;
   }
 }
@@ -488,7 +526,7 @@
 
   .home-service-item__label {
     min-height: calc(2 * 1.12em + 0.14em);
-    font-size: clamp(1.0625rem, 2.5vw, 1.4375rem);
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
     line-height: 1.12;
   }
 }
@@ -786,14 +824,14 @@
 
 @media (min-width: 640px) and (max-width: 767px) {
   .home-service-item__label {
-    font-size: clamp(1rem, 2.8vw, 1.1875rem);
+    font-size: clamp(1.25rem, 2.8vw, 1.5rem);
     min-height: calc(2 * 1.12em + 0.14em);
   }
 }
 
 @media (min-width: 1024px) {
   .home-service-item__label {
-    font-size: clamp(1.1875rem, 1.45vw, 1.875rem);
+    font-size: clamp(1.5rem, 1.45vw, 2rem);
     min-height: calc(2 * 1.12em + 0.16em);
   }
 }
