@@ -159,7 +159,7 @@
 }
 
 .au-hero__lead {
-  max-width: 34rem;
+  max-width: min(100%, 32rem);
   margin: 1rem auto 0;
   font-weight: 300;
   line-height: 1.7;
@@ -170,6 +170,7 @@
 @media (min-width: 1024px) {
   .au-hero__lead {
     margin-inline: 0;
+    max-width: min(100%, 33rem);
   }
 }
 
@@ -199,11 +200,17 @@
 
 .au-intro__text {
   margin-top: 1rem;
-  max-width: 32rem;
+  max-width: min(100%, 34rem);
   margin-inline: auto;
   font-weight: 300;
   line-height: 1.85;
   color: rgb(245 240 235 / 0.8);
+}
+
+@media (min-width: 1024px) {
+  .au-intro__text {
+    max-width: min(100%, 44rem);
+  }
 }
 
 /* Ornamental divider — once below intro ("A sanctuary of beauty") */
