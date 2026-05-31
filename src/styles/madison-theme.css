@@ -867,6 +867,54 @@
   color: var(--madison-gold-dark);
 }
 
+/* Services — cash vs card price badges */
+.service-price-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: fit-content;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1024px) {
+  .service-price-badge {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    justify-content: center;
+  }
+}
+
+.service-price-badge--cash {
+  background: rgb(37 37 37 / 0.92);
+  border: 1px solid rgb(249 190 92 / 0.55);
+}
+
+.service-price-badge--card {
+  background: rgb(249 190 92 / 0.07);
+  border: 1px solid #fde199;
+  box-shadow: inset 0 0 0 1px rgb(249 190 92 / 0.08);
+}
+
+.service-price-badge__text {
+  color: var(--madison-gold);
+  font-weight: 500;
+}
+
+.service-price-badge__text--card {
+  color: #fde199;
+  font-weight: 600;
+}
+
+.service-price-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
 /* Forms on dark surfaces — Ant Design pickers */
 .app .ant-picker {
   background-color: var(--madison-black-soft);
