@@ -7,6 +7,7 @@ import {
   ServiceCategoryRecord,
   AirtableAttachment,
 } from "../pages/Services/types";
+import { normalizeServicePrice } from "../pages/Services/components/ServiceCard/servicePriceUtils";
 
 const resolveImageUrl = (image?: string | AirtableAttachment[]): string => {
   if (typeof image === "string") return image;
@@ -47,7 +48,8 @@ export const useServiceCategories = (): {
             )
             ?.map((service) => ({
               ...service,
-              price: service.price || "",
+              price: normalizeServicePrice(service.price),
+              visa_surcharge: normalizeServicePrice(service.visa_surcharge),
               addons: service.add_on_services || "",
               is_expand: service.is_expand,
             }))

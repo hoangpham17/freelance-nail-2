@@ -11,6 +11,12 @@ import { useCampaignStore } from "@/shared/store/campaignStore";
 import servicesContent from "@/content/services.json";
 import { getServiceCategoryTabsHeight } from "../../constants";
 import { ServiceSectionDecoLines } from "../ServiceSectionDecoLines";
+import {
+  SERVICE_PRICE_CHEVRON_SLOT,
+  SERVICE_PRICE_COLUMN,
+  SERVICE_PRICE_GAP,
+} from "../ServiceCard/servicePriceLayout";
+import ServicePriceBadge from "../ServiceCard/ServicePriceBadge";
 
 interface ServiceCategorySectionProps {
   category: ServiceCategory;
@@ -141,6 +147,17 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
     return index % 2 !== 0 ? "bg-black" : "bg-madison-black-soft";
   };
 
+  const showCashColumn = category.services.some((service) => service.price);
+  const showVisaColumn = category.services.some(
+    (service) => service.visa_surcharge,
+  );
+  const showPriceColumns = showCashColumn || showVisaColumn;
+  const { cashPriceLabel, visaPriceLabel } = (
+    servicesContent as {
+      serviceCard: { cashPriceLabel: string; visaPriceLabel: string };
+    }
+  ).serviceCard;
+
   return (
     <article
       ref={sectionRef}
@@ -268,6 +285,33 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 !categoryImage && isDesktop && "grid grid-cols-2 gap-x-8",
               )}
             >
+              {showPriceColumns && (
+                <div
+                  className={clsx(
+                    "hidden lg:flex items-center px-4 lg:px-6 pb-1",
+                    !categoryImage && isDesktop && "col-span-2",
+                  )}
+                >
+                  <div className="flex-1" aria-hidden="true" />
+                  <Flex align="center" className={SERVICE_PRICE_GAP}>
+                    {showCashColumn && (
+                      <div className={SERVICE_PRICE_COLUMN}>
+                        <ServicePriceBadge type="cash" variant="label">
+                          {cashPriceLabel}
+                        </ServicePriceBadge>
+                      </div>
+                    )}
+                    {showVisaColumn && (
+                      <div className={SERVICE_PRICE_COLUMN}>
+                        <ServicePriceBadge type="card" variant="label">
+                          {visaPriceLabel}
+                        </ServicePriceBadge>
+                      </div>
+                    )}
+                    <div className={SERVICE_PRICE_CHEVRON_SLOT} aria-hidden="true" />
+                  </Flex>
+                </div>
+              )}
               {category.services.map((service, idx) => {
                 const cardId = service.id || `service-${idx}`;
                 const isCardVisible = animatedItems.has(cardId);
@@ -310,6 +354,8 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                     >
                       <ServiceCard
                         {...service}
+                        showCashColumn={showCashColumn}
+                        showVisaColumn={showVisaColumn}
                         isExpanded={isExpanded}
                         onToggle={handleToggle}
                         disableToggle={isAlwaysExpanded}

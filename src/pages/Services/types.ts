@@ -11,6 +11,7 @@ export type ServiceItem = {
   name?: string;
   description?: string;
   price?: string;
+  visa_surcharge?: string;
   category?: string | string[];
   add_on_services?: string;
   index?: number;
