@@ -908,6 +908,19 @@
   font-weight: 600;
 }
 
+.service-price-badge__icon--cash {
+  color: var(--madison-gold);
+}
+
+.service-price-badge__icon--card {
+  color: #fde199;
+}
+
+.service-price-badge__icon--cash svg,
+.service-price-badge__icon--card svg {
+  color: currentColor;
+}
+
 .service-price-label {
   font-weight: 600;
   text-transform: uppercase;

@@ -34,7 +34,7 @@ const AboutUs: React.FC = () => {
             variant="about"
             titleHtml={block?.title}
             subtitleHtml={block?.sub_title}
-            align="start"
+            align="center"
             showUnderline={false}
             className="mb-8"
           />

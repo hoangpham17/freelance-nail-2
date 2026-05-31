@@ -22,14 +22,14 @@ const BADGE_CONFIG = {
     iconSrc: "/assets/svgs/cash.svg",
     iconLabel: "Cash",
     textClass: "service-price-badge__text",
-    iconClass: "text-madison-muted",
+    iconClass: "service-price-badge__icon--cash",
   },
   card: {
     badgeClass: SERVICE_PRICE_BADGE_VISA,
     iconSrc: "/assets/svgs/credit-card.svg",
     iconLabel: "Card",
     textClass: "service-price-badge__text service-price-badge__text--card",
-    iconClass: "text-madison-gold",
+    iconClass: "service-price-badge__icon--card",
   },
 } as const;
 
@@ -61,14 +61,19 @@ const ServicePriceBadge: React.FC<ServicePriceBadgeProps> = ({
   return (
     <div className={badgeClass}>
       {showIcon && (
-        <span className="inline-flex size-4 shrink-0 items-center justify-center">
+        <span
+          className={clsx(
+            "service-price-badge__icon inline-flex size-4 shrink-0 items-center justify-center",
+            iconClass,
+          )}
+        >
           <SvgIcon
             src={iconSrc}
             ariaLabel={iconLabel}
             width={18}
             height={18}
             viewBox="0 0 18 18"
-            className={iconClass}
+            className="size-full"
           />
         </span>
       )}

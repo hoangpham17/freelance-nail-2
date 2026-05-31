@@ -25,7 +25,7 @@ const HEADING_TYPO: Record<
   /** About — nail-ver2 SectionTitle [40, 72] dual-line */
   about: { title: [36, 48], subtitle: [44, 72] },
   /** Gallery — line 2 matches About */
-  gallery: { title: [40, 60], subtitle: [44, 72] },
+  gallery: { title: [36, 60], subtitle: [44, 72] },
   /** Testimonial — nail-ver2 clamp(2.6rem, 5vw, 6.2rem) */
   testimonial: { title: [42, 99], subtitle: [32, 60] },
 };
