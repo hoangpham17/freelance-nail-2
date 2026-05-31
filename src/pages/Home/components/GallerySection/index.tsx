@@ -5,7 +5,7 @@ import { Wrapper } from "@/based/components/Wrapper";
 import Header from "./components/Header";
 import GalleryGrid from "./components/GalleryGrid";
 import GalleryItem from "./components/GalleryItem";
-import GalleryNavButton from "./components/GalleryNavButton";
+import { NavigationArrows } from "@/components/NavigationArrows";
 import { useGalleryItems } from "./useGalleryItems";
 import { GalleryItem as GalleryItemType } from "./types";
 import {
@@ -203,24 +203,17 @@ const GallerySection: React.FC<GallerySectionProps> = ({
             )}
 
             {canNavigate ? (
-              <div
+              <NavigationArrows
+                onPrev={goPrev}
+                onNext={goNext}
+                prevAriaLabel="Gallery previous"
+                nextAriaLabel="Gallery next"
                 className={clsx(
-                  "absolute top-1/2 left-0 right-0 z-10 flex -translate-y-1/2 items-center justify-between pointer-events-none",
+                  "absolute top-1/2 left-0 right-0 z-10 -translate-y-1/2",
                   isXl ? "px-1 md:px-2" : "px-4 md:px-6",
                 )}
                 data-gallery-arrows
-              >
-                <GalleryNavButton
-                  direction="prev"
-                  onClick={goPrev}
-                  className="pointer-events-auto"
-                />
-                <GalleryNavButton
-                  direction="next"
-                  onClick={goNext}
-                  className="pointer-events-auto"
-                />
-              </div>
+              />
             ) : null}
           </div>
 

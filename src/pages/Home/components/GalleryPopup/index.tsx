@@ -6,8 +6,11 @@ import { Skeleton } from "antd";
 import { HomeGalleryItem } from "../../types";
 import GalleryMedia from "../GallerySection/components/GalleryMedia";
 import GalleryPopupVideo from "./components/GalleryPopupVideo";
-import SvgIcon from "@/based/SvgIcon";
-import GalleryNavButton from "../GallerySection/components/GalleryNavButton";
+import { NavigationArrows } from "@/components/NavigationArrows";
+import {
+  PopupCloseButton,
+  POPUP_CLOSE_OVERLAY_CLASS,
+} from "@/components/PopupCloseButton";
 import homepageContent from "@/content/homepage.json";
 
 interface GalleryPopupProps {
@@ -65,23 +68,14 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
       ></div>
       {/* Popup Inner */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] lg:w-[60%] max-h-[95vh] z-[102]">
-        {/* Close Button */}
-        <button
-          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 z-[2] flex size-8 lg:size-10 cursor-pointer items-center justify-center rounded-full border border-madison-gold bg-madison-black-soft/80 shadow-[0_10px_26px_rgba(0,0,0,0.45)] backdrop-blur-md transition-all duration-300 hover:scale-110 active:scale-95"
+        <PopupCloseButton
           onClick={onClose}
-          aria-label={
+          className={POPUP_CLOSE_OVERLAY_CLASS}
+          ariaLabel={
             (homepageContent as { galleryPopup: { closeAriaLabel: string } })
               .galleryPopup.closeAriaLabel
           }
-        >
-          <SvgIcon
-            src={"/assets/svgs/x-close.svg"}
-            ariaLabel="text"
-            width={24}
-            height={24}
-            className="size-[24px] shrink-0 text-madison-gold"
-          />
-        </button>
+        />
         {/* Slider Wrapper */}
         <div className="relative">
           <Swiper
@@ -133,18 +127,11 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
           </Swiper>
 
           {items.length > 1 ? (
-            <div className="absolute top-1/2 left-0 right-0 z-10 flex -translate-y-1/2 items-center justify-between pointer-events-none px-4 md:px-6">
-              <GalleryNavButton
-                direction="prev"
-                onClick={() => swiperRef.current?.slidePrev()}
-                className="pointer-events-auto"
-              />
-              <GalleryNavButton
-                direction="next"
-                onClick={() => swiperRef.current?.slideNext()}
-                className="pointer-events-auto"
-              />
-            </div>
+            <NavigationArrows
+              onPrev={() => swiperRef.current?.slidePrev()}
+              onNext={() => swiperRef.current?.slideNext()}
+              className="absolute top-1/2 left-0 right-0 z-10 -translate-y-1/2 px-4 md:px-6"
+            />
           ) : null}
         </div>
       </div>

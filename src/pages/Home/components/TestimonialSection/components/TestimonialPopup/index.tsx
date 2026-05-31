@@ -1,8 +1,11 @@
 import React, { useRef, useEffect } from "react";
 import Slider, { Settings } from "react-slick";
 import { Skeleton } from "antd";
-import SvgIcon from "@/based/SvgIcon";
 import { NavigationArrows } from "@/components/NavigationArrows";
+import {
+  PopupCloseButton,
+  POPUP_CLOSE_OVERLAY_CLASS,
+} from "@/components/PopupCloseButton";
 import { TestimonialItem } from "../../useTestimonials";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -95,20 +98,10 @@ const TestimonialPopup: React.FC<TestimonialPopupProps> = ({
       ></div>
       {/* Popup Inner */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full w-[90%] lg:w-[60%] max-h-[90vh] z-[102]">
-        {/* Close Button */}
-        <button
-          className="absolute -top-2.5 -right-2.5 lg:-top-2.5 lg:-right-2.5 w-8 h-8 lg:w-10 lg:h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] hover:scale-110 active:scale-95 flex items-center justify-center"
+        <PopupCloseButton
           onClick={onClose}
-          aria-label="Close popup"
-        >
-          <SvgIcon
-            src={"/assets/svgs/x-close.svg"}
-            ariaLabel="text"
-            width={24}
-            height={24}
-            className="size-[24px] shrink-0"
-          />
-        </button>
+          className={POPUP_CLOSE_OVERLAY_CLASS}
+        />
         {/* Slider Wrapper */}
         <div className="relative">
           <div className="[&_.slick-list]:m-0 [&_.slick-slide]:p-0">
@@ -138,15 +131,11 @@ const TestimonialPopup: React.FC<TestimonialPopupProps> = ({
             </Slider>
           </div>
 
-          {/* Navigation Arrows */}
-          <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 pointer-events-none">
-            <NavigationArrows
-              className="flex justify-between w-full mb-0 px-4"
-              buttonClassName="bg-white/90 backdrop-blur-md shadow-lg pointer-events-auto"
-              onPrev={() => sliderRef.current?.slickPrev()}
-              onNext={() => sliderRef.current?.slickNext()}
-            />
-          </div>
+          <NavigationArrows
+            className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-10 px-4"
+            onPrev={() => sliderRef.current?.slickPrev()}
+            onNext={() => sliderRef.current?.slickNext()}
+          />
         </div>
       </div>
     </div>

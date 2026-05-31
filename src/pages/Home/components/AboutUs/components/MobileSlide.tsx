@@ -87,8 +87,7 @@ const MobileSlide: React.FC<MobileSlideProps> = ({ items, isLoading = false }) =
         <NavigationArrows
           onPrev={() => swiperRef.current?.slidePrev()}
           onNext={() => swiperRef.current?.slideNext()}
-          className="flex justify-between w-full mb-0"
-          buttonClassName="bg-[#252525]/80 backdrop-blur-md shadow-lg pointer-events-auto w-12 h-12 border-[#f9be5c] text-[#f9be5c] hover:bg-[#f9be5c] hover:text-[#984121]"
+          className="w-full"
         />
       </div>
     </div>

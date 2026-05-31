@@ -1,23 +1,32 @@
 import clsx from "clsx";
 
-type GalleryNavButtonProps = {
-  direction: "prev" | "next";
-  onClick: () => void;
+export type SlideNavDirection = "prev" | "next";
+
+export interface SlideNavButtonProps {
+  direction: SlideNavDirection;
+  onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  ariaLabel?: string;
+}
+
+const DEFAULT_ARIA_LABELS: Record<SlideNavDirection, string> = {
+  prev: "Previous slide",
+  next: "Next slide",
 };
 
-const GalleryNavButton: React.FC<GalleryNavButtonProps> = ({
+export const SlideNavButton: React.FC<SlideNavButtonProps> = ({
   direction,
   onClick,
   disabled = false,
   className,
+  ariaLabel,
 }) => (
   <button
     type="button"
     onClick={onClick}
     disabled={disabled}
-    aria-label={direction === "prev" ? "Gallery previous" : "Gallery next"}
+    aria-label={ariaLabel ?? DEFAULT_ARIA_LABELS[direction]}
     className={clsx(
       "flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full border border-[#f9be5c] text-[#f9be5c] shrink-0",
       "bg-[#252525]/80 backdrop-blur-md shadow-lg transition-all duration-300",
@@ -46,4 +55,4 @@ const GalleryNavButton: React.FC<GalleryNavButtonProps> = ({
   </button>
 );
 
-export default GalleryNavButton;
+export default SlideNavButton;

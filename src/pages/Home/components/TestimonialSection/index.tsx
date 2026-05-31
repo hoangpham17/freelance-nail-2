@@ -171,8 +171,7 @@ const TestimonialSection: React.FC = () => {
 
           <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 z-50 pointer-events-none">
             <NavigationArrows
-              className="flex justify-between w-full mb-0"
-              buttonClassName="bg-[#252525]/80 backdrop-blur-md shadow-lg pointer-events-auto w-12 h-12 md:w-16 md:h-16 border-[#f9be5c] text-[#f9be5c] hover:bg-[#f9be5c] hover:text-[#984121]"
+              className="w-full"
               prevButtonClassName="testimonial-prev"
               nextButtonClassName="testimonial-next"
             />

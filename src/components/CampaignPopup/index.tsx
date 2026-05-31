@@ -3,7 +3,7 @@ import { useAirtable } from "@/hooks/useAirtable";
 import { AIRTABLE_ENDPOINTS } from "@/services/airtable.service";
 import { PromotionData, AirtableAttachment } from "@/components/Header/types";
 import { useCampaignStore } from "@/shared/store/campaignStore";
-import SvgIcon from "@/based/SvgIcon";
+import { PopupCloseButton } from "@/components/PopupCloseButton";
 
 const resolveImageUrl = (image?: AirtableAttachment[]): string => {
   if (!image || !Array.isArray(image) || image.length === 0) {
@@ -100,20 +100,11 @@ const CampaignPopup: React.FC = () => {
         data-campaign-popup
       >
         <div className="relative max-w-[90%] md:max-w-[75%] lg:max-w-[30%] w-full my-auto py-8 pointer-events-auto">
-          <button
-            className="sticky top-4 ml-auto w-10 h-10 bg-white border border-white rounded-full cursor-pointer transition-all duration-300 z-[2] md:w-8 md:h-8 hover:scale-110 active:scale-95 flex items-center justify-center mb-4"
+          <PopupCloseButton
             data-popup-close
             onClick={handleClosePopup}
-            aria-label="Close popup"
-          >
-            <SvgIcon
-              src={"/assets/svgs/x-close.svg"}
-              ariaLabel="text"
-              width={24}
-              height={24}
-              className="size-[24px] shrink-0"
-            />
-          </button>
+            className="sticky top-4 z-[2] mb-4 ml-auto"
+          />
           <div className="flex flex-col gap-6">
             {imagePromotions.map((promotion, index) => {
               const imageSrc =
