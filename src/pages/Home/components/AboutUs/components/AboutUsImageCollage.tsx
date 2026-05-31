@@ -1,43 +1,54 @@
+import clsx from "clsx";
 import { Skeleton } from "antd";
-
-/** Figma Home — About Us info frame (node 70:200) */
-const COLLAGE_WIDTH = 413;
-const COLLAGE_HEIGHT = 524;
 
 interface AboutUsImageCollageProps {
   primaryImageUrl?: string;
   secondaryImageUrl?: string;
   isLoading?: boolean;
+  className?: string;
 }
 
 const AboutUsImageCollage: React.FC<AboutUsImageCollageProps> = ({
   primaryImageUrl,
   secondaryImageUrl,
   isLoading = false,
+  className,
 }) => {
   return (
     <div
-      className="relative shrink-0 mx-auto lg:mx-0 scale-[0.82] lg:scale-90 xl:scale-100"
-      style={{ width: COLLAGE_WIDTH, height: COLLAGE_HEIGHT }}
+      className={clsx(
+        "relative w-full max-w-[413px] aspect-[413/524] shrink-0",
+        className,
+      )}
     >
       {/* Decorative outline — behind photos (Figma 70:201) */}
       <div
         className="absolute z-0 rounded-xl border-[3px] border-solid border-[#984121] pointer-events-none"
-        style={{ left: 120, top: 127, width: 249, height: 327 }}
+        style={{
+          left: "29.06%",
+          top: "24.24%",
+          width: "60.29%",
+          height: "62.40%",
+        }}
         aria-hidden
       />
 
       {/* Soft shadow between stacks (Figma 70:203) */}
       <div
         className="absolute z-[1] rounded-xl bg-black/30 blur-[50px] pointer-events-none"
-        style={{ left: 120, top: 183, width: 196, height: 231 }}
+        style={{
+          left: "29.06%",
+          top: "34.92%",
+          width: "47.46%",
+          height: "44.08%",
+        }}
         aria-hidden
       />
 
       {/* Primary image (Figma 70:202) */}
       <div
         className="absolute left-0 top-0 z-[2] overflow-hidden rounded-xl bg-[#252525]"
-        style={{ width: 313, height: 405 }}
+        style={{ width: "75.79%", height: "77.29%" }}
       >
         {isLoading ? (
           <Skeleton.Image active className="!w-full !h-full" />
@@ -58,7 +69,12 @@ const AboutUsImageCollage: React.FC<AboutUsImageCollageProps> = ({
       {/* Secondary image — overlaps primary, no border (Figma 70:204) */}
       <div
         className="absolute z-[3] overflow-hidden rounded-xl bg-[#252525]"
-        style={{ left: 151, top: 216, width: 262, height: 308 }}
+        style={{
+          left: "36.56%",
+          top: "41.22%",
+          width: "63.44%",
+          height: "58.78%",
+        }}
       >
         {isLoading ? (
           <Skeleton.Image active className="!w-full !h-full" />

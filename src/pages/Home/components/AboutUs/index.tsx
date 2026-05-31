@@ -29,7 +29,7 @@ const AboutUs: React.FC = () => {
       data-home-grad="about"
     >
       <Wrapper className="home-about-wrap">
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <HomeSectionHeading
             variant="about"
             titleHtml={block?.title}
@@ -53,17 +53,17 @@ const AboutUs: React.FC = () => {
           </div>
         </div>
 
-        <Flex
-          className="home-about-desktop hidden lg:flex w-full max-w-[1320px] mx-auto items-center justify-center gap-10 xl:gap-[60px]"
-          align="center"
-        >
-          <AboutUsImageCollage
-            primaryImageUrl={primaryImage?.imageUrl}
-            secondaryImageUrl={secondaryImage?.imageUrl}
-            isLoading={isLoadingItems}
-          />
+        <div className="home-about-desktop hidden md:grid md:grid-cols-5 w-full max-w-[1320px] mx-auto items-center gap-6 lg:gap-8 xl:gap-[60px]">
+          <div className="col-span-2 min-w-0 flex items-center justify-center">
+            <AboutUsImageCollage
+              primaryImageUrl={primaryImage?.imageUrl}
+              secondaryImageUrl={secondaryImage?.imageUrl}
+              isLoading={isLoadingItems}
+              className="w-full"
+            />
+          </div>
 
-          <Flex vertical className="flex-1 gap-8">
+          <Flex vertical className="col-span-3 min-w-0 gap-6 lg:gap-8">
             <HomeSectionHeading
               variant="about"
               titleHtml={block?.title}
@@ -95,7 +95,7 @@ const AboutUs: React.FC = () => {
               />
             </Link>
           </Flex>
-        </Flex>
+        </div>
       </Wrapper>
     </section>
   );
