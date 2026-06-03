@@ -21,3 +21,43 @@
   z-index: 2;
   background: transparent;
 }
+
+/* Gallery grid card — matches GalleryItem frame height */
+.gallery-card-frame {
+  height: 380px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .gallery-card-frame {
+    height: 460px;
+  }
+}
+
+.gallery-card-shimmer {
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: linear-gradient(90deg, #252525 0%, #333333 50%, #252525 100%);
+  background-size: 200% 100%;
+  animation: gallery-shimmer 1.5s ease-in-out infinite;
+}
+
+.gallery-card-shimmer--frame {
+  height: 380px;
+}
+
+@media (min-width: 1024px) {
+  .gallery-card-shimmer--frame {
+    height: 460px;
+  }
+}
+
+@keyframes gallery-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

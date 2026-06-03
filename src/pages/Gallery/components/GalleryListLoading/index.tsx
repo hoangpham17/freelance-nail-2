@@ -12,25 +12,10 @@ const GalleryListLoading: React.FC = () => {
         {[...Array(6)].map((_, index) => (
           <div
             key={index}
-            className="rounded-2xl overflow-hidden gallery-list-shimmer"
-            style={{
-              aspectRatio: "4/5",
-              background:
-                "linear-gradient(90deg, #252525 0%, #333333 50%, #252525 100%)",
-              backgroundSize: "200% 100%",
-            }}
+            className="gallery-card-shimmer gallery-card-shimmer--frame rounded-2xl"
           />
         ))}
       </div>
-      <style>{`
-        .gallery-list-shimmer {
-          animation: gallery-shimmer 1.5s ease-in-out infinite;
-        }
-        @keyframes gallery-shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-      `}</style>
     </Wrapper>
   );
 };

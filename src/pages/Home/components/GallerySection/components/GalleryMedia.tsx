@@ -12,6 +12,7 @@ type GalleryMediaProps = {
   fit?: "cover" | "contain";
   /** hover = autoplay on hover (grid); manual = click to play/pause (popup) */
   videoPlayback?: "hover" | "manual";
+  onLoaded?: () => void;
 };
 
 const GalleryMedia: React.FC<GalleryMediaProps> = ({
@@ -21,6 +22,7 @@ const GalleryMedia: React.FC<GalleryMediaProps> = ({
   isVideo: isVideoProp,
   fit = "cover",
   videoPlayback = "hover",
+  onLoaded,
 }) => {
   const fitClassName =
     fit === "contain" ? "object-contain" : "size-full object-cover";
@@ -79,6 +81,7 @@ const GalleryMedia: React.FC<GalleryMediaProps> = ({
         onMouseLeave={!isManualPlayback ? pauseAndResetVideo : undefined}
         onFocus={!isManualPlayback ? playVideo : undefined}
         onBlur={!isManualPlayback ? pauseAndResetVideo : undefined}
+        onLoadedData={onLoaded}
         onKeyDown={
           isManualPlayback
             ? (e) => {
@@ -99,6 +102,7 @@ const GalleryMedia: React.FC<GalleryMediaProps> = ({
       src={url}
       alt={alt}
       className={clsx(fitClassName, className)}
+      onLoad={onLoaded}
     />
   );
 };

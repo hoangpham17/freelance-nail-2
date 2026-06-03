@@ -3,7 +3,6 @@ import { GalleryItem } from "../../types";
 import GalleryItemComponent from "../GalleryItem";
 import GalleryListLoading from "../GalleryListLoading";
 import { Wrapper } from "@/based/components/Wrapper";
-import { Skeleton } from "antd";
 
 interface GalleryGridProps {
   items: GalleryItem[];
@@ -108,17 +107,14 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
         {(hasNextPage || isFetchingNextPage) && (
           <div ref={observerTarget} className="w-full mb-4 md:mb-8">
             {isFetchingNextPage && (
-              <div className="flex justify-center items-center pt-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full">
-                  {[...Array(3)].map((_, index) => (
-                    <Skeleton.Image
-                      key={`loading-${index}`}
-                      active
-                      className="!w-full !rounded-2xl"
-                      style={{ aspectRatio: "4/5", minHeight: "380px" }}
-                    />
-                  ))}
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full pt-6">
+                {[...Array(3)].map((_, index) => (
+                  <div
+                    key={`loading-${index}`}
+                    className="gallery-card-shimmer gallery-card-shimmer--frame rounded-2xl"
+                    aria-hidden
+                  />
+                ))}
               </div>
             )}
           </div>
