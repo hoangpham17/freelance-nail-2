@@ -345,11 +345,18 @@
 }
 
 /* Desktop — single flowing row, spread to fill (aligns with form width) */
-@media (min-width: 1280px) {
+@media (min-width: 1200px) {
   .host-party-occasions-chips {
     flex-wrap: nowrap;
     justify-content: space-between;
     gap: 0.5rem;
+    /* Inset both chips and form equally: keeps them edge-aligned and gives
+       the chip hover glow room so the wrapper's overflow:hidden can't clip it. */
+    padding-inline: 1.25rem;
+  }
+
+  .host-party-form__grid {
+    padding-inline: 1.25rem;
   }
 
   .host-party-occasions-chip {
