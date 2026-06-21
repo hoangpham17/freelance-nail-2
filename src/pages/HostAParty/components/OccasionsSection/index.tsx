@@ -113,8 +113,8 @@ const OccasionsSection: React.FC = () => {
                 strokeWidth={1.5}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                width={18}
-                height={18}
+                width={24}
+                height={24}
               >
                 {OCCASION_ICONS[occasion.icon]}
               </svg>
@@ -122,7 +122,7 @@ const OccasionsSection: React.FC = () => {
             <span
               className={clsx(
                 "host-party-occasions-chip__label font-playfairDisplay font-medium text-madison-text leading-none tracking-tight",
-                responsiveFontSizeArray(13, 15),
+                responsiveFontSizeArray(16, 20),
               )}
             >
               {occasion.label}
