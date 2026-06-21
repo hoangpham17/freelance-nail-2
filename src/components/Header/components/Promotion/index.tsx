@@ -71,7 +71,7 @@ const Promotion: React.FC<PromotionProps> = ({
       className={clsx(
         "madison-campaign-bar block w-full transition-all duration-300 ease-linear overflow-hidden",
         showCampaignBar && !isCampaignDismissed
-          ? "opacity-100 max-h-24 translate-y-0"
+          ? "opacity-100 max-h-32 translate-y-0"
           : "opacity-0 max-h-0 -translate-y-full pointer-events-none",
       )}
       data-campaign
@@ -94,9 +94,9 @@ const Promotion: React.FC<PromotionProps> = ({
           </button>
           <div
             className={clsx(
-              "text-madison-gold-dark text-center font-semibold font-montserrat w-full",
+              "text-gold-gradient text-center font-normal font-montserrat w-full",
               textPromotions.length > 1 && "relative min-h-[1.5em]",
-              responsiveFontSizeArray(14, 20),
+              responsiveFontSizeArray(16, 28),
             )}
             data-campaign-text
           >

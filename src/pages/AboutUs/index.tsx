@@ -86,7 +86,7 @@ const AboutUs: React.FC = () => {
               {hero.title}
             </span>
           </h1>
-          <SectionHeadingLine className="mx-auto lg:mx-0 mt-4" />
+          <SectionHeadingLine className="mx-auto mt-4" />
           <p className={clsx("au-hero__lead", responsiveFontSizeArray(16, 20))}>
             {hero.lead}
           </p>

@@ -54,7 +54,7 @@ export const ServiceList = () => {
   if (serviceCategories.length === 0) return null;
 
   return (
-    <div className="relative z-[1] pb-10 md:pb-16">
+    <div className="relative z-[1] pb-16 md:pb-20 lg:pb-24">
       <Wrapper>
         <div
           className="home-service-list mx-auto w-full max-w-[1400px] pt-2"

@@ -19,10 +19,10 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
   const { isMobile } = useScreen();
   return (
     <div className="px-2 md:px-2 py-4">
-      <div className="testimonial-card bg-black rounded-[24px] md:rounded-[40px] p-4 md:p-6 flex flex-col-reverse md:flex-row gap-4 md:gap-6 w-full max-w-[1080px] mx-auto h-auto md:h-[400px] min-[1700px]:h-[540px] transition-[border-color,box-shadow] duration-500 shadow-[0_4px_24px_rgba(0,0,0,0.12)] relative overflow-hidden border border-madison-border/30">
+      <div className="testimonial-card bg-madison-surface rounded-[1rem] sm:rounded-[1.125rem] lg:rounded-[1.25rem] p-4 md:p-6 flex flex-col-reverse md:flex-row gap-4 md:gap-6 w-full max-w-[1080px] mx-auto h-auto md:h-[400px] min-[1700px]:h-[540px] transition-[box-shadow] duration-500 shadow-[0_8px_32px_rgba(0,0,0,0.4)] relative overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-500 pointer-events-none z-20 testimonial-overlay" />
 
-        <div className="bg-madison-surface rounded-[24px] md:rounded-[32px] p-6 md:py-10 md:px-8 w-full md:w-[55%] flex flex-col relative justify-between min-h-[200px]">
+        <div className="bg-black rounded-[1rem] sm:rounded-[1.125rem] lg:rounded-[1.25rem] p-6 md:py-10 md:px-8 w-full md:w-[55%] flex flex-col relative justify-between min-h-[200px]">
           <div className="absolute top-4 left-4 md:top-6 md:left-6">
             <SvgIcon
               src="/assets/svgs/quote-open.svg"
@@ -64,7 +64,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
           </div>
         </div>
 
-        <div className="w-full md:flex-1 h-[260px] md:h-auto overflow-hidden rounded-[24px] md:rounded-[32px]">
+        <div className="w-full md:flex-1 h-[260px] md:h-auto overflow-hidden rounded-[1rem] sm:rounded-[1.125rem] lg:rounded-[1.25rem]">
           <div
             className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
             style={{

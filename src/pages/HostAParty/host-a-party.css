@@ -156,7 +156,7 @@
 @media (min-width: 1024px) {
   .host-party-hero__copy {
     max-width: min(100%, 38rem);
-    margin-inline: 0;
+    margin-inline: clamp(3rem, 15vw, 15rem) 0;
     flex: 0 1 42%;
     min-width: min(100%, 20rem);
   }
@@ -333,18 +333,6 @@
   width: 100%;
 }
 
-@media (min-width: 1024px) {
-  .host-party-form__grid {
-    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
-  }
-}
-
-@media (min-width: 1280px) {
-  .host-party-form__grid {
-    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
-  }
-}
-
 .host-party-form__intro {
   display: flex;
   flex-direction: column;
@@ -352,11 +340,10 @@
   text-align: center;
 }
 
-@media (min-width: 1024px) {
-  .host-party-form__intro {
-    text-align: left;
-    padding-top: 0.25rem;
-  }
+/* Intro moved inside the form card */
+.host-party-form__intro--inside {
+  margin-bottom: var(--host-party-gap-lg);
+  text-align: center;
 }
 
 .host-party-form__panel {
@@ -365,6 +352,9 @@
   background: rgb(18 18 18 / 0.9);
   border: 1px solid rgb(55 65 81 / 0.45);
   padding: var(--host-party-gap-md);
+  max-width: 60rem;
+  margin-inline: auto;
+  width: 100%;
 }
 
 @media (min-width: 768px) {

@@ -61,9 +61,9 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
 
   return (
     <div className="w-full">
-      <Wrapper className="py-8 lg:py-12">
+      <Wrapper className="py-8 lg:py-12 max-w-[1440px] 2xl:max-w-[1680px]">
         {items.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
             {items.map((item, index) => (
               <GalleryItemComponent
                 key={item.id}
@@ -107,8 +107,8 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
         {(hasNextPage || isFetchingNextPage) && (
           <div ref={observerTarget} className="w-full mb-4 md:mb-8">
             {isFetchingNextPage && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full pt-6">
-                {[...Array(3)].map((_, index) => (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 w-full pt-6">
+                {[...Array(4)].map((_, index) => (
                   <div
                     key={`loading-${index}`}
                     className="gallery-card-shimmer gallery-card-shimmer--frame rounded-2xl"

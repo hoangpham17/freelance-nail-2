@@ -20,14 +20,14 @@ const HEADING_TYPO: Record<
   }
 > = {
   default: { title: [36, 48], subtitle: [32, 60] },
-  /** Services — same single-line title scale as testimonial */
-  service: { title: [42, 99], subtitle: [32, 60], description: [14, 24] },
+  /** Services — title matches the "Premium Services" subtitle scale [44, 72] */
+  service: { title: [44, 72], subtitle: [32, 60], description: [14, 24] },
   /** About — nail-ver2 SectionTitle [40, 72] dual-line */
   about: { title: [36, 48], subtitle: [44, 72] },
-  /** Gallery — line 2 matches About */
-  gallery: { title: [36, 60], subtitle: [44, 72] },
-  /** Testimonial — nail-ver2 clamp(2.6rem, 5vw, 6.2rem) */
-  testimonial: { title: [42, 99], subtitle: [32, 60] },
+  /** Gallery — title matches About "Beautiful Nails" [36, 48], line 2 matches About */
+  gallery: { title: [36, 48], subtitle: [44, 72] },
+  /** Testimonial — title matches the "Premium Services" subtitle scale [44, 72] */
+  testimonial: { title: [44, 72], subtitle: [32, 60] },
 };
 
 export type HomeSectionHeadingProps = {
@@ -63,12 +63,8 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
   const titleEl = title ? (
     <div
       className={clsx(
-        "text-gold-gradient font-tangerine font-normal [&_strong]:font-tangerine [&_p]:m-0",
-        (variant === "service" || variant === "testimonial") &&
-          "home-section-feature-title",
-        variant !== "service" &&
-          variant !== "testimonial" &&
-          responsiveFontSizeArray(typo.title[0], typo.title[1]),
+        "text-gold-gradient font-tangerine font-normal [&_strong]:font-tangerine [&_p]:m-0 [&_p]:!text-[1em] [&_*]:!text-[1em]",
+        responsiveFontSizeArray(typo.title[0], typo.title[1]),
         isDualLine ? "leading-[1.15] [&_p+p]:mt-0" : "leading-[1.15]",
         !subtitle &&
           isDualLine &&
@@ -79,7 +75,7 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
         !subtitle &&
           isDualLine &&
           variant === "gallery" && [
-            "[&>p:first-child]:!text-[40px] md:[&>p:first-child]:!text-[60px]",
+            "[&>p:first-child]:!text-[36px] md:[&>p:first-child]:!text-[48px]",
             "[&>p:last-child]:!text-[44px] md:[&>p:last-child]:!text-[72px]",
           ],
         titleClassName,
@@ -151,7 +147,7 @@ export const HomeSectionHeading: React.FC<HomeSectionHeadingProps> = ({
       {description ? (
         <div
           className={clsx(
-            "max-w-[993px] font-light text-[#d1d5db] [&_p]:m-0",
+            "max-w-[1100px] font-light text-[#d1d5db] [&_p]:m-0",
             variant === "service"
               ? "home-service-section__description"
               : responsiveFontSizeArray(...(typo.description ?? [14, 16])),

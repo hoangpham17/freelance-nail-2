@@ -11,6 +11,10 @@ export const antdTheme: ThemeConfig = {
     colorLink: "#f9be5c",
     colorLinkHover: "#f9be5c",
     colorLinkActive: "#f1a953",
+    // Softer, warm error tone — fits the gold/black theme (no harsh neon red)
+    colorError: "#e0857b",
+    colorErrorBorder: "#e0857b",
+    colorErrorHover: "#e89a91",
   },
   components: {
     Button: {

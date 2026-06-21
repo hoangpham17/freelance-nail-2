@@ -124,14 +124,14 @@ const PartyForm: React.FC = () => {
 
   const labelClass = clsx(
     "text-madison-gold font-sans font-medium",
-    responsiveFontSizeArray(14, 15),
+    responsiveFontSizeArray(16, 16),
   );
   const inputClass = clsx(
     "pl-11 pr-4 py-3 rounded-lg !border !border-madison-border/80 h-11 lg:h-12",
     "bg-madison-black-soft text-madison-text placeholder:text-madison-muted/50",
     "focus:!border-madison-gold focus:!shadow-[0_0_0_1px_var(--madison-gold)] hover:!border-madison-gold/40",
     "transition-colors outline-none",
-    responsiveFontSizeArray(14, 16),
+    responsiveFontSizeArray(16, 16),
   );
   const iconClass = "shrink-0 text-madison-gold-dark";
 
@@ -141,12 +141,23 @@ const PartyForm: React.FC = () => {
         form={form}
         onFinish={handleSubmit}
         layout="vertical"
+        validateTrigger="onSubmit"
+        requiredMark={(labelNode, { required }) => (
+          <>
+            {labelNode}
+            {required && (
+              <span className="ml-1 text-[#e0857b]" aria-hidden>
+                *
+              </span>
+            )}
+          </>
+        )}
         className={clsx(
-          "[&_.ant-form-item]:mb-5 [&_.ant-form-item]:lg:mb-6",
+          "[&_.ant-form-item]:mb-7 [&_.ant-form-item]:lg:mb-8",
           "[&_.ant-form-item-control]:relative",
-          "[&_.ant-form-item-additional]:absolute [&_.ant-form-item-additional]:inset-x-0 [&_.ant-form-item-additional]:top-0 [&_.ant-form-item-additional]:z-20 [&_.ant-form-item-additional]:pointer-events-none [&_.ant-form-item-additional]:!h-0 [&_.ant-form-item-additional]:!min-h-0 [&_.ant-form-item-additional]:!m-0 [&_.ant-form-item-additional]:!p-0",
-          "[&_.ant-form-item-explain]:absolute [&_.ant-form-item-explain]:left-11 [&_.ant-form-item-explain]:right-3 [&_.ant-form-item-explain]:top-0.5",
-          "[&_.ant-form-item-explain-error]:text-red-500 [&_.ant-form-item-explain-error]:text-xs [&_.ant-form-item-explain-error]:leading-4",
+          "[&_.ant-form-item-additional]:absolute [&_.ant-form-item-additional]:inset-x-0 [&_.ant-form-item-additional]:top-full [&_.ant-form-item-additional]:z-20 [&_.ant-form-item-additional]:pointer-events-none [&_.ant-form-item-additional]:!h-0 [&_.ant-form-item-additional]:!min-h-0 [&_.ant-form-item-additional]:!m-0 [&_.ant-form-item-additional]:!p-0",
+          "[&_.ant-form-item-explain]:absolute [&_.ant-form-item-explain]:left-1 [&_.ant-form-item-explain]:right-1 [&_.ant-form-item-explain]:top-full [&_.ant-form-item-explain]:mt-1.5",
+          "[&_.ant-form-item-explain-error]:text-[#e0857b] [&_.ant-form-item-explain-error]:text-xs [&_.ant-form-item-explain-error]:leading-snug [&_.ant-form-item-explain-error]:font-light [&_.ant-form-item-explain-error]:tracking-wide",
           "[&_.ant-form-item-margin-offset]:!mb-0",
         )}
       >
@@ -309,7 +320,7 @@ const PartyForm: React.FC = () => {
                   "focus-within:!border-madison-gold focus-within:!shadow-[0_0_0_1px_var(--madison-gold)]",
                   "[&_.ant-picker-input>input]:text-madison-text [&_.ant-picker-input>input]:placeholder:text-madison-muted/50",
                   "[&_.ant-picker-suffix]:text-madison-gold-dark",
-                  responsiveFontSizeArray(14, 16),
+                  responsiveFontSizeArray(16, 16),
                 )}
                 suffixIcon={null}
               />

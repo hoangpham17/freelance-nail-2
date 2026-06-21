@@ -14,7 +14,7 @@ const businessHours = [
 const MainContentSection: React.FC = () => {
   return (
     <section className="py-10 md:py-16 lg:py-[60px]">
-      <Wrapper>
+      <Wrapper className="max-w-[1440px] 2xl:max-w-[1680px]">
         <Flex vertical align="center" className="mb-10 md:mb-12">
           <img
             src="/assets/images/logo/desktop.png"
@@ -26,12 +26,12 @@ const MainContentSection: React.FC = () => {
         <div className="madison-footer-info grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           <FooterLocationColumn />
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-center gap-4 text-center">
             <h4 className="madison-footer-info__heading">Business Hours</h4>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col items-center gap-3">
               {businessHours.map((row) => (
-                <Flex key={row.label} gap={16} wrap="wrap" align="center">
-                  <span className="madison-footer-info__label min-w-[92px] shrink-0">
+                <Flex key={row.label} gap={16} wrap="wrap" align="center" justify="center">
+                  <span className="madison-footer-info__label min-w-[92px] shrink-0 text-left">
                     {row.label}
                   </span>
                   <span className="madison-footer-info__value">{row.time}</span>
@@ -42,22 +42,34 @@ const MainContentSection: React.FC = () => {
 
           <div className="flex flex-col gap-4 md:col-span-2 lg:col-span-1">
             <h4 className="madison-footer-info__heading">Keep in Touch</h4>
-            <div className="flex flex-col gap-2">
-              <Flex align="center" gap={8}>
-                <span className="madison-footer-info__label w-[18px] shrink-0">
-                  T:
+            <div className="flex flex-col gap-3">
+              <Flex align="center" gap={10}>
+                <span className="flex w-[20px] shrink-0 justify-center">
+                  <SvgIcon
+                    src="/assets/svgs/phone.svg"
+                    ariaLabel="Phone"
+                    width={12}
+                    height={18}
+                    className="text-madison-gold"
+                  />
                 </span>
                 <a href="tel:6087201011" className="madison-footer-info__value">
                   (608) 720 1011
                 </a>
               </Flex>
-              <Flex align="center" gap={8}>
-                <span className="madison-footer-info__label w-[18px] shrink-0">
-                  E:
+              <Flex align="center" gap={10}>
+                <span className="flex w-[20px] shrink-0 justify-center">
+                  <SvgIcon
+                    src="/assets/svgs/email.svg"
+                    ariaLabel="Email"
+                    width={18}
+                    height={18}
+                    className="text-madison-gold"
+                  />
                 </span>
                 <a
                   href="mailto:contact@madisonnaillounge.com"
-                  className="madison-footer-info__email"
+                  className="madison-footer-info__value"
                 >
                   contact@madisonnaillounge.com
                 </a>

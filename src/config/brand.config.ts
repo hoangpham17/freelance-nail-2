@@ -14,4 +14,6 @@ export const BRAND = {
     "Madison Nail Lounge, madison nail lounge, Madison nail salon, nail salon Madison WI, manicure, pedicure, nail art, nail enhancements, gel nails, dip powder, acrylic nails, Madison WI",
   twitterHandle: "@madisonnaillounge",
   pageHeroSubtitle: "Madison Nail Lounge",
+  // TODO: thay bằng link booking thật (Booksy/Fresha/Square…)
+  bookingUrl: "https://madisonnaillounge.com",
 } as const;

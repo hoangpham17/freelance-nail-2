@@ -205,7 +205,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         className="sticky z-30 transition-all duration-300"
         style={{ top: stickyTop }}
       >
-        <Wrapper>
+        <Wrapper className="max-w-[1440px] 2xl:max-w-[1680px]">
           <div className="flex-1 min-w-0 overflow-hidden relative">
             <div className="flex gap-2 py-2 lg:py-4">
               {[1, 2, 3].map((i) => (
@@ -234,7 +234,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
       className="sticky z-30 transition-all duration-300 bg-black/95 backdrop-blur-sm border-b border-madison-border/40"
       style={{ top: stickyTop, boxShadow: "0 4px 24px rgba(0, 0, 0, 0.35)" }}
     >
-      <Wrapper>
+      <Wrapper className="max-w-[1440px] 2xl:max-w-[1680px]">
         <div className="flex-1 min-w-0 overflow-hidden relative">
           <Swiper
             onSwiper={(swiper) => (swiperRef.current = swiper)}

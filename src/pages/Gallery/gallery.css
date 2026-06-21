@@ -24,13 +24,27 @@
 
 /* Gallery grid card — matches GalleryItem frame height */
 .gallery-card-frame {
-  height: 380px;
   width: 100%;
+  box-shadow: 0 8px 32px rgba(107, 74, 47, 0.08);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-@media (min-width: 1024px) {
+.gallery-card-frame:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 0 1px rgb(249 190 92 / 0.32),
+    0 14px 40px rgb(0 0 0 / 0.42),
+    0 0 22px rgb(249 190 92 / 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
   .gallery-card-frame {
-    height: 460px;
+    transition: box-shadow 0.35s ease;
+  }
+  .gallery-card-frame:hover {
+    transform: none;
   }
 }
 
@@ -44,13 +58,7 @@
 }
 
 .gallery-card-shimmer--frame {
-  height: 380px;
-}
-
-@media (min-width: 1024px) {
-  .gallery-card-shimmer--frame {
-    height: 460px;
-  }
+  aspect-ratio: 3 / 4;
 }
 
 @keyframes gallery-shimmer {

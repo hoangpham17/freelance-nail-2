@@ -96,10 +96,10 @@ const GallerySection: React.FC<GallerySectionProps> = ({
   if (galleryItems.length === 0) {
     return (
       <section
-        className="home-section-gradient relative overflow-hidden py-10 md:py-16 lg:py-[60px]"
+        className="home-section-gradient relative overflow-hidden py-16 md:py-20 lg:py-24"
         data-home-grad="gallery"
       >
-        <Wrapper className="relative z-[2] lg:!px-[120px]">
+        <Wrapper className="relative z-[2] lg:!px-[120px] max-w-[1440px] 2xl:max-w-[1680px]">
           <Header />
           <div className="mt-8">
             <GalleryGrid items={[]} variant="mosaic" />
@@ -114,17 +114,17 @@ const GallerySection: React.FC<GallerySectionProps> = ({
 
   return (
     <section
-      className="home-section-gradient relative overflow-hidden py-10 md:py-16 lg:py-[60px]"
+      className="home-section-gradient relative overflow-hidden py-16 md:py-20 lg:py-24"
       data-home-grad="gallery"
       data-gallery-section
     >
-      <Wrapper className="relative z-[2] lg:!px-[120px]">
+      <Wrapper className="relative z-[2] lg:!px-[120px] max-w-[1440px] 2xl:max-w-[1680px]">
         <Header />
       </Wrapper>
 
       <div
         className={clsx(
-          "relative z-[2] mt-2 max-w-[1440px] mx-auto",
+          "relative z-[2] mt-2 max-w-[1440px] 2xl:max-w-[1680px] mx-auto",
           isXl ? "px-4 lg:px-[120px]" : "px-0",
         )}
       >

@@ -17,13 +17,13 @@ const AboutUsImageCollage: React.FC<AboutUsImageCollageProps> = ({
   return (
     <div
       className={clsx(
-        "relative w-full max-w-[413px] aspect-[413/524] shrink-0",
+        "relative w-full max-w-[640px] aspect-[480/520] shrink-0",
         className,
       )}
     >
       {/* Decorative outline — behind photos (Figma 70:201) */}
       <div
-        className="absolute z-0 rounded-xl border-[3px] border-solid border-[#984121] pointer-events-none"
+        className="about-collage-frame absolute z-0 rounded-xl border-[3px] border-solid pointer-events-none"
         style={{
           left: "29.06%",
           top: "24.24%",
@@ -48,7 +48,7 @@ const AboutUsImageCollage: React.FC<AboutUsImageCollageProps> = ({
       {/* Primary image (Figma 70:202) */}
       <div
         className="absolute left-0 top-0 z-[2] overflow-hidden rounded-xl bg-[#252525]"
-        style={{ width: "75.79%", height: "77.29%" }}
+        style={{ width: "66%", height: "64%" }}
       >
         {isLoading ? (
           <Skeleton.Image active className="!w-full !h-full" />
@@ -70,17 +70,17 @@ const AboutUsImageCollage: React.FC<AboutUsImageCollageProps> = ({
       <div
         className="absolute z-[3] overflow-hidden rounded-xl bg-[#252525]"
         style={{
-          left: "36.56%",
-          top: "41.22%",
-          width: "63.44%",
-          height: "58.78%",
+          left: "45%",
+          top: "44%",
+          width: "55%",
+          height: "56%",
         }}
       >
         {isLoading ? (
           <Skeleton.Image active className="!w-full !h-full" />
         ) : (
           <div
-            className="size-full bg-cover bg-center"
+            className="size-full bg-cover bg-center bg-no-repeat"
             style={{
               backgroundImage: secondaryImageUrl
                 ? `url('${secondaryImageUrl}')`

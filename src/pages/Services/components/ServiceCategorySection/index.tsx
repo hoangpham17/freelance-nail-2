@@ -174,7 +174,9 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
     >
       <ServiceSectionDecoLines sectionIndex={index} />
       <Wrapper
-        className={clsx("relative z-10 py-8 lg:py-16 !overflow-visible")}
+        className={clsx(
+          "relative z-10 py-8 lg:py-16 !overflow-visible max-w-[1440px] 2xl:max-w-[1680px]",
+        )}
       >
         <Flex
           align={isDesktop ? "start" : "start"}
@@ -200,7 +202,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
               <div
                 ref={imageContainerRef}
                 className={clsx(
-                  "relative w-full border p-4 rounded-xl transition-all duration-1000 ease-out delay-200",
+                  "relative w-full border p-4 rounded-[1rem] sm:rounded-[1.125rem] lg:rounded-[1.25rem] transition-all duration-1000 ease-out delay-200",
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8",
@@ -213,7 +215,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                 }}
               >
                 <div
-                  className="rounded-xl overflow-hidden w-full h-full relative bg-[#EDE6E0]"
+                  className="rounded-[1rem] sm:rounded-[1.125rem] lg:rounded-[1.25rem] overflow-hidden w-full h-full relative bg-[#EDE6E0]"
                   style={{
                     height: isDesktop ? `${maxImageHeight - 32}px` : "368px",
                   }}
@@ -240,7 +242,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
           >
             <div
               className={clsx(
-                "transition-all duration-1000 ease-out delay-300",
+                "transition-all duration-1000 ease-out delay-300 px-4 lg:px-6",
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8",
@@ -254,18 +256,11 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
               >
                 {category.title}
               </h2>
-              <div
-                className="mt-2 lg:mt-3 h-px w-24 rounded-full"
-                style={{
-                  background:
-                    "linear-gradient(90deg, #B2866D 0%, transparent 100%)",
-                }}
-              />
             </div>
             {category.description && (
               <div
                 className={clsx(
-                  "services-richtext font-light text-madison-muted transition-all duration-1000 ease-out delay-400",
+                  "services-richtext font-light text-madison-muted transition-all duration-1000 ease-out delay-400 px-4 lg:px-6",
                   !categoryImage && "md:max-w-[50%]",
                   isVisible
                     ? "opacity-100 translate-y-0"
@@ -331,7 +326,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                     {idx > 0 && !isTwoColumnLayout && (
                       <div
                         className={clsx(
-                          "border-t border-madison-gold/40 transition-all duration-700 ease-out",
+                          "service-row-divider transition-all duration-700 ease-out",
                           isCardVisible ? "opacity-100" : "opacity-0",
                         )}
                         style={{
@@ -346,7 +341,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                         isCardVisible
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-8",
-                        isTwoColumnLayout && "border-b border-madison-gold/40",
+                        isTwoColumnLayout && "service-row-divider-b",
                       )}
                       style={{
                         transitionDelay: `${500 + idx * 100}ms`,
@@ -370,11 +365,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
             {category.additional_charge && (
               <>
                 <div
-                  className="mt-4 lg:mt-6 h-px w-24 mx-auto"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #B2866D 0%, transparent 100%)",
-                  }}
+                  className="mt-4 lg:mt-6 h-px w-full service-row-divider"
                 />
                 <div
                   className={clsx(

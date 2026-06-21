@@ -243,7 +243,7 @@
   /* Chained section backgrounds — end of section N === start of section N+1 */
   --home-grad-hero-end: #000000;
   --home-grad-service-end: #161412;
-  --home-grad-about-end: #2c2824;
+  --home-grad-about-end: #1b1714;
   --home-grad-gallery-end: #121110;
   --home-grad-testimonial-end: #000000;
 }
@@ -285,10 +285,10 @@
   background-image: linear-gradient(
     180deg,
     var(--home-grad-service-end) 0%,
-    #262220 42%,
+    #181410 42%,
     var(--home-grad-about-end) 100%
   );
-  box-shadow: inset 0 1px 0 rgb(249 190 92 / 0.07);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
 }
 
 .home-section-gradient[data-home-grad="gallery"] {
@@ -296,7 +296,7 @@
   background-image: linear-gradient(
     180deg,
     var(--home-grad-about-end) 0%,
-    #1a1816 45%,
+    #151210 45%,
     var(--home-grad-gallery-end) 100%
   );
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
@@ -315,6 +315,31 @@
 /* Fallback for sections without data-home-grad */
 .home-section-gradient {
   background: var(--madison-section-gradient);
+}
+
+/* Home — About Us: decorative collage frame (matches service-item gold @ 50%) */
+.about-collage-frame {
+  border-color: rgb(249 190 92 / 0.5);
+  box-shadow: 0 0 14px rgb(249 190 92 / 0.1);
+  animation: about-collage-frame-glow 4.5s ease-in-out infinite;
+}
+
+@keyframes about-collage-frame-glow {
+  0%,
+  100% {
+    border-color: rgb(249 190 92 / 0.42);
+    box-shadow: 0 0 10px rgb(249 190 92 / 0.08);
+  }
+  50% {
+    border-color: rgb(249 190 92 / 0.62);
+    box-shadow: 0 0 22px rgb(249 190 92 / 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-collage-frame {
+    animation: none;
+  }
 }
 
 /* Home — About Us: symmetric side padding (mobile / tablet / desktop) */
@@ -434,7 +459,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--home-service-gap);
+  column-gap: var(--home-service-gap);
   row-gap: var(--home-service-gap);
 }
 
@@ -471,17 +496,26 @@
 
 @media (min-width: 1024px) {
   .home-service-list {
-    --home-service-cols: 5;
+    --home-service-cols: 4;
     --home-service-gap: 2.5rem;
-    --home-service-tile-max: none;
+    --home-service-tile-max: 18rem;
   }
 
   .home-service-item {
-    width: calc(
-      (100% - (var(--home-service-cols) - 1) * var(--home-service-gap)) /
-        var(--home-service-cols)
+    width: min(
+      calc(
+        (100% - (var(--home-service-cols) - 1) * var(--home-service-gap)) /
+          var(--home-service-cols)
+      ),
+      var(--home-service-tile-max)
     );
-    max-width: none;
+    max-width: var(--home-service-tile-max);
+  }
+
+  .home-service-item:nth-child(n+5) {
+    flex-basis: calc(
+      (100% - var(--home-service-gap)) / 2
+    );
   }
 }
 
@@ -841,6 +875,28 @@
   filter: brightness(1.14);
 }
 
+/* Services — row divider matching Host-a-Party "party started" gradient line */
+.service-row-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(249 190 92 / 0.35) 50%,
+    transparent
+  );
+}
+
+.service-row-divider-b {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(
+      90deg,
+      transparent,
+      rgb(249 190 92 / 0.35) 50%,
+      transparent
+    )
+    1;
+}
+
 /* Services page — readable body copy on dark backgrounds */
 .services-richtext {
   color: var(--madison-text-muted);
@@ -888,14 +944,13 @@
 }
 
 .service-price-badge--cash {
-  background: rgb(37 37 37 / 0.92);
-  border: 1px solid rgb(249 190 92 / 0.55);
+  background: rgb(20 16 11 / 0.92);
+  border: 1px solid transparent;
 }
 
 .service-price-badge--card {
-  background: rgb(249 190 92 / 0.07);
-  border: 1px solid #fde199;
-  box-shadow: inset 0 0 0 1px rgb(249 190 92 / 0.08);
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid transparent;
 }
 
 .service-price-badge__text {
@@ -904,7 +959,7 @@
 }
 
 .service-price-badge__text--card {
-  color: #fde199;
+  color: var(--madison-text-muted);
   font-weight: 600;
 }
 
@@ -913,7 +968,7 @@
 }
 
 .service-price-badge__icon--card {
-  color: #fde199;
+  color: var(--madison-text-muted);
 }
 
 .service-price-badge__icon--cash svg,

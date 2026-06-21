@@ -25,7 +25,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ item, onClick }) => {
 
   return (
     <div
-      className="group relative gallery-card-frame w-full overflow-hidden rounded-2xl bg-[#252525] shadow-[0_8px_32px_rgba(107,74,47,0.08)] transition-all duration-300 hover:shadow-[0_16px_48px_rgba(107,74,47,0.14)]"
+      className="group relative gallery-card-frame aspect-[3/4] w-full overflow-hidden rounded-2xl bg-[#252525]"
       style={{ cursor: "url('/assets/svgs/cursor-plus.svg') 24 24, pointer" }}
       onClick={onClick}
     >
@@ -43,7 +43,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ item, onClick }) => {
             isVideo
             onLoaded={() => setMediaLoaded(true)}
             className={clsx(
-              "relative z-[2] size-full transition-transform duration-300 group-hover:scale-110",
+              "relative z-[2] size-full transition-transform duration-300 group-hover:scale-105",
               !mediaLoaded && "opacity-0",
             )}
           />
@@ -54,7 +54,7 @@ const GalleryItem: React.FC<GalleryItemProps> = ({ item, onClick }) => {
           src={item.url}
           alt=""
           className={clsx(
-            "relative z-[2] size-full object-cover transition-transform duration-300 group-hover:scale-110",
+            "relative z-[2] size-full object-cover transition-transform duration-300 group-hover:scale-105",
             !mediaLoaded && "opacity-0",
           )}
           onLoad={() => setMediaLoaded(true)}

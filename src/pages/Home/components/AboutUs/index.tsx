@@ -21,11 +21,11 @@ const AboutUs: React.FC = () => {
   const primaryImage = items[0];
   const secondaryImage = items[1];
   const descriptionHtml =
-    items[2]?.note ?? block?.description ?? block?.sub_title;
+    block?.description ?? block?.sub_title ?? items[2]?.note;
 
   return (
     <section
-      className="home-section-gradient relative overflow-hidden py-10 md:py-16"
+      className="home-section-gradient relative overflow-hidden py-16 md:py-20 lg:py-24"
       data-home-grad="about"
     >
       <Wrapper className="home-about-wrap">
@@ -53,8 +53,8 @@ const AboutUs: React.FC = () => {
           </div>
         </div>
 
-        <div className="home-about-desktop hidden md:grid md:grid-cols-5 w-full max-w-[1320px] mx-auto items-center gap-6 lg:gap-8 xl:gap-[60px]">
-          <div className="col-span-2 min-w-0 flex items-center justify-center">
+        <div className="home-about-desktop hidden md:grid md:grid-cols-[1fr_1fr] w-full max-w-[1320px] mx-auto items-center gap-10 lg:gap-16 xl:gap-24">
+          <div className="min-w-0 flex items-center justify-center">
             <AboutUsImageCollage
               primaryImageUrl={primaryImage?.imageUrl}
               secondaryImageUrl={secondaryImage?.imageUrl}
@@ -63,7 +63,7 @@ const AboutUs: React.FC = () => {
             />
           </div>
 
-          <Flex vertical className="col-span-3 min-w-0 gap-6 lg:gap-8">
+          <Flex vertical className="min-w-0 gap-6 lg:gap-8">
             <HomeSectionHeading
               variant="about"
               titleHtml={block?.title}

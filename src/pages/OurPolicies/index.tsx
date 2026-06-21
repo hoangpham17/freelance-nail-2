@@ -42,7 +42,7 @@ const OurPolicies: React.FC = () => {
       <PageDecoLines variant="our-policies" intensity="strong" />
 
       <section className="relative z-[2] w-full py-12 lg:py-16">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-12">
+        <div className="max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[90px]">
           {policiesWithId.length > 0 ? (
             <>
               <header className="max-w-3xl mx-auto text-center mb-10 lg:mb-14">

@@ -107,7 +107,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
         boxShadow: "0 4px 24px rgba(0, 0, 0, 0.35)",
       }}
     >
-      <Wrapper>
+      <Wrapper className="max-w-[1440px] 2xl:max-w-[1680px]">
         <div className="flex items-center gap-2">
           {/* Filter pills — Swiper + prev/next như Services */}
           <div
@@ -131,10 +131,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({
                 showArrows && "pr-[100px] md:pr-[120px] lg:pr-[140px]",
               )}
             >
-              {filters.map((filter) => {
+              {filters.map((filter, index) => {
                 const isActive = filter.id === activeFilter;
                 return (
-                  <SwiperSlide key={filter.id} className="!w-auto pl-3">
+                  <SwiperSlide
+                    key={filter.id}
+                    className={clsx("!w-auto", index !== 0 && "pl-3")}
+                  >
                     <div
                       onClick={() => {
                         onChange(filter.id);

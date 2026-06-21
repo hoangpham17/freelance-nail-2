@@ -26,34 +26,34 @@ const FormSection: React.FC<FormSectionProps> = ({ sectionRef }) => {
       <div className="host-party-divider" aria-hidden />
 
       <div className="host-party-form__grid">
-        <header className="host-party-form__intro">
-          <p
-            className={clsx(
-              "font-extralight uppercase tracking-[0.28em] text-madison-gold-dark",
-              responsiveFontSizeArray(10, 11),
-            )}
-          >
-            {formSection.accent}
-          </p>
-          <h2
-            className={clsx(
-              "font-tangerine text-gold-gradient leading-[1.05]",
-              responsiveFontSizeArray(30, 44),
-            )}
-          >
-            {formSection.title}
-          </h2>
-          <p
-            className={clsx(
-              "font-light leading-relaxed text-madison-muted",
-              responsiveFontSizeArray(13, 15),
-            )}
-          >
-            {formSection.subtext}
-          </p>
-        </header>
-
         <div className="host-party-form__panel">
+          <header className="host-party-form__intro host-party-form__intro--inside">
+            <p
+              className={clsx(
+                "font-extralight uppercase tracking-[0.28em] text-madison-gold-dark",
+                responsiveFontSizeArray(10, 11),
+              )}
+            >
+              {formSection.accent}
+            </p>
+            <h2
+              className={clsx(
+                "font-tangerine text-gold-gradient leading-[1.05]",
+                responsiveFontSizeArray(30, 44),
+              )}
+            >
+              {formSection.title}
+            </h2>
+            <p
+              className={clsx(
+                "font-light leading-relaxed text-madison-muted",
+                responsiveFontSizeArray(13, 15),
+              )}
+            >
+              {formSection.subtext}
+            </p>
+          </header>
+
           <PartyForm />
         </div>
       </div>

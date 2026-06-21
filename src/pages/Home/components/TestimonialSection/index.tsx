@@ -70,9 +70,9 @@ const TestimonialSection: React.FC = () => {
       className="home-section-gradient relative overflow-hidden"
       data-home-grad="testimonial"
     >
-      <Wrapper className="relative py-10 md:py-16">
+      <Wrapper className="relative py-16 md:py-20 lg:py-24 max-w-[1440px] 2xl:max-w-[1680px]">
         <Header />
-        <div className="relative group/slider md:mt-12 lg:max-w-[1200px] mx-auto min-[1700px]:max-w-[1920px]">
+        <div className="relative group/slider md:mt-12 lg:max-w-[1200px] mx-auto min-[1700px]:max-w-[1440px]">
           <Swiper
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             onSlideChange={handleSlideChange}
