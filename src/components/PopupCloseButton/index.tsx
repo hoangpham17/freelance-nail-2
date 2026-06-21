@@ -19,7 +19,9 @@ export const PopupCloseButton: React.FC<PopupCloseButtonProps> = ({
     type={type}
     aria-label={ariaLabel}
     className={clsx(
-      "flex size-8 lg:size-10 cursor-pointer items-center justify-center rounded-full border border-madison-gold bg-madison-black-soft/80 shadow-[0_10px_26px_rgba(0,0,0,0.45)] backdrop-blur-md transition-all duration-300 hover:scale-110 active:scale-95",
+      "flex size-9 lg:size-10 cursor-pointer items-center justify-center rounded-full border border-[#f9be5c]/20 bg-[#0a0908]/60 backdrop-blur-md transition-all duration-300",
+      "hover:border-[#f9be5c]/60 hover:text-[#ffe5a0] hover:shadow-[0_0_14px_rgba(249,190,92,0.16)]",
+      "active:scale-95",
       className,
     )}
     {...rest}
@@ -27,9 +29,9 @@ export const PopupCloseButton: React.FC<PopupCloseButtonProps> = ({
     <SvgIcon
       src="/assets/svgs/x-close.svg"
       ariaLabel=""
-      width={24}
-      height={24}
-      className="size-[24px] shrink-0 text-madison-gold"
+      width={20}
+      height={20}
+      className="size-5 shrink-0 text-[#f9be5c]"
     />
   </button>
 );
