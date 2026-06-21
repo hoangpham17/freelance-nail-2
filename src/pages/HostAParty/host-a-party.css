@@ -7,7 +7,7 @@
 
 .host-party-page {
   --host-party-shell-max: 72rem; /* 1152px — max-w-6xl */
-  --host-party-block-max: 64rem; /* 1024px — occasions chips + form width */
+  --host-party-block-max: 60rem; /* 960px — occasions chips + form width */
   /* Page edge + rhythm between sections (not stacked padding) */
   --host-party-edge-y: 2.5rem;
   --host-party-between: 1.75rem;
@@ -367,8 +367,8 @@
   }
 
   .host-party-occasions-chip__icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 }
 
