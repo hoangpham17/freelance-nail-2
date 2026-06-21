@@ -96,16 +96,16 @@ const OccasionsSection: React.FC = () => {
         </p>
       </header>
 
-      <ul className="host-party-occasions-grid list-none p-0 m-0">
+      <ul className="host-party-occasions-chips list-none p-0 m-0">
         {occasions.items.map((occasion) => (
           <li
             key={occasion.label}
-            className="host-party-occasions-tile group"
+            className="host-party-occasions-chip group"
             style={
               { "--occ": hexToRgbTriplet(occasion.colorDark) } as React.CSSProperties
             }
           >
-            <span className="host-party-occasions-tile__icon" aria-hidden>
+            <span className="host-party-occasions-chip__icon" aria-hidden>
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
@@ -113,16 +113,16 @@ const OccasionsSection: React.FC = () => {
                 strokeWidth={1.5}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                width={30}
-                height={30}
+                width={18}
+                height={18}
               >
                 {OCCASION_ICONS[occasion.icon]}
               </svg>
             </span>
             <span
               className={clsx(
-                "host-party-occasions-tile__label font-playfairDisplay font-medium text-madison-text leading-snug tracking-tight text-center",
-                responsiveFontSizeArray(14, 17),
+                "host-party-occasions-chip__label font-playfairDisplay font-medium text-madison-text leading-none tracking-tight",
+                responsiveFontSizeArray(13, 15),
               )}
             >
               {occasion.label}

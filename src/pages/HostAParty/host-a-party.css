@@ -257,85 +257,47 @@
   text-align: center;
 }
 
-.host-party-occasions-grid {
-  margin-top: var(--host-party-gap-lg);
+.host-party-occasions-chips {
+  margin-top: var(--host-party-gap-md);
   max-width: var(--host-party-shell-max);
   margin-inline: auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-}
-
-@media (min-width: 480px) {
-  .host-party-occasions-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 768px) {
-  .host-party-occasions-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .host-party-occasions-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-}
-
-.host-party-occasions-tile {
-  position: relative;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.625rem;
+}
+
+.host-party-occasions-chip {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.75rem 1rem;
-  border-radius: 0.9rem;
-  border: 1px solid rgb(249 190 92 / 0.14);
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(249 190 92 / 0.16);
   background: rgb(255 255 255 / 0.02);
   transition:
-    transform 0.35s ease,
-    border-color 0.35s ease,
-    background-color 0.35s ease,
-    box-shadow 0.35s ease;
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
-.host-party-occasions-tile:hover {
-  transform: translateY(-4px);
+.host-party-occasions-chip:hover {
+  transform: translateY(-2px);
   border-color: rgb(var(--occ) / 0.5);
-  background-color: rgb(var(--occ) / 0.07);
-  box-shadow: 0 14px 32px -16px rgb(var(--occ) / 0.55);
+  background-color: rgb(var(--occ) / 0.08);
 }
 
-.host-party-occasions-tile__icon {
-  display: flex;
+.host-party-occasions-chip__icon {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 50%;
-  color: rgb(var(--occ) / 0.85);
-  border: 1px solid rgb(var(--occ) / 0.22);
-  background: rgb(var(--occ) / 0.06);
-  transition:
-    color 0.35s ease,
-    border-color 0.35s ease,
-    background-color 0.35s ease;
+  color: rgb(var(--occ) / 0.9);
 }
 
-.host-party-occasions-tile:hover .host-party-occasions-tile__icon {
-  color: rgb(var(--occ) / 1);
-  border-color: rgb(var(--occ) / 0.5);
-  background-color: rgb(var(--occ) / 0.12);
-}
-
-.host-party-occasions-tile__label {
+.host-party-occasions-chip__label {
   transition: color 0.3s ease;
 }
 
-.host-party-occasions-tile:hover .host-party-occasions-tile__label {
+.host-party-occasions-chip:hover .host-party-occasions-chip__label {
   color: #fff;
 }
 
@@ -396,11 +358,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .host-party-occasions-tile {
+  .host-party-occasions-chip {
     transition: none;
   }
 
-  .host-party-occasions-tile:hover {
+  .host-party-occasions-chip:hover {
     transform: none;
   }
 }
