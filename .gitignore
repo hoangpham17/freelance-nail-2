@@ -32,3 +32,6 @@ scripts/.page-deco-screenshots
 *.sln
 *.sw?
 
+
+# Vite temp config artifacts
+vite.config.ts.timestamp-*.mjs
