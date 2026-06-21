@@ -7,6 +7,7 @@
 
 .host-party-page {
   --host-party-shell-max: 72rem; /* 1152px — max-w-6xl */
+  --host-party-block-max: 64rem; /* 1024px — occasions chips + form width */
   /* Page edge + rhythm between sections (not stacked padding) */
   --host-party-edge-y: 2.5rem;
   --host-party-between: 1.75rem;
@@ -259,7 +260,7 @@
 
 .host-party-occasions-chips {
   margin-top: var(--host-party-gap-lg);
-  max-width: var(--host-party-shell-max);
+  max-width: var(--host-party-block-max);
   margin-inline: auto;
   display: flex;
   flex-wrap: wrap;
@@ -361,13 +362,13 @@
 
   .host-party-occasions-chip {
     flex: 0 0 auto;
-    padding: 0.625rem 1.125rem 0.625rem 0.625rem;
-    gap: 0.75rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    gap: 0.625rem;
   }
 
   .host-party-occasions-chip__icon {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
 
@@ -376,7 +377,7 @@
   display: grid;
   gap: var(--host-party-grid-gap);
   align-items: start;
-  max-width: var(--host-party-shell-max);
+  max-width: var(--host-party-block-max);
   margin-inline: auto;
   width: 100%;
 }
@@ -400,7 +401,7 @@
   background: rgb(18 18 18 / 0.9);
   border: 1px solid rgb(55 65 81 / 0.45);
   padding: var(--host-party-gap-md);
-  max-width: var(--host-party-shell-max);
+  max-width: var(--host-party-block-max);
   margin-inline: auto;
   width: 100%;
 }
