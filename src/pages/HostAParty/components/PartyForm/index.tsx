@@ -188,7 +188,7 @@ const PartyForm: React.FC = () => {
           <Form.Item
             name="phone"
             label={<span className={labelClass}>{pf.labels.phone}</span>}
-            rules={[{ validator: validatePhone }]}
+            rules={[{ required: true, validator: validatePhone }]}
           >
             <div
               className="relative"

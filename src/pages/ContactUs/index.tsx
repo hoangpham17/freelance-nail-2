@@ -1,6 +1,5 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-import { Wrapper } from "@/based/components/Wrapper";
 import clsx from "clsx";
 import { useBaseOffset } from "@/hooks/useBaseOffset";
 import ContactForm from "./components/ContactForm";
@@ -8,7 +7,6 @@ import { responsiveFontSizeArray } from "@/shared/utils/helper";
 import contactUsContent from "@/content/contactUs.json";
 import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 import { PageDecoLines } from "@/components/PageDecoLines";
-import { ContactInfoSection } from "@/pages/ContactUs/components/ContactInfoSection";
 
 const ContactUs: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -31,54 +29,52 @@ const ContactUs: React.FC = () => {
 
   return (
     <main
-      className="relative w-full min-h-screen madison-section-gradient"
+      className="relative w-full min-h-screen text-madison-text"
       style={{
         paddingTop: `${mainTopSpacing}px`,
+        background: `linear-gradient(180deg, transparent 0, transparent max(0%, calc(100% - 22rem)), rgba(0, 0, 0, 0.4) max(0%, calc(100% - 14rem)), rgba(0, 0, 0, 0.78) max(0%, calc(100% - 7rem)), #000000 100%), var(--madison-section-gradient)`,
       }}
     >
       <PageDecoLines variant="contact" />
 
       <section className="relative z-[2] w-full py-12 lg:py-16">
-        <Wrapper>
-          <div className="max-w-6xl mx-auto">
-            <div className="max-w-2xl mx-auto">
-              <header className="text-center mb-8 lg:mb-10">
-                <p
-                  className={clsx(
-                    "font-extralight uppercase tracking-[0.28em] text-madison-gold-dark",
-                    responsiveFontSizeArray(10, 11),
-                  )}
-                >
-                  {heading}
-                </p>
-                <h1
-                  className={clsx(
-                    "mt-4 font-tangerine text-gold-gradient leading-[1.02]",
-                    responsiveFontSizeArray(40, 60),
-                  )}
-                >
-                  {title}
-                </h1>
-                <SectionHeadingLine className="mx-auto" />
-                <p
-                  className={clsx(
-                    "mt-4 font-light leading-relaxed text-madison-text-muted",
-                    responsiveFontSizeArray(13, 15),
-                  )}
-                >
-                  {subtext}
-                </p>
-              </header>
+        <div className="max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 lg:px-12 xl:px-[90px]">
+          <div className="mx-auto w-full max-w-[960px]">
+            <header className="max-w-3xl mx-auto text-center mb-10 lg:mb-14">
+              <p
+                className={clsx(
+                  "font-extralight uppercase tracking-[0.28em] text-madison-gold-dark",
+                  responsiveFontSizeArray(10, 11),
+                )}
+              >
+                {heading}
+              </p>
+              <h1
+                className={clsx(
+                  "mt-4 font-tangerine text-gold-gradient leading-[1.02]",
+                  responsiveFontSizeArray(40, 60),
+                )}
+              >
+                {title}
+              </h1>
+              <SectionHeadingLine className="mx-auto mt-4" />
+              <p
+                className={clsx(
+                  "mt-3 font-light leading-relaxed text-madison-muted max-w-xl mx-auto",
+                  responsiveFontSizeArray(14, 16),
+                )}
+              >
+                {subtext}
+              </p>
+            </header>
 
-              <div className="relative rounded-2xl bg-madison-black-soft p-4 sm:p-6 lg:p-8 border border-madison-border/70 shadow-[0_14px_50px_rgba(0,0,0,0.35)]">
-                <ContactForm isSignup={isSignup} />
-              </div>
+            <div className="relative rounded-[20px] bg-black/90 border border-gray-700/45 p-6 lg:p-8">
+              <div className="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-madison-gold via-madison-gold-dark to-transparent"></div>
+              <ContactForm isSignup={isSignup} />
             </div>
           </div>
-        </Wrapper>
+        </div>
       </section>
-
-      <ContactInfoSection isSignup={isSignup} />
     </main>
   );
 };
