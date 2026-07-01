@@ -251,7 +251,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
               <h2
                 className={clsx(
                   "text-gold-gradient font-tangerine m-0",
-                  responsiveFontSizeArray(34, 64),
+                  responsiveFontSizeArray(28, 64),
                 )}
               >
                 {category.title}

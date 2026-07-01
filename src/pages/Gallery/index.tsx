@@ -113,7 +113,7 @@ const Gallery: React.FC = () => {
             <span
               className={clsx(
                 "block text-gold-gradient font-tangerine leading-[0.92]",
-                responsiveFontSizeArray(48, 96),
+                responsiveFontSizeArray(36, 96),
               )}
             >
               {(galleryContent as { banner: { title: string } }).banner.title}

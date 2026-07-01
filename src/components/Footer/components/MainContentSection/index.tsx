@@ -26,16 +26,18 @@ const MainContentSection: React.FC = () => {
         <div className="madison-footer-info grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           <FooterLocationColumn />
 
-          <div className="flex flex-col items-center gap-4 text-center">
+          <div className="flex flex-col items-start gap-4 text-left">
             <h4 className="madison-footer-info__heading">Business Hours</h4>
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-start gap-2.5 md:gap-3">
               {businessHours.map((row) => (
-                <Flex key={row.label} gap={16} wrap="wrap" align="center" justify="center">
-                  <span className="madison-footer-info__label min-w-[92px] shrink-0 text-left">
+                <div key={row.label} className="flex items-center gap-3 md:gap-4 justify-start">
+                  <span className="madison-footer-info__label w-[85px] md:w-[92px] shrink-0 text-left">
                     {row.label}
                   </span>
-                  <span className="madison-footer-info__value">{row.time}</span>
-                </Flex>
+                  <span className="madison-footer-info__value whitespace-nowrap text-left">
+                    {row.time}
+                  </span>
+                </div>
               ))}
             </div>
           </div>

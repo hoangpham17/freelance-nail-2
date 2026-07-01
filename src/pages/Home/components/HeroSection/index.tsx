@@ -88,11 +88,11 @@ const HeroSection: React.FC = () => {
 
       const styleInBackticks = clsx(
         "text-gold-gradient leading-none font-tangerine",
-        responsiveFontSizeArray(36, 60),
+        responsiveFontSizeArray(30, 60),
       );
       const styleOutBackticks = clsx(
         "text-madison-text font-montserrat font-medium leading-tight",
-        responsiveFontSizeArray(20, 36),
+        responsiveFontSizeArray(17, 36),
       );
 
       return (

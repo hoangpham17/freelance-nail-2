@@ -52,7 +52,12 @@ const ContactUs: React.FC = () => {
               <h1
                 className={clsx(
                   "mt-4 font-tangerine text-gold-gradient leading-[1.02]",
-                  responsiveFontSizeArray(40, 60),
+                  responsiveFontSizeArray(32, 60, {
+                    sm: 43,
+                    md: 45,
+                    lg: 48,
+                    xl: 52,
+                  }),
                 )}
               >
                 {title}
@@ -61,7 +66,12 @@ const ContactUs: React.FC = () => {
               <p
                 className={clsx(
                   "mt-3 font-light leading-relaxed text-madison-muted max-w-xl mx-auto",
-                  responsiveFontSizeArray(14, 16),
+                  responsiveFontSizeArray(13, 16, {
+                    sm: 14,
+                    md: 15,
+                    lg: 15,
+                    xl: 15,
+                  }),
                 )}
               >
                 {subtext}

@@ -62,7 +62,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScrollToForm }) => {
                 <span
                   className={clsx(
                     "host-party-hero__title-line host-party-hero__title-line--accent block text-gold-gradient",
-                    responsiveFontSizeArray(42, 72, { lg: 68, xl: 72, "2xl": 76 }),
+                    responsiveFontSizeArray(34, 72, { lg: 68, xl: 72, "2xl": 76 }),
                   )}
                 >
                   {hero.titleLine2}

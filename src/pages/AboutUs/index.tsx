@@ -80,7 +80,7 @@ const AboutUs: React.FC = () => {
             <span
               className={clsx(
                 "block text-gold-gradient",
-                responsiveFontSizeArray(52, 96),
+                responsiveFontSizeArray(38, 96),
               )}
             >
               {hero.title}

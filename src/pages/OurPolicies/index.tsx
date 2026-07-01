@@ -57,7 +57,7 @@ const OurPolicies: React.FC = () => {
                 <h1
                   className={clsx(
                     "mt-4 font-tangerine text-gold-gradient leading-[1.02]",
-                    responsiveFontSizeArray(40, 60),
+                    responsiveFontSizeArray(32, 60),
                   )}
                 >
                   {intro.title}
@@ -66,7 +66,7 @@ const OurPolicies: React.FC = () => {
                 <p
                   className={clsx(
                     "mt-4 font-tangerine text-gold-gradient tracking-tight",
-                    responsiveFontSizeArray(22, 28),
+                    responsiveFontSizeArray(18, 28),
                   )}
                 >
                   {intro.subtitle}

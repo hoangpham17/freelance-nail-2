@@ -62,8 +62,8 @@
 .madison-footer-info__heading {
   font-family: "SVN-Gilroy", "Montserrat", sans-serif;
   font-weight: 700;
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 16px;
+  line-height: 24px;
   text-transform: uppercase;
   background: var(--madison-gold-gradient);
   -webkit-background-clip: text;
@@ -71,13 +71,25 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+@media (min-width: 768px) {
+  .madison-footer-info__heading {
+    font-size: 18px;
+    line-height: 26px;
+  }
+}
 
 .madison-footer-info__label {
   font-family: "SVN-Gilroy", "Montserrat", sans-serif;
   font-weight: 600;
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 15px;
+  line-height: 22px;
   color: #f1a953;
+}
+@media (min-width: 768px) {
+  .madison-footer-info__label {
+    font-size: 18px;
+    line-height: 26px;
+  }
 }
 
 .madison-footer-info__value,
@@ -85,10 +97,18 @@
 .madison-footer-info__value:visited {
   font-family: "SVN-Gilroy", "Montserrat", sans-serif;
   font-weight: 400;
-  font-size: 18px;
-  line-height: 26px;
+  font-size: 15px;
+  line-height: 22px;
   color: #e5e7eb !important;
   text-decoration: none;
+}
+@media (min-width: 768px) {
+  .madison-footer-info__value,
+  .madison-footer-info__value:link,
+  .madison-footer-info__value:visited {
+    font-size: 18px;
+    line-height: 26px;
+  }
 }
 
 .madison-footer-info__value:hover {
