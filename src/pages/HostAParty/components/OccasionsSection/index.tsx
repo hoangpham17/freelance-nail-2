@@ -122,7 +122,7 @@ const OccasionsSection: React.FC = () => {
             <span
               className={clsx(
                 "host-party-occasions-chip__label font-playfairDisplay font-medium text-madison-text leading-none tracking-tight whitespace-nowrap",
-                responsiveFontSizeArray(16, 20, { lg: 15, xl: 15, "2xl": 15 }),
+                responsiveFontSizeArray(13, 20, { lg: 15, xl: 15, "2xl": 15 }),
               )}
             >
               {occasion.label}

@@ -91,7 +91,7 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
             {items.map((item, index) => (
               <SwiperSlide
                 key={item.id || index}
-                className="!flex items-center justify-center px-2"
+                className="!flex h-full items-center justify-center px-2"
               >
                 {item.url ? (
                   item.isVideo ? (
@@ -104,8 +104,8 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
                     <GalleryMedia
                       url={item.url}
                       alt={galleryImageAlt}
-                      fit="contain"
-                      className="block mx-auto max-h-[75vh] w-auto rounded-lg"
+                      fit="cover"
+                      className="block mx-auto h-[60vh] md:h-[75vh] aspect-[3/4] rounded-lg"
                     />
                   )
                 ) : (
@@ -128,7 +128,7 @@ const GalleryPopup: React.FC<GalleryPopupProps> = ({
             <NavigationArrows
               onPrev={() => swiperRef.current?.slidePrev()}
               onNext={() => swiperRef.current?.slideNext()}
-              className="absolute top-1/2 left-0 right-0 z-10 -translate-y-1/2 px-4 md:px-6"
+              className="absolute top-1/2 -left-2.5 -right-2.5 md:-left-12 md:-right-12 z-10 -translate-y-1/2 px-0"
             />
           ) : null}
         </div>

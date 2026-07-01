@@ -403,7 +403,7 @@ const Header: React.FC = () => {
                 <img
                   src="/assets/images/logo/desktop.png"
                   alt="Madison Nail Lounge"
-                  className="h-8 w-auto max-h-8 object-contain md:h-[45px] md:max-h-[45px]"
+                  className="h-9 w-auto max-h-9 object-contain md:h-[45px] md:max-h-[45px]"
                 />
               </Link>
               <ListSocial />

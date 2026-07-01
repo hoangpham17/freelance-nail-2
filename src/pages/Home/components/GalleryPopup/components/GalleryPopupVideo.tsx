@@ -98,7 +98,7 @@ const GalleryPopupVideo: React.FC<GalleryPopupVideoProps> = ({
         preload="metadata"
         aria-label={alt || undefined}
         className={clsx(
-          "block max-h-[75vh] max-w-full w-auto cursor-pointer rounded-lg",
+          "block mx-auto h-[60vh] md:h-[75vh] aspect-[3/4] object-cover cursor-pointer rounded-lg",
           className,
         )}
         onClick={handleToggle}

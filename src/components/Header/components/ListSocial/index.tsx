@@ -21,7 +21,7 @@ export const ListSocial = () => {
   const { isDesktop, width } = useScreen();
   const iconSize = useMemo(() => {
     if (width >= BREAKPOINTS["2xl"]) return 22;
-    return isDesktop ? 18 : 16;
+    return isDesktop ? 18 : 20;
   }, [isDesktop, width]);
 
   return (

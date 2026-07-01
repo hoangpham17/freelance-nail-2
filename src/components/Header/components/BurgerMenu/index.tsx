@@ -14,9 +14,9 @@ export const BurgerMenu: React.FC<BurgerMenuProps> = ({ toggleMenu }) => {
       <SvgIcon
         src={"/assets/svgs/burger-menu.svg"}
         ariaLabel="Open menu"
-        width={20}
-        height={20}
-        className="size-[20px] shrink-0 text-[#F6EFE9]"
+        width={22}
+        height={22}
+        className="size-[22px] shrink-0 text-[#F6EFE9]"
       />
     </button>
   );

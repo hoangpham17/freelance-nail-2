@@ -96,7 +96,7 @@ const Promotion: React.FC<PromotionProps> = ({
             className={clsx(
               "text-gold-gradient text-center font-normal font-montserrat w-full",
               textPromotions.length > 1 && "relative min-h-[1.5em]",
-              responsiveFontSizeArray(16, 28),
+              responsiveFontSizeArray(14, 28),
             )}
             data-campaign-text
           >

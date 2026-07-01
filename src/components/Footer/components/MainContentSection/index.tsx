@@ -26,7 +26,7 @@ const MainContentSection: React.FC = () => {
         <div className="madison-footer-info grid grid-cols-1 items-start gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           <FooterLocationColumn />
 
-          <div className="flex flex-col items-start gap-4 text-left">
+          <div className="flex flex-col items-start lg:items-center gap-4 text-left">
             <h4 className="madison-footer-info__heading">Business Hours</h4>
             <div className="flex flex-col items-start gap-2.5 md:gap-3">
               {businessHours.map((row) => (

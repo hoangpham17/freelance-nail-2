@@ -26,29 +26,40 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onScrollToForm }) => {
 
   return (
     <section
-      className="host-party-hero relative w-full bg-black"
+      className="host-party-hero relative w-full bg-black lg:bg-transparent overflow-hidden"
       aria-label="Host a party introduction"
     >
+      {/* Desktop Image */}
       <div
         className="host-party-hero__media-wrap host-party-hero__media-wrap--desktop hidden lg:block absolute inset-y-0 right-0 w-[62%] pointer-events-none overflow-hidden"
         aria-hidden
       >
         <div className="host-party-hero__media absolute inset-0">
-          <img src={HERO_IMAGE} alt="" className="absolute inset-0" />
+          <img src={HERO_IMAGE} alt="" className="absolute inset-0 object-cover w-full h-full" />
           <div className="host-party-hero__scrim absolute inset-0" />
         </div>
       </div>
 
-      <Wrapper className="host-party-hero__wrapper relative z-10 !py-0">
-        <div className="host-party-shell host-party-hero__inner">
-          <div className="host-party-hero__media-wrap host-party-hero__media-wrap--mobile lg:hidden">
-            <div className="host-party-hero__media relative w-full">
-              <img src={HERO_IMAGE} alt={hero.heroImageAlt} />
-              <div className="host-party-hero__scrim absolute inset-0" />
-            </div>
-          </div>
+      {/* Mobile Background Image (Gallery style) */}
+      <div className="absolute inset-0 block lg:hidden pointer-events-none">
+        <div
+          className="absolute inset-0 bg-center bg-cover bg-no-repeat"
+          style={{ backgroundImage: `url(${HERO_IMAGE})` }}
+        />
+        <div className="absolute inset-0 bg-black/15" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.5) 55%, rgba(0,0,0,0.85) 100%)",
+          }}
+        />
+      </div>
 
-          <div className="host-party-hero__copy text-center lg:text-left">
+      <Wrapper className="host-party-hero__wrapper relative z-10 !py-14 lg:!py-0 min-h-[24rem] lg:min-h-0 flex flex-col justify-center">
+        <div className="host-party-shell host-party-hero__inner">
+
+          <div className="host-party-hero__copy text-center lg:text-left relative z-20">
             <div className="host-party-hero__heading">
               <h1 className="host-party-hero__title font-tangerine">
                 <span
