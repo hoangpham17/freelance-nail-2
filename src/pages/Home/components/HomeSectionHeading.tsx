@@ -19,15 +19,15 @@ const HEADING_TYPO: Record<
     description?: [number, number];
   }
 > = {
-  default: { title: [30, 48], subtitle: [26, 60] },
+  default: { title: [30, 48], subtitle: [38, 60] },
   /** Services — title matches the "Premium Services" subtitle scale [44, 72] */
-  service: { title: [34, 72], subtitle: [26, 60], description: [14, 24] },
+  service: { title: [34, 72], subtitle: [38, 60], description: [14, 24] },
   /** About — nail-ver2 SectionTitle [40, 72] dual-line */
-  about: { title: [30, 48], subtitle: [34, 72] },
+  about: { title: [30, 48], subtitle: [38, 72] },
   /** Gallery — title matches About "Beautiful Nails" [36, 48], line 2 matches About */
-  gallery: { title: [30, 48], subtitle: [34, 72] },
+  gallery: { title: [30, 48], subtitle: [38, 72] },
   /** Testimonial — title matches the "Premium Services" subtitle scale [44, 72] */
-  testimonial: { title: [34, 72], subtitle: [26, 60] },
+  testimonial: { title: [34, 72], subtitle: [38, 60] },
 };
 
 export type HomeSectionHeadingProps = {
