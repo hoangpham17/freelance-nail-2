@@ -27,7 +27,7 @@ const ServiceItem = ({ category }: { category: ServiceCategory }) => {
             <div
               className="home-service-item__icon-graphic transition-transform duration-300 group-hover:scale-[1.04]"
               style={{
-                backgroundColor: "var(--madison-gold)",
+                backgroundColor: "#f9d978",
                 maskImage: `url(${iconUrl})`,
                 WebkitMaskImage: `url(${iconUrl})`,
                 maskRepeat: "no-repeat",
@@ -39,7 +39,7 @@ const ServiceItem = ({ category }: { category: ServiceCategory }) => {
               }}
             />
           </div>
-          <span className="home-service-item__label font-tangerine text-gold-gradient">
+          <span className="home-service-item__label font-tangerine text-[#f9d978]">
             {category.title}
           </span>
         </div>
