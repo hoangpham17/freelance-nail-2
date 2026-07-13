@@ -13,8 +13,6 @@ dist-ssr
 *.local
 old-source
 layout-screenshots
-scripts/.host-party-deco-screenshots
-scripts/.page-deco-screenshots
 
 # Environment variables
 .env

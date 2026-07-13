@@ -34,9 +34,9 @@
 .gallery-card-frame:hover {
   transform: translateY(-5px);
   box-shadow:
-    0 0 0 1px rgb(249 190 92 / 0.32),
+    0 0 0 1px rgb(249 217 120 / 0.32),
     0 14px 40px rgb(0 0 0 / 0.42),
-    0 0 22px rgb(249 190 92 / 0.08);
+    0 0 22px rgb(249 217 120 / 0.08);
 }
 
 @media (prefers-reduced-motion: reduce) {

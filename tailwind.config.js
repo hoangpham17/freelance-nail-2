@@ -25,7 +25,7 @@ export default {
           black: "#000000",
           "black-soft": "#1a1a1a",
           surface: "#252525",
-          gold: "#f9be5c",
+          gold: "#f9d978",
           "gold-dark": "#f1a953",
           "gold-text": "#984121",
           text: "#e5e7eb",
@@ -33,7 +33,7 @@ export default {
           border: "#374151",
         },
         primary: {
-          DEFAULT: "#f9be5c",
+          DEFAULT: "#f9d978",
           dark: "#984121",
           light: "#f1a953",
           hover: "#ffe5a0",
@@ -55,7 +55,7 @@ export default {
           secondary: "#d1d5db",
           light: "#9ca3af",
           white: "#ffffff",
-          gold: "#f9be5c",
+          gold: "#f9d978",
         },
         neutral: {
           white: "#FFFFFF",

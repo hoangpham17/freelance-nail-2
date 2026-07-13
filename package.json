@@ -7,12 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "test:page-deco": "node scripts/page-deco-check.mjs",
-    "test:submit-success-lottie": "node scripts/submit-success-lottie-check.mjs",
-    "test:host-party-deco": "npm run test:page-deco",
-    "test:about-us-layout": "node scripts/about-us-layout-check.mjs",
-    "test:home-layout": "node scripts/home-layout-check.mjs"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",

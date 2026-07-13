@@ -194,7 +194,7 @@ const HeroSection: React.FC = () => {
               className={clsx(
                 "h-3 transition-all duration-500 rounded-full",
                 currentSlide === idx
-                  ? "w-[18px] bg-[#f9be5c]"
+                  ? "w-[18px] bg-[#f9d978]"
                   : "w-3 bg-white/40",
               )}
               aria-label={`Go to slide ${idx + 1}`}

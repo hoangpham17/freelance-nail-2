@@ -6,7 +6,7 @@
   --madison-black: #000000;
   --madison-black-soft: #1a1a1a;
   --madison-surface: #252525;
-  --madison-gold: #f9be5c;
+  --madison-gold: #f9d978;
   --madison-gold-dark: #f1a953;
   --madison-gold-text: #984121;
   --madison-text: #e5e7eb;
@@ -112,7 +112,7 @@
 }
 
 .madison-footer-info__value:hover {
-  color: #f9be5c !important;
+  color: #f9d978 !important;
 }
 
 .madison-footer-info__email,
@@ -146,7 +146,7 @@
 }
 
 .madison-footer-info__direction:hover {
-  color: #f9be5c !important;
+  color: #f9d978 !important;
 }
 
 .madison-footer-info__address,
@@ -162,7 +162,7 @@
 }
 
 .madison-footer-info__address:hover {
-  color: #f9be5c !important;
+  color: #f9d978 !important;
 }
 
 .text-gold-gradient-name {
@@ -233,7 +233,7 @@
 }
 
 .madison-btn-outline:hover {
-  background-color: rgb(249 190 92 / 0.1);
+  background-color: rgb(249 217 120 / 0.1);
 }
 
 /* Header nav — active item (override Ant Design link defaults) */
@@ -339,20 +339,20 @@
 
 /* Home — About Us: decorative collage frame (matches service-item gold @ 50%) */
 .about-collage-frame {
-  border-color: rgb(249 190 92 / 0.5);
-  box-shadow: 0 0 14px rgb(249 190 92 / 0.1);
+  border-color: rgb(249 217 120 / 0.5);
+  box-shadow: 0 0 14px rgb(249 217 120 / 0.1);
   animation: about-collage-frame-glow 4.5s ease-in-out infinite;
 }
 
 @keyframes about-collage-frame-glow {
   0%,
   100% {
-    border-color: rgb(249 190 92 / 0.42);
-    box-shadow: 0 0 10px rgb(249 190 92 / 0.08);
+    border-color: rgb(249 217 120 / 0.42);
+    box-shadow: 0 0 10px rgb(249 217 120 / 0.08);
   }
   50% {
-    border-color: rgb(249 190 92 / 0.62);
-    box-shadow: 0 0 22px rgb(249 190 92 / 0.18);
+    border-color: rgb(249 217 120 / 0.62);
+    box-shadow: 0 0 22px rgb(249 217 120 / 0.18);
   }
 }
 
@@ -434,7 +434,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 30px;
-  background-color: #f9be5c;
+  background-color: #f9d978;
   padding: 14px 32px;
   font-weight: 600;
   text-transform: uppercase;
@@ -453,16 +453,16 @@
   justify-content: center;
   gap: 6px;
   border-radius: 24px;
-  border: 1px solid #f9be5c;
+  border: 1px solid #f9d978;
   padding: 8px 24px;
   font-size: 14px;
   text-transform: uppercase;
-  color: #f9be5c;
+  color: #f9d978;
   transition: background-color 0.2s ease;
 }
 
 .home-btn-outline:hover {
-  background-color: rgb(249 190 92 / 0.1);
+  background-color: rgb(249 217 120 / 0.1);
 }
 
 /* Home — service tiles: 2×L gold 50% → hover full-ring sweep; flex row centers last row */
@@ -484,7 +484,7 @@
 }
 
 .home-service-item {
-  --home-service-l-color: rgb(249 190 92 / 50%);
+  --home-service-l-color: rgb(249 217 120 / 50%);
   --home-service-leg: 48%;
   --home-service-cap-long: 12px;
   --home-service-cap-short: 6px;
@@ -684,13 +684,13 @@
   background: conic-gradient(
     from 0deg,
     transparent calc(var(--home-service-spark-head) - 14deg),
-    rgb(249 190 92 / 0.55) calc(var(--home-service-spark-head) - 7deg),
+    rgb(249 217 120 / 0.55) calc(var(--home-service-spark-head) - 7deg),
     rgb(255 236 170 / 0.9) calc(var(--home-service-spark-head) - 3deg),
     rgb(255 252 245 / 1) calc(var(--home-service-spark-head) - 0.6deg),
     #ffffff calc(var(--home-service-spark-head) - 0.15deg),
     #fffef8 var(--home-service-spark-head),
     #fff4c8 calc(var(--home-service-spark-head) + 3deg),
-    rgb(249 190 92 / 0.45) calc(var(--home-service-spark-head) + 7deg),
+    rgb(249 217 120 / 0.45) calc(var(--home-service-spark-head) + 7deg),
     transparent calc(var(--home-service-spark-head) + 11deg),
     transparent 360deg
   );
@@ -698,9 +698,9 @@
     drop-shadow(0 0 1.5px #fff)
     drop-shadow(0 0 5px rgb(255 253 245 / 1))
     drop-shadow(0 0 11px rgb(255 244 200 / 1))
-    drop-shadow(0 0 18px rgb(249 190 92 / 1))
-    drop-shadow(0 0 28px rgb(249 190 92 / 0.72))
-    drop-shadow(0 0 40px rgb(249 190 92 / 0.38));
+    drop-shadow(0 0 18px rgb(249 217 120 / 1))
+    drop-shadow(0 0 28px rgb(249 217 120 / 0.72))
+    drop-shadow(0 0 40px rgb(249 217 120 / 0.38));
   mix-blend-mode: screen;
 }
 
@@ -714,9 +714,9 @@
 .home-service-item:focus-visible .home-service-item__icon-wrap {
   animation: home-service-border-run 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   box-shadow:
-    0 0 0 1px rgb(249 190 92 / 0.08),
-    0 0 20px rgb(249 190 92 / 0.12),
-    0 0 36px rgb(249 190 92 / 0.06);
+    0 0 0 1px rgb(249 217 120 / 0.08),
+    0 0 20px rgb(249 217 120 / 0.12),
+    0 0 36px rgb(249 217 120 / 0.06);
 }
 
 .home-service-item:hover .home-service-item__icon-wrap::before,
@@ -901,7 +901,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgb(249 190 92 / 0.35) 50%,
+    rgb(249 217 120 / 0.35) 50%,
     transparent
   );
 }
@@ -911,7 +911,7 @@
   border-image: linear-gradient(
       90deg,
       transparent,
-      rgb(249 190 92 / 0.35) 50%,
+      rgb(249 217 120 / 0.35) 50%,
       transparent
     )
     1;

@@ -5,11 +5,11 @@ import { theme } from "antd";
 export const antdTheme: ThemeConfig = {
   algorithm: theme.darkAlgorithm,
   token: {
-    colorPrimary: "#f9be5c",
+    colorPrimary: "#f9d978",
     colorPrimaryHover: "#f1a953",
     colorPrimaryActive: "#ebb13f",
-    colorLink: "#f9be5c",
-    colorLinkHover: "#f9be5c",
+    colorLink: "#f9d978",
+    colorLinkHover: "#f9d978",
     colorLinkActive: "#f1a953",
     // Softer, warm error tone — fits the gold/black theme (no harsh neon red)
     colorError: "#e0857b",
@@ -18,15 +18,15 @@ export const antdTheme: ThemeConfig = {
   },
   components: {
     Button: {
-      colorPrimary: "#f9be5c",
+      colorPrimary: "#f9d978",
       colorPrimaryHover: "#f1a953",
       colorPrimaryActive: "#ebb13f",
       primaryColor: "#984121",
-      defaultHoverColor: "#f9be5c",
-      defaultHoverBorderColor: "#f9be5c",
+      defaultHoverColor: "#f9d978",
+      defaultHoverBorderColor: "#f9d978",
       defaultActiveColor: "#f1a953",
       defaultActiveBorderColor: "#f1a953",
-      textHoverBg: "rgb(249 190 92 / 0.1)",
+      textHoverBg: "rgb(249 217 120 / 0.1)",
       linkHoverBg: "transparent",
     },
   },

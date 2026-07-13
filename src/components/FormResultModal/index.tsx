@@ -72,8 +72,8 @@ const FormResultModal: React.FC<FormResultModalProps> = ({
         <div className="flex flex-col items-center gap-6 text-center">
           {isSuccess ? (
             <div className="relative grid place-items-center" aria-hidden>
-              <span className="absolute h-24 w-24 rounded-full bg-[radial-gradient(circle,_rgba(249,190,92,0.22),_transparent_68%)]" />
-              <span className="grid h-[4.75rem] w-[4.75rem] place-items-center rounded-full border border-madison-gold/45 bg-gradient-to-b from-madison-gold/20 to-transparent shadow-[0_0_30px_-8px_rgba(249,190,92,0.55)]">
+              <span className="absolute h-24 w-24 rounded-full bg-[radial-gradient(circle,_rgba(249, 217, 120,0.22),_transparent_68%)]" />
+              <span className="grid h-[4.75rem] w-[4.75rem] place-items-center rounded-full border border-madison-gold/45 bg-gradient-to-b from-madison-gold/20 to-transparent shadow-[0_0_30px_-8px_rgba(249, 217, 120,0.55)]">
                 <CheckOutlined className="text-4xl text-madison-gold" />
               </span>
             </div>

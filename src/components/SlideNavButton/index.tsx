@@ -29,11 +29,11 @@ export const SlideNavButton: React.FC<SlideNavButtonProps> = ({
     aria-label={ariaLabel ?? DEFAULT_ARIA_LABELS[direction]}
     className={clsx(
       "flex items-center justify-center size-9 lg:size-10 rounded-full shrink-0",
-      "border border-[#f9be5c]/20 text-[#f9be5c]",
+      "border border-[#f9d978]/20 text-[#f9d978]",
       "bg-[#0a0908]/60 backdrop-blur-md transition-all duration-300",
-      "hover:border-[#f9be5c]/60 hover:text-[#ffe5a0] hover:shadow-[0_0_14px_rgba(249,190,92,0.16)]",
+      "hover:border-[#f9d978]/60 hover:text-[#ffe5a0] hover:shadow-[0_0_14px_rgba(249, 217, 120,0.16)]",
       "active:scale-95",
-      "disabled:opacity-25 disabled:pointer-events-none disabled:hover:border-[#f9be5c]/20 disabled:hover:text-[#f9be5c] disabled:hover:shadow-none",
+      "disabled:opacity-25 disabled:pointer-events-none disabled:hover:border-[#f9d978]/20 disabled:hover:text-[#f9d978] disabled:hover:shadow-none",
       className,
     )}
   >

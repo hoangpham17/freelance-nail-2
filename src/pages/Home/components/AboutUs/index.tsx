@@ -47,7 +47,7 @@ const AboutUs: React.FC = () => {
                 ariaLabel="arrow"
                 width={16}
                 height={16}
-                className="text-[#f9be5c]"
+                className="text-[#f9d978]"
               />
             </Link>
           </div>
@@ -91,7 +91,7 @@ const AboutUs: React.FC = () => {
                 ariaLabel="arrow"
                 width={16}
                 height={16}
-                className="text-[#f9be5c]"
+                className="text-[#f9d978]"
               />
             </Link>
           </Flex>

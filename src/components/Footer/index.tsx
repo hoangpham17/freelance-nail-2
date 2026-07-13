@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
 
       <div className="border-t border-white/10">
         <Wrapper>
-          <p className="py-4 text-center font-montserrat text-body-l text-white/40 lg:py-5">
+          <p className="pt-4 pb-20 text-center font-montserrat text-body-l text-white/40 lg:py-5">
             Copyright {currentYear} Madison Nail Lounge — All rights reserved
           </p>
         </Wrapper>

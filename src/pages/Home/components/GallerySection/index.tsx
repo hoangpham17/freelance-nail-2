@@ -230,7 +230,7 @@ const GallerySection: React.FC<GallerySectionProps> = ({
                   className={clsx(
                     "h-2.5 md:h-3 transition-all duration-500 rounded-full shrink-0",
                     currentSlide === idx
-                      ? "w-[14px] md:w-[18px] bg-[#f9be5c]"
+                      ? "w-[14px] md:w-[18px] bg-[#f9d978]"
                       : "w-2.5 md:w-3 bg-white/40 hover:bg-white/60",
                   )}
                   aria-label={`Go to gallery slide ${idx + 1}`}

@@ -1,10 +1,10 @@
 /* Ornamental circular loader — soft, artistic (Madison theme) */
 .loading-page .loader {
-  --loader-accent: var(--madison-gold, #f9be5c);
-  --loader-accent-soft: rgba(249, 190, 92, 0.52);
+  --loader-accent: var(--madison-gold, #f9d978);
+  --loader-accent-soft: rgba(249, 217, 120, 0.52);
   --loader-accent-dark: var(--madison-gold-dark, #f1a953);
   --loader-accent-dark-soft: rgba(241, 169, 83, 0.4);
-  --loader-glow: rgba(249, 190, 92, 0.28);
+  --loader-glow: rgba(249, 217, 120, 0.28);
   --loader-ease: cubic-bezier(0.42, 0, 0.2, 1);
 
   position: relative;
@@ -22,7 +22,7 @@
   background: radial-gradient(
     circle,
     var(--loader-glow) 0%,
-    rgba(249, 190, 92, 0.08) 42%,
+    rgba(249, 217, 120, 0.08) 42%,
     transparent 72%
   );
   filter: blur(3px);
@@ -69,7 +69,7 @@
   border-radius: 50%;
   border: 1px solid transparent;
   border-top-color: var(--loader-accent-soft);
-  border-right-color: rgba(249, 190, 92, 0.12);
+  border-right-color: rgba(249, 217, 120, 0.12);
   border-bottom-color: var(--loader-accent-dark-soft);
   border-left-color: rgba(241, 169, 83, 0.1);
   filter: drop-shadow(0 0 10px var(--loader-glow));
@@ -169,7 +169,7 @@
   }
   50% {
     opacity: 0.92;
-    box-shadow: 0 0 10px rgba(249, 190, 92, 0.32);
+    box-shadow: 0 0 10px rgba(249, 217, 120, 0.32);
   }
 }
 
