@@ -206,7 +206,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8",
-                  imageLoaded ? "border-[#B2866D]" : "border-transparent",
+                  imageLoaded ? "border-[#f9d978]" : "border-transparent",
                 )}
                 style={{
                   maxWidth: isDesktop ? "546px" : "250px",
