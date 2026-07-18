@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { PATHS } from "@/routes/Routes";
-import { BRAND } from "@/config/brand.config";
 import { SectionHeadingLine } from "@/components/SectionHeadingLine";
 import { GalleryItem } from "./types";
 import CategoryTabs from "./components/CategoryTabs";
@@ -136,21 +135,16 @@ const Gallery: React.FC = () => {
           </p>
 
           <div className="mt-6 lg:mt-8 flex flex-wrap items-center justify-center gap-3 md:gap-4">
-            <a
-              href={BRAND.bookingUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="madison-btn-primary"
-            >
-              {
-                (galleryContent as { banner: { ctaBooking: string } }).banner
-                  .ctaBooking
-              }
-            </a>
-            <Link to={PATHS.services} className="madison-btn-outline">
+            <Link to={PATHS.services} className="madison-btn-primary">
               {
                 (galleryContent as { banner: { ctaServices: string } }).banner
                   .ctaServices
+              }
+            </Link>
+            <Link to={PATHS.contactUs} className="madison-btn-outline">
+              {
+                (galleryContent as { banner: { ctaContact: string } }).banner
+                  .ctaContact
               }
             </Link>
           </div>

@@ -152,6 +152,12 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
     (service) => service.visa_surcharge,
   );
   const showPriceColumns = showCashColumn || showVisaColumn;
+  const additionalChargeHtml = parseAirtableRichtext(
+    category.additional_charge?.trim(),
+  );
+  const hasAdditionalCharge = Boolean(
+    additionalChargeHtml.replace(/<[^>]*>/g, "").trim(),
+  );
   const { cashPriceLabel, visaPriceLabel } = (
     servicesContent as {
       serviceCard: { cashPriceLabel: string; visaPriceLabel: string };
@@ -361,8 +367,8 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
               })}
             </div>
 
-            {/* Additional charge */}
-            {category.additional_charge && (
+            {/* Additional charge — hide title when content is empty */}
+            {hasAdditionalCharge && (
               <>
                 <div
                   className="mt-4 lg:mt-6 h-px w-full service-row-divider"
@@ -389,7 +395,7 @@ const ServiceCategorySection: React.FC<ServiceCategorySectionProps> = ({
                       responsiveFontSizeArray(14, 16),
                     )}
                     dangerouslySetInnerHTML={{
-                      __html: parseAirtableRichtext(category.additional_charge),
+                      __html: additionalChargeHtml,
                     }}
                   />
                 </div>
